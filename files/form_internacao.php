@@ -1,6 +1,7 @@
 ﻿<?php 
   
- 
+# Corrige o erro de acentuação no banco
+mysqli_query($conn,"SET NAMES 'utf8'");
  
    $query = mysqli_query($conn,"SELECT * FROM cid order by cid") or die("erro ao carregar consulta");
 
@@ -15,7 +16,7 @@
                    }
 
                     
-
+  
                           // Função para autopreenchimento
                                 echo '<script>
                                         function adiciona(){

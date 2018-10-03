@@ -13,7 +13,7 @@ $crm = $_POST["crm"];
 $matricula = str_replace(".", "", $matricula);
 $matricula = str_replace("-", "", $matricula);
 
-		$query = "INSERT INTO `internamento`(`id`, `id_usuario`, `id_cid`, `id_revalida`, `nome`, `matricula`, `solicitante`, `crm`, `data`) VALUES (null ,'".$_SESSION['id']."', '".$id_cid."' , null , '".$nome."' , '".$matricula."' , '".$solicitante."' , '".$crm."' ,'".date("Y-m-d H:i:s")."')";
+		$query = "INSERT INTO `internamento`(`id`, `id_usuario`, `id_cid`, `id_revalida`, `nome`, `matricula`, `solicitante`, `crm`, `dat_entrada`) VALUES (null ,'".$_SESSION['id']."', '".$id_cid."' , null , '".$nome."' , '".$matricula."' , '".$solicitante."' , '".$crm."' ,'".date("Y-m-d H:i:s")."')";
 
         
 	 

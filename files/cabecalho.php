@@ -3,14 +3,7 @@
    // Arquivo de configuração
   require_once "../config/config.php";
 
- # Informa qual o conjunto de caracteres será usado.
-header('Content-Type: text/html; charset=utf-8');
-
-# Aqui está o segredo
-mysqli_query($conn,"SET NAMES 'utf8'");
-mysqli_query($conn,'SET character_set_connection=utf8');
-mysqli_query($conn,'SET character_set_client=utf8');
-mysqli_query($conn,'SET character_set_results=utf8');
+  
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="pt-br" lang="pt-br"><head>
