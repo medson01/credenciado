@@ -1,0 +1,434 @@
+/*
+	==========================================
+	project: DesignHQ 
+	author: Borut Jegrišnik (www.solucija.com)
+	------------------------------------------
+	2009. Solucija
+	==========================================
+*/
+
+*{ margin: 0; padding: 0; }
+
+:focus,:active { outline: 0; }
+body { font: 12px Tahoma, Arial, Sans-Serif; color: #000; background: #ccc; }
+a { text-decoration: none; color: #000; }
+	a:hover { color: #000; }
+.x { clear: both; }
+
+p {  margin: 0 0 12px; color:#666; }
+img { border: 0; }
+
+h1 { font-size: 24px; font-weight: normal; margin-bottom: 15px;}
+h2 { font-size: 14px; font-weight: normal; margin-bottom: 2px; color: #333; }
+h3 { font-size: 14px; font-weight: bolder; margin-bottom: 10px; color: #333; }
+h4 { font-size: 18px; font-weight: normal; float: left; margin: 3px 0 10px; width: 460px; }
+h4.peq { font-size: 18px; font-weight: normal; float: left; margin: 3px 0 10px; width: 190px; }
+
+h2.cursos {
+	-moz-background-clip:border;
+	-moz-background-inline-policy:continuous;
+	-moz-background-origin:padding;
+	background:#FFFFFF url(../images/icon1.jpg) no-repeat scroll 100% 0;
+	border-bottom:1px dashed #BDB9B9;
+	color:#D20039;
+	display:block;
+	font-size:14px;
+	height:50px;
+	line-height:22px;
+	padding:0 20px 0 0;
+	width:240px;
+}
+
+.contrato {
+	border:1px solid #E6E6E6;
+	height:240px;
+	overflow:auto;
+	padding:5px;
+	width:670px;
+}
+
+.passo_ativo {
+		-moz-background-clip:border;
+		-moz-background-origin:padding;
+		-x-system-font:none;
+		color:#585858;
+		font-family:arial;
+	    font-size:14px;
+		font-size-adjust:none;
+		font-stretch:normal;
+		font-style:normal;
+		font-variant:normal;
+		font-weight:bold;
+		height:28px;
+		line-height:normal;
+		padding:5px 0 0 12px;
+}
+
+.passo_anterior {
+		-moz-background-clip:border;
+		-moz-background-origin:padding;
+		-x-system-font:none;
+		color:#D9D9D9;
+		font-family:arial;
+		font-size:14px;
+		font-size-adjust:none;
+		font-stretch:normal;
+		font-style:normal;
+		font-variant:normal;
+		font-weight:bold;
+		height:28px;
+		line-height:normal;
+		padding:5px 0 0 12px;
+}
+
+h2 span {
+-moz-background-clip:border;
+-moz-background-inline-policy:continuous;
+-moz-background-origin:padding;
+background:#FFFFFF none repeat scroll 0 0;
+color:#545454;
+font-size:14px;
+font-weight:bold;
+text-transform:uppercase;
+}
+
+#wrapper { margin: 0 auto; width: 980px; background: url(../images/bg.jpg) no-repeat; }
+
+#logo { padding: 20px 12px 10px; }
+	#logo h1 { font: bold 24px Arial; text-shadow: 1px 1px 1px #fff; letter-spacing: 4px; }
+		#logo h1 a { color: #333; }
+		#logo h1 a span { color: #000; }
+#content { background: #fff; width: 980px; }
+	
+.menu { list-style:none; margin: 14px 25px 20px 10px; width: 740px; float: right; }
+	.menu li { float: left; margin: 0 4px 0 0; }
+	.menu li a { display: block; font-size: 14px; padding: 14px 24px; border: 1px solid #fff; }
+	.menu a:hover { border: 1px solid #ddd; color: red; }, .menu li.current a { border: 1px solid #ddd; }
+
+		.menu li ul { display: block; background: #fff; margin: -1px 0 0; position: absolute; display: none; z-index: 2; border: 1px solid #ddd; }
+		.menu li ul li { float: none; display: inline; margin: 0; padding: 0; }
+		.menu li ul li a { width: auto; margin: 4px; white-space: nowrap; }
+
+#search { float: right; width: 235px; margin: 23px 18px; display: inline; }
+	#search .text { width: 227px; height: 16px; border: 1px solid #ddd; padding: 5px; float: left; color: #888; }
+	#search .submit { float: right; border: 0; background: #000 url(../images/search.gif) no-repeat center 8px; width: 32px; height: 28px; padding-top: 1px; }
+
+#newsletter { float: left; width: 235px; display: inline; font-family: 'lucida grande', lucida, tahoma, helvetica, arial; color: #855414;}
+	#newsletter .text { width: 177px; height: 16px; border: 1px solid #ddd; padding: 5px; float: left; color: #888; }
+	#newsletter .ok { float: right; border: 1; width: 32px; height: 28px; padding-top: 1px; font-weight: bold; }
+
+#pitch { margin-bottom: 30px; float: left;}
+	#pitch .infoline { margin-top: -70px; padding: 25px 0 25px 25px; background: #000; font-size: 18px; width: 620px; height: 18px; opacity:0.70; filter:alpha(opacity=70); color: #fff; }
+
+	.pitch-gallery { overflow: hidden; width: 620px; position: relative; }
+		.pitch-gallery-holder { width: 3920px; position: relative; top: 0; left: 0; }
+		.pitch-gallery-div { float: left; }
+		
+#left { width: 600px; float: left; margin-left: 25px; display: inline;}
+	#left input.text-templo { float: left; margin: 0 5px 10px 0; padding: 7px; width: 550px; border: 1px solid #ccc;}
+	#left img { float: left; margin: 5px 20px 2px 0; padding: 3px; border: 1px solid #ccc; }
+	#left form { padding-left: 5px; }
+	#left label { float: left; display: block; clear: both; padding: 3px 0; color: #666; font-weight: normal; width: 200px; }
+		#left .lcurrent { font-weight: bold; }
+	#left label img { vertical-align: middle; }
+	#left input.text, textarea, select { float: left; margin: 0 5px 10px 0; padding: 7px; width: 250px; border: 1px solid #ccc;}
+	#left textarea { height: 150px; }
+	#left select { 	
+		width: 270px; 
+		font-family: 'Trebuchet MS',Arial,Helvetica,sans-serif; 
+		font-style: normal; 
+		font-variant: normal; 
+		font-weight: normal; 
+		font-size: 16px; 
+		line-height: 1px; 
+		font-size-adjust: none; 
+		font-stretch: normal; 
+		-x-system-font: none; 
+		color: rgb(51, 51, 51);
+	}
+	#left input.radio {  }
+		#left input:focus { border-color:#aaa; }
+		#left textarea:focus { border-color: #aaa; }	
+	.error { font-size: 10px; color:red; margin: 0 0 5px 5px; display: none; }
+	#left .submit { border: 0; background: #000; color: #fff; padding: 5px; float: left; margin-left: 150px; }
+
+
+/* border: 2px solid red;  */
+.esquerda { width: 150px; float: left; margin-left: 25px; display: inline;}
+.direita { width: 250px; float: right; display: inline; }
+	
+ul { color: #666; margin: 0 0 10px 30px; line-height: 18px; }
+ol { color: #666; margin: 5px 0 5px 30px; line-height: 18px; }
+	
+	#contact-back { margin: 12px 40px 0 0; float: right; }
+
+.post { position: relative; margin-bottom: 20px; }
+.post-options { position: relative; margin: -37px 0 40px 0; font-size: 10px; color: #666; }
+
+#right { width: 190px; 
+		 float: right; 
+		 border-left: 1px solid #ccc; 
+		 padding-left: 26px; 
+		 margin-right: 25px; 
+	     margin-left: 75px; 
+		 display: inline; 
+/*		 position:absolute; */
+/*		 left: 750px;  */
+}
+#right-principal { 
+		width: 260px; 
+		float: right; 
+		border-left: 1px solid #ccc; 
+		padding-left: 36px; 
+		margin-right: 25px; 
+		display: inline; 
+}
+	
+#feature { margin-left: 25px; padding-bottom: 10px; }
+	.small-post { float: left; width: 260px; margin-right: 75px; }
+		.small-post img { border: 1px solid #ccc; padding: 3px; margin-bottom: 10px; }
+	.last { margin-right: 0; }
+	#feature ul { margin-top: -11px; }
+	
+#footer { color: #666; font-size: 11px; margin: 20px 0 20px 10px; }
+
+.post-info { font-size: 11px; color: #808080; }
+.read-more { background: url(../images/link.gif) no-repeat center left; padding-left: 13px; font-size: 10px; }
+.break { border-top: 1px solid #ccc; margin: 30px 0; display: block; }
+	.no-border { border: 0; }
+.space { margin-bottom: 20px; }
+
+
+/** BOTÕES *******/
+
+.btn {
+	BORDER-RIGHT: #ddd 1px solid; PADDING-RIGHT: 8px; BORDER-TOP: #ddd 1px solid; PADDING-LEFT: 8px; BACKGROUND: url(https://s3.amazonaws.com/twitter_production/a/1256237813/images/buttons/bg-btn.gif) #ddd repeat-x 0px 0px; PADDING-BOTTOM: 5px; MARGIN: 0px; FONT: 11px/14px "Lucida Grande",Sans-serif; OVERFLOW: visible; BORDER-LEFT: #ddd 1px solid; WIDTH: auto; COLOR: #333; PADDING-TOP: 4px; BORDER-BOTTOM: #ccc 1px solid; -moz-border-radius: 4px; -webkit-border-radius: 4px; -khtml-border-radius: 4px; border-radius: 4px; text-shadow: 1px 1px 0 #fff
+}
+INPUT[type=submit].btn {
+	BORDER-RIGHT: #ddd 1px solid; PADDING-RIGHT: 8px; BORDER-TOP: #ddd 1px solid; PADDING-LEFT: 8px; BACKGROUND: url(https://s3.amazonaws.com/twitter_production/a/1256237813/images/buttons/bg-btn.gif) #ddd repeat-x 0px 0px; PADDING-BOTTOM: 5px; MARGIN: 0px; FONT: 11px/14px "Lucida Grande",Sans-serif; OVERFLOW: visible; BORDER-LEFT: #ddd 1px solid; WIDTH: auto; COLOR: #333; PADDING-TOP: 4px; BORDER-BOTTOM: #ccc 1px solid; -moz-border-radius: 4px; -webkit-border-radius: 4px; -khtml-border-radius: 4px; border-radius: 4px; text-shadow: 1px 1px 0 #fff
+}
+INPUT[type=button].btn {
+	BORDER-RIGHT: #ddd 1px solid; PADDING-RIGHT: 8px; BORDER-TOP: #ddd 1px solid; PADDING-LEFT: 8px; BACKGROUND: url(https://s3.amazonaws.com/twitter_production/a/1256237813/images/buttons/bg-btn.gif) #ddd repeat-x 0px 0px; PADDING-BOTTOM: 5px; MARGIN: 0px; FONT: 11px/14px "Lucida Grande",Sans-serif; OVERFLOW: visible; BORDER-LEFT: #ddd 1px solid; WIDTH: auto; COLOR: #333; PADDING-TOP: 4px; BORDER-BOTTOM: #ccc 1px solid; -moz-border-radius: 4px; -webkit-border-radius: 4px; -khtml-border-radius: 4px; border-radius: 4px; text-shadow: 1px 1px 0 #fff
+}
+.btn:unknown {
+	BORDER-TOP-WIDTH: 0px; PADDING-RIGHT: 0px; PADDING-LEFT: 0px; BORDER-LEFT-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; PADDING-BOTTOM: 0px; PADDING-TOP: 0px; BORDER-RIGHT-WIDTH: 0px
+}
+.btn-m {
+	WIDTH: 115px ;PADDING-RIGHT: 15px; BACKGROUND-POSITION: 0px -200px; PADDING-LEFT: 15px; FONT-SIZE: 15px; PADDING-BOTTOM: 6px; LINE-HEIGHT: 20px; PADDING-TOP: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px; -khtml-border-radius: 5px; border-radius: 5px
+}
+INPUT[type=submit].btn-m {
+	PADDING-RIGHT: 15px; BACKGROUND-POSITION: 0px -200px; PADDING-LEFT: 15px; FONT-SIZE: 15px; PADDING-BOTTOM: 6px; LINE-HEIGHT: 20px; PADDING-TOP: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px; -khtml-border-radius: 5px; border-radius: 5px
+}
+INPUT[type=button].btn-m {
+	PADDING-RIGHT: 15px; BACKGROUND-POSITION: 0px -200px; PADDING-LEFT: 15px; FONT-SIZE: 15px; PADDING-BOTTOM: 6px; LINE-HEIGHT: 20px; PADDING-TOP: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px; -khtml-border-radius: 5px; border-radius: 5px
+}
+.btn-l {
+	PADDING-RIGHT: 20px; BACKGROUND-POSITION: 0px -400px; PADDING-LEFT: 20px; FONT-SIZE: 20px; PADDING-BOTTOM: 9px; LINE-HEIGHT: 26px; PADDING-TOP: 7px; -moz-border-radius: 6px; -webkit-border-radius: 6px; -khtml-border-radius: 6px; border-radius: 6px
+}
+INPUT[type=submit].btn-l {
+	PADDING-RIGHT: 20px; BACKGROUND-POSITION: 0px -400px; PADDING-LEFT: 20px; FONT-SIZE: 20px; PADDING-BOTTOM: 9px; LINE-HEIGHT: 26px; PADDING-TOP: 7px; -moz-border-radius: 6px; -webkit-border-radius: 6px; -khtml-border-radius: 6px; border-radius: 6px
+}
+INPUT[type=button].btn-l {
+	PADDING-RIGHT: 20px; BACKGROUND-POSITION: 0px -400px; PADDING-LEFT: 20px; FONT-SIZE: 20px; PADDING-BOTTOM: 9px; LINE-HEIGHT: 26px; PADDING-TOP: 7px; -moz-border-radius: 6px; -webkit-border-radius: 6px; -khtml-border-radius: 6px; border-radius: 6px
+}
+.btn-light {
+	BORDER-LEFT-COLOR: #add! important; BACKGROUND-IMAGE: url(https://s3.amazonaws.com/twitter_production/a/1256237813/images/buttons/bg-btn-light.gif)! important; BORDER-BOTTOM-COLOR: #9cc! important; BORDER-TOP-COLOR: #add! important; BACKGROUND-COLOR: #add! important; BORDER-RIGHT-COLOR: #add! important; text-shadow: 1px 1px 0 #dff
+}
+.btn-dark {
+	BORDER-LEFT-COLOR: #59a! important; BACKGROUND-IMAGE: url(https://s3.amazonaws.com/twitter_production/a/1256237813/images/buttons/bg-btn-dark.gif)! important; BORDER-BOTTOM-COLOR: #489! important; COLOR: #fff! important; BORDER-TOP-COLOR: #59a! important; BACKGROUND-COLOR: #59a! important; BORDER-RIGHT-COLOR: #59a! important; text-shadow: -1px -1px 0 #59a
+}
+.btn-blue {
+	BORDER-LEFT-COLOR: #39d! important; BACKGROUND-IMAGE: url(https://s3.amazonaws.com/twitter_production/a/1256237813/images/buttons/bg-btn-blue.gif)! important; BORDER-BOTTOM-COLOR: #28c! important; COLOR: #fff! important; BORDER-TOP-COLOR: #39d! important; BACKGROUND-COLOR: #39d! important; BORDER-RIGHT-COLOR: #39d! important; text-shadow: -1px -1px 0 #39d
+}
+.btn-chart {
+	BORDER-LEFT-COLOR: #9c2! important; BACKGROUND-IMAGE: url(https://s3.amazonaws.com/twitter_production/a/1256237813/images/buttons/bg-btn-chart.gif)! important; BORDER-BOTTOM-COLOR: #8b1! important; BORDER-TOP-COLOR: #9c2! important; BACKGROUND-COLOR: #9c2! important; BORDER-RIGHT-COLOR: #9c2! important; text-shadow: 1px 1px 0 #df6
+}
+.btn-mint {
+	BORDER-LEFT-COLOR: #bdb! important; BACKGROUND-IMAGE: url(https://s3.amazonaws.com/twitter_production/a/1256237813/images/buttons/bg-btn-mint.gif)! important; BORDER-BOTTOM-COLOR: #aca! important; BORDER-TOP-COLOR: #bdb! important; BACKGROUND-COLOR: #bdb! important; BORDER-RIGHT-COLOR: #bdb! important; text-shadow: 1px 1px 0 #efe
+}
+.btn-green {
+	BORDER-LEFT-COLOR: #272! important; BACKGROUND-IMAGE: url(https://s3.amazonaws.com/twitter_production/a/1256237813/images/buttons/bg-btn-green.gif)! important; BORDER-BOTTOM-COLOR: #161! important; COLOR: #fff! important; BORDER-TOP-COLOR: #272! important; BACKGROUND-COLOR: #272! important; BORDER-RIGHT-COLOR: #272! important; text-shadow: -1px -1px 0 #272
+}
+.btn-pink {
+	BORDER-LEFT-COLOR: #daa! important; BACKGROUND-IMAGE: url(https://s3.amazonaws.com/twitter_production/a/1256237813/images/buttons/bg-btn-pink.gif)! important; BORDER-BOTTOM-COLOR: #c99! important; BORDER-TOP-COLOR: #daa! important; BACKGROUND-COLOR: #daa! important; BORDER-RIGHT-COLOR: #daa! important; text-shadow: 1px 1px 0 #fdd
+}
+.btn-red {
+	BACKGROUND-POSITION: 0px 0px; BORDER-LEFT-COLOR: #a22! important; BACKGROUND-IMAGE: url(https://s3.amazonaws.com/twitter_production/a/1256237813/images/buttons/bg-btn-red.gif)! important; BORDER-BOTTOM-COLOR: #911! important; COLOR: #fff! important; BORDER-TOP-COLOR: #a22! important; BACKGROUND-COLOR: #a22! important; BORDER-RIGHT-COLOR: #a22! important; text-shadow: -1px -1px 0 #a22
+}
+.btn:hover {
+	BACKGROUND-POSITION: 0px -6px; BORDER-LEFT-COLOR: #999; BORDER-BOTTOM-COLOR: #888; COLOR: #000; BORDER-TOP-COLOR: #999; BORDER-RIGHT-COLOR: #999
+}
+.btn:focus {
+	BACKGROUND-POSITION: 0px -6px; BORDER-LEFT-COLOR: #999; BORDER-BOTTOM-COLOR: #888; COLOR: #000; BORDER-TOP-COLOR: #999; BORDER-RIGHT-COLOR: #999
+}
+INPUT[type=submit].btn:hover {
+	BACKGROUND-POSITION: 0px -6px; BORDER-LEFT-COLOR: #999; BORDER-BOTTOM-COLOR: #888; COLOR: #000; BORDER-TOP-COLOR: #999; BORDER-RIGHT-COLOR: #999
+}
+INPUT[type=submit].btn:focus {
+	BACKGROUND-POSITION: 0px -6px; BORDER-LEFT-COLOR: #999; BORDER-BOTTOM-COLOR: #888; COLOR: #000; BORDER-TOP-COLOR: #999; BORDER-RIGHT-COLOR: #999
+}
+BUTTON.btn:hover {
+	BACKGROUND-POSITION: 0px -6px; BORDER-LEFT-COLOR: #999; BORDER-BOTTOM-COLOR: #888; COLOR: #000; BORDER-TOP-COLOR: #999; BORDER-RIGHT-COLOR: #999
+}
+BUTTON.btn:focus {
+	BACKGROUND-POSITION: 0px -6px; BORDER-LEFT-COLOR: #999; BORDER-BOTTOM-COLOR: #888; COLOR: #000; BORDER-TOP-COLOR: #999; BORDER-RIGHT-COLOR: #999
+}
+.btn-light:hover {
+	BORDER-LEFT-COLOR: #7aa; BORDER-BOTTOM-COLOR: #699; BORDER-TOP-COLOR: #7aa; BORDER-RIGHT-COLOR: #7aa
+}
+.btn-light:focus {
+	BORDER-LEFT-COLOR: #7aa; BORDER-BOTTOM-COLOR: #699; BORDER-TOP-COLOR: #7aa; BORDER-RIGHT-COLOR: #7aa
+}
+.btn-dark:hover {
+	BORDER-LEFT-COLOR: #267; BORDER-BOTTOM-COLOR: #156; COLOR: #fff; BORDER-TOP-COLOR: #267; BORDER-RIGHT-COLOR: #267
+}
+.btn-dark:focus {
+	BORDER-LEFT-COLOR: #267; BORDER-BOTTOM-COLOR: #156; COLOR: #fff; BORDER-TOP-COLOR: #267; BORDER-RIGHT-COLOR: #267
+}
+.btn-blue:hover {
+	BORDER-LEFT-COLOR: #17b; BORDER-BOTTOM-COLOR: #06a; COLOR: #fff; BORDER-TOP-COLOR: #17b; BORDER-RIGHT-COLOR: #17b
+}
+.btn-blue:focus {
+	BORDER-LEFT-COLOR: #17b; BORDER-BOTTOM-COLOR: #06a; COLOR: #fff; BORDER-TOP-COLOR: #17b; BORDER-RIGHT-COLOR: #17b
+}
+.btn-chart:hover {
+	BORDER-LEFT-COLOR: #7a1; BORDER-BOTTOM-COLOR: #690; BORDER-TOP-COLOR: #7a1; BORDER-RIGHT-COLOR: #7a1
+}
+.btn-chart:focus {
+	BORDER-LEFT-COLOR: #7a1; BORDER-BOTTOM-COLOR: #690; BORDER-TOP-COLOR: #7a1; BORDER-RIGHT-COLOR: #7a1
+}
+.btn-mint:hover {
+	BORDER-LEFT-COLOR: #8a8! important; BORDER-BOTTOM-COLOR: #797! important; BORDER-TOP-COLOR: #8a8! important; BORDER-RIGHT-COLOR: #8a8! important
+}
+.btn-mint:focus {
+	BORDER-LEFT-COLOR: #8a8! important; BORDER-BOTTOM-COLOR: #797! important; BORDER-TOP-COLOR: #8a8! important; BORDER-RIGHT-COLOR: #8a8! important
+}
+INPUT[type=submit].btn-mint:hover {
+	BORDER-LEFT-COLOR: #8a8! important; BORDER-BOTTOM-COLOR: #797! important; BORDER-TOP-COLOR: #8a8! important; BORDER-RIGHT-COLOR: #8a8! important
+}
+INPUT[type=submit].btn-mint:focus {
+	BORDER-LEFT-COLOR: #8a8! important; BORDER-BOTTOM-COLOR: #797! important; BORDER-TOP-COLOR: #8a8! important; BORDER-RIGHT-COLOR: #8a8! important
+}
+BUTTON.btn-mint:hover {
+	BORDER-LEFT-COLOR: #8a8! important; BORDER-BOTTOM-COLOR: #797! important; BORDER-TOP-COLOR: #8a8! important; BORDER-RIGHT-COLOR: #8a8! important
+}
+BUTTON.btn-mint:focus {
+	BORDER-LEFT-COLOR: #8a8! important; BORDER-BOTTOM-COLOR: #797! important; BORDER-TOP-COLOR: #8a8! important; BORDER-RIGHT-COLOR: #8a8! important
+}
+.btn-green:hover {
+	BORDER-LEFT-COLOR: #050! important; BORDER-BOTTOM-COLOR: #040! important; COLOR: #fff; BORDER-TOP-COLOR: #050! important; BACKGROUND-COLOR: #272! important; BORDER-RIGHT-COLOR: #050! important
+}
+.btn-green:focus {
+	BORDER-LEFT-COLOR: #050! important; BORDER-BOTTOM-COLOR: #040! important; COLOR: #fff; BORDER-TOP-COLOR: #050! important; BACKGROUND-COLOR: #272! important; BORDER-RIGHT-COLOR: #050! important
+}
+INPUT[type=submit].btn-green:hover {
+	BORDER-LEFT-COLOR: #050! important; BORDER-BOTTOM-COLOR: #040! important; COLOR: #fff; BORDER-TOP-COLOR: #050! important; BACKGROUND-COLOR: #272! important; BORDER-RIGHT-COLOR: #050! important
+}
+INPUT[type=submit].btn-green:focus {
+	BORDER-LEFT-COLOR: #050! important; BORDER-BOTTOM-COLOR: #040! important; COLOR: #fff; BORDER-TOP-COLOR: #050! important; BACKGROUND-COLOR: #272! important; BORDER-RIGHT-COLOR: #050! important
+}
+BUTTON.btn-green:hover {
+	BORDER-LEFT-COLOR: #050! important; BORDER-BOTTOM-COLOR: #040! important; COLOR: #fff; BORDER-TOP-COLOR: #050! important; BACKGROUND-COLOR: #272! important; BORDER-RIGHT-COLOR: #050! important
+}
+BUTTON.btn-green:focus {
+	BORDER-LEFT-COLOR: #050! important; BORDER-BOTTOM-COLOR: #040! important; COLOR: #fff; BORDER-TOP-COLOR: #050! important; BACKGROUND-COLOR: #272! important; BORDER-RIGHT-COLOR: #050! important
+}
+.btn-pink:hover {
+	BORDER-LEFT-COLOR: #a88! important; BORDER-BOTTOM-COLOR: #977! important; BORDER-TOP-COLOR: #a88! important; BORDER-RIGHT-COLOR: #a88! important
+}
+.btn-pink:focus {
+	BORDER-LEFT-COLOR: #a88! important; BORDER-BOTTOM-COLOR: #977! important; BORDER-TOP-COLOR: #a88! important; BORDER-RIGHT-COLOR: #a88! important
+}
+INPUT[type=submit].btn-pink:hover {
+	BORDER-LEFT-COLOR: #a88! important; BORDER-BOTTOM-COLOR: #977! important; BORDER-TOP-COLOR: #a88! important; BORDER-RIGHT-COLOR: #a88! important
+}
+INPUT[type=submit].btn-pink:focus {
+	BORDER-LEFT-COLOR: #a88! important; BORDER-BOTTOM-COLOR: #977! important; BORDER-TOP-COLOR: #a88! important; BORDER-RIGHT-COLOR: #a88! important
+}
+BUTTON.btn-pink:hover {
+	BORDER-LEFT-COLOR: #a88! important; BORDER-BOTTOM-COLOR: #977! important; BORDER-TOP-COLOR: #a88! important; BORDER-RIGHT-COLOR: #a88! important
+}
+BUTTON.btn-pink:focus {
+	BORDER-LEFT-COLOR: #a88! important; BORDER-BOTTOM-COLOR: #977! important; BORDER-TOP-COLOR: #a88! important; BORDER-RIGHT-COLOR: #a88! important
+}
+.btn-red:hover {
+	BORDER-LEFT-COLOR: #611! important; BORDER-BOTTOM-COLOR: #500! important; COLOR: #fff; BORDER-TOP-COLOR: #611! important; BACKGROUND-COLOR: #a22! important; BORDER-RIGHT-COLOR: #611! important
+}
+.btn-red:focus {
+	BORDER-LEFT-COLOR: #611! important; BORDER-BOTTOM-COLOR: #500! important; COLOR: #fff; BORDER-TOP-COLOR: #611! important; BACKGROUND-COLOR: #a22! important; BORDER-RIGHT-COLOR: #611! important
+}
+INPUT[type=submit].btn-red:hover {
+	BORDER-LEFT-COLOR: #611! important; BORDER-BOTTOM-COLOR: #500! important; COLOR: #fff; BORDER-TOP-COLOR: #611! important; BACKGROUND-COLOR: #a22! important; BORDER-RIGHT-COLOR: #611! important
+}
+INPUT[type=submit].btn-red:focus {
+	BORDER-LEFT-COLOR: #611! important; BORDER-BOTTOM-COLOR: #500! important; COLOR: #fff; BORDER-TOP-COLOR: #611! important; BACKGROUND-COLOR: #a22! important; BORDER-RIGHT-COLOR: #611! important
+}
+BUTTON.btn-red:hover {
+	BORDER-LEFT-COLOR: #611! important; BORDER-BOTTOM-COLOR: #500! important; COLOR: #fff; BORDER-TOP-COLOR: #611! important; BACKGROUND-COLOR: #a22! important; BORDER-RIGHT-COLOR: #611! important
+}
+BUTTON.btn-red:focus {
+	BORDER-LEFT-COLOR: #611! important; BORDER-BOTTOM-COLOR: #500! important; COLOR: #fff; BORDER-TOP-COLOR: #611! important; BACKGROUND-COLOR: #a22! important; BORDER-RIGHT-COLOR: #611! important
+}
+.btn-m:hover {
+	BACKGROUND-POSITION: 0px -206px
+}
+.btn-m:focus {
+	BACKGROUND-POSITION: 0px -206px
+}
+INPUT[type=submit].btn-m:hover {
+	BACKGROUND-POSITION: 0px -206px
+}
+INPUT[type=submit].btn-m:focus {
+	BACKGROUND-POSITION: 0px -206px
+}
+BUTTON.btn-m:hover {
+	BACKGROUND-POSITION: 0px -206px
+}
+BUTTON.btn-m:focus {
+	BACKGROUND-POSITION: 0px -206px
+}
+.btn-l:hover {
+	BACKGROUND-POSITION: 0px -406px
+}
+.btn-l:focus {
+	BACKGROUND-POSITION: 0px -406px
+}
+INPUT[type=submit].btn-l:hover {
+	BACKGROUND-POSITION: 0px -406px
+}
+INPUT[type=submit].btn-l:focus {
+	BACKGROUND-POSITION: 0px -406px
+}
+BUTTON.btn-l:hover {
+	BACKGROUND-POSITION: 0px -406px
+}
+BUTTON.btn-l:focus {
+	BACKGROUND-POSITION: 0px -406px
+}
+BUTTON:active {
+	BACKGROUND-IMAGE: none! important; outline: none; text-shadow: none
+}
+BUTTON.btn:active {
+	BACKGROUND-IMAGE: none! important; outline: none; text-shadow: none
+}
+INPUT[type=submit]:active {
+	BACKGROUND-IMAGE: none! important; outline: none; text-shadow: none
+}
+BUTTON.btn-dark:active {
+	BACKGROUND-IMAGE: none! important; outline: none; text-shadow: none
+}
+BUTTON.btn-light:active {
+	BACKGROUND-IMAGE: none! important; outline: none; text-shadow: none
+}
+.btn:active {
+	BACKGROUND-IMAGE: none! important; outline: none; text-shadow: none
+}
+.btn-red:active {
+	BACKGROUND-IMAGE: none! important; outline: none; text-shadow: none
+}
+.btn-green:active {
+	BACKGROUND-IMAGE: none! important; outline: none; text-shadow: none
+}
+
+.foto{ 	BORDER: 1px solid black; width: 114px ;height: 165px; }
+.adicionarFoto { border: 0; background: #000; color: #fff; font-size: 12px; font-weight:bold; height: 20px; width: 107px; }
