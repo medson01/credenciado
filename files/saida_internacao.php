@@ -2,12 +2,15 @@
 // Arquivo de configuração
  require_once "../config/config.php";
  
-$id = $_GET['id'];
-$dat_entrada = $_GET['dat_entrada'];
+echo $id = $_GET['id'];
+echo $dat_saida = $_GET['dat_saida'];
+//echo $dat_saida = $_GET['dat_saida'];
 
 
+
+/*
 if(isset($id)){
-$update = mysqli_query($conn,"UPDATE `internamento` SET `dat_saida`= '".date("Y-m-d H:i:s")."' WHERE id = '".$id."'");
+$update = mysqli_query($conn,"UPDATE `internamento` SET `dat_saida`= now() WHERE id = '".$id."'");
 
 if($dat_entrada){
 
@@ -24,5 +27,5 @@ echo "<script>alert('Registro atulizado com sucesso!');
 location.href=\"internacao.php\"</script>";
 }
 
-
+*/
 ?>

@@ -9,12 +9,17 @@
 
 <!-- Perguntar antes de saida -->
 <script language="Javascript">
-function saida(id) {
+function saida(id,dat_saida) {
+
+   if (dat_saida != true){
      var resposta = confirm("Deseja dar saída do paciente?");
  
      if (resposta == true) {
-          window.location.href = "saida_internacao.php?id="+id;
+          window.location.href = "saida_internacao.php?id="+id+"&dat_saida="+dat_saida;
      }
+   }else{
+      alert("Usuário já saiu!");
+   }
 }
 </script>
 
@@ -84,10 +89,12 @@ function excluir(id) {
                                      if ($registro["dat_saida"] == 0) {
                                      
                                           echo   "";
+                                          $dat_saida = false;
 
                                     }else{
 
-                                           echo   "<font color='green'>".date("d/m/Y h:i:s",strtotime($registro["dat_saida"]))."</font>";
+                                           echo   "<font color='green'>".date("d/m/Y H:i:s",strtotime($registro["dat_saida"]))."</font>";
+                                           $dat_saida = true;
                                     }
 
                         echo "        </div>
@@ -96,7 +103,7 @@ function excluir(id) {
                                     <td><div align='center'>".$registro["credenciado"]."</div></td>
                                     <td>
                                         <div align='center'>
-                                            <a class='btn btn-primary' style='width: 50px; height: 25px' href='javascript:func()' onclick='saida(".$registro["autorizacao"].")'><span style='font-size: 10px; align: center;'> Saída </center> </span> </a>
+                                            <a class='btn btn-primary' style='width: 50px; height: 25px' href='javascript:func()' onclick='saida(".$registro['autorizacao'].",".$dat_saida.")'><span style='font-size: 10px; align: center;'> Saída </center> </span> </a>
                                         </div>
                                     </td>
                                     <td>

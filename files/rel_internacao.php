@@ -147,7 +147,7 @@
 					      <th scope='row'><div align="left">Data de Saíde: <br> &nbsp; 
 					      	<?php 
 					      		
-					      			if($dat_saida <> '0000-00-00') {
+					      			if($dat_saida <> 0) {
 					      				echo date('d / m / Y \h\s H:i:s', strtotime($dat_saida));	
 					      			} 
 					      		 
