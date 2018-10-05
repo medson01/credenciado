@@ -3,12 +3,11 @@
  require_once "../config/config.php";
  
 echo $id = $_GET['id'];
-echo $dat_saida = $_GET['dat_saida'];
-//echo $dat_saida = $_GET['dat_saida'];
 
 
 
-/*
+
+
 if(isset($id)){
 $update = mysqli_query($conn,"UPDATE `internamento` SET `dat_saida`= now() WHERE id = '".$id."'");
 
@@ -27,5 +26,5 @@ echo "<script>alert('Registro atulizado com sucesso!');
 location.href=\"internacao.php\"</script>";
 }
 
-*/
+
 ?>
