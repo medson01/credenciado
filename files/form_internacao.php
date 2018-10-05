@@ -21,14 +21,16 @@ mysqli_query($conn,"SET NAMES 'utf8'");
                                 echo '<script>
                                         function adiciona(){
                                          
-                                          if(document.internamento.cid.value==""){
+                                          if(document.internamento.id_cid.value==""){
                                                         document.internamento.dias.value = "porcentagem"
                                           ;}';
 
                               for ($x=1; $x < $i ; $x++) {
 
-                                     echo 'else if(document.internamento.cid.value=="'.$id[$x].'"){
+                                     echo 'else if(document.internamento.id_cid.value=="'.$id[$x].'"){
                                                   document.internamento.dias.value = "'.$dias[$x].'"
+                                                  document.internamento.cid.value = "'.$cid[$x].'"
+                                                  document.internamento.cid_desc.value = "'.$descricao[$x].'"
                                            ;}';
 
                                 }
@@ -68,21 +70,23 @@ mysqli_query($conn,"SET NAMES 'utf8'");
                             <tr>
                               <td >Código do C.I.D.</td>
                               <td>
-                                  <select name="cid" class="form-control" required="required" onchange="adiciona()">
+                                  <select name="id_cid" class="form-control" required="required" onchange="adiciona()">
                                               <option>*** Digite ou selecio o CID ***</option>
 
                                               <?php 
 
                                                   for ($x=1; $x < $i ; $x++) { 
                                                       echo "<option value='".$id[$x]."'>".$cid[$x]."-".$descricao[$x]."</option>";
-                                                                                                       
+                                                                                              
                                                     }
-
+													
 
 
 
                                                ?>
-                                  </select>                                </td>
+                                  </select> 
+
+                              </td>
                             </tr>
                             <tr>
                               <td >&nbsp;</td>
@@ -123,6 +127,10 @@ mysqli_query($conn,"SET NAMES 'utf8'");
                             <td><div align="right" class="style3">
                               <div align="right">
                                 <strong>
+
+                                  <input type="hidden" id="cid" name="cid">
+                                  <input type="hidden" id="cid_desc" name="cid_desc">
+
                                 <input name="submit" type="Submit" value="Cadastrar" class="btn btn-primary "/> </strong>                              </div>
                             </div></td>
                           </tr>

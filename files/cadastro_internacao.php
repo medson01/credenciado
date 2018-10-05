@@ -3,23 +3,25 @@
   //Arquivo de configuração
   include "cabecalho.php";
 
-$id_cid = $_POST["cid"];
+$id_cid = $_POST["id_cid"];
 $matricula = $_POST["matricula"];
 $nome = $_POST["nome"];
 $dias = $_POST["dias"];
 $solicitante = $_POST["solicitante"];
 $crm = $_POST["crm"];
+$cid = $_POST["cid"];
+$cid_desc = $_POST["cid_desc"];
 
 $matricula = str_replace(".", "", $matricula);
 $matricula = str_replace("-", "", $matricula);
 
-		$query = "INSERT INTO `internamento`(`id`, `id_usuario`, `id_cid`, `id_revalida`, `nome`, `matricula`, `solicitante`, `crm`, `dat_entrada`) VALUES (null ,'".$_SESSION['id']."', '".$id_cid."' , null , '".$nome."' , '".$matricula."' , '".$solicitante."' , '".$crm."' ,'".date("Y-m-d H:i:s")."')";
+		$query = "INSERT INTO `internamento`(`id`, `id_usuario`, `id_cid`, `id_revalida`, `nome`, `matricula`, `solicitante`, `crm`, `dat_entrada`) VALUES (null ,'".$_SESSION['id']."', '".$id_cid."' , null , '".$nome."' , '".$matricula."' , '".$solicitante."' , '".$crm."' , '".date("Y-m-d H:i:s" )."' )";
 
         
 	 
         $insert = mysqli_query($conn, $query);
 		
-		$res = mysqli_insert_id($conn);
+		    $res = mysqli_insert_id($conn);
         
         if($insert){
           
@@ -30,6 +32,6 @@ $matricula = str_replace("-", "", $matricula);
 
         }
   
-      
+     
     
 ?>

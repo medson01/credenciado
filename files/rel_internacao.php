@@ -1,4 +1,58 @@
-﻿
+﻿<?php
+
+  
+	if(!empty($_GET["id_internacao"])){
+
+		  //Arquivo de configuração
+  		  include "cabecalho.php";
+
+  		      # Corrige o erro de acentuação no banco
+				mysqli_query($conn,"SET NAMES 'utf8'");
+	
+
+		$res = $_GET["id_internacao"];
+
+			$query = mysqli_query($conn,"SELECT internamento.nome as paciente, internamento.matricula as matricula, internamento.solicitante as solicitante,
+					 internamento.crm as crm, internamento.dat_entrada as dat_entrada, internamento.dat_saida as dat_saida , cid.cid , cid.descricao as 
+					 descricao ,usuarios.nome as credenciado, cid.dias as dias FROM `internamento` 
+					 INNER JOIN usuarios on usuarios.id = internamento.id_usuario 
+					 INNER JOIN cid on cid.id = internamento.id_cid 
+					 WHERE internamento.id =".$res) or die("erro ao carregar consulta");
+
+
+						
+	                    while($registro = mysqli_fetch_row($query)){
+
+                        $nome = $registro[0];
+                        $matricula = $registro[1];
+                        $solicitante = $registro[2];
+                        $crm = $registro[3];
+                        $dat_entrada = $registro[4];
+                        $dat_saida = $registro[5];
+                        $cid = $registro[6];
+                        $cid_desc = $registro[7];
+                        $credenciado = $registro[8];
+                        $dias = $registro[9];
+                         
+                   }
+
+
+	}else{
+	 		 $query = mysqli_query($conn,"SELECT internamento.dat_saida as dat_saida , usuarios.nome as credenciado , internamento.dat_entrada as dat_entrada FROM `internamento` INNER JOIN usuarios on usuarios.id = internamento.id_usuario WHERE internamento.id =".$res) or die("erro ao carregar consulta");
+	
+
+	  					
+	                    while($registro = mysqli_fetch_row($query)){
+                        
+                        $dat_saida = $registro[0];
+                        $credenciado = $registro[1];
+                        $dat_entrada = $registro[2];
+
+                        
+                   }
+ 
+	 } 
+?>
 <style type="text/css">
 <!--
 .style2 {font-size: 24px}
@@ -42,36 +96,66 @@
 							</div>
                           </div>
                         </div>
-                        <h1 class="documentFirstHeading">&nbsp;</h1>
-                      </div>
+                        </div>
                     </div>
-					<div style="height:400px">
-                    <table width="100%" class='table' style='font-size: 12px';>	
+				<div style="height:500px">
+                    <table width="100%" class='table' style='font-size: 10px';>	
 						
 						<tr>
-						  <th colspan="2" scope='col' style="font-weight:bold; font-size:14px;"><?php echo "Número da Guia: ".$res;?></th>
+						  <th colspan="2" bgcolor="#CCCCCC" style="font-weight:bold; font-size:14px;" scope='col'><div align="center">
+					      <?php echo "Número da Guia: ".$res; ?></div></th>
 		  </tr>
 						<tr>
-							<th width='70%' scope='col'><div align='left'>Nome do paciente:&nbsp; <?php echo $nome; ?></div></th>
+							<th width='48%' scope='col'><div align='left'>Nome do paciente: <br> &nbsp; <?php echo $nome; ?></div></th>
 			 
-							<th scope='col'><div align='left'>Matricula: &nbsp; <?php echo $matricula; ?></div></th>
+							<th width="52%" scope='col'><div align='left'>Matricula: <br> &nbsp; <?php echo $matricula; ?></div></th>
 		              	</tr>
 						 <tr>
 								<th scope='row'><div align='left'>
-							    <div align="left">Médico s olicitante:&nbsp; <?php echo $solicitante; ?></div></th>
-								<th> <div align="left">CRM: <?php echo $crm; ?></div></th>
+							    <div align="left">Data de Emissão: <br> &nbsp; <?php print date("j / n / Y"); ?></div></th>
+								<th> <div align="left">Hora: <br> &nbsp; <?php print date("H:i:s"); ?></div></th>
 						</tr>
 			
 						 <tr>
-						   <th scope='row'><div align="left">Data de Emissão:&nbsp;<?php print date("j / n / Y"); ?></div></th>
-						   <th scope='col'><div align="left">Hora: <?php print date("H:i:s"); ?></div></th>
+						   <th scope='row'><div align="left">Credenciado: <br> &nbsp; <?php echo	$credenciado;  ?> </div></th>
+						   <th scope='col'><div align="left"></div></th>
 	      </tr>
 					    <tr>
-								<th scope='row'><div align='left'>Dias: </div></th>
-								<th scope='col'><div align='left' style="color:#FF0000"><?php echo $dias; ?> </div></th>
+								<th scope='row'><div align='left'>Atendente: <br> &nbsp; <?php echo $_SESSION['login']; ?></div></th>
+								<th scope='col'><div align='left' style="color:#FF0000"></div></th>
           </tr>
-    </table>
-		 </div>
+					    <tr>
+					      <th colspan="2" style="font-weight:bold; font-size:14px;" bgcolor="#CCCCCC" scope='row'><div align="center">Dados do internamento </div></th>
+				      </tr>
+					    <tr>
+					      <th scope='row'><div align="left">Médico solicitante: <br> &nbsp; <?php echo $solicitante; ?></div></th>
+					      <th scope='col'><div align="left">CRM: <br> &nbsp; <?php echo $crm; ?></div></th>
+				      </tr>
+					    <tr>
+					      <th scope='row'><div align="left">Código do CID: <br> &nbsp; <?php echo  $cid; ?> </div></th>
+					      <th scope='col'><div align="left">Descrição do CID: <br> &nbsp;<?php echo "&nbsp;&nbsp;".$cid_desc; ?></div></th>
+				      </tr>
+					    <tr>
+					      <th scope='row'><div align="left">Diárias: <br> &nbsp; <?php echo $dias; ?></div></th>
+					      <th scope='col'><div align="left"></div></th>
+				      </tr>
+					    <tr>
+					      <th scope='row'><div align="left">Data de entrada: <br> &nbsp; <?php print date("j / n / Y \h\s H:i:s" );  ?></div></th>
+					      <th scope='col'><div align="left">Previsão de  saída: <br> &nbsp;  <?php echo date('d / m / Y', strtotime($dat_entrada."+".$dias." days"));   ?> </div></th>
+				      </tr>
+					    <tr>
+					      <th scope='row'><div align="left">Data de Saíde: <br> &nbsp; 
+					      	<?php 
+					      		
+					      			if($dat_saida <> '0000-00-00') {
+					      				echo date('d / m / Y \h\s H:i:s', strtotime($dat_saida));	
+					      			} 
+					      		 
+					      	?> </div></th>
+					      <th scope='col'><div align="left"></div></th>
+				      </tr>
+    				</table>
+		 		</div>
 				        <div align="center">
 	        <p>
   <input class='btn btn-primary delete' type="button" value="Voltar" onClick="history.go(-1)">

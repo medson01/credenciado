@@ -14,7 +14,7 @@
 -->
 </style>
         
-            <td width="898" id="portal-column-content">
+            <td width="898" id="portal-column-content" style="width: 600px; ">
 
               
                 <div class="">
