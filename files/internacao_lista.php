@@ -2,7 +2,7 @@
   
  
  
-   $query = mysqli_query($conn,"SELECT internamento.id as autorizacao, internamento.nome as paciente, internamento.matricula as matricula, internamento.solicitante as solicitante, internamento.crm as crm, internamento.dat_entrada as dat_entrada, internamento.dat_saida as dat_saida , cid.cid ,usuarios.nome as credenciado, cid.dias as dias FROM `internamento` INNER JOIN usuarios on usuarios.id = internamento.id_usuario INNER JOIN cid on cid.id = internamento.id_cid WHERE internamento.dat_saida = '00000-00-00' or (Month(internamento.dat_entrada) = ".date("m")." and Year(internamento.dat_entrada) = ".date("Y").") order by internamento.id") or die("erro ao carregar consulta");
+   $query = mysqli_query($conn,"SELECT internamento.id as autorizacao, internamento.nome as paciente, internamento.matricula as matricula, internamento.solicitante as solicitante, internamento.crm as crm, internamento.dat_entrada as dat_entrada, internamento.dat_saida as dat_saida , cid.cid ,usuarios.nome as credenciado, cid.dias as dias, internamento.motivo as motivo FROM `internamento` INNER JOIN usuarios on usuarios.id = internamento.id_usuario INNER JOIN cid on cid.id = internamento.id_cid WHERE internamento.dat_saida = '00000-00-00' or (Month(internamento.dat_entrada) = ".date("m")." and Year(internamento.dat_entrada) = ".date("Y").") order by internamento.id") or die("erro ao carregar consulta");
 
 
 ?>
@@ -115,13 +115,16 @@ function excluir(id) {
                                               $data[$i] = 0;
                                        }
 
-                                     if ($registro["dat_saida"] == 0) {
+                                     if ($registro["dat_saida"] == 0){
                                      
                                           echo   "";
                                           $dat_saida[$i]  = 0;
 
-                                      
-                                        
+                                    }elseif (!empty($registro["motivo"])) {
+
+                                           echo   "<font color='red'>".date("d/m/Y H:i:s",strtotime($registro["dat_saida"]))."</font>";
+                                           $dat_saida[$i]  = true;
+
                                     }else{
 
                                            echo   "<font color='green'>".date("d/m/Y H:i:s",strtotime($registro["dat_saida"]))."</font>";

@@ -39,7 +39,7 @@
 
 
 	}else{
-	 		 $query = mysqli_query($conn,"SELECT internamento.dat_saida as dat_saida , usuarios.nome as credenciado , internamento.dat_entrada as dat_entrada, internamento.motivo as motivo FROM `internamento` INNER JOIN usuarios on usuarios.id = internamento.id_usuario WHERE internamento.id =".$res) or die("erro ao carregar consulta");
+	 		 $query = mysqli_query($conn,"SELECT internamento.dat_saida as dat_saida , usuarios.nome as credenciado , internamento.dat_entrada as dat_entrada  FROM `internamento` INNER JOIN usuarios on usuarios.id = internamento.id_usuario WHERE internamento.id =".$res) or die("erro ao carregar consulta");
 	
 
 	  					
@@ -48,7 +48,7 @@
                         $dat_saida = $registro[0];
                         $credenciado = $registro[1];
                         $dat_entrada = $registro[2];
-                        $motivo = $registro[4];
+                        
 
                         
                    }
@@ -160,7 +160,7 @@
 								
 								if(!empty($motivo)){
 
-									echo "Motivo da prorogação do internamento: <br> &nbsp;"; 
+									echo "Motivo da prorogação do internamento: <br> &nbsp;";	 
 
 					      			echo $motivo;
 					      		}
