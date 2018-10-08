@@ -13,8 +13,8 @@
 		$res = $_GET["id_internacao"];
 
 			$query = mysqli_query($conn,"SELECT internamento.nome as paciente, internamento.matricula as matricula, internamento.solicitante as solicitante,
-					 internamento.crm as crm, internamento.dat_entrada as dat_entrada, internamento.dat_saida as dat_saida , cid.cid , cid.descricao as 
-					 descricao ,usuarios.nome as credenciado, cid.dias as dias FROM `internamento` 
+					 internamento.crm as crm, internamento.dat_entrada as dat_entrada, internamento.dat_saida as dat_saida, cid.cid , cid.descricao as 
+					 descricao ,usuarios.nome as credenciado, cid.dias as dias, internamento.motivo as motivo FROM `internamento` 
 					 INNER JOIN usuarios on usuarios.id = internamento.id_usuario 
 					 INNER JOIN cid on cid.id = internamento.id_cid 
 					 WHERE internamento.id =".$res) or die("erro ao carregar consulta");
@@ -33,12 +33,13 @@
                         $cid_desc = $registro[7];
                         $credenciado = $registro[8];
                         $dias = $registro[9];
+                        $motivo = $registro[10];
                          
                    }
 
 
 	}else{
-	 		 $query = mysqli_query($conn,"SELECT internamento.dat_saida as dat_saida , usuarios.nome as credenciado , internamento.dat_entrada as dat_entrada FROM `internamento` INNER JOIN usuarios on usuarios.id = internamento.id_usuario WHERE internamento.id =".$res) or die("erro ao carregar consulta");
+	 		 $query = mysqli_query($conn,"SELECT internamento.dat_saida as dat_saida , usuarios.nome as credenciado , internamento.dat_entrada as dat_entrada, internamento.motivo as motivo FROM `internamento` INNER JOIN usuarios on usuarios.id = internamento.id_usuario WHERE internamento.id =".$res) or die("erro ao carregar consulta");
 	
 
 	  					
@@ -47,6 +48,7 @@
                         $dat_saida = $registro[0];
                         $credenciado = $registro[1];
                         $dat_entrada = $registro[2];
+                        $motivo = $registro[4];
 
                         
                    }
@@ -151,8 +153,20 @@
 					      				echo date('d / m / Y \h\s H:i:s', strtotime($dat_saida));	
 					      			} 
 					      		 
-					      	?> </div></th>
-					      <th scope='col'><div align="left"></div></th>
+					      	?> </div>
+					      </th>
+					      <th scope='col'><div align="left"></div> 
+					      	<?php
+								
+								if(!empty($motivo)){
+
+									echo "Motivo da prorogação do internamento: <br> &nbsp;"; 
+
+					      			echo $motivo;
+					      		}
+
+					      	?>
+					      </th>
 				      </tr>
     				</table>
 		 		</div>

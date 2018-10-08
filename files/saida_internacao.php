@@ -1,22 +1,22 @@
+
 <?php
 // Arquivo de configuração
  require_once "../config/config.php";
  
-echo $id = $_GET['id'];
+$id = $_GET['id'];
 
 
+if(isset($_GET['motivo'])){
+	$motivo = $_GET['motivo'];
+	$update = mysqli_query($conn,"UPDATE `internamento` SET `dat_saida`= now(), `motivo`= '".$motivo."' WHERE id = '".$id."'");
+	//echo "existe";
+}else{
 
-
-
-if(isset($id)){
-$update = mysqli_query($conn,"UPDATE `internamento` SET `dat_saida`= now() WHERE id = '".$id."'");
-
-if($dat_entrada){
-
+	$update = mysqli_query($conn,"UPDATE `internamento` SET `dat_saida`= now() WHERE id = '".$id."'");
+	//echo "Não existe";
 }
 
-header ("location: internacao.php");
-}
+
 
 if($update == ''){
 echo "<script>alert('Houve um erro ao atualizar!');

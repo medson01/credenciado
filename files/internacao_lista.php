@@ -9,16 +9,32 @@
 
 <!-- Perguntar antes de saida -->
 <script language="Javascript">
-function saida(id,dat_saida) {
+function saida(id,dat_saida,data) {
+   
+   if (dat_saida != 1){
 
-   if (dat_saida != true){
      var resposta = confirm("Deseja dar saída do paciente?");
  
-     if (resposta == true) {
-          window.location.href = "saida_internacao.php?id="+id+"&dat_saida="+dat_saida;
-     }
+               if (resposta == true) {
+
+                       //Previsaão < que data atual
+                       if(data != 0){
+
+                               var motivo;
+
+                                   motivo = prompt ("O paciente exedeu as diárias permitidas, favor informar o motivo:");
+
+                               window.location.href = "saida_internacao.php?id="+id+"&motivo="+motivo;
+
+
+                       }else{
+                               window.location.href = "saida_internacao.php?id="+id;
+                       }
+                    
+               }
+
    }else{
-      alert("Usuário já saiu!");
+      alert("Paciente já saiu!");
    }
 }
 </script>
@@ -61,6 +77,9 @@ function excluir(id) {
                           
               <?php
 
+                error_reporting(E_ALL ^ E_NOTICE);
+
+                  $i = 0;
                  
                   while($registro = mysqli_fetch_assoc($query)){
                          
@@ -86,15 +105,30 @@ function excluir(id) {
                                      <td>
                                       <div align='center'>";
 
+ 
+                                       $dat_previsao[$i] = strtotime(date("j/n/Y", strtotime(date("Y-n-j",strtotime($registro["dat_entrada"]))."+".$registro["dias"]." days")));
+
+                                       $dat_atual[$i] = strtotime(date("j/n/Y"));
+
+                                       if($dat_atual[$i] <= $dat_previsao[$i]){
+
+                                              $data[$i] = 0;
+                                       }
+
                                      if ($registro["dat_saida"] == 0) {
                                      
                                           echo   "";
-                                          $dat_saida = false;
+                                          $dat_saida[$i]  = 0;
 
+                                      
+                                        
                                     }else{
 
                                            echo   "<font color='green'>".date("d/m/Y H:i:s",strtotime($registro["dat_saida"]))."</font>";
-                                           $dat_saida = true;
+                                           $dat_saida[$i]  = true;
+
+                                            
+                                           
                                     }
 
                         echo "        </div>
@@ -103,7 +137,7 @@ function excluir(id) {
                                     <td><div align='center'>".$registro["credenciado"]."</div></td>
                                     <td>
                                         <div align='center'>
-                                            <a class='btn btn-primary' style='width: 50px; height: 25px' href='javascript:func()' onclick='saida(".$registro['autorizacao'].",".$dat_saida.")'><span style='font-size: 10px; align: center;'> Saída </center> </span> </a>
+                                            <a class='btn btn-primary' style='width: 50px; height: 25px' href='javascript:func()' onclick='saida(".$registro['autorizacao'].",".$dat_saida[$i].",".$data[$i].")'><span style='font-size: 10px; align: center;'> Saída </center> </span> </a>
                                         </div>
                                     </td>
                                     <td>
@@ -112,6 +146,8 @@ function excluir(id) {
                                         </div>
                                     </td>
                                  </tr>";
+
+                                 $i++;
                      }
                   
 
