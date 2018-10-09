@@ -75,6 +75,7 @@
                               <td>Perfil</td>
                               <td><select class="form-matric" style="background:#faffbd;" id="perfil" name="perfil" required="required" style="width:100%" style="background:#faffbd;">
                                 <option  value="administrador">Administrador</option>
+                                <option  value="auditor">Auditor</option>
                                 <option  value="usuario">Usuario</option>
 
                               </select></td>

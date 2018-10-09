@@ -33,6 +33,13 @@
                         $_SESSION["id"] = $registro["id"];							
         								
         						break;
+
+                    case "auditor":
+                        setcookie("login",$login);
+                        $_SESSION["perfil"] = $registro["perfil"];  
+                        $_SESSION["id"] = $registro["id"];              
+                        
+                    break;
         							
         						case "usuario":
         								setcookie("login",$login);

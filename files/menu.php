@@ -44,7 +44,7 @@
 <!-- botão perfil  -->  	
     	<?php 
 
-		 If( $_SESSION["perfil"] == "administrador"){
+		 If( $_SESSION["perfil"] == "administrador") {
 				
 		 		//  botão Cadastro de usuários 
 				echo "	
@@ -56,6 +56,9 @@
 						</a>
 				";
 
+		}
+
+		 If( ($_SESSION["perfil"] == "administrador") or ($_SESSION["perfil"] == "auditor")){
 		 		//  botão Avidos 
 				echo "	
 						<a href='form_cadastro_aviso.php' > 

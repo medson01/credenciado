@@ -77,7 +77,7 @@ function excluir(id) {
                   <td style='padding: 4px;'><div align="center">diárias</div></td>
                   <td style='padding: 4px;'><div align="center">Saída</div></td>
                   <td style='padding: 4px;'><div align="center">CID</div></td>
-                 <?php If( $_SESSION["perfil"] == "administrador"){ echo "<td style='padding: 4px; color: #FF8000'><div align='center'>Credenciado</div></td>"; } ?>
+                 <?php If( $_SESSION["perfil"] == "administrador" or $_SESSION["perfil"] == "auditor"){ echo "<td style='padding: 4px;'><div align='center'>Credenciado</div></td>"; } ?>
                  <td><div align="center"></div></td>
                     <td><div align="center"></div></td>
                </tr>
@@ -129,12 +129,12 @@ function excluir(id) {
 
                                     }elseif (!empty($registro["motivo"])) {
 
-                                           echo   "<font color='red'>".date("d/m/Y H:i:s",strtotime($registro["dat_saida"]))."</font>";
+                                           echo   "<font color='#FF4000'><strong>".date("d/m/Y H:i:s",strtotime($registro["dat_saida"]))."</strong></font>";
                                            $dat_saida[$i]  = true;
 
                                     }else{
 
-                                           echo   "<font color='green'>".date("d/m/Y H:i:s",strtotime($registro["dat_saida"]))."</font>";
+                                           echo   "<font color='#04B45F'><strong>".date("d/m/Y H:i:s",strtotime($registro["dat_saida"]))." </strong></font>";
                                            $dat_saida[$i]  = true;
 
                                             
@@ -145,8 +145,8 @@ function excluir(id) {
                                     </td>
                                     <td><div align='center'>".$registro["cid"]."</div></td>";
 
-                                      If( $_SESSION["perfil"] == "administrador"){
-                                         echo " <td style='color: #FF8000'><div align='center'>".$registro["credenciado"]."</div></td>";
+                                      If( ($_SESSION["perfil"] == "administrador") or ($_SESSION["perfil"] == "auditor")){
+                                         echo " <td><div align='center'>".$registro["credenciado"]."</div></td>";
                                       }
 
                         echo "
