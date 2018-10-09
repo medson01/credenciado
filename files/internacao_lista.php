@@ -1,8 +1,15 @@
 <?php 
   
  
- 
-   $query = mysqli_query($conn,"SELECT internamento.id as autorizacao, internamento.nome as paciente, internamento.matricula as matricula, internamento.solicitante as solicitante, internamento.crm as crm, internamento.dat_entrada as dat_entrada, internamento.dat_saida as dat_saida , cid.cid ,usuarios.nome as credenciado, cid.dias as dias, internamento.motivo as motivo FROM `internamento` INNER JOIN usuarios on usuarios.id = internamento.id_usuario INNER JOIN cid on cid.id = internamento.id_cid WHERE internamento.dat_saida = '00000-00-00' or (Month(internamento.dat_entrada) = ".date("m")." and Year(internamento.dat_entrada) = ".date("Y").") order by internamento.id") or die("erro ao carregar consulta");
+  If( $_SESSION["perfil"] == "usuario"){
+   $query = mysqli_query($conn,"SELECT internamento.id as autorizacao, internamento.nome as paciente, internamento.matricula as matricula, internamento.solicitante as solicitante, internamento.crm as crm, internamento.dat_entrada as dat_entrada, internamento.dat_saida as dat_saida , cid.cid ,usuarios.nome as credenciado, cid.dias as dias, internamento.motivo as motivo FROM `internamento` INNER JOIN usuarios on usuarios.id = internamento.id_usuario INNER JOIN cid on cid.id = internamento.id_cid WHERE usuarios.login = '".$login."' and (Month(internamento.dat_entrada) = '".date("m")."' and Year(internamento.dat_entrada) = '".date("Y")."') order by internamento.id") or die("erro ao carregar consulta");
+  }else{
+
+     $query = mysqli_query($conn,"SELECT internamento.id as autorizacao, internamento.nome as paciente, internamento.matricula as matricula, internamento.solicitante as solicitante, internamento.crm as crm, internamento.dat_entrada as dat_entrada, internamento.dat_saida as dat_saida , cid.cid ,usuarios.nome as credenciado, cid.dias as dias, internamento.motivo as motivo FROM `internamento` INNER JOIN usuarios on usuarios.id = internamento.id_usuario INNER JOIN cid on cid.id = internamento.id_cid WHERE  internamento.dat_saida = '00000-00-00' or (Month(internamento.dat_entrada) = ".date("m")." and Year(internamento.dat_entrada) = ".date("Y").") order by internamento.id") or die("erro ao carregar consulta");
+
+  }
+
+
 
 
 ?>
@@ -55,24 +62,24 @@ function excluir(id) {
 
 
                     
-   <table class="table table-striped" width="709" align="center" style="font-size: 9px">
+   <table class="table table-striped" align="center" style="font-size: 9px">
                <tr>
-                 <td colspan="14" style="text-align: center; text-decoration-style: solid;"> <strong>Pacientes insternados</strong></td>
+                 <td colspan="12" style="text-align: center; text-decoration-style: solid;"> <strong>Pacientes insternados</strong></td>
                </tr>
                <tr  style='font-weight:bold;'>
-                  <td width="236"><div align="center">Status</div></td>
-                  <td width="236"><div align="center">Autorização</div></td>
-                  <td width="236"><div align="center">Paciente</div></td>
-                  <td width="257"><div align="center">Matricula</div></td>
-                  <td width="257"><div align="center">Solicitante</div></td>
-                  <td width="202"><div align="center">CRM</div></td>
-                  <td width="202"><div align="center">Entrada</div></td>
-                  <td width="202"><div align="center">diárias</div></td>
-                  <td width="202"><div align="center">Saída</div></td>
-                  <td width="202"><div align="center">CID</div></td>
-                  <td width="202"><div align="center">Credenciado</div></td>
-                   <td width="202"><div align="center"></div></td>
-                    <td width="202"><div align="center"></div></td>
+                 <!-- <td width="27"><div align="center">Status</div></td> -->
+                 <td style='padding: 4px;'><div align="center" style='width: 30px;'>Autorização</div></td>
+                 <td style='padding: 4px;'><div align="center" style='width: 150px;'>Paciente</div></td>
+                 <td style='padding: 4px;'><div align="center">Matricula</div></td>
+                 <td style='padding: 4px;'><div align="center">Solicitante</div></td>
+                  <td style='padding: 4px;'><div align="center">CRM</div></td>
+                  <td style='padding: 4px;'><div align="center">Entrada</div></td>
+                  <td style='padding: 4px;'><div align="center">diárias</div></td>
+                  <td style='padding: 4px;'><div align="center">Saída</div></td>
+                  <td style='padding: 4px;'><div align="center">CID</div></td>
+                 <?php If( $_SESSION["perfil"] == "administrador"){ echo "<td style='padding: 4px; color: #FF8000'><div align='center'>Credenciado</div></td>"; } ?>
+                 <td><div align="center"></div></td>
+                    <td><div align="center"></div></td>
                </tr>
                           
               <?php
@@ -86,22 +93,22 @@ function excluir(id) {
                       
 
                          echo " <tr>   
-                                    <td><div align='center'>";
+                                  <!--  <td><div align='center'>";
 
                                      if ($registro["dat_saida"] != 0){
 
-                                    echo "<span class='glyphicon glyphicon-ok'> </span>";
+                                    echo "<span class='glyphicon glyphicon-ok'> </span> ";
 
                                     }
 
-                         echo          "</div></td>
-                                    <td><div align='center'> <a href = 'rel_internacao.php?id_internacao=".$registro["autorizacao"]." '>  ".$registro["autorizacao"]."</a></div></td>
-                                    <td><div align='center'>".$registro["paciente"]."</div></td>
-                                    <td><div align='center'>".$registro["matricula"]."</div></td>
-                                    <td><div align='center'>".$registro["solicitante"]."</div></td>
-                                     <td><div align='center'>".$registro["crm"]."</div></td>
-                                     <td><div align='center'>".date("j/n/Y H:i:s",strtotime($registro["dat_entrada"]))."</div></td>
-                                     <td><div align='center'>".$registro["dias"]."</div></td>
+                         echo          "</div></td> -->
+                                    <td><div align='center' style='width: 30px;'> <a href = 'rel_internacao.php?id_internacao=".$registro["autorizacao"]." '>  ".$registro["autorizacao"]."</a></div></td>
+                                    <td style='padding: 4px;'><div align='center' style='width: 150px;'>".$registro["paciente"]."</div></td>
+                                    <td style='padding: 4px;'><div align='center' >".$registro["matricula"]."</div></td>
+                                    <td style='padding: 4px;'><div align='center'>".$registro["solicitante"]."</div></td>
+                                     <td style='padding: 4px;'><div align='center'>".$registro["crm"]."</div></td>
+                                     <td style='padding: 4px;'><div align='center'>".date("j/n/Y H:i:s",strtotime($registro["dat_entrada"]))."</div></td>
+                                     <td style='padding: 4px;'><div align='center'>".$registro["dias"]."</div></td>
                                      <td>
                                       <div align='center'>";
 
@@ -136,20 +143,33 @@ function excluir(id) {
 
                         echo "        </div>
                                     </td>
-                                    <td><div align='center'>".$registro["cid"]."</div></td>
-                                    <td><div align='center'>".$registro["credenciado"]."</div></td>
+                                    <td><div align='center'>".$registro["cid"]."</div></td>";
+
+                                      If( $_SESSION["perfil"] == "administrador"){
+                                         echo " <td style='color: #FF8000'><div align='center'>".$registro["credenciado"]."</div></td>";
+                                      }
+
+                        echo "
                                     <td>
                                         <div align='center'>
+
+                                            <!-- Botão sair -->
                                             <a class='btn btn-primary' style='width: 50px; height: 25px' href='javascript:func()' onclick='saida(".$registro['autorizacao'].",".$dat_saida[$i].",".$data[$i].")'><span style='font-size: 10px; align: center;'> Saída </center> </span> </a>
+                                            <!--/Botão sair -->
+
                                         </div>
                                     </td>
                                     <td>
-                                        <div align='center'>
+                                        <div align='center'>";
+                    If( $_SESSION["perfil"] == "administrador"){
+                         echo  " <!-- Botão exluir -->
                                             <a class='btn btn-danger' style='width: 50px; height: 25px' href='javascript:func()' onclick='excluir(".$registro["autorizacao"].")'><span style='font-size: 10px; align: center;'> Excluir </span> </a>
+                                <!--/Botão exluir -->
+
                                         </div>
                                     </td>
                                  </tr>";
-
+                          }       
                                  $i++;
                      }
                   
