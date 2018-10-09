@@ -1,12 +1,13 @@
-RESUMO:
-# Pasta local ainda não configurada:
-git init
-git add --all
-git commit -m "comentário"
-git remote add origin https://github.com/medson01/dashboard_ipaseal.git
-git push origin master
+﻿RESUMO:
 
 # Pasta local já configurada, apenas para atualizações:
+git add --all
+git commit -m "comentário"
+git remote add origin https://github.com/medson01/credenciado.git
+git push origin master
+
+# Pasta local ainda não configurada:
+git init
 git add --all
 git commit -m "comentário"
 git remote add origin https://github.com/medson01/dashboard_ipaseal.git

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 03-Out-2018 às 23:37
+-- Generation Time: 09-Out-2018 às 17:37
 -- Versão do servidor: 10.1.31-MariaDB
 -- PHP Version: 7.2.3
 
@@ -2129,18 +2129,20 @@ CREATE TABLE `internamento` (
   `matricula` varchar(16) NOT NULL,
   `solicitante` varchar(50) NOT NULL,
   `crm` int(8) NOT NULL,
-  `dat_entrada` date NOT NULL,
-  `dat_saida` date NOT NULL
+  `dat_entrada` datetime NOT NULL,
+  `dat_saida` datetime NOT NULL,
+  `motivo` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `internamento`
 --
 
-INSERT INTO `internamento` (`id`, `id_usuario`, `id_cid`, `id_revalida`, `nome`, `matricula`, `solicitante`, `crm`, `dat_entrada`, `dat_saida`) VALUES
-(73, 21, 1, NULL, 'edson ', '0001000132132132', 'edson ', 1321, '2018-10-03', '2018-10-03'),
-(74, 21, 2, NULL, 'edson', '0001000113213213', 'edssdon', 5454, '2018-10-03', '2018-10-03'),
-(75, 21, 1, NULL, 'Edson ', '0001000112345612', 'edson', 2132, '2018-10-03', '2018-10-03');
+INSERT INTO `internamento` (`id`, `id_usuario`, `id_cid`, `id_revalida`, `nome`, `matricula`, `solicitante`, `crm`, `dat_entrada`, `dat_saida`, `motivo`) VALUES
+(298, 21, 1, NULL, 'esdf', '0000121121321321', 'sadfasd', 2132, '2018-10-05 18:09:34', '2018-10-08 18:11:50', 'Agravante do quadro CID A001'),
+(299, 21, 1, NULL, 'esdf', '0000121121321321', 'sadfasd', 2132, '2018-10-08 18:10:47', '2018-10-08 18:12:16', ''),
+(301, 21, 3, NULL, 'Edson Martins de Almeida Junior', '0001000112346465', 'Jose da Silva Peixoto', 2132, '2018-10-09 12:21:03', '2018-10-09 12:21:22', ''),
+(302, 31, 2, NULL, 'Benedito Jose Bentes', '0001000123132131', 'Eduardo Medeiros', 2132, '2018-10-09 12:33:36', '0000-00-00 00:00:00', '');
 
 -- --------------------------------------------------------
 
@@ -2217,7 +2219,7 @@ ALTER TABLE `cid`
 -- AUTO_INCREMENT for table `internamento`
 --
 ALTER TABLE `internamento`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=303;
 
 --
 -- AUTO_INCREMENT for table `usuarios`
