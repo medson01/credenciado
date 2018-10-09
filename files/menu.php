@@ -72,8 +72,27 @@
 		}		
 
 		?>
+		<?php 
+			        
 
-		<a href="downloads.php" > 
+			switch ($_SESSION["perfil"]) {
+        			
+        			case "administrador":
+        				echo "<a href='https://drive.google.com/open?id=1sJ_ra3b58K9frWX45gKP0M_TJK2pA2H6' > ";												
+        			break;
+
+                    case "auditor":
+        				echo "<a href='https://drive.google.com/open?id=1eDVe20kCPoclhEw9xQI1_4xLo132Kg3u' > ";												
+        			break;              
+        							
+        			case "usuario":
+        				echo "<a href='https://drive.google.com/open?id=1bbMZdkkI7R9eu3ST5Fkgmpv38gNhBGv2' > ";												
+        			break;
+        	}
+				
+			
+		?>
+
 			<div class="thumbnail tile tile-medium tile-teal" style="display: flex; justify-content: center; align-items: center;">	
 				
 				 Downloads  	

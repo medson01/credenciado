@@ -172,7 +172,21 @@
 		 		</div>
 				        <div align="center">
 	        <p>
-  <input class='btn btn-primary delete' type="button" value="Voltar" onClick="history.go(-1)">
+
+	<!-- Remover o sublinhado -->
+				<style type="text/css">
+					a:link {
+					text-decoration:none;
+					}
+					a:visited {
+					text-decoration:none;
+					}
+					a:hover {
+					text-decoration:underline;
+					}
+				</style>
+
+  <a href="internacao.php" > <input class='btn btn-primary delete' type="button" value="Voltar"> </a>
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	          <input class='btn btn-primary delete'  name="button" type="button" onclick="window.print();" value="Imprimir" />
           </p>
