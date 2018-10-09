@@ -33,7 +33,7 @@
 		</a>
 
 
-		<a href="internacao.php" > 
+		<a href="internacao.php"  > 
 			<div class="thumbnail tile tile-medium tile-teal" style="display: flex; justify-content: center; align-items: center;">	
 				
 				Interna&ccedil;&atilde;o 	
@@ -78,15 +78,15 @@
 			switch ($_SESSION["perfil"]) {
         			
         			case "administrador":
-        				echo "<a href='https://drive.google.com/open?id=1sJ_ra3b58K9frWX45gKP0M_TJK2pA2H6' > ";												
+        				echo "<a href='https://drive.google.com/open?id=1sJ_ra3b58K9frWX45gKP0M_TJK2pA2H6' target='_blank'> ";												
         			break;
 
                     case "auditor":
-        				echo "<a href='https://drive.google.com/open?id=1eDVe20kCPoclhEw9xQI1_4xLo132Kg3u' > ";												
+        				echo "<a href='https://drive.google.com/open?id=1eDVe20kCPoclhEw9xQI1_4xLo132Kg3u' target='_blank'> ";												
         			break;              
         							
         			case "usuario":
-        				echo "<a href='https://drive.google.com/open?id=1bbMZdkkI7R9eu3ST5Fkgmpv38gNhBGv2' > ";												
+        				echo "<a href='https://drive.google.com/open?id=1bbMZdkkI7R9eu3ST5Fkgmpv38gNhBGv2' target='_blank'> ";												
         			break;
         	}
 				
