@@ -104,7 +104,7 @@
 		<a data-toggle="tooltip" data-placement="top" title="Logout" href="../logout.php">
 			<div>
 					
-			    <img src="../imagem/logoff.jpg" width="100" height="100">
+			    <img src="../imagem/logoff.png" width="100" height="100">
 		    </div>
 		</a>
 		  

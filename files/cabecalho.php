@@ -19,19 +19,16 @@
 
          script/style tags. -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge"> 
-
-    
-      <!-- base href="http://www.ipasealsaude.al.gov.br/ipaseal-saude" --><!--[if lt IE 7]></base><![endif]-->
     
 
     <link rel="kss-base-url" href="http://www.ipasealsaude.al.gov.br/ipaseal-saude">
 
 
-      <style type="text/css">@import url(http://www.ipasealsaude.al.gov.br/portal_css/Tema%20Fabrica/base-cachekey3495.css);</style>
+       <link rel="stylesheet" type="text/css" href="../css/base-cachekey3495.css">
+       <!-- Estrutura em tabelas do site -->
+       <link rel="stylesheet" type="text/css" href="../css/contentpanels-cachekey9970.css">
 
-      <style type="text/css">@import url(http://www.ipasealsaude.al.gov.br/portal_css/Tema%20Fabrica/contentpanels-cachekey9970.css);</style>
-     
-      <style type="text/css">@import url(http://www.ipasealsaude.al.gov.br/portal_css/Tema%20Fabrica/contentpanels-cachekey9970.css);</style>
+   
     
   <!-- Bootstrap -->
     
@@ -51,10 +48,6 @@
 <title>Ipaseal Saúde — ipaseal</title>
 
 
-    <link rel="shortcut icon" type="image/x-icon" href="http://www.ipasealsaude.al.gov.br/favicon.ico">
-    <link rel="home" href="http://www.ipasealsaude.al.gov.br/" title="Página inicial">
-    <link rel="contents" href="http://www.ipasealsaude.al.gov.br/sitemap" title="Mapa do Site">
-    <link rel="search" href="http://www.ipasealsaude.al.gov.br/search_form" title="Search this site">
 
     <!-- Disable IE6 image toolbar -->
     <meta http-equiv="imagetoolbar" content="no">
@@ -132,7 +125,7 @@
               <a href="principal.php" id="tema-portal">  IPASEAL SAÚDE  </a>
               <span id="descricao-portal">Instituto de Assistência à Saúde dos Servidores do Estado de Alagoas</span>
             </p>
-			 <div align="right">
+			 <div align="right" style="color:#FFFFFF">
 			   <?php
 			 								// Data e hora 
 								setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');

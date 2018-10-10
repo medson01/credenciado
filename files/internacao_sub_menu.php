@@ -38,25 +38,27 @@ body {
 <div id="exTab2" class="container" style="width: 760px; padding-left: 1px;">	
 <ul class="nav nav-tabs">
 			<li class="active">
-        <a  href="#1" data-toggle="tab">Lista de Internação</a>
+        		<a  href="#1" data-toggle="tab">Lista de Internação</a>
 			</li>
-			<li><a href="#2" data-toggle="tab">Cadastro</a>
+			<li>
+				<a href="#2" data-toggle="tab">Cadastro</a>
 			</li>
-<!--
-			<li><a href="#3" data-toggle="tab">Solution</a>
+
+			<li>
+				<a href="#3" data-toggle="tab">Gráficos</a>
 			</li>
--->
+
 		</ul>
 
 			<div class="tab-content ">
-			  <div class="tab-pane active" id="1">
+			  	<div class="tab-pane active" id="1">
           				<?php   require_once "internacao_lista.php"; ?>
 				</div>
 				<div class="tab-pane" id="2">
         				<?php   require_once "form_internacao.php"; ?>
 				</div>
-        <div class="tab-pane" id="3">
-          <h3>add clearfix to tab-content (see the css)</h3>
+        		<div class="tab-pane" id="3">
+          			    <?php   require_once "../grafico/graf_qtd_internacao_hospitiais.php"; ?>
 				</div>
 			</div>
   </div>
