@@ -25,7 +25,7 @@ function saida(id,dat_saida,data) {
                if (resposta == true) {
 
                        //Previsaão < que data atual
-                       if(data != 0){
+                       if(data != 1){
 
                                var motivo;
 
@@ -113,13 +113,15 @@ function excluir(id) {
                                       <div align='center'>";
 
  
-                                       $dat_previsao[$i] = strtotime(date("j/n/Y", strtotime(date("Y-n-j",strtotime($registro["dat_entrada"]))."+".$registro["dias"]." days")));
+                                        $dat_previsao[$i] = strtotime(date("Y-n-j", strtotime(date("Y-n-j",strtotime($registro["dat_entrada"]))."+".$registro["dias"]." days")));
 
-                                       $dat_atual[$i] = strtotime(date("j/n/Y"));
+                                        $dat_atual[$i] = strtotime(date("Y-n-j"));
+
 
                                        if($dat_atual[$i] <= $dat_previsao[$i]){
 
-                                              $data[$i] = 0;
+                                             $data[$i] = 1;
+                                             
                                        }
 
                                      if ($registro["dat_saida"] == 0){

@@ -44,10 +44,13 @@ body {
 				<a href="#2" data-toggle="tab">Cadastro</a>
 			</li>
 
-			<li>
-				<a href="#3" data-toggle="tab">Gráficos</a>
-			</li>
-
+		<?php
+			If( ($_SESSION["perfil"] == "administrador") or ($_SESSION["perfil"] == "auditor")){
+			echo "	<li>
+						<a href='#3' data-toggle='tab'>Gráficos</a>
+					</li>";
+			}
+		?>
 		</ul>
 
 			<div class="tab-content ">
@@ -58,7 +61,7 @@ body {
         				<?php   require_once "form_internacao.php"; ?>
 				</div>
         		<div class="tab-pane" id="3">
-          			    <?php   require_once "../grafico/graf_qtd_internacao_hospitiais.php"; ?>
+          			     <iframe src="../grafico/graf_qtd_internacao_hospitiais.php" height="500" width="100%" scrolling="no" style="border:none;"></iframe> 
 				</div>
 			</div>
   </div>

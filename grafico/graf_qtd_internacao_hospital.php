@@ -78,7 +78,7 @@ $(function () {
 <script src="../grafico/Highcharts-4.1.5/js/highcharts.js"></script>
 <script src="../grafico/Highcharts-4.1.5/js/modules/exporting.js"></script>
 
-<div id="container" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto"></div>
+<div id="container" style="min-width: 310px; max-width: 800px; height: 100px; margin: 0 auto"></div>
 
 	</body>
 </html>
