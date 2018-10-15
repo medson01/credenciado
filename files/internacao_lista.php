@@ -14,6 +14,9 @@
 
 ?>
 
+<!-- Mensagem ao passar o mouse -->
+<script type="text/javascript" src="../js/wz_tooltip.js"></script>
+
 <!-- Perguntar antes de saida -->
 <script language="Javascript">
 function saida(id,dat_saida,data) {
@@ -131,7 +134,13 @@ function excluir(id) {
 
                                     }elseif (!empty($registro["motivo"])) {
 
-                                           echo   "<font color='#FF4000'><strong>".date("d/m/Y H:i:s",strtotime($registro["dat_saida"]))."</strong></font>";
+
+                                           echo   "<font color=\"#FF4000\"><strong><a style=\"color: #F00\"  href=\"javascript:func()\" onmouseover=\"Tip('";
+
+                                           echo $registro["motivo"];
+
+
+                                           echo "')\" onmouseout=\"UnTip()\">".date("d/m/Y H:i:s",strtotime($registro["dat_saida"]))."</a></strong></font>";
                                            $dat_saida[$i]  = true;
 
                                     }else{
