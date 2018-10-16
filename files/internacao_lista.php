@@ -2,10 +2,10 @@
   
  
   If( $_SESSION["perfil"] == "usuario"){
-   $query = mysqli_query($conn,"SELECT internamento.id as autorizacao, internamento.nome as paciente, internamento.matricula as matricula, internamento.solicitante as solicitante, internamento.crm as crm, internamento.dat_entrada as dat_entrada, internamento.dat_saida as dat_saida , cid.cid ,usuarios.nome as credenciado, cid.dias as dias, internamento.motivo as motivo FROM `internamento` INNER JOIN usuarios on usuarios.id = internamento.id_usuario INNER JOIN cid on cid.id = internamento.id_cid WHERE usuarios.login = '".$login."' and (Month(internamento.dat_entrada) = '".date("m")."' and Year(internamento.dat_entrada) = '".date("Y")."') order by internamento.id") or die("erro ao carregar consulta");
+   $query = mysqli_query($conn,"SELECT internamento.id as autorizacao, internamento.nome as paciente, internamento.matricula as matricula, internamento.solicitante as solicitante, internamento.crm as crm, internamento.dat_entrada as dat_entrada, internamento.dat_saida as dat_saida , cid.cid ,usuarios.nome as credenciado, cid.dias as dias, internamento.motivo as motivo FROM `internamento` INNER JOIN usuarios on usuarios.id = internamento.id_usuario INNER JOIN cid on cid.id = internamento.id_cid WHERE usuarios.login = '".$login."' and Year(internamento.dat_entrada) = '".date("Y")."' order by internamento.id") or die("erro ao carregar consulta");
   }else{
 
-     $query = mysqli_query($conn,"SELECT internamento.id as autorizacao, internamento.nome as paciente, internamento.matricula as matricula, internamento.solicitante as solicitante, internamento.crm as crm, internamento.dat_entrada as dat_entrada, internamento.dat_saida as dat_saida , cid.cid ,usuarios.nome as credenciado, cid.dias as dias, internamento.motivo as motivo FROM `internamento` INNER JOIN usuarios on usuarios.id = internamento.id_usuario INNER JOIN cid on cid.id = internamento.id_cid WHERE  internamento.dat_saida = '00000-00-00' or (Month(internamento.dat_entrada) = ".date("m")." and Year(internamento.dat_entrada) = ".date("Y").") order by internamento.id") or die("erro ao carregar consulta");
+     $query = mysqli_query($conn,"SELECT internamento.id as autorizacao, internamento.nome as paciente, internamento.matricula as matricula, internamento.solicitante as solicitante, internamento.crm as crm, internamento.dat_entrada as dat_entrada, internamento.dat_saida as dat_saida , cid.cid ,usuarios.nome as credenciado, cid.dias as dias, internamento.motivo as motivo FROM `internamento` INNER JOIN usuarios on usuarios.id = internamento.id_usuario INNER JOIN cid on cid.id = internamento.id_cid WHERE  Year(internamento.dat_entrada) = ".date("Y")." order by internamento.id") or die("erro ao carregar consulta");
 
   }
 
@@ -105,14 +105,14 @@ function excluir(id) {
                                     }
 
                          echo          "</div></td> -->
-                                    <td><div align='center' style='width: 30px;'> <a href = 'rel_internacao.php?id_internacao=".$registro["autorizacao"]." '>  ".$registro["autorizacao"]."</a></div></td>
+                                    <td style='padding: 4px;'><div align='center' style='width: 30px;'> <a href = 'rel_internacao.php?id_internacao=".$registro["autorizacao"]." '>  ".$registro["autorizacao"]."</a></div></td>
                                     <td style='padding: 4px;'><div align='center' style='width: 150px;'>".$registro["paciente"]."</div></td>
                                     <td style='padding: 4px;'><div align='center' >".$registro["matricula"]."</div></td>
                                     <td style='padding: 4px;'><div align='center'>".$registro["solicitante"]."</div></td>
                                      <td style='padding: 4px;'><div align='center'>".$registro["crm"]."</div></td>
                                      <td style='padding: 4px;'><div align='center'>".date("j/n/Y H:i:s",strtotime($registro["dat_entrada"]))."</div></td>
                                      <td style='padding: 4px;'><div align='center'>".$registro["dias"]."</div></td>
-                                     <td>
+                                     <td style='padding: 4px;'>
                                       <div align='center'>";
 
  
@@ -154,7 +154,7 @@ function excluir(id) {
 
                         echo "        </div>
                                     </td>
-                                    <td><div align='center'>".$registro["cid"]."</div></td>";
+                                    <td style='padding: 4px;'><div align='center'>".$registro["cid"]."</div></td>";
 
                                       If( ($_SESSION["perfil"] == "administrador") or ($_SESSION["perfil"] == "auditor")){
                                          echo " <td><div align='center'>".$registro["credenciado"]."</div></td>";
