@@ -9,13 +9,14 @@ $nome = $_POST["nome"];
 $dias = $_POST["dias"];
 $solicitante = $_POST["solicitante"];
 $crm = $_POST["crm"];
+$motivo = $_POST["motivo"];
 $cid = $_POST["cid"];
 $cid_desc = $_POST["cid_desc"];
 
 $matricula = str_replace(".", "", $matricula);
 $matricula = str_replace("-", "", $matricula);
 
-		$query = "INSERT INTO `internamento`(`id`, `id_usuario`, `id_cid`, `id_revalida`, `nome`, `matricula`, `solicitante`, `crm`, `dat_entrada`) VALUES (null ,'".$_SESSION['id']."', '".$id_cid."' , null , '".$nome."' , '".$matricula."' , '".$solicitante."' , '".$crm."' , '".date("Y-m-d H:i:s" )."' )";
+		$query = "INSERT INTO `internamento`(`id`, `id_usuario`, `id_cid`, `id_revalida`, `nome`, `matricula`, `solicitante`, `crm`, `dat_entrada`,`motivo`, `prorrogacao`) VALUES (null ,'".$_SESSION['id']."', '".$id_cid."' , null , '".$nome."' , '".$matricula."' , '".$solicitante."' , '".$crm."' , '".date("Y-m-d H:i:s" )."' , '".$motivo."', null)";
 
         
 	 
@@ -28,7 +29,7 @@ $matricula = str_replace("-", "", $matricula);
           require_once"rel_internacao.php";
           
         }else{
-         echo"<script language='javascript' type='text/javascript'>alert('Aviso não cadastrado com sucesso!');window.location.href='form_internacao.php'</script>";
+         echo"<script language='javascript' type='text/javascript'>alert('internamento não cadastrado com sucesso!');window.location.href='form_internacao.php'</script>";
 
         }
   

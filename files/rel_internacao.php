@@ -14,7 +14,7 @@
 
 			$query = mysqli_query($conn,"SELECT internamento.nome as paciente, internamento.matricula as matricula, internamento.solicitante as solicitante,
 					 internamento.crm as crm, internamento.dat_entrada as dat_entrada, internamento.dat_saida as dat_saida, cid.cid , cid.descricao as 
-					 descricao ,usuarios.nome as credenciado, cid.dias as dias, internamento.motivo as motivo FROM `internamento` 
+					 descricao ,usuarios.nome as credenciado, cid.dias as dias, internamento.motivo as motivo, internamento.prorrogacao as prorrogacao FROM `internamento` 
 					 INNER JOIN usuarios on usuarios.id = internamento.id_usuario 
 					 INNER JOIN cid on cid.id = internamento.id_cid 
 					 WHERE internamento.id =".$res) or die("erro ao carregar consulta");
@@ -34,6 +34,7 @@
                         $credenciado = $registro[8];
                         $dias = $registro[9];
                         $motivo = $registro[10];
+                        $prorrogacao = $registro[11];
                          
                    }
 
@@ -98,9 +99,9 @@
 							</div>
                           </div>
                         </div>
-                        </div>
+                      </div>
                     </div>
-				<div style="height:500px">
+				<div style="height:550px">
                     <table width="100%" class='table' style='font-size: 10px';>	
 						
 						<tr>
@@ -146,6 +147,23 @@
 					      <th scope='col'><div align="left">Previsão de  saída: <br> &nbsp;  <?php echo date('d / m / Y', strtotime($dat_entrada."+".$dias." days"));   ?> </div></th>
 				      </tr>
 					    <tr>
+					      <th scope='row'><div align="left">
+					      	<?php
+								
+								if(!empty($motivo)){
+
+									echo "Motivo do internamento: <br> &nbsp;";	 
+
+					      			echo $motivo;
+					      		}
+
+					      	?> </div>
+					      </th>
+					      <th scope='col'><div align="left"></div> 
+					      	
+					      </th>
+				      </tr>
+				       <tr>
 					      <th scope='row'><div align="left">Data de Saíde: <br> &nbsp; 
 					      	<?php 
 					      		
@@ -158,11 +176,11 @@
 					      <th scope='col'><div align="left"></div> 
 					      	<?php
 								
-								if(!empty($motivo)){
+								if(!empty($prorrogacao)){
 
-									echo "Motivo da prorogação do internamento: <br> &nbsp;";	 
+									echo "Motivo da Prorrogação: <br> &nbsp;";	 
 
-					      			echo $motivo;
+					      			echo $prorrogacao;
 					      		}
 
 					      	?>

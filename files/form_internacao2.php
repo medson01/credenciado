@@ -36,7 +36,8 @@ mysqli_query($conn,"SET NAMES 'utf8'");
                             </script>';           
                     // 
                      ?>
-                     <form name="internamento" id="internamento" action ="cadastro_internacao.php" method="post" id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+
+                     <form name="internamento" action ="cadastro_internacao.php" method="post" id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
                       <label> </label>
                       <div align="center">
                         </p>
@@ -66,15 +67,11 @@ mysqli_query($conn,"SET NAMES 'utf8'");
                                               <option>*** Digite ou selecio o CID ***</option>
 
                                               <?php 
-
                                                   for ($x=1; $x < $i ; $x++) { 
                                                       echo "<option value='".$id[$x]."'>".$cid[$x]."-".$descricao[$x]."</option>";
                                                                                               
                                                     }
-													
-
-
-
+                          
                                                ?>
                                   </select> 
 
@@ -114,20 +111,6 @@ mysqli_query($conn,"SET NAMES 'utf8'");
                             <td>&nbsp;</td>
                             <td>&nbsp;</td>
                           </tr>
-                          <td >Motivo do internamento</td>
-                            <td>
-                              <textarea class="form-matric" name="motivo"  style="margin: 0px; height: 100px; width: 100%;" form="internamento" placeholder="Entre com o texto aqui..."> </textarea>
-                              
-                            </td>
-                            </tr>
-                            <tr>
-                            
-                            <td></td>
-                          </tr>
-                          <tr>
-                            <td>&nbsp;</td>
-                            <td>&nbsp;</td>
-                          </tr>
                           <tr>
                             <td >&nbsp;</td>
                             <td><div align="right" class="style3">
@@ -142,7 +125,7 @@ mysqli_query($conn,"SET NAMES 'utf8'");
                           </tr>
                         </table>
                       </div>
-	
+  
                         <br />
                         <br /> 
                       
@@ -156,8 +139,3 @@ mysqli_query($conn,"SET NAMES 'utf8'");
                         <br />
                       </div>
                     </form>
-                   
-
-			       
-					
-	

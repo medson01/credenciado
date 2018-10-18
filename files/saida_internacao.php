@@ -6,9 +6,9 @@
 $id = $_GET['id'];
 
 
-if(isset($_GET['motivo'])){
-	$motivo = $_GET['motivo'];
-	$update = mysqli_query($conn,"UPDATE `internamento` SET `dat_saida`= now(), `motivo`= '".$motivo."' WHERE id = '".$id."'");
+if(isset($_GET['prorrogacao'])){
+	$prorrogacao = $_GET['prorrogacao'];
+	$update = mysqli_query($conn,"UPDATE `internamento` SET `dat_saida`= now(), `prorrogacao`= '".$prorrogacao."' WHERE id = '".$id."'");
 	//echo "existe";
 }else{
 

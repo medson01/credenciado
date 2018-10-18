@@ -3,6 +3,8 @@
   // retira os erros 
  // error_reporting(0);
 
+        # Corrige o erro de acentuação no banco
+        mysqli_query($conn,"SET NAMES 'utf8'");
 
  if(isset($_GET['mes'])){
 
@@ -16,10 +18,10 @@
   }
  
   If( $_SESSION["perfil"] == "usuario"){
-   $query = mysqli_query($conn,"SELECT internamento.id as autorizacao, internamento.nome as paciente, internamento.matricula as matricula, internamento.solicitante as solicitante, internamento.crm as crm, internamento.dat_entrada as dat_entrada, internamento.dat_saida as dat_saida , cid.cid ,usuarios.nome as credenciado, cid.dias as dias, internamento.motivo as motivo FROM `internamento` INNER JOIN usuarios on usuarios.id = internamento.id_usuario INNER JOIN cid on cid.id = internamento.id_cid WHERE usuarios.login = '".$login."' and MONTH(internamento.dat_entrada) = ".$mes." and Year(internamento.dat_entrada) = '".date("Y")."' order by internamento.id") or die("erro ao carregar consulta");
+   $query = mysqli_query($conn,"SELECT internamento.id as autorizacao, internamento.nome as paciente, internamento.matricula as matricula, internamento.solicitante as solicitante, internamento.crm as crm, internamento.dat_entrada as dat_entrada, internamento.dat_saida as dat_saida , cid.cid ,usuarios.nome as credenciado, cid.dias as dias, internamento.motivo as motivo, internamento.prorrogacao as prorrogacao FROM `internamento` INNER JOIN usuarios on usuarios.id = internamento.id_usuario INNER JOIN cid on cid.id = internamento.id_cid WHERE usuarios.login = '".$login."' and MONTH(internamento.dat_entrada) = ".$mes." and Year(internamento.dat_entrada) = '".date("Y")."' order by internamento.id") or die("erro ao carregar consulta");
   }else{
 
-     $query = mysqli_query($conn,"SELECT internamento.id as autorizacao, internamento.nome as paciente, internamento.matricula as matricula, internamento.solicitante as solicitante, internamento.crm as crm, internamento.dat_entrada as dat_entrada, internamento.dat_saida as dat_saida , cid.cid ,usuarios.nome as credenciado, cid.dias as dias, internamento.motivo as motivo FROM `internamento` INNER JOIN usuarios on usuarios.id = internamento.id_usuario INNER JOIN cid on cid.id = internamento.id_cid WHERE MONTH(internamento.dat_entrada) = ".$mes." and Year(internamento.dat_entrada) = ".date("Y")." order by internamento.id") or die("erro ao carregar consulta");
+     $query = mysqli_query($conn,"SELECT internamento.id as autorizacao, internamento.nome as paciente, internamento.matricula as matricula, internamento.solicitante as solicitante, internamento.crm as crm, internamento.dat_entrada as dat_entrada, internamento.dat_saida as dat_saida , cid.cid ,usuarios.nome as credenciado, cid.dias as dias, internamento.motivo as motivo, internamento.prorrogacao as prorrogacao FROM `internamento` INNER JOIN usuarios on usuarios.id = internamento.id_usuario INNER JOIN cid on cid.id = internamento.id_cid WHERE MONTH(internamento.dat_entrada) = ".$mes." and Year(internamento.dat_entrada) = ".date("Y")." order by internamento.id") or die("erro ao carregar consulta");
 
   }
 
@@ -27,12 +29,7 @@
 
 
 ?>
-<!-- pegar mes de consulta -->
-<script language="Javascript">
- document.getElementById("mes").onchange = function(){
-      window.location.href = this.value;
-    }
-</script>
+
 
 <!-- Mensagem ao passar o mouse -->
 <script type="text/javascript" src="../js/wz_tooltip.js"></script>
@@ -50,11 +47,11 @@ function saida(id,dat_saida,data) {
                        //Previsaão < que data atual
                        if(data != 1){
 
-                               var motivo;
+                               var prorrogacao;
 
-                                   motivo = prompt ("O paciente exedeu as diárias permitidas, favor informar o motivo:");
+                                   prorrogacao = prompt ("O paciente exedeu as diárias permitidas, favor informar o motivo:");
 
-                               window.location.href = "saida_internacao.php?id="+id+"&motivo="+motivo;
+                               window.location.href = "saida_internacao.php?id="+id+"&prorrogacao="+prorrogacao;
 
 
                        }else{
@@ -82,9 +79,9 @@ function excluir(id) {
 }
 </script>
 <div align="right"><span style="right:inherit">Mês
-  <select name="m" id="m" onchange="javascript:location.href = this.value;">
+  <select name="mes" id="mes" onchange="mudarmes()">
     <option  value="" > ... </option>
-    <option  value="internacao.php?mes=01"<?php  if($mes == '01'){ echo "selected"; } ?> >Janeiro </option>
+    <option  value="internacao.php?mes=01"<?php  if($mes == '01'){ echo "selected"; } ?>>Janeiro </option>
     <option  value="internacao.php?mes=02"<?php  if($mes == '02'){ echo "selected"; } ?>>Fevereiro</option>
     <option  value="internacao.php?mes=03"<?php  if($mes == '03'){ echo "selected"; } ?>>Março</option>
     <option  value="internacao.php?mes=04"<?php  if($mes == '04'){ echo "selected"; } ?>>abril</option>
@@ -98,6 +95,14 @@ function excluir(id) {
     <option  value="internacao.php?mes=12"<?php  if($mes == '12'){ echo "selected"; } ?>>dezembro</option>
   </select>
 </span></div>
+
+<!-- pegar mes de consulta  -->
+<script language="Javascript">
+    function mudarmes(){
+      var x = document.getElementById("mes").value;
+      window.location.href = x;
+    }
+</script>
                     
    <table class="table table-striped" align="center" style="font-size: 9px">
                <tr>
@@ -166,12 +171,12 @@ function excluir(id) {
                                           echo   "";
                                           $dat_saida[$i]  = 0;
 
-                                    }elseif (!empty($registro["motivo"])) {
+                                    }elseif (!empty($registro["prorrogacao"])) {
 
 
                                            echo   "<font color=\"#FF4000\"><strong><a style=\"color: #F00\"  href=\"javascript:func()\" onmouseover=\"Tip('";
 
-                                           echo $registro["motivo"];
+                                           echo "Motivo prorrogação:<br>".$registro["prorrogacao"];
 
 
                                            echo "')\" onmouseout=\"UnTip()\">".date("d/m/Y H:i:s",strtotime($registro["dat_saida"]))."</a></strong></font>";
