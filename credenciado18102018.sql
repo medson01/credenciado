@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 09-Out-2018 às 17:37
+-- Generation Time: 19-Out-2018 às 00:02
 -- Versão do servidor: 10.1.31-MariaDB
 -- PHP Version: 7.2.3
 
@@ -46,7 +46,10 @@ INSERT INTO `avisos` (`id`, `id_usuarios`, `titulo`, `conteudo`, `data`) VALUES
 (7, 21, 'Facebook', 'CURTA, COMPARTILHE e CONVIDE os seus amigos para CURTIR as nossas Redes Sociais! ', '2018-09-27'),
 (8, 21, 'ProduÃ§Ã£o', ' A produÃ§Ã£o deverÃ¡ se entregue atÃ© o dia 30 de cada mÃªs.\r\nAtt.:\r\nAdministraÃ§Ã£o Ipaseal SaÃºde\r\n                                  ', '2018-09-27'),
 (9, 31, 'Facebook', 'Favor verificar em nossas pÃ¡ginas as novidades. \r\n                                  ', '2018-10-03'),
-(12, 21, 'atenÃ§Ã£o', ' \r\n                                  asdfa', '2018-10-03');
+(12, 21, 'atenÃ§Ã£o', ' \r\n                                  asdfa', '2018-10-03'),
+(13, 33, 'Agenda dia 09/10/2018', '# 10:30hs, Eveline, Hospital sanatÃ³rio;\r\n# 11:30hs, Ana Claudia, Hospital do AÃ§ucar;\r\n# 12:30hs, Maria JosÃ©, Hospital \r\n \r\n                                  ', '2018-10-09'),
+(14, 31, 'Titulo', ' teste\r\n                                  ', '2018-10-10'),
+(15, 29, 'teste', ' \r\n                       jlkjlkjljlkjl           ', '2018-10-18');
 
 -- --------------------------------------------------------
 
@@ -2131,18 +2134,30 @@ CREATE TABLE `internamento` (
   `crm` int(8) NOT NULL,
   `dat_entrada` datetime NOT NULL,
   `dat_saida` datetime NOT NULL,
-  `motivo` text NOT NULL
+  `motivo` text CHARACTER SET utf8,
+  `prorrogacao` text CHARACTER SET utf8
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `internamento`
 --
 
-INSERT INTO `internamento` (`id`, `id_usuario`, `id_cid`, `id_revalida`, `nome`, `matricula`, `solicitante`, `crm`, `dat_entrada`, `dat_saida`, `motivo`) VALUES
-(298, 21, 1, NULL, 'esdf', '0000121121321321', 'sadfasd', 2132, '2018-10-05 18:09:34', '2018-10-08 18:11:50', 'Agravante do quadro CID A001'),
-(299, 21, 1, NULL, 'esdf', '0000121121321321', 'sadfasd', 2132, '2018-10-08 18:10:47', '2018-10-08 18:12:16', ''),
-(301, 21, 3, NULL, 'Edson Martins de Almeida Junior', '0001000112346465', 'Jose da Silva Peixoto', 2132, '2018-10-09 12:21:03', '2018-10-09 12:21:22', ''),
-(302, 31, 2, NULL, 'Benedito Jose Bentes', '0001000123132131', 'Eduardo Medeiros', 2132, '2018-10-09 12:33:36', '0000-00-00 00:00:00', '');
+INSERT INTO `internamento` (`id`, `id_usuario`, `id_cid`, `id_revalida`, `nome`, `matricula`, `solicitante`, `crm`, `dat_entrada`, `dat_saida`, `motivo`, `prorrogacao`) VALUES
+(324, 21, 1, NULL, 'Edson Martins', '6465464654646465', 'Edson Martins', 2212, '2018-10-18 14:53:46', '2018-10-18 16:40:43', 'Teste internamento motivo ', NULL),
+(325, 21, 1, NULL, 'Edson Martins', '6465464654646465', 'Edson Martins', 2212, '2018-10-18 14:55:14', '2018-10-18 16:43:15', 'Teste internamento motivo ', NULL),
+(326, 21, 2, NULL, 'edson', '5465465465464646', 'asdfdsfa', 6565, '2018-10-01 14:56:11', '2018-10-18 16:44:25', 'asfasdfadsf ', NULL),
+(327, 21, 2, NULL, 'edson', '5465465465464646', 'asdfdsfa', 6565, '2018-10-02 14:57:58', '2018-10-18 16:46:48', 'asfasdfadsf ', 'prorrogação teste'),
+(328, 21, 2, NULL, 'edson', '5465465465464646', 'asdfdsfa', 6565, '2018-10-01 15:01:05', '2018-10-18 16:45:11', 'asfasdfadsf ', NULL),
+(329, 21, 2, NULL, 'edson', '5465465465464646', 'asdfdsfa', 6565, '2018-10-01 15:01:56', '2018-10-18 18:40:05', 'asfasdfadsf ', 'teste01'),
+(330, 21, 2, NULL, 'edson', '5465465465464646', 'asdfdsfa', 6565, '2018-10-18 15:02:48', '2018-10-18 18:51:12', 'asfasdfadsf ', NULL),
+(331, 21, 2, NULL, 'edson', '5465465465464646', 'asdfdsfa', 6565, '2018-10-18 15:03:22', '2018-10-18 18:51:21', 'asfasdfadsf ', NULL),
+(332, 21, 2, NULL, 'edson', '5465465465464646', 'asdfdsfa', 6565, '2018-10-18 15:05:09', '2018-10-18 18:51:29', 'asfasdfadsf ', NULL),
+(333, 29, 2, NULL, 'Edson Martins', '3213213211364646', 'Edson Martins', 5465, '2018-10-01 15:35:30', '2018-10-18 15:37:50', 'agravamento do quadro', NULL),
+(334, 21, 1, NULL, 'Edson Martins', '0001213213132132', 'Edson Martins', 4654, '2018-10-18 16:36:17', '2018-10-18 18:51:40', ' motivo internamento', NULL),
+(335, 21, 2, NULL, 'Edson Martins', '2132132135132132', 'Edson', 3212, '2018-10-01 17:39:57', '2018-10-18 18:51:56', '', 'agravamento do quadro'),
+(336, 21, 6, NULL, 'Edson Martins', '3213216546465654', 'Edson Martins', 2313, '2018-10-18 17:44:37', '2018-10-18 18:52:03', 'asdfasdfasdfasdf', NULL),
+(337, 21, 1, NULL, 'asdfasdf', '2132131231313213', 'asdfasdfad', 4654, '2018-10-01 18:49:32', '2018-10-18 18:52:13', 'motivo internamento teste', 'teste01'),
+(338, 21, 1, NULL, 'asdfasdf', '2132131231313213', 'asdfasdfad', 4654, '2018-10-18 18:50:17', '2018-10-18 18:52:19', 'motivo internamento teste', NULL);
 
 -- --------------------------------------------------------
 
@@ -2163,11 +2178,12 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`id`, `nome`, `login`, `senha`, `perfil`) VALUES
-(29, 'Hospital Satatorio', 'sanatorio', '123456', 'usuario'),
-(25, 'Hospital do Acucar', 'acucar', '123456', 'usuario'),
-(24, 'Hospital Artur Ramos', 'arturramos', '123456', 'usuario'),
-(21, 'admin', 'admin', 'ip@s3@l', 'administrador'),
-(31, 'HOSPITAL CHAMA', 'CHAMA', '123456', 'usuario');
+(29, 'HOSPITAL SANATORIO', 'SANATORIO', '123456', 'usuario'),
+(25, 'HOSPITAL DO ACUCAR', 'ACUCAR', '123456', 'usuario'),
+(24, 'HOSPITAL ARTUR RAMOS', 'ARTURRAMOS', '123456', 'usuario'),
+(21, 'ADMIN', 'ADMIN', 'ip@s3@l', 'administrador'),
+(31, 'HOSPITAL CHAMA', 'CHAMA', '123456', 'usuario'),
+(33, 'AUDITOR', 'AUDITOR', '123456', 'auditor');
 
 --
 -- Indexes for dumped tables
@@ -2207,7 +2223,7 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT for table `avisos`
 --
 ALTER TABLE `avisos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `cid`
@@ -2219,13 +2235,13 @@ ALTER TABLE `cid`
 -- AUTO_INCREMENT for table `internamento`
 --
 ALTER TABLE `internamento`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=303;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=339;
 
 --
 -- AUTO_INCREMENT for table `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- Constraints for dumped tables
