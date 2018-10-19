@@ -1,10 +1,10 @@
-<?php 
+﻿<?php 
   
   // retira os erros 
  // error_reporting(0);
 
         # Corrige o erro de acentuação no banco
-        mysqli_query($conn,"SET NAMES 'utf8'");
+        # mysqli_query($conn,"SET NAMES 'utf8'");
 
  if(isset($_GET['mes'])){
 
@@ -204,7 +204,7 @@ function excluir(id) {
                                         <div align='center'>
 
                                             <!-- Botão sair -->
-                                            <a class='btn btn-primary' style='width: 50px; height: 25px' href='javascript:func()' onclick='saida(".$registro['autorizacao'].",".$dat_saida[$i].",".$data[$i].")'><span style='font-size: 10px; align: center;'> Saída </center> </span> </a>
+                                            <a class='btn btn-primary' style='width: 50px; height: 25px' onclick='saida(".$registro['autorizacao'].",".$dat_saida[$i].",".$data[$i].")'><span style='font-size: 10px; align: center;'> Saída </center> </span> </a>
                                             <!--/Botão sair -->
 
                                         </div>
@@ -213,7 +213,7 @@ function excluir(id) {
                                         <div align='center'>";
                     If( $_SESSION["perfil"] == "administrador"){
                          echo  " <!-- Botão exluir -->
-                                            <a class='btn btn-danger' style='width: 50px; height: 25px' href='javascript:func()' onclick='excluir(".$registro["autorizacao"].")'><span style='font-size: 10px; align: center;'> Excluir </span> </a>
+                                            <a class='btn btn-danger' style='width: 50px; height: 25px' onclick='excluir(".$registro["autorizacao"].")'><span style='font-size: 10px; align: center;'> Excluir </span> </a>
                                 <!--/Botão exluir -->
 
                                         </div>

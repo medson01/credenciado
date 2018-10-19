@@ -7,7 +7,7 @@
   		  include "cabecalho.php";
 
   		      # Corrige o erro de acentuação no banco
-				mysqli_query($conn,"SET NAMES 'utf8'");
+				#mysqli_query($conn,"SET NAMES 'utf8'");
 	
 
 		$res = $_GET["id_internacao"];
