@@ -6,6 +6,49 @@
         # Corrige o erro de acentuação no banco
         # mysqli_query($conn,"SET NAMES 'utf8'");
 
+
+
+# Função para calcuçar a diferença de horas
+function calculaTempo($hora_inicial, $hora_final) {
+
+$i = 1;
+$tempo_total;
+
+$tempos = array($hora_final, $hora_inicial);
+
+foreach($tempos as $tempo) {
+
+
+      
+      $segundos = 0;
+
+      list($ano, $mes, $dia) = explode('-', $tempo);
+
+
+      list($h, $m, $s) = explode(':', $tempo);
+      $segundos += $dia * 86400;
+      $segundos += $h * 3600;
+      $segundos += $m * 60;
+      $segundos += $s;
+
+      $tempo_total[$i] = $segundos;
+
+      $i++;
+}
+      $segundos = $tempo_total[1] - $tempo_total[2];
+
+      $horas = floor($segundos / 3600);
+      $segundos -= $horas * 3600;
+      $minutos = str_pad((floor($segundos / 60)), 2, '0', STR_PAD_LEFT);
+      $segundos -= $minutos * 60;
+      $segundos = str_pad($segundos, 2, '0', STR_PAD_LEFT);
+
+return "$horas:$minutos:$segundos";
+}
+
+
+
+
  if(isset($_GET['mes'])){
 
   $mes = $_GET['mes'];
@@ -18,10 +61,10 @@
   }
  
   If( $_SESSION["perfil"] == "usuario"){
-   $query = mysqli_query($conn,"SELECT internamento.id as autorizacao, internamento.nome as paciente, internamento.matricula as matricula, internamento.solicitante as solicitante, internamento.crm as crm, internamento.dat_entrada as dat_entrada, internamento.dat_saida as dat_saida , cid.cid ,usuarios.nome as credenciado, cid.dias as dias, internamento.motivo as motivo, internamento.prorrogacao as prorrogacao FROM `internamento` INNER JOIN usuarios on usuarios.id = internamento.id_usuario INNER JOIN cid on cid.id = internamento.id_cid WHERE usuarios.login = '".$login."' and MONTH(internamento.dat_entrada) = ".$mes." and Year(internamento.dat_entrada) = '".date("Y")."' order by internamento.id") or die("erro ao carregar consulta");
+   $query = mysqli_query($conn,"SELECT pronto_atendimento.id as autorizacao, pronto_atendimento.matricula as matricula, pronto_atendimento.nome as paciente, pronto_atendimento.dat_entrada as dat_entrada, pronto_atendimento.dat_saida as dat_saida , pronto_atendimento.motivo as motivo, usuarios.nome as credenciado, pronto_atendimento.prorrogacao as prorrogacao FROM `pronto_atendimento` INNER JOIN usuarios on usuarios.id = pronto_atendimento.id_usuario WHERE usuarios.login = '".$login."' and MONTH(pronto_atendimento.dat_entrada) = ".$mes." and Year(pronto_atendimento.dat_entrada) = '".date("Y")."' order by pronto_atendimento.id") or die("erro ao carregar consulta");
   }else{
 
-     $query = mysqli_query($conn,"SELECT internamento.id as autorizacao, internamento.nome as paciente, internamento.matricula as matricula, internamento.solicitante as solicitante, internamento.crm as crm, internamento.dat_entrada as dat_entrada, internamento.dat_saida as dat_saida , cid.cid ,usuarios.nome as credenciado, cid.dias as dias, internamento.motivo as motivo, internamento.prorrogacao as prorrogacao FROM `internamento` INNER JOIN usuarios on usuarios.id = internamento.id_usuario INNER JOIN cid on cid.id = internamento.id_cid WHERE MONTH(internamento.dat_entrada) = ".$mes." and Year(internamento.dat_entrada) = ".date("Y")." order by internamento.id") or die("erro ao carregar consulta");
+     $query = mysqli_query($conn,"SELECT pronto_atendimento.id as autorizacao, pronto_atendimento.matricula as matricula, pronto_atendimento.nome as paciente, pronto_atendimento.dat_entrada as dat_entrada, pronto_atendimento.dat_saida as dat_saida , pronto_atendimento.motivo as motivo, usuarios.nome as credenciado, pronto_atendimento.prorrogacao as prorrogacao FROM `pronto_atendimento` INNER JOIN usuarios on usuarios.id = pronto_atendimento.id_usuario WHERE MONTH(pronto_atendimento.dat_entrada) = ".$mes." and Year(pronto_atendimento.dat_entrada) = ".date("Y")." order by pronto_atendimento.id") or die("erro ao carregar consulta");
 
   }
 
@@ -49,13 +92,13 @@ function saida(id,dat_saida,data) {
 
                                var prorrogacao;
 
-                                   prorrogacao = prompt ("O paciente exedeu as diárias permitidas, favor informar o motivo:");
+                                   prorrogacao = prompt ("O paciente exedeu as 12 horas do pronto atendimento, favor informar o motivo:");
 
-                               window.location.href = "saida_internacao.php?id="+id+"&prorrogacao="+prorrogacao;
+                               window.location.href = "pronto_atendimento_saida.php?id="+id+"&prorrogacao="+prorrogacao;
 
 
                        }else{
-                               window.location.href = "saida_internacao.php?id="+id;
+                               window.location.href = "pronto_atendimento_saida.php?id="+id;
                        }
                     
                }
@@ -72,7 +115,7 @@ function excluir(id) {
      var resposta = confirm("Deseja remover esse registro?");
      
      if (resposta == true) {
-          window.location.href = "deleta_internacao.php?id="+id;
+          window.location.href = "pronto_atendimento_deleta.php?id="+id;
 
 
      }
@@ -104,24 +147,22 @@ function excluir(id) {
     }
 </script>
                     
-   <table class="table table-striped" align="center" style="font-size: 9px">
+   <table width="435" align="center" class="table table-striped" style="font-size: 9px">
                <tr>
-                 <td colspan="12" style="text-align: center; text-decoration-style: solid;"> <strong>Pacientes insternados </strong></td>
+                 <td colspan="10" style="text-align: center; text-decoration-style: solid;"> <strong>Pacientes insternados </strong></td>
                </tr>
                <tr  style='font-weight:bold;'>
                  <!-- <td width="27"><div align="center">Status</div></td> -->
-                 <td style='padding: 4px;'><div align="center" style='width: 30px;'>Autorização</div></td>
-                 <td style='padding: 4px;'><div align="center" style='width: 150px;'>Paciente</div></td>
-                 <td style='padding: 4px;'><div align="center">Matricula</div></td>
-                 <td style='padding: 4px;'><div align="center">Solicitante</div></td>
-                  <td style='padding: 4px;'><div align="center">CRM</div></td>
-                  <td style='padding: 4px;'><div align="center">Entrada</div></td>
-                  <td style='padding: 4px;'><div align="center">diárias</div></td>
-                  <td style='padding: 4px;'><div align="center">Saída</div></td>
-                  <td style='padding: 4px;'><div align="center">CID</div></td>
+                 <td width="61" ><div align="center" style='width: 30px;'>Autorização</div></td>
+                 <td width="156"><div align="center" style='width: 150px;'>Paciente</div></td>
+                 <td width="50" ><div align="center">Matricula</div></td>
+                 <td width="39" ><div align="center">Entrada</div></td>
+                 <td width="43" ><div align="center">Permanência</div></td>
+                 <td width="29" ><div align="center">Saída</div></td>
+                  
                  <?php If( $_SESSION["perfil"] == "administrador" or $_SESSION["perfil"] == "auditor"){ echo "<td style='padding: 4px;'><div align='center'>Credenciado</div></td>"; } ?>
-                 <td><div align="center"></div></td>
-                    <td><div align="center"></div></td>
+                 <td width="16"><div align="center"></div></td>
+                    <td width="5"><div align="center"></div></td>
                </tr>
                           
               <?php
@@ -144,20 +185,44 @@ function excluir(id) {
                                     }
 
                          echo          "</div></td> -->
-                                    <td style='padding: 4px;'><div align='center' style='width: 30px;'> <a href = 'rel_internacao.php?id_internacao=".$registro["autorizacao"]." '>  ".$registro["autorizacao"]."</a></div></td>
-                                    <td style='padding: 4px;'><div align='center' style='width: 150px;'>".$registro["paciente"]."</div></td>
+                                    <td ><div align='center' style='width: 30px;'> <a href = 'rel_internacao.php?id_internacao=".$registro["autorizacao"]." '>  ".$registro["autorizacao"]."</a></div></td>
+                                    <td ><div align='center' style='width: 150px;'>".$registro["paciente"]."</div></td>
                                     <td ><div align='center' >".$registro["matricula"]."</div></td>
-                                    <td ><div align='center'>".$registro["solicitante"]."</div></td>
-                                     <td ><div align='center'>".$registro["crm"]."</div></td>
                                      <td ><div align='center'>".date("j/n/Y <\b\\r> H:i:s",strtotime($registro["dat_entrada"]))."</div></td>
-                                     <td ><div align='center'>".$registro["dias"]."</div></td>
                                      <td >
                                       <div align='center'>";
 
- 
-                                        $dat_previsao[$i] = strtotime(date("Y-n-j", strtotime(date("Y-n-j",strtotime($registro["dat_entrada"]))."+".$registro["dias"]." days")));
+                                  # Configurar a permanência do paciênte no hospital "+12 minute".
+                                      $dat_previsao[$i] = strtotime(date("Y-n-j H:i:s", strtotime("+12 minute",strtotime($registro["dat_entrada"]))));
 
-                                        $dat_atual[$i] = strtotime(date("Y-n-j"));
+                                      $dat_atual[$i] = strtotime(date("Y-n-j H:i:s"));
+
+
+                                      if(!empty($registro["dat_saida"])){
+
+                                        //echo $horaB = substr(date("Y-n-j H:i:s", strtotime("+30 minute",strtotime($registro["dat_entrada"]))),10);
+
+                                         $horaA = $registro["dat_entrada"];                              
+                                         $horaB = $registro["dat_saida"];
+      
+                                          echo calculaTempo($horaA, $horaB);
+
+                                     }else{
+                                         $horaA = $registro["dat_entrada"];                              
+                                         $horaB = date("Y-n-j H:i:s");
+  
+                                          echo calculaTempo($horaA, $horaB);
+
+                                     }
+
+
+
+                        echo "       </div>
+                                    </td>
+                                    <td > <div align='center'>";
+									
+									 
+                                       
 
 
                                        if($dat_atual[$i] <= $dat_previsao[$i]){
@@ -190,10 +255,8 @@ function excluir(id) {
                                             
                                            
                                     }
-
-                        echo "        </div>
-                                    </td>
-                                    <td ><div align='center'>".$registro["cid"]."</div></td>";
+									
+						echo"			</div></td>";
 
                                       If( ($_SESSION["perfil"] == "administrador") or ($_SESSION["perfil"] == "auditor")){
                                          echo " <td><div align='center'>".$registro["credenciado"]."</div></td>";
@@ -226,7 +289,6 @@ function excluir(id) {
 
                    
               ?>              
-            
 </table>
 			       <span style="background-color: red"></span>
 					

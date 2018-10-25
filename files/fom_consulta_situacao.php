@@ -19,7 +19,7 @@
                       
                       			<div>
 
-   									 <h1 class="documentFirstHeading">Pronto Atendimento </h1>
+   									 <h1 class="documentFirstHeading"> Consulta de Situação </h1>
                      			
 								</div>
                     </div>

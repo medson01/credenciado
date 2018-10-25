@@ -12,12 +12,12 @@
 
 		$res = $_GET["id_internacao"];
 
-			$query = mysqli_query($conn,"SELECT internamento.nome as paciente, internamento.matricula as matricula, internamento.solicitante as solicitante,
-					 internamento.crm as crm, internamento.dat_entrada as dat_entrada, internamento.dat_saida as dat_saida, cid.cid , cid.descricao as 
-					 descricao ,usuarios.nome as credenciado, cid.dias as dias, internamento.motivo as motivo, internamento.prorrogacao as prorrogacao FROM `internamento` 
-					 INNER JOIN usuarios on usuarios.id = internamento.id_usuario 
-					 INNER JOIN cid on cid.id = internamento.id_cid 
-					 WHERE internamento.id =".$res) or die("erro ao carregar consulta");
+			$query = mysqli_query($conn,"SELECT pronto_atendimento.nome as paciente, pronto_atendimento.matricula as matricula, pronto_atendimento.solicitante as solicitante,
+					 pronto_atendimento.crm as crm, pronto_atendimento.dat_entrada as dat_entrada, pronto_atendimento.dat_saida as dat_saida, cid.cid , cid.descricao as 
+					 descricao ,usuarios.nome as credenciado, cid.dias as dias, pronto_atendimento.motivo as motivo, pronto_atendimento.prorrogacao as prorrogacao FROM `pronto_atendimento` 
+					 INNER JOIN usuarios on usuarios.id = pronto_atendimento.id_usuario 
+					 INNER JOIN cid on cid.id = pronto_atendimento.id_cid 
+					 WHERE pronto_atendimento.id =".$res) or die("erro ao carregar consulta");
 
 
 						
@@ -40,7 +40,7 @@
 
 
 	}else{
-	 		 $query = mysqli_query($conn,"SELECT internamento.dat_saida as dat_saida , usuarios.nome as credenciado , internamento.dat_entrada as dat_entrada  FROM `internamento` INNER JOIN usuarios on usuarios.id = internamento.id_usuario WHERE internamento.id =".$res) or die("erro ao carregar consulta");
+	 		 $query = mysqli_query($conn,"SELECT pronto_atendimento.dat_saida as dat_saida , usuarios.nome as credenciado , pronto_atendimento.dat_entrada as dat_entrada  FROM `pronto_atendimento` INNER JOIN usuarios on usuarios.id = pronto_atendimento.id_usuario WHERE pronto_atendimento.id =".$res) or die("erro ao carregar consulta");
 	
 
 	  					
@@ -78,7 +78,7 @@
                       
                       			<div>
 
-   									 <h1 class="documentFirstHeading"> Relatório de Internamento </h1>
+   									 <h1 class="documentFirstHeading"> Relatório de Pronto Atendimento </h1>
 								</div>
                     </div>
 
@@ -121,47 +121,28 @@
 			
 						 <tr>
 						   <th scope='row'><div align="left">Credenciado: <br> &nbsp; <?php echo	$credenciado;  ?> </div></th>
-						   <th scope='col'><div align="left"></div></th>
+						   <th scope='col'><div align="left">Atendente: <br />
+&nbsp; <?php echo $_SESSION['login']; ?></div></th>
 	      </tr>
 					    <tr>
-								<th scope='row'><div align='left'>Atendente: <br> &nbsp; <?php echo $_SESSION['login']; ?></div></th>
-								<th scope='col'><div align='left' style="color:#FF0000"></div></th>
-          </tr>
-					    <tr>
-					      <th colspan="2" style="font-weight:bold; font-size:14px;" bgcolor="#CCCCCC" scope='row'><div align="center">Dados do internamento </div></th>
+					      <th colspan="2" style="font-weight:bold; font-size:14px;" bgcolor="#CCCCCC" scope='row'><div align="center">Dados do Pronto Atendimento </div></th>
 				      </tr>
 					    <tr>
-					      <th scope='row'><div align="left">Médico solicitante: <br> &nbsp; <?php echo $solicitante; ?></div></th>
-					      <th scope='col'><div align="left">CRM: <br> &nbsp; <?php echo $crm; ?></div></th>
-				      </tr>
-					    <tr>
-					      <th scope='row'><div align="left">Código do CID: <br> &nbsp; <?php echo  $cid; ?> </div></th>
-					      <th scope='col'><div align="left">Descrição do CID: <br> &nbsp;<?php echo "&nbsp;&nbsp;".$cid_desc; ?></div></th>
-				      </tr>
-					    <tr>
-					      <th scope='row'><div align="left">Diárias: <br> &nbsp; <?php echo $dias; ?></div></th>
-					      <th scope='col'><div align="left"></div></th>
-				      </tr>
-					    <tr>
-					      <th scope='row'><div align="left">Data de entrada: <br> &nbsp; <?php print date("j / n / Y \h\s H:i:s" );  ?></div></th>
-					      <th scope='col'><div align="left">Previsão de  saída: <br> &nbsp;  <?php echo date('d / m / Y', strtotime($dat_entrada."+".$dias." days"));   ?> </div></th>
-				      </tr>
-					    <tr>
-					      <th scope='row'><div align="left">
-					      	<?php
+					      <th colspan="2" scope='row'><div align="left">Motivo do atendimento <br> &nbsp;  
+					        <?php
 								
 								if(!empty($motivo)){
-
-									echo "Motivo do internamento: <br> &nbsp;";	 
 
 					      			echo $motivo;
 					      		}
 
-					      	?> </div>
-					      </th>
-					      <th scope='col'><div align="left"></div> 
-					      	
-					      </th>
+					      	?>
+					      </div>					        <div align="left"></div></th>
+				      </tr>
+					    <tr>
+					      <th scope='row'><div align="left">Data da entrada: <br> &nbsp; <?php print date("j / n / Y " );  ?></div></th>
+					      <th scope='col'><div align="left">Hora da de entrada: <br> &nbsp; <?php print date(" H:i:s" );  ?><br> 
+					        &nbsp;</div></th>
 				      </tr>
 				       <tr>
 					      <th scope='row'><div align="left">Data de Saíde: <br> &nbsp; 
@@ -171,20 +152,21 @@
 					      				echo date('d / m / Y \h\s H:i:s', strtotime($dat_saida));	
 					      			} 
 					      		 
-					      	?> </div>
-					      </th>
-					      <th scope='col'><div align="left"></div> 
-					      	<?php
+					      	?> </div>					      </th>
+					      <th scope='col'><div align="left">Permanência: <br> &nbsp;
+					        <?php
 								
-								if(!empty($prorrogacao)){
+								if(!empty($dat_saida)){	
+										
+										 $date_time  = new DateTime($dat_entrada);
+										 $diff       = $date_time->diff( new DateTime($dat_saida));
+										 echo $diff->format('%d dia(s), %H hora(s), %i minuto(s) e %s segundo(s)');
 
-									echo "Motivo da Prorrogação: <br> &nbsp;";	 
-
-					      			echo $prorrogacao;
 					      		}
 
 					      	?>
-					      </th>
+					      </div>					      					    
+						 </th>
 				      </tr>
     				</table>
 		 		</div>
@@ -204,7 +186,7 @@
 					}
 				</style>
 
-  <a href="internacao.php" > <input class='btn btn-primary delete' type="button" value="Voltar"> </a>
+  <a href="pronto_atendimento.php" > <input class='btn btn-primary delete' type="button" value="Voltar"> </a>
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	          <input class='btn btn-primary delete'  name="button" type="button" onclick="window.print();" value="Imprimir" />
           </p>

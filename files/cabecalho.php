@@ -57,7 +57,7 @@
     <script src="http://code.jquery.com/jquery-1.8.2.js"></script>
     <script src="http://code.jquery.com/ui/1.9.0/jquery-ui.js"></script>
   
-
+<!-- calendario data 
   <script>
     $(function() {
          $( "#cal_inicial" ).datepicker({
@@ -83,7 +83,8 @@
       });
     });
   </script>
-  <!-- fim calendario data -->
+  
+   /calendario data -->
 
     
     <style type="text/css">
@@ -102,7 +103,7 @@
     
     <!-- Mascara para campo -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.11/jquery.mask.min.js"></script>
+    <script src="../js/jquery.mask.min.js"></script>
 
    <script type="text/javascript">
     $("#matricula").mask("00000000.000000-00");

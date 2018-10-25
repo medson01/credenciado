@@ -28,7 +28,14 @@
 		<a href="fom_consulta_situacao.php" > 
 			<div class="thumbnail tile tile-medium tile-teal"  style="display: flex; justify-content: center; align-items: center;">	
 				
-				Pronto Atendimento 	
+				Situação 	
+			</div>
+		</a>
+
+		<a href="pronto_atendimento.php"  > 
+			<div class="thumbnail tile tile-medium tile-teal" style="display: flex; justify-content: center; align-items: center;">	
+				
+				Pronto atendimento	
 			</div>
 		</a>
 
