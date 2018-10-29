@@ -1,4 +1,4 @@
-<style type="text/css">
+﻿<style type="text/css">
 <!--
 .style1 {font-size: 14px}
 -->
@@ -15,7 +15,7 @@
 				  		<br /> 
                   		
                   		<?php
-							$login = $_SESSION["login"];
+							$login = utf8_encode($_SESSION["login"]);
 								
 							echo $login;
 				
