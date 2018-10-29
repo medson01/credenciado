@@ -124,18 +124,18 @@ function excluir(id) {
 <div align="right"><span style="right:inherit">Mês
   <select name="mes" id="mes" onchange="mudarmes()">
     <option  value="" > ... </option>
-    <option  value="internacao.php?mes=01"<?php  if($mes == '01'){ echo "selected"; } ?>>Janeiro </option>
-    <option  value="internacao.php?mes=02"<?php  if($mes == '02'){ echo "selected"; } ?>>Fevereiro</option>
-    <option  value="internacao.php?mes=03"<?php  if($mes == '03'){ echo "selected"; } ?>>Março</option>
-    <option  value="internacao.php?mes=04"<?php  if($mes == '04'){ echo "selected"; } ?>>abril</option>
-    <option  value="internacao.php?mes=05"<?php  if($mes == '05'){ echo "selected"; } ?>>Maio</option>
-    <option  value="internacao.php?mes=06"<?php  if($mes == '06'){ echo "selected"; } ?>>Junho</option>
-    <option  value="internacao.php?mes=07"<?php  if($mes == '07'){ echo "selected"; } ?>>Julho</option>
-    <option  value="internacao.php?mes=08"<?php  if($mes == '08'){ echo "selected"; } ?>>Agosto</option>
-    <option  value="internacao.php?mes=09"<?php  if($mes == '09'){ echo "selected"; } ?>>Setembro</option>
-    <option  value="internacao.php?mes=10"<?php  if($mes == '10'){ echo "selected"; } ?>>Outubro</option>
-    <option  value="internacao.php?mes=11"<?php  if($mes == '11'){ echo "selected"; } ?>>Novembro</option>
-    <option  value="internacao.php?mes=12"<?php  if($mes == '12'){ echo "selected"; } ?>>dezembro</option>
+    <option  value="pronto_atendimento.php?mes=01"<?php  if($mes == '01'){ echo "selected"; } ?>>Janeiro </option>
+    <option  value="pronto_atendimento.php?mes=02"<?php  if($mes == '02'){ echo "selected"; } ?>>Fevereiro</option>
+    <option  value="pronto_atendimento.php?mes=03"<?php  if($mes == '03'){ echo "selected"; } ?>>Março</option>
+    <option  value="pronto_atendimento.php?mes=04"<?php  if($mes == '04'){ echo "selected"; } ?>>abril</option>
+    <option  value="pronto_atendimento.php?mes=05"<?php  if($mes == '05'){ echo "selected"; } ?>>Maio</option>
+    <option  value="pronto_atendimento.php?mes=06"<?php  if($mes == '06'){ echo "selected"; } ?>>Junho</option>
+    <option  value="pronto_atendimento.php?mes=07"<?php  if($mes == '07'){ echo "selected"; } ?>>Julho</option>
+    <option  value="pronto_atendimento.php?mes=08"<?php  if($mes == '08'){ echo "selected"; } ?>>Agosto</option>
+    <option  value="pronto_atendimento.php?mes=09"<?php  if($mes == '09'){ echo "selected"; } ?>>Setembro</option>
+    <option  value="pronto_atendimento.php?mes=10"<?php  if($mes == '10'){ echo "selected"; } ?>>Outubro</option>
+    <option  value="pronto_atendimento.php?mes=11"<?php  if($mes == '11'){ echo "selected"; } ?>>Novembro</option>
+    <option  value="pronto_atendimento.php?mes=12"<?php  if($mes == '12'){ echo "selected"; } ?>>dezembro</option>
   </select>
 </span></div>
 
@@ -185,7 +185,7 @@ function excluir(id) {
                                     }
 
                          echo          "</div></td> -->
-                                    <td ><div align='center' style='width: 30px;'> <a href = 'rel_internacao.php?id_internacao=".$registro["autorizacao"]." '>  ".$registro["autorizacao"]."</a></div></td>
+                                    <td ><div align='center' style='width: 30px;'> <a href = 'pronto_atendimento_relatorio.php?id_internacao=".$registro["autorizacao"]." '>  ".$registro["autorizacao"]."</a></div></td>
                                     <td ><div align='center' style='width: 150px;'>".$registro["paciente"]."</div></td>
                                     <td ><div align='center' >".$registro["matricula"]."</div></td>
                                      <td ><div align='center'>".date("j/n/Y <\b\\r> H:i:s",strtotime($registro["dat_entrada"]))."</div></td>

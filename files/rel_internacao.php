@@ -143,7 +143,7 @@
 					      <th scope='col'><div align="left"></div></th>
 				      </tr>
 					    <tr>
-					      <th scope='row'><div align="left">Data de entrada: <br> &nbsp; <?php print date("j / n / Y \h\s H:i:s" );  ?></div></th>
+					      <th scope='row'><div align="left">Data de entrada: <br> &nbsp; <?php print date('d / m / Y ', strtotime($dat_entrada));  ?></div></th>
 					      <th scope='col'><div align="left">Previsão de  saída: <br> &nbsp;  <?php echo date('d / m / Y', strtotime($dat_entrada."+".$dias." days"));   ?> </div></th>
 				      </tr>
 					    <tr>
