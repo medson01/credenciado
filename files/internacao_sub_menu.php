@@ -55,7 +55,7 @@
           				<?php   require_once "internacao_lista.php"; ?>
 				</div>
 				<div class="tab-pane" id="2">
-        				<?php   require_once "form_internacao.php"; ?>
+        				<?php   require_once "internacao_formulario.php"; ?>
 				</div>
         		<div class="tab-pane" id="3">
           			     <iframe src="../grafico/graf_qtd_internacao_hospitiais.php" height="500" width="100%" scrolling="no" style="border:none;"></iframe> 

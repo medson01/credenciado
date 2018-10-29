@@ -51,11 +51,11 @@ function saida(id,dat_saida,data) {
 
                                    prorrogacao = prompt ("O paciente exedeu as diárias permitidas, favor informar o motivo:");
 
-                               window.location.href = "saida_internacao.php?id="+id+"&prorrogacao="+prorrogacao;
+                               window.location.href = "internacao_saida.php?id="+id+"&prorrogacao="+prorrogacao;
 
 
                        }else{
-                               window.location.href = "saida_internacao.php?id="+id;
+                               window.location.href = "internacao_saida.php?id="+id;
                        }
                     
                }
@@ -72,7 +72,7 @@ function excluir(id) {
      var resposta = confirm("Deseja remover esse registro?");
      
      if (resposta == true) {
-          window.location.href = "deleta_internacao.php?id="+id;
+          window.location.href = "internacao_deleta.php?id="+id;
 
 
      }

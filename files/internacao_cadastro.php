@@ -26,10 +26,10 @@ $matricula = str_replace("-", "", $matricula);
         
         if($insert){
           
-          require_once"rel_internacao.php";
+          require_once"internacao_relatorio.php";
           
         }else{
-         echo"<script language='javascript' type='text/javascript'>alert('internamento não cadastrado com sucesso!');window.location.href='form_internacao.php'</script>";
+         echo"<script language='javascript' type='text/javascript'>alert('internamento não cadastrado com sucesso!');window.location.href='internacao_fomulario.php'</script>";
 
         }
   

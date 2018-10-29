@@ -36,7 +36,7 @@ mysqli_query($conn,"SET NAMES 'utf8'");
                             </script>';           
                     // 
                      ?>
-                     <form name="internamento" id="internamento" action ="cadastro_internacao.php" method="post" id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+                     <form name="internamento" id="internamento" action ="internacao_cadastro.php" method="post" id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
                       <label> </label>
                       <div align="center">
                         </p>
