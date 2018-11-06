@@ -115,7 +115,7 @@
 						 <tr>
 						   <th scope='row'><div align="left">Credenciado: <br> &nbsp; <?php echo	$credenciado;  ?> </div></th>
 						   <th scope='col'><div align="left">Atendente: <br />
-&nbsp; <?php echo $_SESSION['login']; ?></div></th>
+&nbsp; <?php echo utf8_encode($_SESSION['login']); ?></div></th>
 	      </tr>
 					    <tr>
 					      <th colspan="2" style="font-weight:bold; font-size:14px;" bgcolor="#CCCCCC" scope='row'><div align="center">Dados do Pronto Atendimento </div></th>

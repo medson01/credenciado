@@ -15,9 +15,9 @@
 				  		<br /> 
                   		
                   		<?php
-							$login = utf8_encode($_SESSION["login"]);
+							$login = $_SESSION["login"];
 								
-							echo $login;
+							echo utf8_encode($login);
 				
 						?>
 					</div>
@@ -68,7 +68,7 @@
 		 If( ($_SESSION["perfil"] == "administrador") or ($_SESSION["perfil"] == "auditor")){
 		 		//  botão Avidos 
 				echo "	
-						<a href='form_cadastro_aviso.php' > 
+						<a href='aviso.php' > 
 							<div class='thumbnail tile tile-medium tile-teal' style='display: flex; justify-content: center; align-items: center;'>	
 								
 								 Avisos 

@@ -6,9 +6,9 @@ $id = $_GET['id'];
 $deleta = mysqli_query($conn,"DELETE FROM avisos WHERE id = '$id'");
 if($deleta == ''){
 echo "<script>alert('Houve um erro ao deletar!');
-location.href=\"form_cadastro_aviso.php\"</script>";
+location.href=\"aviso.php\"</script>";
 }else{
 echo "<script>alert('Registro excluido com sucesso!');
-location.href=\"form_cadastro_aviso.php\"</script>";
+location.href=\"aviso.php\"</script>";
 }
 ?>

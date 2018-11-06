@@ -21,7 +21,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge"> 
     
 
-    <link rel="kss-base-url" href="http://www.ipasealsaude.al.gov.br/ipaseal-saude">
+   <!-- <link rel="kss-base-url" href="http://www.ipasealsaude.al.gov.br/ipaseal-saude"> -->
 
 
        <link rel="stylesheet" type="text/css" href="../css/base-cachekey3495.css">
@@ -38,14 +38,14 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="../bootstrap/js/bootstrap.min.js"></script>
     <link rel="stylesheet" type="text/css" href="../css/metro-bootstrap.min.css">
-    <link rel="kinetic-stylesheet" type="text/css" href="http://www.ipasealsaude.al.gov.br/portal_kss/Tema%20Fabrica/at-cachekey1702.kss">
+    <!-- <link rel="kinetic-stylesheet" type="text/css" href="http://www.ipasealsaude.al.gov.br/portal_kss/Tema%20Fabrica/at-cachekey1702.kss"> -->
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
   
 
 
-<title>Ipaseal Saúde — ipaseal</title>
+<title>Credenciado Ipaseal Saúde</title>
 
 
 

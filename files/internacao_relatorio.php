@@ -124,7 +124,7 @@
 						   <th scope='col'><div align="left"></div></th>
 	      </tr>
 					    <tr>
-								<th scope='row'><div align='left'>Atendente: <br> &nbsp; <?php echo $_SESSION['login']; ?></div></th>
+								<th scope='row'><div align='left'>Atendente: <br> &nbsp; <?php echo utf8_encode($_SESSION['login']); ?></div></th>
 								<th scope='col'><div align='left' style="color:#FF0000"></div></th>
           </tr>
 					    <tr>
