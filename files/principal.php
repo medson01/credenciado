@@ -4,7 +4,7 @@
 	include "cabecalho.php";
 
 
-	$query = mysqli_query($conn,"SELECT avisos.titulo, avisos.conteudo, avisos.data FROM avisos INNER JOIN usuarios ON usuarios.id = avisos.id_usuarios WHERE usuarios.id = ".$_SESSION['id']."") or die("erro ao carregar os usuários");
+	$query = mysqli_query($conn,"SELECT avisos.titulo, avisos.conteudo, avisos.data FROM avisos INNER JOIN usuarios ON usuarios.id = avisos.id_usuarios WHERE avisos.status = '1' and usuarios.id = ".$_SESSION['id']."") or die("erro ao carregar os usuários");
       
                    
 
