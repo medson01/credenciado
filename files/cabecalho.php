@@ -1,4 +1,7 @@
 ﻿<?php
+  //Acertar data e hora 
+  date_default_timezone_set('America/Recife');
+
 
    // Arquivo de configuração
   require_once "../config/config.php";

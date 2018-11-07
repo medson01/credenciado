@@ -42,6 +42,10 @@ foreach($tempos as $tempo) {
       $minutos = str_pad((floor($segundos / 60)), 2, '0', STR_PAD_LEFT);
       $segundos -= $minutos * 60;
       $segundos = str_pad($segundos, 2, '0', STR_PAD_LEFT);
+      
+      $horas = abs($horas);
+      $minutos = abs($minutos);
+      $segundos = abs($segundos);
 
 return "$horas:$minutos:$segundos";
 }
