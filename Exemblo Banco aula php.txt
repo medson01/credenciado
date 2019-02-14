@@ -1,0 +1,27 @@
+<?php
+	
+	// Comando que faz a conexão com o banco de dados
+	$conn = new PDO("mysql:host=localhost;dbname=dbphp7","root","root");
+	
+	// Comando que prepara o SQL para ser executado
+	$stmt = $conn->prepare("INSERT INTO tb_usuario (deslogin, desenha) VALUE (:LOGIN, :PASSWORD)");
+	$stmt = $conn->prepare("UPDATE tb_usuario set deslogin = :LOGIN, desenha = :PASSWORD" WHERE idusuario = ID");
+	$stm =  $conn->prepare("DELETE FROM tb_usuario WHERE idusuario = ID")
+	
+	/ Variáveis do SQL
+	$login = "jose"; 
+	$password = "123456";
+	$id = 2;
+
+	// Comando bindParam, bind= ligar, Param= parametro, ligar parametro
+	$stmt->bindParam(":LOGIN", $login);
+	$stmt->bindParam(":PASSWORD", $password);
+	$stmt->bindParam(":ID", $id);
+	
+	// Comando método POO para executar o SQL
+	$stmt->execute();
+
+	echo "Insert OK!";
+
+
+?>

@@ -30,21 +30,24 @@
         						case "administrador":
         								setcookie("login",$login);
         								$_SESSION["perfil"] = $registro["perfil"];	
-                        $_SESSION["id"] = $registro["id"];							
+                        				$_SESSION["id"] = $registro["id"];	
+										$_SESSION["credenciado"] = $registro["nome"];							
         								
         						break;
 
-                    case "auditor":
-                        setcookie("login",$login);
-                        $_SESSION["perfil"] = $registro["perfil"];  
-                        $_SESSION["id"] = $registro["id"];              
-                        
-                    break;
+								case "auditor":
+										setcookie("login",$login);
+										$_SESSION["perfil"] = $registro["perfil"];  
+										$_SESSION["id"] = $registro["id"];     
+										$_SESSION["credenciado"] = $registro["nome"];	         
+									
+								break;
         							
         						case "usuario":
         								setcookie("login",$login);
-        							  $_SESSION["perfil"] = $registro["perfil"];
-        								$_SESSION["id"] = $registro["id"];  								 				
+        							 	$_SESSION["perfil"] = $registro["perfil"];
+        								$_SESSION["id"] = $registro["id"];  	
+										$_SESSION["credenciado"] = $registro["nome"];								 				
         						break;
         					}
         			}

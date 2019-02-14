@@ -12,7 +12,7 @@
 
 		$res = $_GET["id_internacao"];
 
-			$query = mysqli_query($conn,"SELECT pronto_atendimento.nome as paciente, pronto_atendimento.matricula as matricula, pronto_atendimento.dat_entrada as dat_entrada, pronto_atendimento.dat_saida as dat_saida, usuarios.nome as credenciado, pronto_atendimento.motivo as motivo, pronto_atendimento.prorrogacao as prorrogacao FROM `pronto_atendimento` 
+			$query = mysqli_query($conn,"SELECT pronto_atendimento.nome as paciente, pronto_atendimento.matricula as matricula, pronto_atendimento.dat_entrada as dat_entrada, pronto_atendimento.dat_saida as dat_saida, usuarios.nome as credenciado, pronto_atendimento.medico as medico, pronto_atendimento.motivo as motivo, pronto_atendimento.prorrogacao as prorrogacao FROM `pronto_atendimento` 
 					 INNER JOIN usuarios on usuarios.id = pronto_atendimento.id_usuario 
 					 WHERE pronto_atendimento.id =".$res) or die("erro ao carregar consulta");
 
@@ -25,8 +25,9 @@
                         $dat_entrada = $registro[2];
                         $dat_saida = $registro[3];
                         $credenciado = $registro[4];
-                        $motivo = $registro[5];
-                        $prorrogacao = $registro[6];
+                        $medico = $registro[5];
+						$motivo = $registro[6];
+                        $prorrogacao = $registro[7];
 
                          
                    }
@@ -120,9 +121,28 @@
 					    <tr>
 					      <th colspan="2" style="font-weight:bold; font-size:14px;" bgcolor="#CCCCCC" scope='row'><div align="center">Dados do Pronto Atendimento </div></th>
 				      </tr>
+					   	
 					    <tr>
-					      <th colspan="2" scope='row'><div align="left">Motivo do atendimento <br> &nbsp;  
-					        <?php
+					      <th scope='row'><div align="left">
+					        <div align="left">Médico atendente<br />
+  &nbsp;
+  <?php
+								
+								if(!empty($medico)){
+
+					      			echo $medico;
+					      		}
+
+					      	?>
+                            </div>
+					        <div align="left">
+<br />
+</div>					        
+					      <div align="left"></div></th>
+						  <th scope='col'><div align="left">
+						    <div align="left">Motivo do atendimento <br />
+						      &nbsp;
+						      <?php
 								
 								if(!empty($motivo)){
 
@@ -130,11 +150,13 @@
 					      		}
 
 					      	?>
-					      </div>					        <div align="left"></div></th>
-				      </tr>
+					                                  </div>
+						    <div align="left">
+					        </div>
+						  </tr>
 					    <tr>
-					      <th scope='row'><div align="left">Data da entrada: <br> &nbsp; <?php print date('d / m / Y ', strtotime($dat_entrada));  ?></div></th>
-					      <th scope='col'><div align="left">Hora da de entrada: <br> &nbsp; <?php print date('H:i:s', strtotime($dat_entrada));  ?><br> 
+					      <th scope='row'><div align="left">Data da entrada: <br> &nbsp; <?php print date('j / n / Y', strtotime($dat_entrada));  ?></div></th>
+					      <th scope='col'><div align="left">Hora da entrada: <br> &nbsp; <?php print date('H:i:s', strtotime($dat_entrada));  ?><br> 
 					        &nbsp;</div></th>
 				      </tr>
 				       <tr>
@@ -163,8 +185,7 @@
 					      </br>		
 					      </br>
 					      </br>	
-					      </br>		      					    
-						 </th>
+					      </br>						 </th>
 				      </tr>
 
 				      <tr>
@@ -175,8 +196,7 @@
  							<div style="text-align: justify;">
 										Caro credenciado, é considerado pronto atendimento a permanencia de 12 horas do usuário do plano no hospital.
 
-										Caso o mesmo necessite permanecer além do prazo, o atendente deverá cadastrá-lo no sistema de internação, através do botão internação.
-				      	</th>
+										Caso o mesmo necessite permanecer além do prazo, o atendente deverá cadastrá-lo no sistema de internação, através do botão internação.				      	</th>
 				      </tr>
 				      <tr>
 				      	<th></th>

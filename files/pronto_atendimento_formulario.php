@@ -39,6 +39,14 @@
                             <td>&nbsp;</td>
                           </tr>
                           <tr>
+                            <td >Médico atendente </td>
+                            <td><input name="medico" class="form-matric" id="medico" size="60"  minlength="4" required="required" placeholder="Digite o nome do médico atendente"/></td>
+                          </tr>
+                          <tr>
+                            <td >&nbsp;</td>
+                            <td>&nbsp;</td>
+                          </tr>
+                          <tr>
                             <td >&nbsp;</td>
                             <td><div align="right" class="style3">
                               <div align="right">

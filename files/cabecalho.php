@@ -112,7 +112,21 @@
     $("#matricula").mask("00000000.000000-00");
     $("#crm").mask("0000");
     </script>
-    
+
+
+	<!-- Mascara para valor monetário -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://igorescobar.github.io/jQuery-Mask-Plugin/js/jquery.mask.min.js"></script>
+   
+	 <script>
+		$(document).ready(function(){
+	   			$("#valor").mask('000.000.000.000.000,00', {reverse: true});
+	  			$("#valor").change(function(){
+				$("#value").html($(this).val().replace(/\D/g,''))
+	 	 })
+	  
+		});
+	 </script>
 
 
   

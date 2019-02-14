@@ -82,18 +82,22 @@ function excluir(id) {
                     
    <table class="table table-striped" align="center" style="font-size: 9px">
                <tr>
-                 <td colspan="8" style="text-align: center; text-decoration-style: solid;"> <strong>Avisos cadastrados</strong></td>
+                 <td colspan="10" style="text-align: center; text-decoration-style: solid;"> <strong>Avisos cadastrados</strong></td>
                </tr>
                <tr>
                   <td ><div align="center">Status</div></td>
-                  
                   <td ><div align="center">Login</div></td>
                    <td ><div align="center">Data</div></td>
                   <td ><div align="center">Titulo</div></td>
                   <td ><div align="center">Aviso</div></td>
                   <td style="width:25px"><div align="center"></div></td>
                   <td style="width:25px"><div align="center"></div></td>
-                  <td style="width:25px"><div align="center"></div></td>
+                   <td style="width:25px"><div align="center"></div></td>
+                    <td style="width:25px"><div align="center"></div></td>
+
+                  
+
+                 
                  
 
                </tr>
@@ -119,17 +123,37 @@ function excluir(id) {
                                     <td><div align='center'>".$conteudo[$i]."</div></td>
                                    
                          ";
-                       If( $_SESSION["perfil"] == "administrador"){
-                            print "
+
+                       if( $_SESSION["perfil"] == "auditor" ){
+
+                            print "     <td></td>
+                                        <td></td>
                                         <td style='width:25px'><a class='btn btn-success btn-sm' href=aviso_ativa.php?id=".$id[$i]."><span class='glyphicon glyphicon-ok' align: center;'></span></a></td>
                                       ";
+
                             print "
                                         <td style='width:25px'><a class='btn btn-primary btn-sm'  href=aviso_desativar.php?id=".$id[$i]."><span class='glyphicon glyphicon-remove' align: left;'></span></a></td>
                                       ";
+
+                        }elseif($_SESSION["perfil"] == "administrador"){
+
+                            print "   
+                                        <td style='width:25px'><a class='btn btn-success btn-sm' href=aviso_ativa.php?id=".$id[$i]."><span class='glyphicon glyphicon-ok' align: center;'></span></a></td>
+                                      ";
+
                             print "
-                                        <td style='width:25px'><div align='center'><a class='btn btn-danger btn-sm' href=aviso_deleta.php?id=".$id[$i]."><span class='glyphicon glyphicon-trash' style='align: center;'></span></a></td>
+                                        <td style='width:25px'><a class='btn btn-primary btn-sm'  href=aviso_desativar.php?id=".$id[$i]."><span class='glyphicon glyphicon-remove' align: left;'></span></a></td>
+                                      ";
+
+                            print "
+                                      <td style='width:25px'><div align='center'><a class='btn btn-danger btn-sm' href=aviso_deleta.php?id=".$id[$i]."><span class='glyphicon glyphicon-trash' style='align: center;'></span></a></td>
                                       </tr>";
-                       }
+                        }else{
+
+                            print "<td></td>
+                                    <td></td>
+                                    <td></td>";
+                        }
 
                   } 
               ?>              
