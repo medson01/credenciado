@@ -1,6 +1,6 @@
 <?php 
   
-  //Arquivo de configuração
+  //Arquivo de configuraï¿½ï¿½o
   include "cabecalho.php";
 	
 
@@ -9,11 +9,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Upload de vários arquivos com PHP</title>
+<title>Upload de vï¿½rios arquivos com PHP</title>
 </head>
  
 <body>
-<h1>Upload de vários arquivos com PHP</h1>
+<h1>Upload de vï¿½rios arquivos com PHP</h1>
 
 <form action="teste_consulta.php" method="post" enctype="multipart/form-data">
 <p><input type="file" name="arquivo[]" /></p>
@@ -21,7 +21,15 @@
 <p><input type="file" name="arquivo[]" /></p>
 <p><input type="file" name="arquivo[]" /></p>
 <p><input type="file" name="arquivo[]" /></p>
+
+<input class="form-control form-control-lg" type="text" placeholder=".form-control-lg">
+<input class="form-control" type="text" placeholder="Input padrÃ£o">
+<input class="form-control form-control-sm" type="text" placeholder=".form-control-sm">
+
+
 <p><input type="submit" value="Enviar" /></p>
+
+
 </form>
 
 

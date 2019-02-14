@@ -2,7 +2,11 @@
 	
 	// Comando que faz a conexão com o banco de dados
 	$conn = new PDO("mysql:host=localhost;dbname=dbphp7","root","root");
-	
+
+	// Trabalhando com transações. Funcionalidade com commit, rollback, Confimar e voltar ações de banco de dados.
+	// Esta ligado a conexão de banco
+	$conn->beginTransaction();
+
 	// Comando que prepara o SQL para ser executado
 	$stmt = $conn->prepare("INSERT INTO tb_usuario (deslogin, desenha) VALUE (:LOGIN, :PASSWORD)");
 	$stmt = $conn->prepare("UPDATE tb_usuario set deslogin = :LOGIN, desenha = :PASSWORD" WHERE idusuario = ID");
@@ -20,6 +24,11 @@
 	
 	// Comando método POO para executar o SQL
 	$stmt->execute();
+
+	// Caso use transações ( beginTransaction() )  usa-se no $stm o comando abaixo:
+	$stmt->execute(array($id));
+	// $conn->rollback(); // retorna o valor após uma ação de banco. Ex: delete
+	// $conn->commit(); // Confirma uma ação de banco. Ex: delete
 
 	echo "Insert OK!";
 

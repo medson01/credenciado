@@ -2,6 +2,12 @@
 <?php 
 
       include 'cabecalho.php';
+	  
+	 
+
+      $sql = mysqli_query($conn,"SELECT id, nome FROM credenciado") or die("erro ao carregar os usuários");
+      
+	  
                   
  ?>
 
@@ -40,20 +46,37 @@
               <div class="panel panel-default">
                   <div class="panel-heading">
                           <p>&nbsp;</p>
-                          <table width="400"border="0"align="center">
+                          <table width="460"border="0"align="center">
                             <tr>
-                              <td width="44"><font>Nome&nbsp;</font> </td>
-                              <td width="818">
+                              <td width="77"><font>Nome&nbsp;</font></td>
+                              <td width="36">&nbsp;</td>
+                              <td width="385">
                                 <div align="left">
-                                  <input class="form-matric" style="background:#faffbd;" type="text" name="nome" id="nome" required="required" />
+                                  <input name="nome" type="text" class="form-matric" id="nome" style="background:#faffbd;" size="60" required="required" />
                               </div></td>
                             </tr>
                             <tr>
                               <td>&nbsp;</td>
-                              <td><div align="right"></div></td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                            </tr>
+                            <tr>
+                              <td>Perfil</td>
+                              <td>&nbsp;</td>
+                              <td><select class="form-matric" style="background:#faffbd;" id="perfil" name="perfil" required="required">
+                                  <option  value="administrador">Administrador</option>
+                                  <option  value="auditor">Auditor</option>
+                                  <option  value="usuario">Usuario</option>
+                              </select></td>
+                            </tr>
+                            <tr>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
                             </tr>
                             <tr>
                               <td>Login&nbsp;</td>
+                              <td>&nbsp;</td>
                               <td>
                                 <div align="left">
                                   <input class="form-matric" style="background:#faffbd;" type="text" name="login" id="login"  required="required" />
@@ -62,29 +85,41 @@
                             <tr>
                               <td>&nbsp;</td>
                               <td>&nbsp;</td>
+                              <td>&nbsp;</td>
                             </tr>
                             <tr>
-                              <td><p>Senha&nbsp;</p>                              </td>
+                              <td>Senha&nbsp;</td>
+                              <td><p>&nbsp;</p>                              </td>
                               <td><input class="form-matric" style="background:#faffbd;" type="password" name="senha" id="senha"  required="required" /></td>
                             </tr>
                             <tr>
                               <td>&nbsp;</td>
                               <td>&nbsp;</td>
+                              <td>&nbsp;</td>
                             </tr>
                             <tr>
-                              <td>Perfil</td>
-                              <td><select class="form-matric" style="background:#faffbd;" id="perfil" name="perfil" required="required" style="width:100%" style="background:#faffbd;">
-                                <option  value="administrador">Administrador</option>
-                                <option  value="auditor">Auditor</option>
-                                <option  value="usuario">Usuario</option>
-
-                              </select></td>
+                              <td>Empresa</td>
+                              <td>&nbsp;</td>
+                              <td>
+							  
+							  <select class="form-matric" style="background:#faffbd;" id="empresa" name="empresa" required="required">
+                                <option  value="...">...</option>
+                                <?php
+								
+								while($registro = mysqli_fetch_row($sql)){
+									echo "<option  value=".$registro[0].">".$registro[1]."</option>";        
+                   				}
+								
+								?>
+							  </select>							  </td>
                             </tr>
                             <tr>
                               <td>&nbsp;</td>
                               <td>&nbsp;</td>
+                              <td>&nbsp;</td>
                             </tr>
                             <tr>
+                              <td>&nbsp;</td>
                               <td>&nbsp;</td>
                               <td><div align="right">
                                 <input class="btn btn-primary delete" type="submit" value="Cadastrar" id="entrar" name="entrar"  />

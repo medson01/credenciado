@@ -9,7 +9,7 @@ $nome = strtoupper($_POST["nome"]);
 $login = strtoupper($_POST["login"]);
 $perfil = $_POST["perfil"];
 $senha = $_POST['senha'];
-//$senha = $_POST["senha"];
+$id_credenciado = $_POST['empresa'];
 $sql = mysqli_query($conn,"SELECT login FROM usuarios WHERE login = '$login'") or die("erro ao carregar os usuários");
 $array = mysqli_fetch_array($sql, MYSQLI_ASSOC);
 $logarray = $array['login'];
@@ -24,7 +24,7 @@ $logarray = $array['login'];
         die();
 
       }else{
-        $query = "INSERT INTO usuarios (nome,login,senha,perfil) VALUES ('$nome','$login','$senha','$perfil')";
+         $query = "INSERT INTO usuarios (id_credenciado,nome,login,senha,perfil) VALUES ('$id_credenciado','$nome','$login','$senha','$perfil')";
         $insert = mysqli_query($conn, $query);
         
         if($insert){
