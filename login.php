@@ -31,6 +31,7 @@
         								setcookie("login",$login);
         								$_SESSION["perfil"] = $registro["perfil"];	
                         				$_SESSION["id"] = $registro["id"];	
+										$_SESSION["id_credenciado"] = $registro["id_credenciado"];
 										$_SESSION["credenciado"] = $registro["nome"];							
         								
         						break;
