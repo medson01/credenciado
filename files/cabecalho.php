@@ -78,7 +78,7 @@
     <link rel="stylesheet" type="text/css" href="../css/titulo_conteudo.css"/>
 
 
-  	<!-- Soma campos -->
+  	<!-- Mascara campos -->
   	<script src="../js/mascara_campos.js"></script>
 
 

@@ -1,60 +1,45 @@
 <?php 
-  
-  //Arquivo de configuração
-  include "cabecalho.php";
-	
 
- ?>
- 
-<style type="text/css">
-<!--
-.style3 {font-size: 10px}
--->
-</style>
-        
-            <td width="898" id="portal-column-content">
-
-              
-                <div class="">
-                  <div id="region-content" class="documentContent">
-                    
-
-                                      
-                    <div id="viewlet-above-content"></div>
-
-                    
-                    <div id="content">
-                      
-                      			<div>
-
-   									 <h1 class="documentFirstHeading">Envio Faturamento </h1>
-   									 <p class="documentFirstHeading">&nbsp;</p>
-                      			</div>
-                    </div>
-					<table width="688"border="0"align="center">
-                                <tr>
-                                  <td colspan="4"><div align="center"><font>Detalhe do envio</font> </div></td>
-                                </tr>
-                                <tr>
-                                  <td colspan="4">&nbsp;                                </td>
-                      <tr>
-                        <td colspan="4"><span class="style3">Arquivos:</span>                          <br />
-                        <?php 
 
 
 $id_usuario =  $_POST["id"];
+$codigo = $_POST["codigo"];
+$credenciado = $_POST["credenciado"];
 $prod_mes = $_POST["prod_mes"];
 $prod_ano = $_POST["prod_ano"];
-$qtd_lote = $_POST["qtd_lote"];
+$cpf_cnpj = $_POST["cpf_cnpj"];
+$telefone = $_POST["telefone"];
+$celular = $_POST["celular"];
+$email = $_POST["email"];
+$qtd_eletivas = $_POST["qtd_eletivas"];
+$val_eletivas = $_POST["val_eletivas"];
+$qtd_emergencias = $_POST["qtd_emergencias"];
+$val_emergencias = $_POST["val_emergencias"];
+$qtd_visitas = $_POST["qtd_visitas"];
+$val_visitas = $_POST["val_visitas"];
+$qtd_raix = $_POST["qtd_raix"];
+$val_raix = $_POST["val_raix"];
+$qtd_previos = $_POST["qtd_previos"];
+$val_previos = $_POST["val_previos"];
+$qtd_procedimento = $_POST["qtd_procedimento"];
+$val_procedimento = $_POST["val_procedimento"];
+$qtd_pa = $_POST["qtd_pa"];
+$val_pa = $_POST["val_pa"];
+$qtd_auditoria = $_POST["qtd_auditoria"];
+$val_auditoria = $_POST["val_auditoria"];
+$quantidade = $_POST["quantidade"];
 $valor = $_POST["valor"];
 
-        $query = "INSERT INTO faturamento (id, id_usuario, mes, ano, qtd_lote, valor) VALUES (null,'$id_usuario','$prod_mes','$prod_ano','$qtd_lote', '$valor')";
-      
+
+		$query = "INSERT INTO `faturamento`(`id`, `id_usuario`, `mes`, `ano`, `qtd_eletivas`, `val_eletivas`, `qtd_emergencias`, `val_emergencias`, `qtd_visitas`, `val_visitas`, `qtd_raix`, `val_raix`, `qtd_previos`, `val_previos`, `qtd_procedimento`, `val_procedimento`, `qtd_pa`, `val_pa`, `qtd_auditoria`, `val_auditoria`, `quantidade`, `valor`) VALUES (null, '".$id_usuario."', '".$prod_mes."', '".$prod_ano."', '".$qtd_eletivas."', '".$val_eletivas."', '".$qtd_emergencias."', '".$val_emergencias."', '".$qtd_visitas."', '".$val_visitas."', '".$qtd_raix."', '".$val_raix."', '".$qtd_previos."', '".$val_previos."', '".$qtd_procedimento."', '".$val_procedimento."', '".$qtd_pa."', '".$val_pa."', '".$qtd_auditoria."', '".$val_auditoria."', '".$quantidade."', '".$valor."')";
+
+		             
 
         $insert = mysqli_query($conn, $query);
         
         if($insert){
-          /* echo"<script language='javascript' type='text/javascript'>alert('Faturamento cadastrado com sucesso!');window.location.href='form_faturamento_envio.php'</script>"; */
+         
+		   
 		  
 		     if(isset($_FILES['arquivo']))
 				   {
@@ -80,6 +65,7 @@ $valor = $_POST["valor"];
 							$tamanhoArquivo = $_FILES["arquivo"]["size"][$i];
 							$nomeTemporario = $_FILES["arquivo"]["tmp_name"][$i];
 							
+							$nomeArqAntigo[$i] = $nomeArquivo;
 							
 							// Verifica se o arquivo foi colocado no campo
 							if (!empty($nomeArquivo)) {
@@ -88,15 +74,15 @@ $valor = $_POST["valor"];
 							
 								// Verifica se o tamanho do arquivo é maior que o permitido
 								if ($tamanhoArquivo > $tamanhoMaximo) {
-									$erro = "O arquivo " . $nomeArquivo . " não deve ultrapassar " . $tamanhoMaximo. " bytes";
+									$erro = "O arquivo " . $nomeArquivo . " n\u00e3o deve ultrapassar " . $tamanhoMaximo. " bytes";
 								} 
 								// Verifica se a extensão está entre as aceitas
 								elseif (!in_array(strrchr($nomeArquivo, "."), $extensoes)) {
-									$erro = "A extensão do arquivo <b>" . $nomeArquivo . "</b> não é válida";
+									$erro = "A extens\u00e3o do arquivo " . $nomeArquivo . " n\u00e3o \u00e9 v\u00e1lida. \\n Exten\u00e7\u00f5es permitidas: .xlsx, .txt, .pdf, .xls";
 								} 
 								// Verifica se o arquivo existe e se é para substituir
 								elseif (file_exists($caminho . $nomeArquivo) and !$substituir) {
-									$erro = "O arquivo <b>" . $nomeArquivo . "</b> já existe";
+									$erro = "O arquivo " . $nomeArquivo . " j\u00e1 existe";
 								}
 								
 								//Pegando extensão do arquivo
@@ -105,68 +91,35 @@ $valor = $_POST["valor"];
 								// Se não houver erro
 								if (!$erro) {
 									// Muda o nome do arquivo
-									$nomeArquivo = $_SESSION["credenciado"]."_". $i ."_". date("d.m.Y-H.i.s").".".$ext;
+									$nomeArquivo = $_SESSION["credenciado"]."_prod".$prod_mes.$prod_ano."_". $i ."_". date("d.m.Y-H.i.s").".".$ext;
 									// Move o arquivo para o caminho definido
 									move_uploaded_file($nomeTemporario, ($caminho . $nomeArquivo));
 									// Mensagem de sucesso
-									echo "O arquivo <b>".$nomeArquivo."</b> foi enviado com sucesso. <br />";
-									$x = 0;
-									$x = $x + 1;
+									//echo "O arquivo <b>".$nomeArquivo."</b> foi enviado com sucesso. <br />";
+
 								} 
 								// Se houver erro
 								else {
 									// Mensagem de erro
 									
-									echo "<tr>
-                                  			<td>Erros</td>
-                                  			<td>" . $erro .	"</td>
-										  </tr>";
+									 echo"<script language='javascript' type='text/javascript'>alert('".$erro."');window.location.href='faturamento_formulario.php'</script>";
 										
 								}
+
+								$x = $i + 1;
 							}
 						}
 				   }
 		  
+		  									  
+		  // Arquivos enviados
+		  echo"<script language='javascript'>alert('Faturamento cadastrado com sucesso! \\n ".$x." arquivo(s) enviado(s); \\n Obrigado!');</script>"; 
+		  
         }else{
-          echo"<script language='javascript' type='text/javascript'>alert('Produção não enviada com sucesso!');window.location.href='form_faturamento_envio.php'</script>";
+          echo"<script language='javascript' type='text/javascript'>alert('Produção não enviada com sucesso!');window.location.href='faturamento_formulario.php'</script>";
 
         }
   
      
   
-?>                                </td>
-                      <tr>
-                        <td width="263">&nbsp;</td>
-                        <td width="415" colspan="3" style="font-size:10px">
-                      <tr>
-                          <td colspan="2"><span class="style3">Quantidade de arquivos enviados</span><br />
-                          <?php echo $x+1; ?></td>
-                          </tr>
-		</table>
-<p><br />
-		            </p>
-                     <div class="x"></div>
-			<div id="feature"></div>
-  </div>		
-<!-- Conteudo -->
-					
-			       
-					
-					
-					
-					
-<!--/ Coonteudo -->                      
-                      </p>
-              </div>
-           
-          </tr>
-        </tbody>
-    </table>
-
-</div>
-  
-  
- <?php
- 
- 	  include "rodape.php";
- ?>     
+?>   

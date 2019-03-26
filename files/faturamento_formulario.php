@@ -2,13 +2,37 @@
   
   //Arquivo de configuração
   include "cabecalho.php";
+  
+  # Corrige o erro de acentuação no banco
+	mysqli_query($conn,"SET NAMES 'utf8'");
 	
+	$sql = mysqli_query($conn,"SELECT credenciado.codigo, credenciado.nome, credenciado.cpf_cnpj, credenciado.endereco, credenciado.numero, credenciado.cep, credenciado.cidade,credenciado.estado,credenciado.telefone, credenciado.celular, credenciado.email FROM `usuarios` INNER JOIN credenciado on credenciado.id = id_credenciado WHERE id_credenciado =1") or die("erro ao carregar os usuários");
+	 
+	 while($registro = mysqli_fetch_row($sql)){
+
+                        $codigo = $registro[0];
+                        $credenciado = $registro[1];
+                        $cpf_cnpj = $registro[2];
+                        $_SESSION["endereco"] = $registro[3];
+                        $_SESSION["numero"] = $registro[4];
+                        $_SESSION["cep"] = $registro[5];
+                        $_SESSION["cidade"] = $registro[6];
+                        $_SESSION["estado"] = $registro[7];
+                        $telefone = $registro[8];
+                        $celular = $registro[9];
+                        $email = $registro[10];
+                        
+                         
+                   }
 
  ?>
- 
+
+
 <style type="text/css">
 <!--
 .style3 {font-size: 10px}
+.style5 {font-family: Arial, Helvetica, sans-serif; font-size: 11px; }
+.style8 {font-size: 9px}
 -->
 </style>
         
@@ -25,103 +49,325 @@
                     
                     <div id="content">
                       
-                      			<div>
+           			  <div>
 
-   									 <h1 class="documentFirstHeading">Envio Faturamento </h1>
-   									 <p class="documentFirstHeading">&nbsp;</p>
-                      			</div>
+						   <h1 class="documentFirstHeading">Envio Faturamento </h1>
+							    </div>
                     </div>
 
  
-                    <form action="faturamento_envio.php" method="post" class="form-group" enctype="multipart/form-data">
+                    <form action="faturamento_relatorio.php" method="post" class="form-group" enctype="multipart/form-data">
+
+					
                       <div align="center">
-                              <p><br />
-                              </p>
-                              <table width="572"border="0"align="center">
+					   <div class="form-group">
+                         <p>&nbsp;</p>
+                              <table width="712"border="0"align="center">
                                 <tr>
-                                  <td width="250"><font>Credenciado</font> </td>
-                                  <td colspan="3"><div align="left">
-                                      <input class="form-matric" style="background:#faffbd;" type="text" size="50" value="<?php echo $_SESSION["credenciado"]; ?>" />
-									  <input class="form-matric" style="background:#faffbd;" type="hidden" name="id" id="id" size="50" value="<?php echo $_SESSION["id"]; ?>" />
-                                  </div></td>
+                                  <td colspan="11">Dados do Credenciado</td>
                                 </tr>
                                 <tr>
-                                  <td>&nbsp;</td>
-                                  <td colspan="3"><div align="right"></div></td>
+                                  <td colspan="11" style="border-top:ridge">&nbsp;</td>
                                 </tr>
+                                
                                 <tr>
-                                  <td>Produção</td>
-                                  <td width="96"><div align="left">
-                                      <span class="style3">Mês</span> 
-                                      <br />
-                                   <select name="prod_mes" class="form-control" required="required" style="background:#faffbd;">
-									<option  value="" > ... </option>
-									<option  value="01">Janeiro </option>
-									<option  value="02">Fevereiro</option>
-									<option  value="03">Março</option>
-									<option  value="04">abril</option>
-									<option  value="05">Maio</option>
-									<option  value="06">Junho</option>
-									<option  value="07">Julho</option>
-									<option  value="08">Agosto</option>
-									<option  value="09">Setembro</option>
-									<option  value="10">Outubro</option>
-									<option  value="11">Novembro</option>
-									<option  value="12">dezembro</option>
-								  </select>
-                                  </div></td>
-                                  <td width="114">&nbsp;</td>
-                                  <td width="94"><span class="style3">Ano<br />
-                                  </span>
-                                    <select name="prod_ano" class="form-control" required="required" style="background:#faffbd;">
+                                  <td width="92"><font>
+                                    <span class="style8">Código</span><br />
+                                    <input name="codigo" type="text" class="form-matric" style="background:#faffbd;" readonly="true" value="<?php echo $codigo;  ?>" size="12" />
+                                  </font></td>
+                                  <td width="1">&nbsp;</td>
+                                  <td colspan="3"><font>
+                                    <span class="style8">Credenciado<br />
+</span>
+                                    <input name="credenciado" type="text" class="form-matric" style="background:#faffbd;" readonly="true" value="<?php echo $credenciado ?>" size="44" />
+									<input name="id" id="id"   type="hidden" class="form-matric" style="background:#faffbd;" size="50" value="<?php echo $_SESSION["id"]; ?>" />
+                                  </font></td>
+                                  
+                                  <td width="1">&nbsp;</td>
+                                  <td width="172"><font><span class="style8">Competência</span></font><br />
+                                  <select name="prod_mes" class="form-control" required="required" >
+                                    <option  value="" >... </option>
+                                      <option  value="01">Janeiro </option>
+                                      <option  value="02">Fevereiro</option>
+                                      <option  value="03">Março</option>
+                                      <option  value="04">abril</option>
+                                      <option  value="05">Maio</option>
+                                      <option  value="06">Junho</option>
+                                      <option  value="07">Julho</option>
+                                      <option  value="08">Agosto</option>
+                                      <option  value="09">Setembro</option>
+                                      <option  value="10">Outubro</option>
+                                      <option  value="11">Novembro</option>
+                                      <option  value="12">dezembro</option>
+                                    </select></td>
+                                
+								  <td width="1">&nbsp;</td>
+								  <td width="136"><font><span class="style8">.</span></font><br />
+								    <select name="prod_ano" class="form-control" required="required" >
                                     <option  value="" > ... </option>
                                     <option  value="2019">2019 </option>
                                     <option  value="2018">2018 </option>
                                   </select></td>
+								  
+                                </tr>
+                                <tr>
+                                  <td colspan="11">&nbsp;</td>
+                                </tr>
+                                <tr>
+                                  <td colspan="11"><font>
+                                 
+                                  </font></td>
+                                </tr>
+                                <tr>
+                                  <td><font><span class="style8">CPF / CNPJ<br />
+                                  </span>
+                                      <input name="cpf_cnpj" type="text" class="form-matric" style="background:#faffbd;" readonly="true" value="<?php echo $cpf_cnpj; ?>" size="12" />
+                                  </font></td>
+                                  <td>&nbsp;</td>
+                                  <td width="144"><font><span class="style8">Fone Comercial<br />
+                                  </span>
+                                      <input name="telefone" type="text" class="form-matric" style="background:#faffbd;" readonly="true" value="<?php echo $telefone; ?>" size="18" />
+                                  </font></td>
+                                  <td width="1">&nbsp;</td>
+                                  <td width="126"><font><span class="style8">Celular</span><br />
+                                      <input name="celular" type="text" class="form-matric" style="background:#faffbd;" readonly="true" value="<?php echo $celular; ?>" size="18" />
+                                  </font></td>
+                                  <td>&nbsp;</td>
+                                  <td colspan="3"><font><span class="style8"><font><font>E-mail<br />
+                                  </font>
+                                          <input name="email" type="text" class="form-matric" style="background:#faffbd;" readonly="true" value="<?php echo $email; ?>" size="30" />
+                                  </font></span></font></td>
+          
+                                </tr>
+						 </table>
+
+							  <p>&nbsp;</p>
+							  <table width="712"border="0"align="center">
+                                <tr>
+                                  <td width="218">Consultas</td>
+                                  <td width="135"><div align="right"><span class="style8">Quantidade</span></div></td>
+                                  <td width="72">&nbsp;</td>
+                                  <td colspan="2"><span class="style8">Faturado</span></td>
+                                </tr>
+                                <tr>
+                                  <td colspan="5" style="border-top:ridge">&nbsp;</td>
+                                </tr>
+                                <tr>
+                                  <td><span class="style5">Eletivas</span></td>
+                                  <td width="135">
+                                    <div align="right">
+                                      <input style="text-align:right" class="form-control form-control-sm" type="text" name="qtd_eletivas" id="qtd_eletivas"   size="20" onblur="calcular()"/>
+                                  </div></td>
+                                  <td>&nbsp;</td>
+                                  <td width="145">
+                                    <input  class="form-control form-control-sm" type="text" name="val_eletivas" id="val_eletivas" size="20" onblur="calcular()"/>                                  </td>
+                                  <td width="120">&nbsp;</td>
                                 </tr>
                                 <tr>
                                   <td>&nbsp;</td>
-                                  <td colspan="3">&nbsp;</td>
+                                  <td>&nbsp;</td>
+                                  <td>&nbsp;</td>
+                                  <td colspan="2">&nbsp;</td>
                                 </tr>
                                 <tr>
-                                  <td><p>Quantidade de lotes </p></td>
-                                  <td colspan="3"><input class="form-matric" style="background:#faffbd;" type="text" name="qtd_lote" id="qtd_lote"  maxlength="3" required="required" size="16" />								  </td>
+                                  <td><span class="style5">Emergências</span></td>
+                                  <td width="135"><div align="right">
+                                    <input style="text-align:right" class="form-control form-control-sm" type="text" name="qtd_emergencias" id="qtd_emergencias"  size="20" onblur="calcular()"/>
+                                  </div></td>
+                                  <td>&nbsp;</td>
+                                  <td><div align="left">
+                                      <input class="form-control form-control-sm" type="text" name="val_emergencias" id="val_emergencias" size="20" onblur="calcular()"/>
+                                  </div></td>
+                                  <td>&nbsp;</td>
                                 </tr>
                                 <tr>
                                   <td>&nbsp;</td>
-                                  <td colspan="3">&nbsp;</td>
+                                  <td>&nbsp;</td>
+                                  <td>&nbsp;</td>
+                                  <td colspan="2">&nbsp;</td>
                                 </tr>
                                 <tr>
-                                  <td>Total R$ </td>
-                                  <td colspan="3"><input class="form-matric" type="text" style="background:#faffbd;" name="valor" id="valor"  size="16" required="required" /></td>
+                                  <td><span class="style5">Visita Hospitalar<br />
+                                  <br />
+                                  </span></td>
+                                  <td width="135"><div align="right">
+                                    <input style="text-align:right" class="form-control form-control-sm" type="text" name="qtd_visitas" id="qtd_visitas"   size="20" onblur="calcular()"/>
+                                  </div></td>
+                                  <td>&nbsp;</td>
+                                  <td><div align="left">
+                                      <input class="form-control form-control-sm" type="text" name="val_visitas" id="val_visitas"   size="20" onblur="calcular()"/>
+                                  </div></td>
+                                  <td>&nbsp;</td>
+                                </tr>
+                                <tr>
+                                  <td colspan="5">&nbsp;</td>
+                                </tr>
+                                <tr>
+                                  <td colspan="2">Exames / Raio X </td>
+                                  <td>&nbsp;</td>
+                                  <td colspan="2">&nbsp;</td>
+                                </tr>
+                                <tr>
+                                  <td colspan="5" style="border-top:ridge">&nbsp;</td>
                                 </tr>
                                 <tr>
                                   <td>&nbsp;</td>
-                                  <td colspan="3">&nbsp;</td>
+                                  <td><div align="right">
+                                      <input style="text-align:right" class="form-control form-control-sm" type="text" name="qtd_raix" id="qtd_raix"   size="20" onblur="calcular()"/>
+                                  </div></td>
+                                  <td>&nbsp;</td>
+                                  <td><div align="left">
+                                      <input class="form-control form-control-sm" type="text" name="val_raix" id="val_raix"  size="20" onblur="calcular()"/>
+                                  </div></td>
+                                  <td>&nbsp;</td>
                                 </tr>
                                 <tr>
-                                  <td>Enviar arquivo de produção </td>
-                                  <td colspan="3"><div align="right">
-                                    <p><input type="file" name="arquivo[]" /></p>
-									<p><input type="file" name="arquivo[]" /></p>
-									<p><input type="file" name="arquivo[]" /></p>
-									<p><input type="file" name="arquivo[]" /></p>
-									<p><input type="file" name="arquivo[]" /></p>
+                                  <td colspan="2">Exames prévios </td>
+                                  <td>&nbsp;</td>
+                                  <td colspan="2">&nbsp;</td>
+                                </tr>
+                                <tr>
+                                  <td colspan="5" style="border-top:ridge">&nbsp;</td>
+                                </tr>
+                                <tr>
+                                  <td>&nbsp;</td>
+                                  <td><div align="right">
+                                      <input style="text-align:right" class="form-control form-control-sm" type="text" name="qtd_previos" id="qtd_previos"  size="20" onblur="calcular()"/>
+                                  </div></td>
+                                  <td>&nbsp;</td>
+                                  <td><div align="left">
+                                      <input class="form-control form-control-sm" type="text" name="val_previos" id="val_previos" size="20" onblur="calcular()"/>
+                                  </div></td>
+                                  <td>&nbsp;</td>
+                                </tr>
+                                <tr>
+                                  <td colspan="2">Procedimentos</td>
+                                  <td>&nbsp;</td>
+                                  <td colspan="2">&nbsp;</td>
+                                </tr>
+                                <tr>
+                                  <td colspan="5" style="border-top:ridge">&nbsp;</td>
+                                </tr>
+                                <tr>
+                                  <td>&nbsp;</td>
+                                  <td><div align="right">
+                                      <input style="text-align:right" class="form-control form-control-sm" type="text" name="qtd_procedimento" id="qtd_procedimento"   size="20" onblur="calcular()"/>
+                                  </div></td>
+                                  <td>&nbsp;</td>
+                                  <td><div align="left">
+                                      <input class="form-control form-control-sm" type="text" name="val_procedimento" id="val_procedimento" size="20" onblur="calcular()"/>
+                                  </div></td>
+                                  <td>&nbsp;</td>
+                                </tr>
+                                <tr>
+                                  <td colspan="2">Pronto Atendimento - <span class="style3">P.A.</span> </td>
+                                  <td>&nbsp;</td>
+                                  <td colspan="2">&nbsp;</td>
+                                </tr>
+                                <tr>
+                                  <td colspan="5" style="border-top:ridge">&nbsp;</td>
+                                </tr>
+                                <tr>
+                                  <td>&nbsp;</td>
+                                  <td><div align="right">
+                                      <input style="text-align:right" class="form-control form-control-sm" type="text" name="qtd_pa" id="qtd_pa"   size="20" onblur="calcular()"/>
+                                  </div></td>
+                                  <td>&nbsp;</td>
+                                  <td><div align="left">
+                                      <input class="form-control form-control-sm" type="text" name="val_pa" id="val_pa"  size="20" onblur="calcular()"/>
+                                  </div></td>
+                                  <td>&nbsp;</td>
+                                </tr>
+                                <tr>
+                                  <td colspan="2">Auditoria</td>
+                                  <td>&nbsp;</td>
+                                  <td colspan="2">&nbsp;</td>
+                                </tr>
+                                <tr>
+                                  <td colspan="5" style="border-top:ridge">&nbsp;</td>
+                                </tr>
+                                <tr>
+                                  <td>&nbsp;</td>
+                                  <td><div align="right">
+                                      <input style="text-align:right" class="form-control form-control-sm" type="text" name="qtd_auditoria" size="20" id="qtd_auditoria"  onblur="calcular()"/>
+                                  </div></td>
+                                  <td>&nbsp;</td>
+                                  <td><div align="left">
+                                      <input class="form-control form-control-sm" type="text" size="20" name="val_auditoria" id="val_auditoria"  onblur="calcular()"/>
+                                  </div></td>
+                                  <td>&nbsp;</td>
+                                </tr>
+                                <tr>
+                                  <td>&nbsp;</td>
+                                  <td colspan="4">&nbsp;</td>
+                                </tr>
+                                <tr>
+                                  <td colspan="2"><div align="right"></div></td>
+                                  <td>&nbsp;</td>
+                                  <td colspan="2">&nbsp;</td>
+                                </tr>
+                                <tr>
+                                  <td>&nbsp;</td>
+                                  <td><div align="right"><span class="style8">Quantidade</span></div></td>
+                                  <td>&nbsp;</td>
+                                  <td><div align="left"><span class="style8">Faturado</span></div></td>
+                                  <td>&nbsp;</td>
+                                </tr>
+                                <tr>
+                                  <td><strong>Total R$</strong></td>
+                                  <td><div align="right">
+                                    <input style="text-align:right; background:#faffbd" class="form-matric" type="text" name="quantidade" id="quantidade"  size="20" readonly/>
+                                  </div></td>
+                                  <td>&nbsp;</td>
+                                  <td><div align="left">
+                                    <input class="form-matric" style="background:#faffbd;" type="text" name="valor" id="valor"  size="20" required="required" readonly />
+                                  </div></td>
+                                  <td>&nbsp;</td>
+                                </tr>
+                                <tr>
+                                  <td colspan="2">&nbsp;</td>
+                                  <td>&nbsp;</td>
+                                  <td colspan="2">&nbsp;</td>
+                                </tr>
+                                <tr>
+                                  <td colspan="2">Arquivos</td>
+                                  <td>&nbsp;</td>
+                                  <td colspan="2">&nbsp;</td>
+                                </tr>
+                                <tr>
+                                  <td colspan="5" style="border-top:ridge">&nbsp;</td>
+                                </tr>
+                                
+                                <tr>
+                                  <td colspan="5"><div align="right">
+                                    <p align="center"><input type="file" name="arquivo[]" /></p>
+									<p align="center"><input type="file" name="arquivo[]" /></p>
+									<p align="center"><input type="file" name="arquivo[]" /></p>
+									<p align="center"><input type="file" name="arquivo[]" /></p>
+									<p align="center"><input type="file" name="arquivo[]" /></p>
                                   </div></td>
                                 </tr>
                                 
                                 <tr>
                                   <td>&nbsp;</td>
-                                  <td colspan="3"></td>
+                                  <td colspan="4"></td>
                                 </tr>
                                 <tr>
                                   <td>&nbsp;</td>
-                                  <td colspan="3"><div align="right">
+                                  <td colspan="4"><div align="right">
                                       <input class="btn btn-primary delete" type="submit" value="Cadastrar" id="entrar" name="entrar">
                                   </div></td>
                                 </tr>
                         </table>
-
+						      <table width="349"border="0"align="center">
+                                <tr>
+                                  <td>&nbsp;</td>
+                                  <td width="137">&nbsp;</td>
+                                  <td width="20">&nbsp;</td>
+                                  <td width="96">&nbsp;</td>
+                                </tr>
+                              </table>
+					   </div>
                       </div>
                       </form>
                     <p><br />

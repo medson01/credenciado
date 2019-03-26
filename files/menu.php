@@ -62,8 +62,32 @@
 							</div>
 						</a>
 				";
+				
+				
+				//  botão Cadastro de Empresa 
+				echo "	
+						<a href='credenciado.php' > 
+							<div class='thumbnail tile tile-medium tile-teal' style='display: flex; justify-content: center; align-items: center;'>	
+								
+								 Credenciados
+							</div>
+						</a>
+				";
 
 		}
+		
+		 If( ($_SESSION["perfil"] == "administrador") or ($_SESSION["perfil"] == "faturamento")){
+		 		//  botão Avidos 
+				echo "	
+						<a href='faturamento_formulario.php' > 
+							<div class='thumbnail tile tile-medium tile-teal' style='display: flex; justify-content: center; align-items: center;'>	
+								
+								 Faturamento 
+							</div>
+						</a>
+				";
+
+		}		
 
 		 If( ($_SESSION["perfil"] == "administrador") or ($_SESSION["perfil"] == "auditor")){
 		 		//  botão Avidos 

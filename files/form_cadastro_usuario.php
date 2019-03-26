@@ -7,6 +7,7 @@
 
       $sql = mysqli_query($conn,"SELECT id, nome FROM credenciado") or die("erro ao carregar os usuários");
       
+
 	  
                   
  ?>
@@ -67,6 +68,7 @@
                                   <option  value="administrador">Administrador</option>
                                   <option  value="auditor">Auditor</option>
                                   <option  value="usuario">Usuario</option>
+								  <option  value="faturamento">Faturamento</option>
                               </select></td>
                             </tr>
                             <tr>
@@ -107,7 +109,7 @@
                                 <?php
 								
 								while($registro = mysqli_fetch_row($sql)){
-									echo "<option  value=".$registro[0].">".$registro[1]."</option>";        
+									echo "<option  value=".$registro[0].">".utf8_encode($registro[1])."</option>";        
                    				}
 								
 								?>
@@ -140,24 +142,27 @@
 					
 		   <table class="table table-striped" width="709" align="center">
                <tr>
-                 <td colspan="4" style="text-align: center; text-decoration-style: solid;"> <strong>Usuários cadastrados</strong></td>
+                 <td colspan="5" style="text-align: center; text-decoration-style: solid;"> <strong>Usuários cadastrados</strong></td>
                </tr>
                <tr>
                   <td width="236"><div align="center">Nome</div></td>
                   <td width="257"><div align="center">Login</div></td>
-                  <td width="202"><div align="center">Perfil</div></td>
+                  <td width="202"><div align="center">Perfil</div></td><br />
+ 				  <td width="202"><div align="center">Empresa</div></td>
                   <td width="202"><div align="center"></div></td>
                </tr>
                          		
               <?php
 
-                  $verifica = mysqli_query($conn,"SELECT * FROM usuarios") or die("erro ao carregar os usuários");
+                  $verifica = mysqli_query($conn,"SELECT (usuarios.id) as id, (usuarios.nome) as nome, (usuarios.login) as login, (usuarios.perfil) as perfil, (credenciado.nome) as credenciado FROM usuarios INNER JOIN credenciado ON credenciado.id = usuarios.id_credenciado") or die("erro ao carregar os usuários");
                   
                   while($registro = mysqli_fetch_assoc($verifica)){
                          print "  <tr>
                                     <td><div align='center'>".$registro["nome"]."</div></td>
                                     <td><div align='center'>".$registro["login"]."</div></td>
                                     <td><div align='center'>".$registro["perfil"]."</div></td>
+									<td><div align='center'>".$registro["credenciado"]."</div></td>
+								
                                     <td><div align='center'><a class='btn btn-primary delete' href=deleta_inscricoes.php?id=".$registro["id"].">Excluir</a></div></td>
                                   </tr>";
                    }

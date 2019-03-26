@@ -32,7 +32,7 @@
 </style>
 
 
-<div id="exTab2" class="container" style="width: 760px; padding-left: 1px;">	
+<div id="exTab2" class="container" style="width: 980px; padding-left: 1px;">	
 <ul class="nav nav-tabs">
 			<li class="active">
         		<a  href="#1" data-toggle="tab">Lista de Avisos</a>
