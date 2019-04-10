@@ -28,6 +28,10 @@
  ?>
 
 
+    <!-- Mascara campos -->
+    <script src="../js/mascara_campos.js"></script>
+
+
 <style type="text/css">
 <!--
 .style3 {font-size: 10px}

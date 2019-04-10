@@ -81,50 +81,17 @@ return "$horas:$minutos:$segundos";
 <!-- Mensagem ao passar o mouse -->
 <script type="text/javascript" src="../js/wz_tooltip.js"></script>
 
-<!-- Perguntar antes de saida -->
-<script language="Javascript">
-function saida(id,dat_saida,data) {
-   
-   if (dat_saida != 1){
+<!-- Botão Sair -->
+<script type="text/javascript" src="../js/bnt_sair.js"></script>
 
-     var resposta = confirm("Deseja dar saída do paciente?");
- 
-               if (resposta == true) {
+<!-- Botão Excluir -->
+<script type="text/javascript" src="../js/bnt_excluir.js"></script>
 
-                       //Previsaão < que data atual
-                       if(data != 1){
-
-                               var prorrogacao;
-
-                                   prorrogacao = prompt ("O paciente exedeu as 12 horas do pronto atendimento, favor informar o motivo:");
-
-                               window.location.href = "pronto_atendimento_saida.php?id="+id+"&prorrogacao="+prorrogacao;
+<!-- Botão internação -->
+<script type="text/javascript" src="../js/bnt_internacao.js"></script>
 
 
-                       }else{
-                               window.location.href = "pronto_atendimento_saida.php?id="+id;
-                       }
-                    
-               }
 
-   }else{
-      alert("Paciente já saiu!");
-   }
-}
-</script>
-
-<!-- Perguntar antes de excluir -->
-<script language="Javascript">
-function excluir(id) {
-     var resposta = confirm("Deseja remover esse registro?");
-     
-     if (resposta == true) {
-          window.location.href = "pronto_atendimento_deleta.php?id="+id;
-
-
-     }
-}
-</script>
 <div align="right"><span style="right:inherit">Mês
   <select name="mes" id="mes" onchange="mudarmes()">
     <option  value="" > ... </option>
@@ -153,7 +120,7 @@ function excluir(id) {
                     
    <table width="435" align="center" class="table table-striped" style="font-size: 9px">
                <tr>
-                 <td colspan="10" style="text-align: center; text-decoration-style: solid;"> <strong>Pacientes insternados </strong></td>
+                 <td colspan="12" style="text-align: center; text-decoration-style: solid;"> <strong>Pacientes insternados </strong></td>
                </tr>
                <tr  style='font-weight:bold;'>
                  <!-- <td width="27"><div align="center">Status</div></td> -->
@@ -192,7 +159,7 @@ function excluir(id) {
                                     <td ><div align='center' style='width: 30px;'> <a href = 'pronto_atendimento_relatorio.php?id_internacao=".$registro["autorizacao"]." '>  ".$registro["autorizacao"]."</a></div></td>
                                     <td ><div align='center' style='width: 150px;'>".$registro["paciente"]."</div></td>
                                     <td ><div align='center' >".$registro["matricula"]."</div></td>
-                                     <td ><div align='center'>".date("j/n/Y <\b\\r> H:i:s",strtotime($registro["dat_entrada"]))."</div></td>
+                                     <td ><div align='center'><font color='blue'><strong>".date("j/n/Y <\b\\r> H:i:s",strtotime($registro["dat_entrada"]))."</strong></font></div></td>
                                      <td >
                                       <div align='center'>";
 
@@ -233,7 +200,9 @@ function excluir(id) {
 
                                              $data[$i] = 1;
                                              
-                                       }
+                                       }else{ 
+									   		 $data[$i] = 0;
+									    }
 
                                      if ($registro["dat_saida"] == 0){
                                      
@@ -260,35 +229,37 @@ function excluir(id) {
                                            
                                     }
 									
-						echo"			</div></td>";
+					             	echo"			</div></td>";
 
-                                      If( ($_SESSION["perfil"] == "administrador") or ($_SESSION["perfil"] == "auditor")){
+                        
+                        If( ($_SESSION["perfil"] == "administrador") or ($_SESSION["perfil"] == "auditor")){
                                          echo " <td><div align='center'>".$registro["credenciado"]."</div></td>";
                                       }
 
-                        echo "
-                                    <td>
-                                        <div align='center'>
+                             echo " <!-- Botão sair -->
+                                    <td align='right'  style='width: 220px'>                           
+                                            <a class='btn btn-primary' style='width: 50px; height: 25px' onclick='saida(".$registro['autorizacao'].",".$dat_saida[$i].",".$data[$i].")'><span style='font-size: 10px; align: center;'> Saída </center> </span> </a>                                                   
+                                    ";
 
-                                            <!-- Botão sair -->
-                                            <a class='btn btn-primary' style='width: 50px; height: 25px' onclick='saida(".$registro['autorizacao'].",".$dat_saida[$i].",".$data[$i].")'><span style='font-size: 10px; align: center;'> Saída </center> </span> </a>
-                                            <!--/Botão sair -->
 
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div align='center'>";
-                    If( $_SESSION["perfil"] == "administrador"){
-                         echo  " <!-- Botão exluir -->
-                                            <a class='btn btn-danger' style='width: 50px; height: 25px' onclick='excluir(".$registro["autorizacao"].")'><span style='font-size: 10px; align: center;'> Excluir </span> </a>
-                                <!--/Botão exluir -->
 
-                                        </div>
-                                    </td>
-                                 </tr>";
-                          }       
-                                 $i++;
-                     }
+                             echo " <!-- Botão internamento -->
+                  
+                                            <a class='btn btn-success' style='width: 50px; height: 25px' onclick='internar(".$registro['autorizacao'].",".$dat_saida[$i].",".$data[$i].",".$registro['matricula'].",\"".$registro['paciente']."\")'><span style='font-size: 10px; align: center'> Internar </center> </span> </a>              
+                                    ";
+
+
+
+
+                        If( $_SESSION["perfil"] == "administrador"){
+
+                             echo  " <!-- Botão exluir -->
+                                                <a class='btn btn-danger' style='width: 50px; height: 25px' onclick='excluir(".$registro["autorizacao"].")'><span style='font-size: 10px; align: center;'> Excluir </span> </a>
+                                        </td>
+                                     </tr>";
+                              }       
+                                     $i++;
+                         }
                   
 
                    

@@ -4,6 +4,8 @@
  require_once "../config/config.php";
  
 $id = $_GET['id'];
+$paciente = $_GET['paciente'];
+$matricula = $_GET['matricula'];
 
 
 if(isset($_GET['prorrogacao'])){
@@ -17,14 +19,23 @@ if(isset($_GET['prorrogacao'])){
 }
 
 
-
-if($update == ''){
-echo "<script>alert('Houve um erro ao atualizar!');
-location.href=\"pronto_atendimento.php\"</script>";
+if(!isset($_GET['matricula'])){
+		if($update == ''){
+			echo "<script>alert('Houve um erro ao atualizar!');
+			location.href=\"pronto_atendimento.php\"</script>";
+			}else{
+			echo "<script>alert('Saída efetuada com sucesso!');
+			location.href=\"pronto_atendimento.php\"</script>";
+		}
 }else{
-echo "<script>alert('Registro atulizado com sucesso!');
-location.href=\"pronto_atendimento.php\"</script>";
-}
+ 	if($update == ''){
+			echo "<script>alert('Houve um erro ao atualizar!');
+			location.href=\"internacao.php?id=".$id."&matricula=".$matricula."&paciente=".$paciente."\"</script>";
+			}else{
+			echo "<script>alert('Pronto atendimento encerrado com sucesso! \\n Favor preencher os dados da internação');
+			location.href=\"internacao.php?id=".$id."&matricula=".$matricula."&paciente=".$paciente."\"</script>";
+		}
 
+}
 
 ?>

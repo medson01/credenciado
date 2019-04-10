@@ -239,16 +239,31 @@ function reset() {
                               <div align="right">
                                 <strong>
 
-                                 <a class='btn btn-primary' onclick='reset()'> Novo </center>  </a>
+                                 
                                  
                                 <?php 
 
-                                  if(isset($_GET['id'])){
+                                  if(empty($_GET['id'])){
 
                                       echo "<input type='hidden' id='id' name='id' value='".$_GET['id']."'> ";
-                                      echo "<input name='submit' type='Submit' value='Atualizar' class='btn btn-primary '/>";
-                                  }else{ 
                                       echo"<input name='submit' type='Submit' value='Cadastrar' class='btn btn-primary '/>";
+                                      
+                                      
+                                  }elseif($id ==''){
+
+                                     
+                                      echo"<input name='submit' type='Submit' value='Cadastrar' class='btn btn-primary '/> 
+                                      &nbsp;&nbsp;";
+                                      echo "<a class='btn btn-primary' onclick='reset()'> Novo </center>  </a>";
+
+                                  }else{ 
+
+                                      echo "<input type='hidden' id='id' name='id' value='".$_GET['id']."'> ";
+                                      echo "<input name='submit' type='Submit' value='Atualizar' class='btn btn-primary '/>
+                                       &nbsp;&nbsp;";
+                                      echo "<a class='btn btn-primary' onclick='reset()'> Novo </center>  </a>";
+
+
                                   } 
 
                                 ?>

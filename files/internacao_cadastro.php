@@ -3,6 +3,7 @@
   //Arquivo de configuração
   include "cabecalho.php";
 
+
 $id_cid = $_POST["id_cid"];
 $matricula = $_POST["matricula"];
 $nome = $_POST["nome"];
@@ -16,9 +17,21 @@ $cid_desc = $_POST["cid_desc"];
 $matricula = str_replace(".", "", $matricula);
 $matricula = str_replace("-", "", $matricula);
 
-		$query = "INSERT INTO `internamento`(`id`, `id_usuario`, `id_cid`, `id_revalida`, `nome`, `matricula`, `solicitante`, `crm`, `dat_entrada`,`motivo`, `prorrogacao`) VALUES (null ,'".$_SESSION['id']."', '".$id_cid."' , null , '".$nome."' , '".$matricula."' , '".$solicitante."' , '".$crm."' , '".date("Y-m-d H:i:s" )."' , '".$motivo."', null)";
 
-        
+    if(!isset($_POST['id_pa'])){
+
+
+		    $query = "INSERT INTO `internamento`(`id`, `id_usuario`, `id_cid`, `id_revalida`, `nome`, `matricula`, `solicitante`, `crm`, `dat_entrada`,`motivo`, `prorrogacao`) VALUES (null ,'".$_SESSION['id']."', '".$id_cid."' , null , '".$nome."' , '".$matricula."' , '".$solicitante."' , '".$crm."' , '".date("Y-m-d H:i:s" )."' , '".$motivo."', null)";
+
+     }else{
+
+        $id_pa = $_POST['id_pa'];
+
+        $query = "INSERT INTO `internamento`(`id`, `id_usuario`, `id_cid`, `id_revalida`, `id_pa`,`nome`, `matricula`, `solicitante`, `crm`, `dat_entrada`,`motivo`, `prorrogacao`) VALUES (null ,'".$_SESSION['id']."', '".$id_cid."' , null , '".$id_pa."' , '".$nome."' , '".$matricula."' , '".$solicitante."' , '".$crm."' , '".date("Y-m-d H:i:s" )."' , '".$motivo."', null)";
+
+     }
+
+       
 	 
         $insert = mysqli_query($conn, $query);
 		

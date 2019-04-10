@@ -1,7 +1,9 @@
 ﻿<?php 
-  
+
 # Corrige o erro de acentuação no banco
 mysqli_query($conn,"SET NAMES 'utf8'");
+
+
  
    $query = mysqli_query($conn,"SELECT * FROM cid order by cid") or die("erro ao carregar consulta");
                   $i = 1;
@@ -44,7 +46,7 @@ mysqli_query($conn,"SET NAMES 'utf8'");
                           <tr>
                             <td width="179" >Matr&iacute;cula</td>
                             <td width="360">
-                            <input required="required" type="text" name="matricula" minlength="16" class="form-matric" id="matricula" size="20" maxlength="16"placeholder="00000000.000000.00"/></td>
+                            <input required="required" type="text" name="matricula" minlength="16" class="form-matric" id="matricula" size="20" maxlength="16"placeholder="00000000.000000.00" <?php if(isset($_GET['matricula'])){ echo "value=".$_GET['matricula'];} ?> /></td>
                           </tr>
                             <tr>
                               <td>&nbsp;</td>
@@ -52,7 +54,7 @@ mysqli_query($conn,"SET NAMES 'utf8'");
                             </tr>
                             <tr>
                               <td >Nome</td>
-                              <td><input  minlength="4" name="nome" class="form-matric" required="required" placeholder="Digite o nome do paciente" size="60"/></td>
+                              <td><input  minlength="4" name="nome" class="form-matric" required="required" placeholder="Digite o nome do paciente" size="60" <?php if(isset($_GET['paciente'])){ echo "value=".$_GET['paciente'];} ?> /></td>
                             </tr>
                             <tr>
                             <td class="style3">&nbsp;</td>
@@ -133,7 +135,15 @@ mysqli_query($conn,"SET NAMES 'utf8'");
                             <td><div align="right" class="style3">
                               <div align="right">
                                 <strong>
+                                  <?php 
+                                    
+                                    if(isset($_GET['id'])){
+                                        $id_pa = $_GET['id'];
+                                        echo "<input type='hidden' id='id_pa' name='id_pa' value='".$id_pa."'>";
+                                    }
 
+
+                                  ?>
                                   <input type="hidden" id="cid" name="cid">
                                   <input type="hidden" id="cid_desc" name="cid_desc">
 
