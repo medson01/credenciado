@@ -34,10 +34,10 @@
 
 <div id="exTab2" class="container" style="width: 980px; padding-left: 1px;">
 <ul class="nav nav-tabs">
-			<li class="active">
+			<li <?php if(!isset($_GET['id'])){ echo 'class="active"';} ?>>
         		<a  href="#1" data-toggle="tab">Lista de Pronto Atendimento</a>
 			</li>
-			<li>
+			<li <?php if(isset($_GET['id'])){ echo 'class="active"';} ?>>
 				<a href="#2" data-toggle="tab">Cadastro</a>
 			</li>
 
@@ -51,10 +51,10 @@
 		</ul>
 
 			<div class="tab-content ">
-			  	<div class="tab-pane active" id="1">
+			  	<div class="tab-pane <?php if(!isset($_GET['id'])){ echo 'active';} ?>" id="1">
           				<?php   require_once "pronto_atendimento_lista.php"; ?>
 				</div>
-				<div class="tab-pane" id="2">
+				<div class="tab-pane <?php if(isset($_GET['id'])){ echo 'active';} ?>" id="2">
         				<?php   require_once "pronto_atendimento_formulario.php"; ?>
 				</div>
         		<div class="tab-pane" id="3">

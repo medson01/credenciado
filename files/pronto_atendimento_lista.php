@@ -229,7 +229,7 @@ return "$horas:$minutos:$segundos";
                                            
                                     }
 									
-					             	echo"			</div></td>";
+					             	echo"			</div></td><td></td>";
 
                         
                         If( ($_SESSION["perfil"] == "administrador") or ($_SESSION["perfil"] == "auditor")){

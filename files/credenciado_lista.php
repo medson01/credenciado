@@ -111,28 +111,26 @@ function atualizar(id) {
                                     <td ><div align='center'>".date("d/m/Y ",strtotime($registro["data_inc"]))."</div></td>
                                     <td ><div align='center'>".$registro["telefone"]."</div></td>
 								    <td ><div align='center'>".$registro["celular"]."</div></td>
-									<td ><div align='center'>".$registro["email"]."</div></td>";
+									<td ><div align='center'>".$registro["email"]."</div></td>
+									<td></td>";
 
                       
 
                         echo "
-                                    <td>
-                                        <div align='center'>
+                                    <td align='right'>
+                                       
 
                                             <!-- Botão sair -->
-                                            <a class='btn btn-primary' style='width: 60px; height: 25px' onclick='atualizar(".$registro["id"].")'><span style='font-size: 10px; align: center;'> Atualizar </center> </span> </a>
-                                            <!--/Botão sair -->
+                                            <a class='btn btn-primary' style='width: 60px; height: 25px' onclick='atualizar(".$registro["id"].")'><span style='font-size: 10px; align: center;'> Atualizar </center> </span> </a>";
+                                           
 
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div align='center'>";
+                                       
                     If( $_SESSION["perfil"] == "administrador"){
                          echo  " <!-- Botão exluir -->
                                             <a class='btn btn-danger' style='width: 50px; height: 25px' onclick='excluir(".$registro["id"].")'><span style='font-size: 10px; align: center;'> Excluir </span> </a>
-                                <!--/Botão exluir -->
+                                
 
-                                        </div>
+                                       
                                     </td>
                                  </tr>";
                           }       

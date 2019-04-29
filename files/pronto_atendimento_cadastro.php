@@ -13,23 +13,46 @@ $matricula = str_replace("-", "", $matricula);
 
 date_default_timezone_set('America/Maceio');
 
-	$query = "INSERT INTO `pronto_atendimento`(`id`,`id_usuario`,`matricula`, `nome`,`dat_entrada`,`dat_saida`,`medico`, `motivo`) VALUES (null ,'".$_SESSION['id']."','".$matricula."' , '".$nome."' , '".date("Y-m-d H:i:s" )."' , null , '".$medico."' , '".$motivo."')";
+    $matric = substr($matricula, 9, -2);
 
-     
-	 
-        $insert = mysqli_query($conn, $query);
-		
-		    $res = mysqli_insert_id($conn);
-        
-        if($insert){
-          
-          require_once"pronto_atendimento_relatorio.php";
-          
+    $query = mysqli_query($conn,"SELECT * FROM `beneficiarios` WHERE `matricula` = '".$matric."' and `contrato_ativo` = 't' and `pessoa_ativa` = 't'") or die("erro ao selecionar");
+
+
+        if (mysqli_num_rows($query)<=0){
+          echo"<script language='javascript' type='text/javascript'>alert('Usuario não está ativo ou matrícula não existe.');window.location.href='pronto_atendimento.php?id=1';</script>";
+          die();
+
+
+
         }else{
-         echo"<script language='javascript' type='text/javascript'>alert('O pronto atendimento não cadastrado com sucesso!');window.location.href='pronto_atendimento.php'</script>";
+
+         
+
+                $query = "INSERT INTO `pronto_atendimento`(`id`,`id_usuario`,`matricula`, `nome`,`dat_entrada`,`dat_saida`,`medico`, `motivo`) VALUES (null ,'".$_SESSION['id']."','".$matricula."' , '".$nome."' , '".date("Y-m-d H:i:s" )."' , null , '".$medico."' , '".$motivo."')";
+
+                 
+               
+                    $insert = mysqli_query($conn, $query);
+                
+                    $res = mysqli_insert_id($conn);
+                    
+                    if($insert){
+                      
+                      require_once"pronto_atendimento_relatorio.php";
+                      
+                    }else{
+                     echo"<script language='javascript' type='text/javascript'>alert('O pronto atendimento não cadastrado com sucesso!');window.location.href='pronto_atendimento.php'</script>";
+
+                    }
 
         }
+
   
-     
+
+
+
+
+  
+    
     
 ?>

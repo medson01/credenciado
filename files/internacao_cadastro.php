@@ -18,6 +18,22 @@ $matricula = str_replace(".", "", $matricula);
 $matricula = str_replace("-", "", $matricula);
 
 
+
+$matric = substr($matricula, 9, -2);
+
+    $query = mysqli_query($conn,"SELECT * FROM `beneficiarios` WHERE `matricula` = '".$matric."' and `contrato_ativo` = 't' and `pessoa_ativa` = 't'") or die("erro ao selecionar");
+
+
+        if (mysqli_num_rows($query)<=0){
+          echo"<script language='javascript' type='text/javascript'>alert('Usuario não está ativo ou matrícula não existe.');window.location.href='internacao.php?id=1';</script>";
+          die();
+
+
+
+        }else{
+
+
+
     if(!isset($_POST['id_pa'])){
 
 
@@ -46,6 +62,6 @@ $matricula = str_replace("-", "", $matricula);
 
         }
   
-     
+     }
     
 ?>

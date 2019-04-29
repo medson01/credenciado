@@ -30,7 +30,8 @@
        <link rel="stylesheet" type="text/css" href="../css/base-cachekey3495.css">
        <!-- Estrutura em tabelas do site -->
        <link rel="stylesheet" type="text/css" href="../css/contentpanels-cachekey9970.css">
-
+	   <!-- Remover lixo na impressão -->
+	   <link rel="stylesheet" type="text/css" href="../css/print.css" media="print" />
    
     
   <!-- Bootstrap -->
