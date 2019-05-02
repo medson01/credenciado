@@ -16,17 +16,41 @@
   $mes = date("m");
   
   }
+
+  // Definição de perfil de usuário Administrador ou usuário comum.
+ $a = "SELECT internamento.id as autorizacao, internamento.nome as paciente, internamento.matricula as matricula, internamento.solicitante as solicitante, internamento.crm as crm, internamento.dat_entrada as dat_entrada, internamento.dat_saida as dat_saida , cid.cid ,usuarios.nome as credenciado, cid.dias as dias, internamento.motivo as motivo, internamento.prorrogacao as prorrogacao, pronto_atendimento.id as id_pa ,pronto_atendimento.dat_entrada as data_pa FROM `internamento` LEFT JOIN pronto_atendimento on pronto_atendimento.id = internamento.id_pa INNER JOIN usuarios on usuarios.id = internamento.id_usuario INNER JOIN cid on cid.id = internamento.id_cid";
+
+
  
   If( $_SESSION["perfil"] == "usuario"){
-   $query = mysqli_query($conn,"SELECT internamento.id as autorizacao, internamento.nome as paciente, internamento.matricula as matricula, internamento.solicitante as solicitante, internamento.crm as crm, internamento.dat_entrada as dat_entrada, internamento.dat_saida as dat_saida , cid.cid ,usuarios.nome as credenciado, cid.dias as dias, internamento.motivo as motivo, internamento.prorrogacao as prorrogacao, pronto_atendimento.id as id_pa ,pronto_atendimento.dat_entrada as data_pa FROM `internamento` LEFT JOIN pronto_atendimento on pronto_atendimento.id = internamento.id_pa INNER JOIN usuarios on usuarios.id = internamento.id_usuario INNER JOIN cid on cid.id = internamento.id_cid WHERE usuarios.login = '".$login."' and MONTH(internamento.dat_entrada) = ".$mes." and Year(internamento.dat_entrada) = '".date("Y")."' order by internamento.id") or die("erro ao carregar consulta");
+
+    if(isset($_GET['buscar'])){
+
+       $b = " WHERE usuarios.login = '".$login."' and (internamento.nome like '%".$_GET['buscar']."%' or internamento.id = '".$_GET['buscar']."' or internamento.matricula = '".$_GET['buscar']."')order by internamento.id";
+    }else{
+
+       $b = " WHERE usuarios.login = '".$login."' and MONTH(internamento.dat_entrada) = ".$mes." and Year(internamento.dat_entrada) = '".date("Y")."' order by internamento.id";
+    }
+
   }else{
 
-     $query = mysqli_query($conn,"SELECT internamento.id as autorizacao, internamento.nome as paciente, internamento.matricula as matricula, internamento.solicitante as solicitante, internamento.crm as crm, internamento.dat_entrada as dat_entrada, internamento.dat_saida as dat_saida , cid.cid ,usuarios.nome as credenciado, cid.dias as dias, internamento.motivo as motivo, internamento.prorrogacao as prorrogacao,  pronto_atendimento.id as id_pa ,pronto_atendimento.dat_entrada as data_pa FROM `internamento` LEFT JOIN pronto_atendimento on pronto_atendimento.id = internamento.id_pa INNER JOIN usuarios on usuarios.id = internamento.id_usuario INNER JOIN cid on cid.id = internamento.id_cid WHERE MONTH(internamento.dat_entrada) = ".$mes." and Year(internamento.dat_entrada) = ".date("Y")." order by internamento.id") or die("erro ao carregar consulta");
+
+        if(isset($_GET['buscar'])){
+
+          $b = " WHERE (internamento.nome like '%".$_GET['buscar']."%' or internamento.id = '".$_GET['buscar']."' or internamento.matricula = '".$_GET['buscar']."' or usuarios.nome like '%".$_GET['buscar']."%') order by internamento.id";
+
+         
+        }else{
+
+          $b= " WHERE MONTH(internamento.dat_entrada) = ".$mes." and Year(internamento.dat_entrada) = ".date("Y")." order by internamento.id";
+
+        }
 
   }
 
 
 
+    $query = mysqli_query($conn,$a.$b) or die("erro ao carregar consulta");
 
 ?>
 
@@ -78,8 +102,13 @@ function excluir(id) {
      }
 }
 </script>
-<div align="right"><span style="right:inherit">Mês
-  <select name="mes" id="mes" onchange="mudarmes()">
+
+		
+<div style="position: absolute; top:310px; right:180px; width: 500px;">
+
+<div style="position: relative; float:right">
+
+  <select style="width:140px; font-size:12px; height:27px" class="form-control form-control-sm"  name="mes" id="mes" onchange="mudarmes()">
     <option  value="" > ... </option>
     <option  value="internacao.php?mes=01"<?php  if($mes == '01'){ echo "selected"; } ?>>Janeiro </option>
     <option  value="internacao.php?mes=02"<?php  if($mes == '02'){ echo "selected"; } ?>>Fevereiro</option>
@@ -94,7 +123,25 @@ function excluir(id) {
     <option  value="internacao.php?mes=11"<?php  if($mes == '11'){ echo "selected"; } ?>>Novembro</option>
     <option  value="internacao.php?mes=12"<?php  if($mes == '12'){ echo "selected"; } ?>>dezembro</option>
   </select>
-</span></div>
+</div>
+<div style="position:relative; float:right" >&nbsp;</div>
+<div style="position:relative; float:right" >
+<?php  
+      If( $_SESSION["perfil"] == "usuario"){  
+         echo "<form name='frmBusca' method='get' action=". $_SERVER['PHP_SELF'] ."?c=buscar' >
+                 <input type='search' class='form-control ds-input' id='search-input' placeholder='Pesquisar...' autocomplete='off' spellcheck='false' role='combobox' aria-autocomplete='list' aria-expanded='false' aria-owns='algolia-autocomplete-listbox-0' dir='auto' style='position: relative; vertical-align: top; width:350px; font-size:12px; height:27px' name='buscar'>
+            </form>";
+      }else{
+
+        echo "<form name='frmBusca' method='get' action=". $_SERVER['PHP_SELF'] ."?c=buscar' >
+                 <input type='search' class='form-control ds-input' id='search-input' placeholder='Pesquisar...' autocomplete='off' spellcheck='false' role='combobox' aria-autocomplete='list' aria-expanded='false' aria-owns='algolia-autocomplete-listbox-0' dir='auto' style='position: relative; vertical-align: top; width:350px; font-size:12px; height:27px' name='buscar'>
+            </form>";
+      }
+?>
+</div>
+</div>
+
+
 
 <!-- pegar mes de consulta  -->
 <script language="Javascript">
@@ -110,7 +157,7 @@ function excluir(id) {
                </tr>
                <tr  style='font-weight:bold;'>
                  <!-- <td width="27"><div align="center">Status</div></td> -->
-                 <td style='padding: 4px;'><div align="center">Autorização</div></td>
+                 <td style='padding: 4px;'><div align="left">Autorização</div></td>
                  <td style='padding: 4px;'><div align="center">Paciente</div></td>
                  <td style='padding: 4px;'><div align="center">Matricula</div></td>
                  <td style='padding: 4px;'><div align="center">Solicitante</div></td>

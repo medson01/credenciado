@@ -48,7 +48,13 @@
 					</li>";
 			}
 		?>
+		
+		
+		
+		
 		</ul>
+		
+		
 
 			<div class="tab-content ">
 			  	<div class="tab-pane <?php if(!isset($_GET['id'])){ echo 'active';} ?>" id="1">
@@ -64,7 +70,6 @@
   </div>
 
 <hr></hr>
-
 
 
 

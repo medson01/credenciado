@@ -64,16 +64,41 @@ return "$horas:$minutos:$segundos";
   
   }
  
+ // Definição de perfil de usuário Administrador ou usuário comum.
+
+ $a = "SELECT pronto_atendimento.id as autorizacao, pronto_atendimento.matricula as matricula, pronto_atendimento.nome as paciente, pronto_atendimento.dat_entrada as dat_entrada, pronto_atendimento.dat_saida as dat_saida , pronto_atendimento.motivo as motivo, usuarios.nome as credenciado, pronto_atendimento.prorrogacao as prorrogacao FROM `pronto_atendimento` INNER JOIN usuarios on usuarios.id = pronto_atendimento.id_usuario";
+
+
   If( $_SESSION["perfil"] == "usuario"){
-   $query = mysqli_query($conn,"SELECT pronto_atendimento.id as autorizacao, pronto_atendimento.matricula as matricula, pronto_atendimento.nome as paciente, pronto_atendimento.dat_entrada as dat_entrada, pronto_atendimento.dat_saida as dat_saida , pronto_atendimento.motivo as motivo, usuarios.nome as credenciado, pronto_atendimento.prorrogacao as prorrogacao FROM `pronto_atendimento` INNER JOIN usuarios on usuarios.id = pronto_atendimento.id_usuario WHERE usuarios.login = '".$login."' and MONTH(pronto_atendimento.dat_entrada) = ".$mes." and Year(pronto_atendimento.dat_entrada) = '".date("Y")."' order by pronto_atendimento.id") or die("erro ao carregar consulta");
+
+
+     if(isset($_GET['buscar'])){
+       
+          $b = " WHERE usuarios.login = '".$login."' and (pronto_atendimento.nome like '%".$_GET['buscar']."%' or pronto_atendimento.id = '".$_GET['buscar']."' or pronto_atendimento.matricula = '".$_GET['buscar']."')order by pronto_atendimento.id";
+
+     }else{ 
+  
+          $b = " WHERE usuarios.login = '".$login."'and MONTH(pronto_atendimento.dat_entrada) = ".$mes." and Year(pronto_atendimento.dat_entrada) = '".date("Y")."' order by pronto_atendimento.id";
+     }
+
+  
   }else{
 
-     $query = mysqli_query($conn,"SELECT pronto_atendimento.id as autorizacao, pronto_atendimento.matricula as matricula, pronto_atendimento.nome as paciente, pronto_atendimento.dat_entrada as dat_entrada, pronto_atendimento.dat_saida as dat_saida , pronto_atendimento.motivo as motivo, usuarios.nome as credenciado, pronto_atendimento.prorrogacao as prorrogacao FROM `pronto_atendimento` INNER JOIN usuarios on usuarios.id = pronto_atendimento.id_usuario WHERE MONTH(pronto_atendimento.dat_entrada) = ".$mes." and Year(pronto_atendimento.dat_entrada) = ".date("Y")." order by pronto_atendimento.id") or die("erro ao carregar consulta");
 
+    if(isset($_GET['buscar'])){
+
+
+            $b = " WHERE (pronto_atendimento.nome like '%".$_GET['buscar']."%' or pronto_atendimento.id = '".$_GET['buscar']."' or pronto_atendimento.matricula = '".$_GET['buscar']."' or usuarios.nome like '%".$_GET['buscar']."%') order by pronto_atendimento.id";
+       
+     }else{
+          
+            $b = " WHERE MONTH(pronto_atendimento.dat_entrada) = ".$mes." and Year(pronto_atendimento.dat_entrada) = '".date("Y")."' order by pronto_atendimento.id";
+  
+     }
   }
 
 
-
+   $query = mysqli_query($conn,$a.$b) or die("erro ao carregar consulta");
 
 ?>
 
@@ -91,9 +116,12 @@ return "$horas:$minutos:$segundos";
 <script type="text/javascript" src="../js/bnt_internacao.js"></script>
 
 
+		
+<div style="position: absolute; top:310px; right:180px; width: 500px;">
 
-<div align="right"><span style="right:inherit">Mês
-  <select name="mes" id="mes" onchange="mudarmes()">
+<div style="position: relative; float:right">
+
+  <select style="width:140px; font-size:12px; height:27px" class="form-control form-control-sm"  name="mes" id="mes" onchange="mudarmes()">
     <option  value="" > ... </option>
     <option  value="pronto_atendimento.php?mes=01"<?php  if($mes == '01'){ echo "selected"; } ?>>Janeiro </option>
     <option  value="pronto_atendimento.php?mes=02"<?php  if($mes == '02'){ echo "selected"; } ?>>Fevereiro</option>
@@ -108,7 +136,25 @@ return "$horas:$minutos:$segundos";
     <option  value="pronto_atendimento.php?mes=11"<?php  if($mes == '11'){ echo "selected"; } ?>>Novembro</option>
     <option  value="pronto_atendimento.php?mes=12"<?php  if($mes == '12'){ echo "selected"; } ?>>dezembro</option>
   </select>
-</span></div>
+</div>
+<div style="position:relative; float:right" >&nbsp;</div>
+<div style="position:relative; float:right" >
+<?php  
+      If( $_SESSION["perfil"] == "usuario"){  
+         echo "<form name='frmBusca' method='get' action=". $_SERVER['PHP_SELF'] ."?c=buscar' >
+                 <input type='search' class='form-control ds-input' id='search-input' placeholder='Pesquisar... ' autocomplete='off' spellcheck='false' role='combobox' aria-autocomplete='list' aria-expanded='false' aria-owns='algolia-autocomplete-listbox-0' dir='auto' style='position: relative; vertical-align: top; width:350px; font-size:12px; height:27px' name='buscar'>
+            </form>";
+      }else{
+
+        echo "<form name='frmBusca' method='get' action=". $_SERVER['PHP_SELF'] ."?c=buscar' >
+                 <input type='search' class='form-control ds-input' id='search-input' placeholder='Pesquisar...' autocomplete='off' spellcheck='false' role='combobox' aria-autocomplete='list' aria-expanded='false' aria-owns='algolia-autocomplete-listbox-0' dir='auto' style='position: relative; vertical-align: top; width:350px; font-size:12px; height:27px' name='buscar'>
+            </form>";
+      }
+?>
+</div>
+</div>
+
+
 
 <!-- pegar mes de consulta  -->
 <script language="Javascript">
@@ -124,16 +170,16 @@ return "$horas:$minutos:$segundos";
                </tr>
                <tr  style='font-weight:bold;'>
                  <!-- <td width="27"><div align="center">Status</div></td> -->
-                 <td width="61" ><div align="center" style='width: 30px;'>Autorização</div></td>
-                 <td width="156"><div align="center" style='width: 150px;'>Paciente</div></td>
-                 <td width="50" ><div align="center">Matricula</div></td>
-                 <td width="39" ><div align="center">Entrada</div></td>
-                 <td width="43" ><div align="center">Permanência</div></td>
-                 <td width="29" ><div align="center">Saída</div></td>
+                 <td ><div align="left" style='width: 30px;'>Autorização</div></td>
+                 <td ><div align="center" style='width: 150px;'>Paciente</div></td>
+                 <td ><div align="center">Matricula</div></td>
+                 <td ><div align="center">Entrada</div></td>
+                 <td ><div align="center">Permanência</div></td>
+                 <td ><div align="center">Saída</div></td>
                   
                  <?php If( $_SESSION["perfil"] == "administrador" or $_SESSION["perfil"] == "auditor"){ echo "<td style='padding: 4px;'><div align='center'>Credenciado</div></td>"; } ?>
-                 <td width="16"><div align="center"></div></td>
-                    <td width="5"><div align="center"></div></td>
+                 
+                   
                </tr>
                           
               <?php
@@ -229,7 +275,7 @@ return "$horas:$minutos:$segundos";
                                            
                                     }
 									
-					             	echo"			</div></td><td></td>";
+					             	echo"			</div></td>";
 
                         
                         If( ($_SESSION["perfil"] == "administrador") or ($_SESSION["perfil"] == "auditor")){
