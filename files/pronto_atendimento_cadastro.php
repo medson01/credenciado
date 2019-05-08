@@ -15,7 +15,7 @@ date_default_timezone_set('America/Maceio');
 
     $matric = substr($matricula, 9, -2);
 
-    $query = mysqli_query($conn,"SELECT * FROM `beneficiarios` WHERE `matricula` = '".$matric."' and `contrato_ativo` = 't' and `pessoa_ativa` = 't'") or die("erro ao selecionar");
+    $query = mysqli_query($conn,"SELECT * FROM `beneficiarios` WHERE `matricula` = '".$matric."' and `contrato_ativo` = '1' and `pessoa_ativa` = '1'") or die("erro ao selecionar");
 
 
         if (mysqli_num_rows($query)<=0){

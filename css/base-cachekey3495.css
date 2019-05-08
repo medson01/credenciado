@@ -1,7 +1,6 @@
 
 /* - base.css - */
 @media screen {
-/* http://www.ipasealsaude.al.gov.br/portal_css/base.css?original=1 */
 /* */
 /* */
 body {
@@ -146,7 +145,6 @@ text-decoration: line-through;
 
 /* - public.css - */
 @media screen {
-/* http://www.ipasealsaude.al.gov.br/portal_css/public.css?original=1 */
 /* */
 /* */
 /* */
@@ -184,7 +182,6 @@ padding: 1em 1em 2em 1em !important;
 background: White;
 }
 .documentContent ul {
-list-style-image: url(http://www.ipasealsaude.al.gov.br/bullet.gif);
 list-style-type: square;
 margin: 0.5em 0 0 1.5em;
 }
@@ -494,7 +491,6 @@ text-transform: none;
 list-style: none;
 }
 #portal-personaltools .portalUser {
-background: transparent url(http://www.ipasealsaude.al.gov.br/user.gif) center left no-repeat;
 padding-left: 18px;
 }
 #portal-personaltools .portalNotLoggedIn {
@@ -1001,7 +997,6 @@ width: 143px;
 margin: 0em;
 padding: 0px 6px 0px 9px;
 text-align: center;
-background-image: url('http://www.ipasealsaude.al.gov.br/polaroid-single.png');
 background-repeat: no-repeat;
 }
 .photoAlbumEntry img {
@@ -1023,7 +1018,6 @@ width: 130px;
 margin: 16px auto 0px;
 }
 .photoAlbumFolder {
-background-image: url('http://www.ipasealsaude.al.gov.br/polaroid-multi.png');
 background-repeat: no-repeat;
 }
 .photoAlbumEntryTitle {
@@ -1035,7 +1029,6 @@ height: 3.6em;
 /* */
 a.link-parent {
 display: block;
-background: transparent url(http://www.ipasealsaude.al.gov.br/arrowUp.gif) 4px 5px no-repeat;
 padding: 1px 0px 10px 16px;
 font-size: 90%;
 text-decoration: none;
@@ -1044,11 +1037,9 @@ text-decoration: none;
 color: #74ae0b !important;
 }
 #content .link-user {
-background: transparent url(http://www.ipasealsaude.al.gov.br/user.gif) 0 1px no-repeat;
 padding: 1px 0px 1px 16px;
 }
 #content .link-comment {
-background: transparent url(http://www.ipasealsaude.al.gov.br/discussionitem_icon.gif) center left no-repeat;
 padding: 1px 0px 1px 16px !important; /* */
 }
 #content .link-anchor {
@@ -1065,40 +1056,40 @@ color: red;
 }
 /* */
 #content span.link-external a {
-background: transparent url(http://www.ipasealsaude.al.gov.br/link_icon.gif) 0px 1px no-repeat;
+
 padding: 1px 0px 1px 16px;
 }
 #content span.link-https a {
-background: transparent url(http://www.ipasealsaude.al.gov.br/lock_icon.gif) 0px 1px no-repeat;
+
 padding: 1px 0px 1px 16px;
 }
 /* */
 #content span.link-mailto  a {
-background: transparent url(http://www.ipasealsaude.al.gov.br/mail_icon.gif) 0px 1px no-repeat;
+
 padding: 1px 0px 1px 16px;
 }
 #content span.link-news a {
-background: transparent url(http://www.ipasealsaude.al.gov.br/topic_icon.gif) 0px 1px no-repeat;
+
 padding: 1px 0px 1px 16px;
 }
 #content span.link-ftp a {
-background: transparent url(http://www.ipasealsaude.al.gov.br/file_icon.gif) 0px 1px no-repeat;
+
 padding: 1px 0px 1px 16px;
 }
 #content span.link-irc a {
-background: transparent url(http://www.ipasealsaude.al.gov.br/discussionitem_icon.gif) 0px 1px no-repeat;
+
 padding: 1px 0px 1px 16px;
 }
 #content span.link-callto a {
-background: transparent url(http://www.ipasealsaude.al.gov.br/phone_icon.gif) 0px 1px no-repeat;
+
 padding: 1px 0px 1px 16px;
 }
 #content span.link-webcal a {
-background: transparent url(http://www.ipasealsaude.al.gov.br/event_icon.gif) 0px 1px no-repeat;
+
 padding: 1px 0px 1px 16px;
 }
 #content span.link-feed a {
-background: transparent url(http://www.ipasealsaude.al.gov.br/rss.gif) 0px 1px no-repeat;
+
 padding: 1px 0px 1px 18px;
 }
 #content .link-plain {
@@ -1228,7 +1219,7 @@ padding-bottom:0.5em;
 
 /* - columns.css - */
 @media screen {
-/* http://www.ipasealsaude.al.gov.br/portal_css/columns.css?original=1 */
+
 /* */
 #portal-columns {
 width: 100% !important;
@@ -1514,7 +1505,7 @@ border-bottom: 1px solid #76797c;
 font-weight: normal;
 }
 .comment h3 a {
-background-image: url(http://www.ipasealsaude.al.gov.br/discussionitem_icon.gif);
+
 background-repeat: no-repeat;
 padding-left: 18px;
 margin-left: -1px;
@@ -1694,7 +1685,7 @@ background-color: #ffce7b;
 color: Black;
 }
 li.formTab a.required span {
-background-image: url(http://www.ipasealsaude.al.gov.br/required.gif);
+
 background-position: center right;
 background-repeat: no-repeat;
 padding-right: 8px;
@@ -1786,7 +1777,7 @@ margin:0;
 padding:1em;
 }
 div.portletWrapper{
-background:transparent url(http://www.ipasealsaude.al.gov.br/box_middle.png);
+
 width:169px;
 margin-bottom:16px;
 margin-left:auto;
@@ -1795,7 +1786,7 @@ margin-right:auto;
 dl.portlet{
 width:169px;
 margin:0;
-background:url(http://www.ipasealsaude.al.gov.br/box_bottom.png) no-repeat left bottom;
+
 }
 dl.portlet a{
 text-decoration:none;
@@ -1804,7 +1795,7 @@ dl.portlet .portletHeader{
 font-size:13px;
 font-family:verdana,arial;
 color:#3A393A;
-background:url(http://www.ipasealsaude.al.gov.br/box_top.png) no-repeat top left;
+
 padding-left:13px;
 padding-top:5px;
 }
@@ -1841,7 +1832,7 @@ background:none;
 padding-left:0;
 }
 #portlet-agencia .portletHeader a{
-background:url(http://www.ipasealsaude.al.gov.br/logo_agencia.jpg) no-repeat center;
+
 padding-top:28px;
 display:block;
 text-indent:-99999px;
@@ -1899,7 +1890,7 @@ font-size:100% !important;
 display:block;
 width:10px;
 float:left;
-background:url(http://www.ipasealsaude.al.gov.br/arrows.gif) no-repeat 0px 5px;
+
 text-indent:-99999px;
 position: absolute;
 top:0;
@@ -1909,7 +1900,7 @@ left:5px;
 display:block;
 width:10px;
 float:right;
-background:url(http://www.ipasealsaude.al.gov.br/arrows.gif) no-repeat -13px 5px;
+
 text-indent:-99999px;
 position:absolute;
 left:155px;
@@ -1940,7 +1931,7 @@ padding:0 !important;
 .portletSearch .searchField{
 font-size:10px;
 border:1px solid #C1C3C9;
-background:url(http://www.ipasealsaude.al.gov.br/bg_select.jpg) #DFE0E3;
+
 padding-bottom:3px;
 padding-left:3px;
 padding-top:3px;
@@ -1949,7 +1940,7 @@ width:104px;
 -webkit-border-radius:5px;
 }
 .portletSearch .searchButton{
-background:url(http://www.ipasealsaude.al.gov.br/bg_search_bt.jpg) repeat-x;
+
 border: 1px solid #A1BEC8;
 padding:3px 1px 1px;
 color: #fff;
@@ -1970,7 +1961,7 @@ overflow:hidden;
 }
 .portlet_publicidade .nav{
 padding:5px;
-background:url(http://www.ipasealsaude.al.gov.br/bg_ul_banners.png);
+
 width:auto;
 }
 .portlet_publicidade .nav a{
@@ -2212,7 +2203,6 @@ font-size: 90%;
 margin: 1em 0em;
 padding: 0.5em 1em 0.5em 3em;
 vertical-align: middle;
-background-image: url(http://www.ipasealsaude.al.gov.br/info_icon.gif);
 background-repeat: no-repeat;
 background-position: 5px 50%;
 }
@@ -2365,7 +2355,6 @@ font: 100% Monaco, "Courier New", Courier, monospace;
 border: 1px solid #ddd;
 border-color:#666 #ddd #ddd #666;
 color: Black;
-background: White url(http://www.ipasealsaude.al.gov.br/input_background.gif) repeat-x;
 width: 100%;
 }
 input {
@@ -2375,7 +2364,6 @@ border: 1px solid #ddd;
 border-color:#666 #ddd #ddd #666;
 color: Black;
 vertical-align: middle;
-background: White url(http://www.ipasealsaude.al.gov.br/input_background.gif) repeat-x;
 font-size: 1em;
 }
 /* */
@@ -2467,7 +2455,6 @@ margin: 0 1em;
 }
 .standalone,
 .documentEditable * .standalone {
-background: #efefef url(http://www.ipasealsaude.al.gov.br/linkOpaque.gif) 9px 1px no-repeat;
 color: Black;
 cursor: pointer;
 font-size: 90%;
@@ -2478,7 +2465,6 @@ border: 1px solid #d5d5d5;
 .context,
 .formControls .actionButtons .button,
 .documentEditable * .context {
-background: transparent url(http://www.ipasealsaude.al.gov.br/linkTransparent.gif) 9px 1px no-repeat;
 color: Black;
 cursor: pointer;
 font-size: 90%;
@@ -2488,7 +2474,6 @@ border: 1px solid #d5d5d5;
 }
 .destructive,
 .documentEditable * .destructive {
-background: #ffce7b url(http://www.ipasealsaude.al.gov.br/linkTransparent.gif) 9px 1px no-repeat;
 border: 1px solid #ffa500;
 color: Black;
 cursor: pointer;
@@ -2501,7 +2486,6 @@ input.searchButton {
 margin-bottom: 1px ! important;
 color: Black;
 font-size: 90%;
-background: White url(http://www.ipasealsaude.al.gov.br/search_icon.gif) 2px 1px no-repeat;
 cursor: pointer;
 padding: 1px 1px 1px 19px;
 text-transform: none;
@@ -2525,7 +2509,6 @@ clear: both;
 margin: 0;
 }
 .fieldRequired {
-background: url(http://www.ipasealsaude.al.gov.br/required.gif) center left no-repeat;
 padding: 0 0 0 8px;
 color: White;
 }
@@ -2595,7 +2578,6 @@ z-index: 999;
 
 /* - ploneKss.css - */
 @media screen {
-/* http://www.ipasealsaude.al.gov.br/portal_css/ploneKss.css?original=1 */
 #kss-spinner {
 display:none;
 width: 20px;

@@ -117,7 +117,7 @@ return "$horas:$minutos:$segundos";
 
 
 		
-<div style="position: absolute; top:310px; right:180px; width: 500px;">
+<div style="position: absolute; top:261px; right:177px; width: 500px;">
 
 <div style="position: relative; float:right">
 

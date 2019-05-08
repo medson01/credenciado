@@ -1,4 +1,17 @@
-﻿<style type="text/css">
+﻿
+<script>
+function pegarMatricula() {
+
+  var matric = document.getElementById("matricula").value;
+  var pa = 1;
+
+  window.location.href = "verficar_matricula.php?pa="+pa+"&matric="+matric;
+
+  //alert("The input value has changed. The new value is: " + matric);
+}
+</script>
+
+<style type="text/css">
 <!--
 .style1 {font-size: 12px}
 -->
@@ -12,7 +25,7 @@
                           <tr>
                             <td width="179" >Matr&iacute;cula</td>
                             <td width="360">
-                            <input required="required" type="text" name="matricula" minlength="16" class="form-matric" id="matricula" size="20" maxlength="16"placeholder="00000000.000000.00"/></td>
+                            <input required="required" type="text" name="matricula" minlength="16" class="form-matric" id="matricula" size="20" maxlength="16"placeholder="00000000.000000.00" onchange="pegarMatricula()" <?php if(isset($_GET['matricula'])){ echo "value=".$_GET['matricula'];} ?> ></td>
                           </tr>
                             <tr>
                               <td>&nbsp;</td>
@@ -20,7 +33,7 @@
                             </tr>
                             <tr>
                               <td >Nome</td>
-                              <td><input  minlength="4" name="nome" class="form-matric" required="required" placeholder="Digite o nome do paciente" size="60"/></td>
+                              <td><input  id="nome" name="nome" readonly="readonly" class="form-control col-md-7 col-xs-12" required="required"  size="60" <?php if(isset($_GET['nome'])){ echo "value='".$_GET['nome']."'";} ?> ></td>
                             </tr>
                             <tr>
                             <td>&nbsp;</td>
