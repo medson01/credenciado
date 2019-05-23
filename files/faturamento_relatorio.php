@@ -409,6 +409,7 @@ echo $_SESSION["cidade"].",".strftime('%d de %B de %Y', strtotime('today'));?>" 
                        <tr>
                          <td class="style13">&nbsp;</td>
                          <td colspan="12"><div align="right">
+                            <a href='faturamento_formulario.php' > <input class='btn btn-primary delete' type="button" value="Voltar"> </a>
                            <input class="btn btn-primary delete" type="submit"  onclick="window.print();" value="Imprimir" name="imprimir" />
                          </div></td>
                        </tr>

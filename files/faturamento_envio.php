@@ -113,8 +113,15 @@ $valor = $_POST["valor"];
 		  
 		  									  
 		  // Arquivos enviados
-		  echo"<script language='javascript'>alert('Faturamento cadastrado com sucesso! \\n ".$x." arquivo(s) enviado(s); \\n Obrigado!');</script>"; 
-		  
+
+				if(!isset($x) ){		   
+				  	
+				  	echo"<script language='javascript'>alert('Faturamento cadastrado com sucesso! nenhum arquivo enviado; \\n Obrigado!');</script>"; 
+				}else{
+					
+					echo"<script language='javascript'>alert('Faturamento cadastrado com sucesso! \\n ".$x." arquivo(s) enviado(s); \\n Obrigado!');</script>";
+				
+				}  
         }else{
           echo"<script language='javascript' type='text/javascript'>alert('Produção não enviada com sucesso!');window.location.href='faturamento_formulario.php'</script>";
 

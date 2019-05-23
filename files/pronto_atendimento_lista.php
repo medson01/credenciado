@@ -1,4 +1,4 @@
-﻿<?php 
+<?php 
   
   // retira os erros 
  // error_reporting(0);
@@ -115,46 +115,11 @@ return "$horas:$minutos:$segundos";
 <!-- Botão internação -->
 <script type="text/javascript" src="../js/bnt_internacao.js"></script>
 
+<?php
 
-		
-<div style="position: absolute; top:261px; right:177px; width: 500px;">
+	require_once("pesquisar.php");
 
-<div style="position: relative; float:right">
-
-  <select style="width:140px; font-size:12px; height:27px" class="form-control form-control-sm"  name="mes" id="mes" onchange="mudarmes()">
-    <option  value="" > ... </option>
-    <option  value="pronto_atendimento.php?mes=01"<?php  if($mes == '01'){ echo "selected"; } ?>>Janeiro </option>
-    <option  value="pronto_atendimento.php?mes=02"<?php  if($mes == '02'){ echo "selected"; } ?>>Fevereiro</option>
-    <option  value="pronto_atendimento.php?mes=03"<?php  if($mes == '03'){ echo "selected"; } ?>>Março</option>
-    <option  value="pronto_atendimento.php?mes=04"<?php  if($mes == '04'){ echo "selected"; } ?>>abril</option>
-    <option  value="pronto_atendimento.php?mes=05"<?php  if($mes == '05'){ echo "selected"; } ?>>Maio</option>
-    <option  value="pronto_atendimento.php?mes=06"<?php  if($mes == '06'){ echo "selected"; } ?>>Junho</option>
-    <option  value="pronto_atendimento.php?mes=07"<?php  if($mes == '07'){ echo "selected"; } ?>>Julho</option>
-    <option  value="pronto_atendimento.php?mes=08"<?php  if($mes == '08'){ echo "selected"; } ?>>Agosto</option>
-    <option  value="pronto_atendimento.php?mes=09"<?php  if($mes == '09'){ echo "selected"; } ?>>Setembro</option>
-    <option  value="pronto_atendimento.php?mes=10"<?php  if($mes == '10'){ echo "selected"; } ?>>Outubro</option>
-    <option  value="pronto_atendimento.php?mes=11"<?php  if($mes == '11'){ echo "selected"; } ?>>Novembro</option>
-    <option  value="pronto_atendimento.php?mes=12"<?php  if($mes == '12'){ echo "selected"; } ?>>dezembro</option>
-  </select>
-</div>
-<div style="position:relative; float:right" >&nbsp;</div>
-<div style="position:relative; float:right" >
-<?php  
-      If( $_SESSION["perfil"] == "usuario"){  
-         echo "<form name='frmBusca' method='get' action=". $_SERVER['PHP_SELF'] ."?c=buscar' >
-                 <input type='search' class='form-control ds-input' id='search-input' placeholder='Pesquisar... ' autocomplete='off' spellcheck='false' role='combobox' aria-autocomplete='list' aria-expanded='false' aria-owns='algolia-autocomplete-listbox-0' dir='auto' style='position: relative; vertical-align: top; width:350px; font-size:12px; height:27px' name='buscar'>
-            </form>";
-      }else{
-
-        echo "<form name='frmBusca' method='get' action=". $_SERVER['PHP_SELF'] ."?c=buscar' >
-                 <input type='search' class='form-control ds-input' id='search-input' placeholder='Pesquisar...' autocomplete='off' spellcheck='false' role='combobox' aria-autocomplete='list' aria-expanded='false' aria-owns='algolia-autocomplete-listbox-0' dir='auto' style='position: relative; vertical-align: top; width:350px; font-size:12px; height:27px' name='buscar'>
-            </form>";
-      }
 ?>
-</div>
-</div>
-
-
 
 <!-- pegar mes de consulta  -->
 <script language="Javascript">
@@ -289,9 +254,9 @@ return "$horas:$minutos:$segundos";
 
 
 
-                             echo " <!-- Botão internamento -->
+                             echo " <!-- Botão internaramento -->
                   
-                                            <a class='btn btn-success' style='width: 50px; height: 25px' onclick='internar(".$registro['autorizacao'].",".$dat_saida[$i].",".$data[$i].",".$registro['matricula'].",\"".$registro['paciente']."\")'><span style='font-size: 10px; align: center'> Internar </center> </span> </a>              
+                                            <a class='btn btn-success' style='width: 50px; height: 25px' onclick='internar(".$registro['autorizacao'].",".$dat_saida[$i].",".$data[$i].",\"".$registro['matricula']."\",\"".$registro['paciente']."\")'><span style='font-size: 10px; align: center'> Internar </center> </span> </a>              
                                     ";
 
 

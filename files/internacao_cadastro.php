@@ -21,23 +21,14 @@ $matricula = str_replace("-", "", $matricula);
 
 $matric = substr($matricula, 9, -2);
 
-    $query = mysqli_query($conn,"SELECT * FROM `beneficiarios` WHERE `matricula` = '".$matric."' and `contrato_ativo` = 't' and `pessoa_ativa` = 't'") or die("erro ao selecionar");
-
-
-        if (mysqli_num_rows($query)<=0){
-          echo"<script language='javascript' type='text/javascript'>alert('Usuario não está ativo ou matrícula não existe.');window.location.href='internacao.php?id=1';</script>";
-          die();
+    $query = mysqli_query($conn,"SELECT * FROM `beneficiarios` WHERE `matricula` = '".$matric."'") or die("erro ao selecionar");
 
 
 
-        }else{
+    if($_POST['id_pa'] == false){
 
 
-
-    if(!isset($_POST['id_pa'])){
-
-
-		    $query = "INSERT INTO `internamento`(`id`, `id_usuario`, `id_cid`, `id_revalida`, `nome`, `matricula`, `solicitante`, `crm`, `dat_entrada`,`motivo`, `prorrogacao`) VALUES (null ,'".$_SESSION['id']."', '".$id_cid."' , null , '".$nome."' , '".$matricula."' , '".$solicitante."' , '".$crm."' , '".date("Y-m-d H:i:s" )."' , '".$motivo."', null)";
+		    $query = "INSERT INTO `internamento`(`id`, `id_usuario`, `id_cid`, `id_revalida`, `id_pa`,`nome`, `matricula`, `solicitante`, `crm`, `dat_entrada`,`motivo`, `prorrogacao`) VALUES (null ,'".$_SESSION['id']."', '".$id_cid."' , null , '0' , '".$nome."' , '".$matricula."' , '".$solicitante."' , '".$crm."' , '".date("Y-m-d H:i:s" )."' , '".$motivo."', null)";
 
      }else{
 
@@ -58,10 +49,10 @@ $matric = substr($matricula, 9, -2);
           require_once"internacao_relatorio.php";
           
         }else{
-         echo"<script language='javascript' type='text/javascript'>alert('internamento não cadastrado com sucesso!');window.location.href='internacao_fomulario.php'</script>";
+         echo"<script language='javascript' type='text/javascript'>alert('internamento não cadastrado com sucesso!');window.location.href='painel.php?int=1'</script>";
 
         }
   
-     }
+     
     
 ?>

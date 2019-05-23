@@ -35,7 +35,7 @@
 <div id="exTab2" class="container" style="width: 980px; padding-left: 1px;">	
 <ul class="nav nav-tabs">
 			<li <?php if(!isset($_GET['id'])){ echo 'class="active"';} ?> >
-        		<a  href="#1" data-toggle="tab">Lista de Internação</a>
+        		<a  href="#1" data-toggle="tab">Lista de credenciados</a>
 			</li>
 			<li <?php if(isset($_GET['id'])){ echo 'class="active"';} ?> >
 				<a href="#2" data-toggle="tab">Cadastro</a>

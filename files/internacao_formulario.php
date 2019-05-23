@@ -81,7 +81,7 @@ mysqli_query($conn,"SET NAMES 'utf8'");
                             </tr>
 
                             <tr>
-                              <td >CÃ³digo do C.I.D.</td>
+                              <td >Código do C.I.D.</td>
                               <td>
                                <select id="id_cid"  name="id_cid" class="form-control" required="required"  onchange= "adicionar()"> 
                                                             <option value="0">*** Digite ou selecio o CID ***</option> 
@@ -117,7 +117,7 @@ mysqli_query($conn,"SET NAMES 'utf8'");
                             </tr>
                             
                             <tr>
-                            <td >MÃ©dico solicitante</td>
+                            <td >Médico solicitante</td>
                             <td><input  type="text" minlength="4"  name="solicitante" class="form-matric" id="solicitante" size="60" required="required"/></td>
                             </tr>
                             <tr>
@@ -158,6 +158,9 @@ mysqli_query($conn,"SET NAMES 'utf8'");
                                     
                                     if(isset($_GET['id'])){
                                         $id_pa = $_GET['id'];
+                                        echo "<input type='hidden' id='id_pa' name='id_pa' value='".$id_pa."'>";
+                                    }else{
+                                        $id_pa = false;
                                         echo "<input type='hidden' id='id_pa' name='id_pa' value='".$id_pa."'>";
                                     }
 

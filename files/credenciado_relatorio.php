@@ -1,7 +1,7 @@
 ﻿<?php
 
   
-	if(!empty($_GET["id_internacao"])){
+	if(!empty($_GET["id_credenciado"])){
 
 		  //Arquivo de configuração
   		  include "cabecalho.php";
@@ -10,51 +10,32 @@
 				mysqli_query($conn,"SET NAMES 'utf8'");
 	
 
-		$res = $_GET["id_internacao"];
+		$res = $_GET["id_credenciado"];
 
-			$query = mysqli_query($conn,"SELECT internamento.nome as paciente, internamento.matricula as matricula, internamento.solicitante as solicitante,
-					 internamento.crm as crm, internamento.dat_entrada as dat_entrada, internamento.dat_saida as dat_saida, cid.cid , cid.descricao as 
-					 descricao ,usuarios.nome as credenciado, cid.dias as dias, internamento.motivo as motivo, internamento.prorrogacao as prorrogacao FROM `internamento` 
-					 INNER JOIN usuarios on usuarios.id = internamento.id_usuario 
-					 INNER JOIN cid on cid.id = internamento.id_cid 
-					 WHERE internamento.id =".$res) or die("erro ao carregar consulta");
-
-
+			 $query = mysqli_query($conn,"SELECT `id`,`nome`,`nome_fantasia`,`cpf_cnpj`, `codigo`, `data_inc`, `telefone`, `celular`, `email`, `endereco`, `numero`, `bairro`, `cep`, `cidade`, `estado` FROM `credenciado` WHERE id = '".$_GET['id_credenciado']."'") or die("erro ao carregar consulta");
 						
-	                    while($registro = mysqli_fetch_row($query)){
+               while($registro = mysqli_fetch_row($query)){
 
-                        $nome = $registro[0];
-                        $matricula = $registro[1];
-                        $solicitante = $registro[2];
-                        $crm = $registro[3];
-                        $dat_entrada = $registro[4];
-                        $dat_saida = $registro[5];
-                        $cid = $registro[6];
-                        $cid_desc = $registro[7];
-                        $credenciado = $registro[8];
-                        $dias = $registro[9];
-                        $motivo = $registro[10];
-                        $prorrogacao = $registro[11];
-                         
-                   }
+                                  $id = $registro[0];
+                                  $nome = $registro[1];
+                                  $nome_fantasia = $registro[2];
+                                  $cpf_cnpj = $registro[3];
+                                  $codigo = $registro[4];
+                                  $data_inc = $registro[5];
+                                  $telefone = $registro[6];
+                                  $celular = $registro[7];
+                                  $email = $registro[8];
+                                  $endereco = $registro[9];
+                                  $numero = $registro[10];
+                                  $bairro = $registro[11];
+                                  $cep = $registro[12];
+                                  $cidade = $registro[13];
+								  $estado = $registro[14];
+                                   
+               }
 
-
-	}else{
-	 		 $query = mysqli_query($conn,"SELECT internamento.dat_saida as dat_saida , usuarios.nome as credenciado , internamento.dat_entrada as dat_entrada  FROM `internamento` INNER JOIN usuarios on usuarios.id = internamento.id_usuario WHERE internamento.id =".$res) or die("erro ao carregar consulta");
-	
-
-	  					
-	                    while($registro = mysqli_fetch_row($query)){
-                        
-                        $dat_saida = $registro[0];
-                        $credenciado = $registro[1];
-                        $dat_entrada = $registro[2];
-                        
-
-                        
-                   }
- 
-	 } 
+	}
+	  
 ?>
 <style type="text/css">
 <!--
@@ -78,7 +59,7 @@
                       
                       			<div>
 
-   									 <h1 class="documentFirstHeading"> Relatório de Internamento </h1>
+   									 <h1 class="documentFirstHeading"> Relatório de Credenciado </h1>
 								</div>
                     </div>
 
@@ -106,85 +87,53 @@
 						
 						<tr>
 						  <th colspan="2" bgcolor="#CCCCCC" style="font-weight:bold; font-size:14px;" scope='col'><div align="center">
-					      <?php echo "Número da Guia: ".$res; ?></div></th>
+					      <?php echo "ID: ".$res; ?></div></th>
 		  </tr>
 						<tr>
-							<th width='48%' scope='col'><div align='left'>Nome do paciente: <br> &nbsp; <?php echo $nome; ?></div></th>
+							<th width='48%' scope='col'><div align='left'>Nome do credenciado: <br> &nbsp; <?php echo $nome; ?></div></th>
 			 
-							<th width="52%" scope='col'><div align='left'>Matricula: <br> &nbsp; <?php echo $matricula; ?></div></th>
+							<th width="52%" scope='col'><div align='left'>Nome fantasia: <br> 
+							  &nbsp; <?php echo $nome_fantasia; ?></div></th>
 		              	</tr>
 						 <tr>
 								<th scope='row'><div align='left'>
-							    <div align="left">Data de Emissão: <br> &nbsp; <?php print date("j / n / Y"); ?></div></th>
-								<th> <div align="left">Hora: <br> &nbsp; <?php print date("H:i:s"); ?></div></th>
+							    <div align="left">CNPJ / CPF : <br> 
+							      &nbsp; <?php echo $cpf_cnpj; ?></div></th>
+								<th> <div align="left">Código  Totvs: <br> 
+								  &nbsp; <?php echo $codigo; ?></div></th>
 						</tr>
-			
-						 <tr>
-						   <th scope='row'><div align="left">Credenciado: <br> &nbsp; <?php echo	$credenciado;  ?> </div></th>
-						   <th scope='col'><div align="left"></div></th>
-	      </tr>
 					    <tr>
-								<th scope='row'><div align='left'>Atendente: <br> &nbsp; <?php echo utf8_encode($_SESSION['login']); ?></div></th>
-								<th scope='col'><div align='left' style="color:#FF0000"></div></th>
-          </tr>
-					    <tr>
-					      <th colspan="2" style="font-weight:bold; font-size:14px;" bgcolor="#CCCCCC" scope='row'><div align="center">Dados do internamento </div></th>
+					      <th colspan="2" style="font-weight:bold; font-size:14px;" bgcolor="#CCCCCC" scope='row'><div align="center">Dados do Credenciado </div></th>
 				      </tr>
 					    <tr>
-					      <th scope='row'><div align="left">Médico solicitante: <br> &nbsp; <?php echo $solicitante; ?></div></th>
-					      <th scope='col'><div align="left">CRM: <br> &nbsp; <?php echo $crm; ?></div></th>
+					      <th scope='row'><div align="left">Endereço: <br> &nbsp; <?php echo $endereco; ?></div></th>
+					      <th scope='col'><div align="left">Número: <br> &nbsp; <?php echo $numero; ?></div></th>
 				      </tr>
 					    <tr>
-					      <th scope='row'><div align="left">Código do CID: <br> &nbsp; <?php echo  $cid; ?> </div></th>
-					      <th scope='col'><div align="left">Descrição do CID: <br> &nbsp;<?php echo "&nbsp;&nbsp;".$cid_desc; ?></div></th>
+					      <th scope='row'><div align="left">Bairro: <br> &nbsp; <?php echo  $bairro; ?> </div></th>
+					      <th scope='col'><div align="left"> Cidade: <br> &nbsp;<?php echo "&nbsp;&nbsp;".$cidade; ?></div></th>
 				      </tr>
 					    <tr>
-					      <th scope='row'><div align="left">Diárias: <br> &nbsp; <?php echo $dias; ?></div></th>
+					      <th scope='row'><div align="left">Estados: <br> &nbsp; <?php echo $estado; ?></div></th>
 					      <th scope='col'><div align="left"></div></th>
 				      </tr>
 					    <tr>
-					      <th scope='row'><div align="left">Data de entrada: <br> &nbsp; <?php print date('d / m / Y ', strtotime($dat_entrada));  ?></div></th>
-					      <th scope='col'><div align="left">Previsão de  saída: <br> &nbsp;  <?php echo date('d / m / Y', strtotime($dat_entrada."+".$dias." days"));   ?> </div></th>
+					      <th scope='row'><div align="left">Data de inclusão: <br> &nbsp; <?php print date('d / m / Y ', strtotime($data_inc));  ?></div></th>
+					      <th scope='col'><div align="left"></div></th>
 				      </tr>
 					    <tr>
-					      <th scope='row'><div align="left">
-					      	<?php
-								
-								if(!empty($motivo)){
-
-									echo "Motivo do internamento: <br> &nbsp;";	 
-
-					      			echo $motivo;
-					      		}
-
-					      	?> </div>
-					      </th>
-					      <th scope='col'><div align="left"></div> 
-					      	
-					      </th>
+					      <th scope='row'><div align="left">Telefone fixo: <br />
+&nbsp;
+<?php echo  $telefone; ?>
+</div>					      </th>
+					      <th scope='col'><div align="left">Cidade: <br />
+&nbsp;<?php echo "&nbsp;&nbsp;".$celular; ?></div>					      </th>
 				      </tr>
 				       <tr>
-					      <th scope='row'><div align="left">Data de Saíde: <br> &nbsp; 
-					      	<?php 
-					      		
-					      			if($dat_saida <> 0) {
-					      				echo date('d / m / Y \h\s H:i:s', strtotime($dat_saida));	
-					      			} 
-					      		 
-					      	?> </div>
-					      </th>
+					      <th scope='row'><div align="left">E-mail: <br />
+&nbsp; <?php echo  $email; ?> </div>					      </th>
 					      <th scope='col'><div align="left"></div> 
-					      	<?php
-								
-								if(!empty($prorrogacao)){
-
-									echo "Motivo da Prorrogação: <br> &nbsp;";	 
-
-					      			echo $prorrogacao;
-					      		}
-
-					      	?>
-					      </th>
+				      </th>
 				      </tr>
     				</table>
 		 		</div>
@@ -204,7 +153,7 @@
 					}
 				</style>
 
-  <a href="internacao.php" > <input class='btn btn-primary delete' type="button" value="Voltar"> </a>
+  <a href="painel.php?cred=1" > <input class='btn btn-primary delete' type="button" value="Voltar"> </a>
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	          <input class='btn btn-primary delete'  name="button" type="button" onclick="window.print();" value="Imprimir" />
           </p>

@@ -6,25 +6,37 @@
   # Corrige o erro de acentuação no banco
 	mysqli_query($conn,"SET NAMES 'utf8'");
 	
-	$sql = mysqli_query($conn,"SELECT credenciado.codigo, credenciado.nome, credenciado.cpf_cnpj, credenciado.endereco, credenciado.numero, credenciado.cep, credenciado.cidade,credenciado.estado,credenciado.telefone, credenciado.celular, credenciado.email FROM `usuarios` INNER JOIN credenciado on credenciado.id = id_credenciado WHERE id_credenciado =1") or die("erro ao carregar os usuários");
-	 
-	 while($registro = mysqli_fetch_row($sql)){
+	
+	
+ 
+ 
+   $sql = "SELECT `id`,`nome_fantasia`,`cpf_cnpj`, `codigo`, `telefone`, `celular`, `email`, `endereco`,`numero`,`bairro`,`cep`, `cidade`, `estado` FROM `credenciado` WHERE id = '".$_SESSION["id_credenciado"]."'";
 
-                        $codigo = $registro[0];
-                        $credenciado = $registro[1];
-                        $cpf_cnpj = $registro[2];
-                        $_SESSION["endereco"] = $registro[3];
-                        $_SESSION["numero"] = $registro[4];
-                        $_SESSION["cep"] = $registro[5];
-                        $_SESSION["cidade"] = $registro[6];
-                        $_SESSION["estado"] = $registro[7];
-                        $telefone = $registro[8];
-                        $celular = $registro[9];
-                        $email = $registro[10];
-                        
-                         
-                   }
+   
+     $query = mysqli_query($conn,$sql) or die("erro ao carregar consulta");
+  
 
+
+               while($registro = mysqli_fetch_row($query)){
+
+                                  $id = $registro[0];
+                                  $nome_fantasia = $registro[1];
+                                  $cpf_cnpj = $registro[2];
+                                  $codigo = $registro[3];
+                                  $telefone = $registro[4];
+                                  $celular = $registro[5];
+                                  $email = $registro[6];
+                                  $_SESSION["endereco"] = $registro[7];
+                                  $_SESSION["numero"] = $registro[8];
+                                  $_SESSION["bairro"] = $registro[9];
+                                  $_SESSION["cep"] = $registro[10];
+                                  $_SESSION["cidade"]= $registro[11];
+                                  $_SESSION["estado"]= $registro[12];
+
+                                   
+               }
+              
+  
  ?>
 
 
@@ -60,7 +72,7 @@
                     </div>
 
  
-                    <form action="faturamento_relatorio.php" method="post" class="form-group" enctype="multipart/form-data">
+                    <form action="faturamento_relatorio.php" method="POST" class="form-group" enctype="multipart/form-data">
 
 					
                       <div align="center">
@@ -83,7 +95,7 @@
                                   <td colspan="3"><font>
                                     <span class="style8">Credenciado<br />
 </span>
-                                    <input name="credenciado" type="text" class="form-matric" style="background:#faffbd;" readonly="true" value="<?php echo $credenciado ?>" size="44" />
+                                    <input name="credenciado" type="text" class="form-matric" style="background:#faffbd;" readonly="true" value="<?php echo $nome_fantasia; ?>" size="44" />
 									<input name="id" id="id"   type="hidden" class="form-matric" style="background:#faffbd;" size="50" value="<?php echo $_SESSION["id"]; ?>" />
                                   </font></td>
                                   

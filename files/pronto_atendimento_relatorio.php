@@ -219,7 +219,7 @@
 					}
 				</style>
 
-  <a href="pronto_atendimento.php" > <input class='btn btn-primary delete' type="button" value="Voltar"> </a>
+  <a href="painel.php?pa=1" > <input class='btn btn-primary delete' type="button" value="Voltar"> </a>
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	          <input class='btn btn-primary delete'  name="button" type="button" onclick="window.print();" value="Imprimir" />
           </p>

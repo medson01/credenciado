@@ -20,10 +20,10 @@ if(isset($_GET['prorrogacao'])){
 
 if($update == ''){
 echo "<script>alert('Houve um erro ao atualizar!');
-location.href=\"internacao.php\"</script>";
+location.href=\"painel.php?int=1\"</script>";
 }else{
 echo "<script>alert('Registro atulizado com sucesso!');
-location.href=\"internacao.php\"</script>";
+location.href=\"painel.php?int=1\"</script>";
 }
 
 

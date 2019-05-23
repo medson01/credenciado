@@ -104,43 +104,11 @@ function excluir(id) {
 </script>
 
 		
-<div style="position: absolute; top:310px; right:180px; width: 500px;">
+<?php 
 
-<div style="position: relative; float:right">
+  require_once("pesquisar.php");
 
-  <select style="width:140px; font-size:12px; height:27px" class="form-control form-control-sm"  name="mes" id="mes" onchange="mudarmes()">
-    <option  value="" > ... </option>
-    <option  value="internacao.php?mes=01"<?php  if($mes == '01'){ echo "selected"; } ?>>Janeiro </option>
-    <option  value="internacao.php?mes=02"<?php  if($mes == '02'){ echo "selected"; } ?>>Fevereiro</option>
-    <option  value="internacao.php?mes=03"<?php  if($mes == '03'){ echo "selected"; } ?>>Março</option>
-    <option  value="internacao.php?mes=04"<?php  if($mes == '04'){ echo "selected"; } ?>>abril</option>
-    <option  value="internacao.php?mes=05"<?php  if($mes == '05'){ echo "selected"; } ?>>Maio</option>
-    <option  value="internacao.php?mes=06"<?php  if($mes == '06'){ echo "selected"; } ?>>Junho</option>
-    <option  value="internacao.php?mes=07"<?php  if($mes == '07'){ echo "selected"; } ?>>Julho</option>
-    <option  value="internacao.php?mes=08"<?php  if($mes == '08'){ echo "selected"; } ?>>Agosto</option>
-    <option  value="internacao.php?mes=09"<?php  if($mes == '09'){ echo "selected"; } ?>>Setembro</option>
-    <option  value="internacao.php?mes=10"<?php  if($mes == '10'){ echo "selected"; } ?>>Outubro</option>
-    <option  value="internacao.php?mes=11"<?php  if($mes == '11'){ echo "selected"; } ?>>Novembro</option>
-    <option  value="internacao.php?mes=12"<?php  if($mes == '12'){ echo "selected"; } ?>>dezembro</option>
-  </select>
-</div>
-<div style="position:relative; float:right" >&nbsp;</div>
-<div style="position:relative; float:right" >
-<?php  
-      If( $_SESSION["perfil"] == "usuario"){  
-         echo "<form name='frmBusca' method='get' action=". $_SERVER['PHP_SELF'] ."?c=buscar' >
-                 <input type='search' class='form-control ds-input' id='search-input' placeholder='Pesquisar...' autocomplete='off' spellcheck='false' role='combobox' aria-autocomplete='list' aria-expanded='false' aria-owns='algolia-autocomplete-listbox-0' dir='auto' style='position: relative; vertical-align: top; width:350px; font-size:12px; height:27px' name='buscar'>
-            </form>";
-      }else{
-
-        echo "<form name='frmBusca' method='get' action=". $_SERVER['PHP_SELF'] ."?c=buscar' >
-                 <input type='search' class='form-control ds-input' id='search-input' placeholder='Pesquisar...' autocomplete='off' spellcheck='false' role='combobox' aria-autocomplete='list' aria-expanded='false' aria-owns='algolia-autocomplete-listbox-0' dir='auto' style='position: relative; vertical-align: top; width:350px; font-size:12px; height:27px' name='buscar'>
-            </form>";
-      }
 ?>
-</div>
-</div>
-
 
 
 <!-- pegar mes de consulta  -->
@@ -167,7 +135,7 @@ function excluir(id) {
                   <td style='padding: 4px;'><div align="center">Saída</div></td>
                   <td style='padding: 4px;'><div align="center">CID</div></td>
                  <?php If( $_SESSION["perfil"] == "administrador" or $_SESSION["perfil"] == "auditor"){ echo "<td style='padding: 4px;'><div align='center'>Credenciado</div></td>"; } ?>            
-				 <td style='padding: 4px;'><div align="center"> Data P.A </div></td>
+				 <td style='padding: 4px;'><div align="center"> Entrada P.A </div></td>
                  <td><div align="center"></div></td>
                     <td><div align="center"></div></td>
                </tr>

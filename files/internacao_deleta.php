@@ -7,13 +7,13 @@ if(isset($id)){
 
 $deleta = mysqli_query($conn,"DELETE FROM internamento WHERE id = '$id'");
 
-header ("location: internacao.php");
+header ("location: painel.php?int=1");
 }
 if($deleta == ''){
 echo "<script>alert('Houve um erro ao deletar!');
-location.href=\"internacao.php\"</script>";
+location.href=\"painel.php?int=1\"</script>";
 }else{
 echo "<script>alert('Registro excluido com sucesso!');
-location.href=\"internacao.php\"</script>";
+location.href=\"painel.php?int=1\"</script>";
 }
 ?>

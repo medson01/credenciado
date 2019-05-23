@@ -1,4 +1,5 @@
-﻿<style type="text/css">
+﻿<!-- Pag menu.php -->
+<style type="text/css">
 <!--
 .style1 {font-size: 14px}
 -->
@@ -25,6 +26,8 @@
 <!-- /Boas vindas! -->
 		
 <!-- Botões do Menu -->
+
+		<!-- Botão consulta de situação -->
 		<a href="fom_consulta_situacao.php" > 
 			<div class="thumbnail tile tile-medium tile-teal"  style="display: flex; justify-content: center; align-items: center;">	
 				
@@ -32,15 +35,16 @@
 			</div>
 		</a>
 
-		<a href="pronto_atendimento.php"  > 
+		<!-- Botão pronto atendimento -->
+		<a href="painel.php?pa=1"  > 
 			<div class="thumbnail tile tile-medium tile-teal" style="display: flex; justify-content: center; align-items: center;">	
 				
 				Pronto atendimento	
 			</div>
 		</a>
 
-
-		<a href="internacao.php"  > 
+		<!-- Botão internação -->
+		<a  href="painel.php?int=1"  > 
 			<div class="thumbnail tile tile-medium tile-teal" style="display: flex; justify-content: center; align-items: center;">	
 				
 				Interna&ccedil;&atilde;o 	
@@ -55,7 +59,7 @@
 				
 		 		//  botão Cadastro de usuários 
 				echo "	
-						<a href='form_cadastro_usuario.php' > 
+						<a href='painel.php?caduser=1' > 
 							<div class='thumbnail tile tile-medium tile-teal' style='display: flex; justify-content: center; align-items: center;'>	
 								
 								 Usu&aacute;rios
@@ -66,7 +70,7 @@
 				
 				//  botão Cadastro de Empresa 
 				echo "	
-						<a href='credenciado.php' > 
+						<a href='painel.php?cred=1' > 
 							<div class='thumbnail tile tile-medium tile-teal' style='display: flex; justify-content: center; align-items: center;'>	
 								
 								 Credenciados
@@ -92,7 +96,7 @@
 		 If( ($_SESSION["perfil"] == "administrador") or ($_SESSION["perfil"] == "auditor")){
 		 		//  botão Avidos 
 				echo "	
-						<a href='aviso.php' > 
+						<a href='painel.php?aviso=1' > 
 							<div class='thumbnail tile tile-medium tile-teal' style='display: flex; justify-content: center; align-items: center;'>	
 								
 								 Avisos 
@@ -138,4 +142,5 @@
 			    <img src="../imagem/logoff.png" width="100" height="100">
 		    </div>
 		</a>
-		  
+
+<!-- /Pag menu.php -->		  

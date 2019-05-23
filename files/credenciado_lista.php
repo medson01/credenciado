@@ -53,7 +53,7 @@ function excluir(id) {
 <!-- Atualizar credenciado -->
 <script language="Javascript">
 function atualizar(id) {
-          window.location.href = "credenciado.php?id="+id;
+          window.location.href = "painel.php?cred=1&id="+id;
 }
 </script>
 
@@ -67,7 +67,7 @@ function atualizar(id) {
                     
    <table class="table table-striped" align="center" style="font-size: 10px">
                <tr>
-                 <td colspan="12" style="text-align: center; text-decoration-style: solid;"> <strong>Pacientes insternados </strong></td>
+                 <td colspan="12" style="text-align: center; text-decoration-style: solid;"> <strong> Empresas </strong></td>
                </tr>
                <tr  style='font-weight:bold;'>
                  <!-- <td width="27"><div align="center">Status</div></td> -->
@@ -104,7 +104,7 @@ function atualizar(id) {
                                     }
 
                          echo          "</div></td> -->
-                                    <td ><div align='center'> <a href = 'rel_internacao.php?id_internacao=".$registro["id"]." '>  ".$registro["id"]."</a></div></td>
+                                    <td ><div align='center'> <a href = 'credenciado_relatorio.php?id_credenciado=".$registro["id"]." '>  ".$registro["id"]."</a></div></td>
                                     <td ><div align='center'>".$registro["nome"]."</div></td>
                                     <td ><div align='center'>".$registro["cpf_cnpj"]."</div></td>
                                     <td ><div align='center'>".$registro["codigo"]."</div></td>

@@ -318,7 +318,7 @@ if(!empty($_GET["id_pa"])){
 					}
 				</style>
 
-  <a href='internacao.php' > <input class='btn btn-primary delete' type="button" value="Voltar"> </a>
+  <a href='painel.php?int=1' > <input class='btn btn-primary delete' type="button" value="Voltar"> </a>
  
 	          <input class='btn btn-primary delete'  name="button" type="button" onclick="window.print();" value="Imprimir" />
           </p>
