@@ -5,6 +5,30 @@
 mysqli_query($conn,"SET NAMES 'utf8'");
 
 
+ function calc_idade($nascimento) {
+            $nascimento = date("d/m/Y", strtotime($nascimento));
+            $nascimento=date($nascimento);
+            $nascimento=explode('/',$nascimento); //Cria um array com os campos da data de nascimento  
+            $data=date('d/m/Y'); 
+            $data=explode('/',$data); //Cria um array com os campos da data atual 
+            $anos=$data[2]-$nascimento[2]; //ano atual - ano de nascimento 
+            if($nascimento[1] > $data[1]){
+               return $anos-1;
+            } //Se o mês de nascimento for maior que o mês atual, diminui um ano 
+            if($nascimento[1] == $data[1]){ 
+            //se o mês de nascimento for igual ao mês atual, precisamos ver os dias 
+                  if($nascimento[0] <= $data[0]) {
+                      return $anos; 
+                  }else{
+                      return $anos-1; 
+                  }
+            }
+              
+          return $anos; 
+        
+}
+
+
  
    $query = mysqli_query($conn,"SELECT * FROM cid order by cid") or die("erro ao carregar consulta");
                   $i = 1;
@@ -16,8 +40,23 @@ mysqli_query($conn,"SET NAMES 'utf8'");
                         $dias[$i] = $registro["dias"];
                         $i++; 
                    }
+
+
+  if(isset($_GET['id_beneficiarios'])){
+
+
+ 
+   $query = mysqli_query($conn,"SELECT * FROM `beneficiarios` WHERE `id`='".$_GET['id_beneficiarios']."'") or die("erro ao carregar consulta");
+                  
+                  while($registro = mysqli_fetch_assoc($query)){
+                        
+                         $data_nascimento = $registro["data_nascimento"];
+
+                   }
                    
-                    
+    } 
+
+
                   ?>
                   <!--FunÃ§Ã£o para autopreenchimento -->
                       <script>
@@ -57,14 +96,14 @@ mysqli_query($conn,"SET NAMES 'utf8'");
                       }
                       </script>                     
                   
-                     <form name="internamento" id="internamento" action ="internacao_cadastro.php" method="post" id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+         <form name="internamento" id="internamento" action ="internacao_cadastro.php" method="post" id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
                       <label> </label>
                       <div align="center">
                         </p>
-                        <table width="549" border="0" align="center">
+                        <table width="608" border="0" align="center">
                           <tr>
-                            <td width="179" >Matr&iacute;cula</td>
-                            <td width="360">
+                            <td width="235" >Matr&iacute;cula</td>
+                            <td width="363">
                             <input required="required" type="text" name="matricula" minlength="16" class="form-matric" id="matricula" size="20" maxlength="16"placeholder="00000000.000000.00"  onchange="pegarMatricula()" <?php if(isset($_GET['matricula'])){ echo "value=".$_GET['matricula'];} ?> /></td>
                           </tr>
                             <tr>
@@ -74,6 +113,44 @@ mysqli_query($conn,"SET NAMES 'utf8'");
                             <tr>
                               <td >Nome</td>
                               <td><input  minlength="4" id="nome" name="nome" readonly="readonly" class="form-control col-md-7 col-xs-12" required="required"  size="60" <?php if(isset($_GET['paciente'])){ echo "value='".$_GET['paciente']."'";} ?> /></td>
+                            </tr>
+                            <tr>
+                              <td class="style3">&nbsp;</td>
+                              <td>&nbsp;</td>
+                            </tr>
+                            <tr>
+                              <td class="style3">Data de nascimento </td>
+                              <td><input required="required" type="text" name="data_nascimento" minlength="16" class="form-control col-md-7 col-xs-12" id="data_nascimento"  readonly="readonly" <?php if(isset($data_nascimento)) { echo "value=".date("d/m/Y", strtotime($data_nascimento)); } ?> /></td>
+                            </tr>
+                            <tr>
+                              <td class="style3">&nbsp;</td> 
+                              <td>&nbsp;</td>
+                            </tr>
+                            <tr>
+                              <td class="style3">Idade</td>
+                              <td><input required="required" type="text" name="idade" minlength="16" class="form-control col-md-7 col-xs-12" id="idade"   readonly="readonly" <?php if(isset($data_nascimento)) {  echo "value=".calc_idade($data_nascimento); }  ?> /></td>
+                            </tr>
+                            <tr>
+                              <td class="style3">&nbsp;</td>
+                              <td>&nbsp;</td>
+                            </tr>
+                            <tr>
+                              <td class="style3">Deficiente</td>
+                              <td>
+
+								 <input type="checkbox" name="deficiente" id="deficiente" class="form-check-input" onclick="return false;" 
+								<?php
+
+										if( $_GET['deficiente'] == 1 ){
+											echo " value='1' checked ";
+										}else{
+											echo " value='0' ";
+										
+										}
+								
+								?> />
+                             
+                              </td>
                             </tr>
                             <tr>
                             <td class="style3">&nbsp;</td>
@@ -97,9 +174,7 @@ mysqli_query($conn,"SET NAMES 'utf8'");
 
 
                                                ?>
-                                  </select> 
-
-                              </td>
+                                  </select>                              </td>
                             </tr>
                             <tr>
                               <td >&nbsp;</td>
@@ -108,8 +183,7 @@ mysqli_query($conn,"SET NAMES 'utf8'");
                             <tr>
                               <td >Dias</td>
                               <td> 
-                                <input type="number" id="dias" readonly="readonly" name="dias" required="required" style="font-weight: bold" class="form-control col-md-7 col-xs-12">
-                              </td>
+                                <input type="number" id="dias" readonly="readonly" name="dias" required="required" style="font-weight: bold" class="form-control col-md-7 col-xs-12">                              </td>
                             </tr>
                             <tr>
                               <td>&nbsp;</td>
@@ -137,9 +211,11 @@ mysqli_query($conn,"SET NAMES 'utf8'");
                           </tr>
                           <td >Motivo do internamento</td>
                             <td>
-                              <textarea class="form-matric" name="motivo"  style="margin: 0px; height: 100px; width: 100%;" form="internamento" placeholder="Entre com o texto aqui..."> </textarea>
-                              
-                            </td>
+                              <textarea class="form-matric" name="motivo"  style="margin: 0px; height: 100px; width: 100%;" form="internamento" placeholder="Entre com o texto aqui..."  > 
+
+                               
+
+                              </textarea>                            </td>
                             </tr>
                             <tr>
                             
@@ -163,9 +239,11 @@ mysqli_query($conn,"SET NAMES 'utf8'");
                                         $id_pa = false;
                                         echo "<input type='hidden' id='id_pa' name='id_pa' value='".$id_pa."'>";
                                     }
-
+							
 
                                   ?>
+                                  <input type="hidden" id="id_beneficiarios" name="id_beneficiarios" <?php if(isset($_GET['id_beneficiarios'])){ echo "value=".$_GET['id_beneficiarios'];} ?>>
+
                                   <input type="hidden" id="cid" name="cid">
                                   <input type="hidden" id="cid_desc" name="cid_desc">
 

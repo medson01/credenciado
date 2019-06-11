@@ -1,5 +1,5 @@
 
-function internar(id,dat_saida,data,matricula,paciente) {
+function internar(tempo,id,dat_saida,data,matricula,paciente,id_beneficiarios) {
 
 
 
@@ -11,17 +11,23 @@ function internar(id,dat_saida,data,matricula,paciente) {
      	if (resposta == true) {
 
      		//Previsaão < que data atual
-                       if(data != 1){
+                       if(data == 1){
 
-                               var prorrogacao;
+                               //var prorrogacao;
 
-                                   prorrogacao = prompt ("O paciente exedeu as 12 horas do pronto atendimento, favor informar o motivo:");
+                               //    prorrogacao = prompt ("Favor informar o motivo do internamento:");
 
-                               window.location.href = "pronto_atendimento_saida.php?id="+id+"&prorrogacao="+prorrogacao+"&matricula="+matricula+"&paciente="+paciente;
+                               //window.location.href = "pronto_atendimento_saida.php?id="+id+"&prorrogacao="+prorrogacao+"&matricula="+matricula+"&paciente="+paciente;
+
+                               window.location.href = "pronto_atendimento_saida.php?id="+id+"&matricula="+matricula+"&id_beneficiarios="+id_beneficiarios+"&paciente="+paciente;
 
 
                        }else{
-                               window.location.href = "pronto_atendimento_saida.php?id="+id+"&matricula="+matricula+"&paciente="+paciente;
+
+
+                             alert("Caro usuário, a internação só poderá ser realizada, após o período de "+tempo+" referente ao Pronto Atendimento. ");
+                             //  window.location.href = "pronto_atendimento_saida.php?id="+id+"&matricula="+matricula+"&paciente="+paciente;
+                       
                        }
   
           //window.location.href = "internacao.php?id="+id+"&matricula="+matricula+"&paciente="+paciente;

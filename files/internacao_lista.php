@@ -1,4 +1,4 @@
-﻿<?php 
+<?php 
   
   // retira os erros 
  // error_reporting(0);
@@ -18,7 +18,7 @@
   }
 
   // Definição de perfil de usuário Administrador ou usuário comum.
- $a = "SELECT internamento.id as autorizacao, internamento.nome as paciente, internamento.matricula as matricula, internamento.solicitante as solicitante, internamento.crm as crm, internamento.dat_entrada as dat_entrada, internamento.dat_saida as dat_saida , cid.cid ,usuarios.nome as credenciado, cid.dias as dias, internamento.motivo as motivo, internamento.prorrogacao as prorrogacao, pronto_atendimento.id as id_pa ,pronto_atendimento.dat_entrada as data_pa FROM `internamento` LEFT JOIN pronto_atendimento on pronto_atendimento.id = internamento.id_pa INNER JOIN usuarios on usuarios.id = internamento.id_usuario INNER JOIN cid on cid.id = internamento.id_cid";
+ $a = "SELECT internamento.id as autorizacao, internamento.nome as paciente, internamento.matricula as matricula, internamento.solicitante as solicitante, internamento.crm as crm, internamento.dat_entrada as dat_entrada, internamento.dat_saida as dat_saida , internamento.id_beneficiarios as id_beneficiarios , cid.cid ,usuarios.nome as credenciado, cid.dias as dias, internamento.motivo as motivo, internamento.prorrogacao as prorrogacao, pronto_atendimento.id as id_pa ,pronto_atendimento.dat_entrada as data_pa FROM `internamento` LEFT JOIN pronto_atendimento on pronto_atendimento.id = internamento.id_pa INNER JOIN usuarios on usuarios.id = internamento.id_usuario INNER JOIN cid on cid.id = internamento.id_cid";
 
 
  
@@ -103,6 +103,22 @@ function excluir(id) {
 }
 </script>
 
+
+<!-- Perguntar antes de prorrogar -->
+<script language="Javascript">
+function prorrogar(id) {
+
+     var resposta = confirm("Deseja realmente prorrogar?");
+     
+     if (resposta == true) {
+
+          window.location.href = "painel.php?id="+id+"&prorro=1";
+
+
+     }
+}
+</script>
+
 		
 <?php 
 
@@ -121,7 +137,7 @@ function excluir(id) {
                     
    <table width="834" align="center" class="table table-striped" style="font-size: 9px">
                <tr>
-                 <td colspan="14" style="text-align: center; text-decoration-style: solid;"> <strong>Pacientes insternados </strong></td>
+                 <td colspan="13" style="text-align: center; text-decoration-style: solid;"> <strong>Pacientes insternados </strong></td>
                </tr>
                <tr  style='font-weight:bold;'>
                  <!-- <td width="27"><div align="center">Status</div></td> -->
@@ -132,12 +148,12 @@ function excluir(id) {
                   <td style='padding: 4px;'><div align="center">CRM</div></td>
                   <td style='padding: 4px;'><div align="center">Entrada</div></td>
                   <td style='padding: 4px;'><div align="center">diárias</div></td>
-                  <td style='padding: 4px;'><div align="center">Saída</div></td>
-                  <td style='padding: 4px;'><div align="center">CID</div></td>
+                  <td style='padding: 4px;'><div align="center">Previsão</div></td>
+                  <td style='padding: 4px;'><div align="center">Saída</div></td> 
                  <?php If( $_SESSION["perfil"] == "administrador" or $_SESSION["perfil"] == "auditor"){ echo "<td style='padding: 4px;'><div align='center'>Credenciado</div></td>"; } ?>            
 				 <td style='padding: 4px;'><div align="center"> Entrada P.A </div></td>
-                 <td><div align="center"></div></td>
-                    <td><div align="center"></div></td>
+                
+                    
                </tr>
                           
               <?php
@@ -159,28 +175,52 @@ function excluir(id) {
 
                                     }
 
-                         echo          "</div></td> -->
-                                    <td style='padding: 4px;'><div align='center' style='width: 30px;'> <a href = 'internacao_relatorio.php?id_internacao=".$registro["autorizacao"]."&id_pa=".$registro["id_pa"]." '>  ".$registro["autorizacao"]."</a></div></td>
+                         echo  "</div></td> -->
+                                    <td style='padding: 4px;'><div align='center' style='width: 30px;'> <a href = 'internacao_relatorio.php?id_internacao=".$registro["autorizacao"]."&id_pa=".$registro["id_pa"]."&prorro=1 '>  ".$registro["autorizacao"]."</a></div></td>
                                     <td style='padding: 4px;'><div align='center' style='width: 150px;'>".$registro["paciente"]."</div></td>
                                     <td ><div align='center' >".$registro["matricula"]."</div></td>
                                     <td ><div align='center'>".$registro["solicitante"]."</div></td>
                                      <td ><div align='center'>".$registro["crm"]."</div></td>
                                      <td ><div align='center'><font color='blue'><strong>".date("j/n/Y <\b\\r> H:i:s",strtotime($registro["dat_entrada"]))."</strong></font></div></td>
-                                     <td ><div align='center'>".$registro["dias"]."</div></td>
-                                     <td >
-                                      <div align='center'>";
+                                     <td ><div align='center'>".$registro["dias"]."</div></td>";
 
- 
-                                        $dat_previsao[$i] = strtotime(date("Y-n-j", strtotime(date("Y-n-j",strtotime($registro["dat_entrada"]))."+".$registro["dias"]." days")));
+
+
+              // Previsão de saída
+                        
+                        $dat_previsao[$i] = strtotime(date("Y-n-j", strtotime(date("Y-n-j",strtotime($registro["dat_entrada"]))."+".$registro["dias"]." days")));             
+
 
                                         $dat_atual[$i] = strtotime(date("Y-n-j"));
 
 
-                                       if($dat_atual[$i] <= $dat_previsao[$i]){
+              // Prorrogação
+                       if($dat_atual[$i] < $dat_previsao[$i]){
 
-                                             $data[$i] = 1;
+                               $data[$i] = 1;
+
+                           echo " <td ><div align='center'>". date("d/m/Y <\b\\r> H:i:s", strtotime(date("Y-n-j H:i:s",strtotime($registro["dat_entrada"]))."+".$registro["dias"]." days")) ."</div></td>";       
                                              
-                                       }
+                              
+
+                        }elseif($dat_atual[$i] = $dat_previsao[$i]) {
+
+                              $data[$i] = 1;
+                              
+                           echo " <td style='color: #FF4000; font-weight: bold;'><div align='center'>". date("d/m/Y <\b\\r> H:i:s", strtotime(date("Y-n-j H:i:s",strtotime($registro["dat_entrada"]))."+".$registro["dias"]." days")) ."</div></td>";    
+                        }else{
+
+
+                              echo " <td ><div align='center'>". date("d/m/Y <\b\\r> H:i:s", strtotime(date("Y-n-j H:i:s",strtotime($registro["dat_entrada"]))."+".$registro["dias"]." days")) ."</div></td>";    
+
+                        }
+
+
+
+
+                          echo " <td >
+                                      <div align='center'>";
+
 
                                      if ($registro["dat_saida"] == 0){
                                      
@@ -207,9 +247,9 @@ function excluir(id) {
                                            
                                     }
 
-                        echo "        </div>
+                      /*  echo "        </div>
                                     </td>
-                                    <td ><div align='center'>".$registro["cid"]."</div></td>";
+                                    <td ><div align='center'>".$registro["cid"]."</div></td>"; */
 
                                       If( ($_SESSION["perfil"] == "administrador") or ($_SESSION["perfil"] == "auditor")){
                                          echo " <td><div align='center'>".$registro["credenciado"]."</div></td>";
@@ -236,18 +276,42 @@ function excluir(id) {
                      }
 
 
-                        echo "  <td></td><td>
+                        echo "  <td style='width: 200px;'>";
+
+                  //Botão prorrogação   
+                        echo " 
                                     <!-- Botão sair -->
                                             <a class='btn btn-primary' style='width: 50px; height: 25px' onclick='saida(".$registro['autorizacao'].",".$dat_saida[$i].",".$data[$i].")'><span style='font-size: 10px; align: center;'> Saída </center> </span> </a>
                                       ";
-									  
+
+                  //  Botão Ecluir                  
+                    
                     If( $_SESSION["perfil"] == "administrador"){
                          echo  " <!-- Botão exluir -->
                                             <a class='btn btn-danger' style='width: 50px; height: 25px' onclick='excluir(".$registro["autorizacao"].")'><span style='font-size: 10px; align: center;'> Excluir </span> </a>
-                                 </td>
-                            </tr>";
+                                 ";
+                            
+                          } 
+
+
+                  // Botão prorrogação     
+                        If($dat_atual[$i] == $dat_previsao[$i]){
+
+                          if(empty($registro["dat_saida"])){
+
+                                   echo  " <!-- Botão prorrogação -->
+                                                      <a class='btn btn-danger' style='width: 70px; height: 25px' onclick='prorrogar(".$registro["autorizacao"].")'><span style='font-size: 10px; align: center;'> Prorrogar </span> </a>
+                                           ";
+
+                            }     
                           }       
+                               
+      
                                  $i++;
+
+
+                          echo " </td></tr>";
+
                      }
                   
 

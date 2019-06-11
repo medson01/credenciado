@@ -3,22 +3,29 @@
   //Arquivo de configuração
   include "cabecalho.php";
 
+  # Corrige o erro de acentuação no banco
+        mysqli_query($conn,"SET NAMES 'utf8'");
+
 $matricula = $_POST["matricula"];
 $nome = $_POST["nome"];
 $medico = $_POST["medico"];
 $motivo = $_POST["motivo"];
+//$deficiente = $_POST["deficiente"];
+$id_beneficiarios = $_POST["id_beneficiarios"];
 
 $matricula = str_replace(".", "", $matricula);
 $matricula = str_replace("-", "", $matricula);
 
 date_default_timezone_set('America/Maceio');
 
+
+
     $matric = substr($matricula, 9, -2);
 
     $query = mysqli_query($conn,"SELECT * FROM `beneficiarios` WHERE `matricula` = '".$matric."'") or die("erro ao selecionar");
 
 
-    $query = "INSERT INTO `pronto_atendimento`(`id`,`id_usuario`,`matricula`, `nome`,`dat_entrada`,`dat_saida`,`medico`, `motivo`) VALUES (null ,'".$_SESSION['id']."','".$matricula."' , '".$nome."' , '".date("Y-m-d H:i:s" )."' , null , '".$medico."' , '".$motivo."')";
+    $query = "INSERT INTO `pronto_atendimento`(`id`,`id_usuario`,`id_beneficiarios` , `matricula`, `nome`,`dat_entrada`,`dat_saida`,`medico`, `motivo`) VALUES (null , '".$_SESSION['id']."' , '".$id_beneficiarios."' , '".$matricula."' , '".$nome."' , '".date("Y-m-d H:i:s" )."' , null , '".$medico."' , '".$motivo."')";
 
                  
                

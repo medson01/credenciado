@@ -110,8 +110,19 @@ echo '<div id="exTab2" class="container" style="width: 980px; padding-left: 1px;
 <hr></hr>
 ';
 }else{
+
+
+	if(isset($_GET['prorro'])){
+
+		require_once("internacao_prorrogacao.php");
+
+
+	}else{
 	
-	require_once("user_system_formulario.php");
+	  require_once("user_system_formulario.php");
+
+	}
+
 }
 ?>
 <!-- /sub_menu -->

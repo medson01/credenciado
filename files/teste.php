@@ -1,42 +1,35 @@
 <?php 
   
-  //Arquivo de configuração
-  include "cabecalho.php";
-  
-  # Corrige o erro de acentuação no banco
-  mysqli_query($conn,"SET NAMES 'utf8'");
-  
-  
-  echo $_SESSION["id_credenciado"];
- 
- 
-  
+ function calc_idade($nascimento) {
+           $nascimento = date("d/m/Y", strtotime($nascimento));
+           
+            $nascimento=date($nascimento);
+            $nascimento=explode('/',$nascimento); //Cria um array com os campos da data de nascimento 
+             
+            $data=date('d/m/Y'); 
+            $data=explode('/',$data); //Cria um array com os campos da data atual 
 
-   
-    $query = mysqli_query($conn,"SELECT `id`,`nome`,`nome_fantasia`,`cpf_cnpj`, `codigo`, `data_inc`, `telefone`, `celular`, `email`, `endereco`, `numero`, `bairro`, `cep`, `cidade`, `estado` FROM `credenciado` WHERE id = '".$_SESSION["id_credenciado"]."'") or die("erro ao carregar consulta");
-  
+            
+            $anos=$data[2]-$nascimento[2]; //ano atual - ano de nascimento 
 
-
-               while($registro = mysqli_fetch_row($query)){
-
-                               echo   $id = $registro[0];
-                               echo   $nome = $registro[1];
-                               echo   $nome_fantasia = $registro[2];
-                               echo    $cpf_cnpj = $registro[3];
-                               echo   $codigo = $registro[4];
-                               echo   $data_inc = $registro[5];
-                               echo    $telefone = $registro[6];
-                               echo    $celular = $registro[7];
-                               echo   $email = $registro[8];
-                               echo   $endereco = $registro[9];
-                               echo   $numero = $registro[10];
-                               echo   $bairro = $registro[11];
-                               echo   $cep = $registro[12];
-                               echo    $cidade = $registro[13];
-                                
-
-                                   
-               }
+            if($nascimento[1] > $data[1]){
+               return $anos-1;
+            } //Se o mês de nascimento for maior que o mês atual, diminui um ano 
+            if($nascimento[1] == $data[1]){ 
+            //se o mês de nascimento for igual ao mês atual, precisamos ver os dias 
+                  if($nascimento[0] <= $data[0]) {
+                      return $anos; 
+                  }else{
+                      return $anos-1; 
+                  }
+            }
               
-  
- ?>
+          return $anos; 
+        
+}
+
+echo calc_idade("1973-11-07");
+
+       
+?>
+ 

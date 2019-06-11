@@ -1,4 +1,4 @@
-﻿<?php
+<?php
   //Acertar data e hora 
   date_default_timezone_set('America/Recife');
 
@@ -9,12 +9,14 @@
  
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="pt-br" lang="pt-br"><head>
+
+<html>
+
+<head>
 
 
-    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <meta charset="UTF-8">
 
-    <meta name="generator" content="Plone - http://plone.org">
 
     <!-- Internet Explorer fix, forces IE8 into newest possible rendering
          engine even if it's on an intranet. This has to be defined before any
@@ -77,6 +79,9 @@
     <!-- CSS para o título e conteúdo -->
     <link rel="stylesheet" type="text/css" href="../css/titulo_conteudo.css"/>
 
+        <!-- CSS para o título e conteúdo -->
+    <link rel="stylesheet" type="text/css" href="../css/botao_redondo.css"/>
+
 
     <!-- Soma campos -->
     <script src="../js/soma.js"></script>
@@ -93,6 +98,7 @@
     $("#codigo").mask("000000");
     $("#cpf_cnpj").mask("00000000000000");
     $("#numero").mask("00000");
+    $("#dias").mask("00");
     </script>
 
 
@@ -135,7 +141,18 @@
       </div>
 
     <div>
-      <table height="772" id="portal-columns">
+	
+	<?php 
+      if(isset($_GET["prorro"])){
+	  
+	  	echo "<table height='1500px' id='portal-columns'>";
+	  
+	  }else{
+	  
+	  	echo "<table id='portal-columns'>";
+	  }
+	?>  
+	  
         <tbody>
           <tr>
             

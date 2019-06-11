@@ -13,28 +13,26 @@ $crm = $_POST["crm"];
 $motivo = $_POST["motivo"];
 $cid = $_POST["cid"];
 $cid_desc = $_POST["cid_desc"];
+$id_beneficiarios = $_POST["id_beneficiarios"];
 
-$matricula = str_replace(".", "", $matricula);
-$matricula = str_replace("-", "", $matricula);
+//$matricula = str_replace(".", "", $matricula);
+//$matricula = str_replace("-", "", $matricula);
+//$matric = substr($matricula, 9, -2);
 
-
-
-$matric = substr($matricula, 9, -2);
-
-    $query = mysqli_query($conn,"SELECT * FROM `beneficiarios` WHERE `matricula` = '".$matric."'") or die("erro ao selecionar");
+    $query = mysqli_query($conn,"SELECT * FROM `beneficiarios` WHERE `matricula` = '".$id_beneficiarios."'") or die("erro ao selecionar");
 
 
 
     if($_POST['id_pa'] == false){
 
 
-		    $query = "INSERT INTO `internamento`(`id`, `id_usuario`, `id_cid`, `id_revalida`, `id_pa`,`nome`, `matricula`, `solicitante`, `crm`, `dat_entrada`,`motivo`, `prorrogacao`) VALUES (null ,'".$_SESSION['id']."', '".$id_cid."' , null , '0' , '".$nome."' , '".$matricula."' , '".$solicitante."' , '".$crm."' , '".date("Y-m-d H:i:s" )."' , '".$motivo."', null)";
+		    $query = "INSERT INTO `internamento`(`id`, `id_usuario`, `id_cid`, `id_beneficiarios`, `id_pa`,`nome`, `matricula`, `solicitante`, `crm`, `dat_entrada`,`motivo`, `prorrogacao`) VALUES (null ,'".$_SESSION['id']."', '".$id_cid."' , '".$id_beneficiarios."', '0' , '".$nome."' , '".$matricula."' , '".$solicitante."' , '".$crm."' , '".date("Y-m-d H:i:s" )."' , '".$motivo."', null)";
 
      }else{
 
         $id_pa = $_POST['id_pa'];
 
-        $query = "INSERT INTO `internamento`(`id`, `id_usuario`, `id_cid`, `id_revalida`, `id_pa`,`nome`, `matricula`, `solicitante`, `crm`, `dat_entrada`,`motivo`, `prorrogacao`) VALUES (null ,'".$_SESSION['id']."', '".$id_cid."' , null , '".$id_pa."' , '".$nome."' , '".$matricula."' , '".$solicitante."' , '".$crm."' , '".date("Y-m-d H:i:s" )."' , '".$motivo."', null)";
+        $query = "INSERT INTO `internamento`(`id`, `id_usuario`, `id_cid`, `id_beneficiarios`, `id_pa`,`nome`, `matricula`, `solicitante`, `crm`, `dat_entrada`,`motivo`, `prorrogacao`) VALUES (null ,'".$_SESSION['id']."', '".$id_cid."' , '".$id_beneficiarios."' , '".$id_pa."' , '".$nome."' , '".$matricula."' , '".$solicitante."' , '".$crm."' , '".date("Y-m-d H:i:s" )."' , '".$motivo."', null)";
 
      }
 

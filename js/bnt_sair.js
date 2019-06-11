@@ -1,4 +1,4 @@
-function saida(id,dat_saida,data) {
+function saida(tempo,id,dat_saida,data) {
    
    if (dat_saida != 1){
 
@@ -7,17 +7,29 @@ function saida(id,dat_saida,data) {
                if (resposta == true) {
 
                        //Previsaão < que data atual
-                       if(data != 1){
+                       if(data == 1){   // data = 0
+
+
+
 
                                var prorrogacao;
 
-                                   prorrogacao = prompt ("O paciente exedeu as 12 horas do pronto atendimento, favor informar o motivo:");
+                                   prorrogacao = prompt ("O paciente exedeu o período referente ao Pronto Atendimento que é de "+tempo+", favor informar o motivo:");
 
                                window.location.href = "pronto_atendimento_saida.php?id="+id+"&prorrogacao="+prorrogacao;
 
 
-                       }else{
-                               window.location.href = "pronto_atendimento_saida.php?id="+id;
+                       }else{         // data = 1
+
+                        // alta do paciente
+
+                              var motivo_saida;
+                              
+                               $motivo_saida = prompt ("Favor informar sobre a alta do paciente:");
+
+                               //window.location.href = "pronto_atendimento_saida.php?id="+id;
+
+                               window.location.href = "pronto_atendimento_saida.php?id="+id+"&motivo_saida="+motivo_saida;
                        }
                     
                }

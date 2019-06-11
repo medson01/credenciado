@@ -4,13 +4,22 @@
  require_once "../config/config.php";
  
 $id = $_GET['id'];
+
 if(isset($_GET['paciente'])){
 		$paciente = $_GET['paciente'];
+}
+if(isset($_GET['id_beneficiarios'])){
+		$id_beneficiarios = $_GET['id_beneficiarios'];
 }
 if (isset($_GET['matricula'])){
 	    $matricula = $_GET['matricula'];
 }
         
+if(isset($_GET['motivo_saida'])){
+		$motivo_saida = $_GET['motivo_saida'];
+}else{
+		$motivo_saida = "";
+}
 
 
 if(isset($_GET['prorrogacao'])){
@@ -19,7 +28,7 @@ if(isset($_GET['prorrogacao'])){
 	
 }else{
 
-	$update = mysqli_query($conn,"UPDATE `pronto_atendimento` SET `dat_saida`= now() WHERE id = '".$id."'");
+	$update = mysqli_query($conn,"UPDATE `pronto_atendimento` SET `dat_saida`= now(), `motivo_saida`= '".$motivo_saida."'  WHERE id = '".$id."'");
 	
 }
 
@@ -38,15 +47,20 @@ if(!isset($_GET['matricula'])){
 
  
 
-			echo "<script>alert('Houve um erro ao atualizar!');
+					echo "<script>alert('Houve um erro ao atualizar!');
 			location.href=\"painel.php?pa=1&id=".$id."&matricula=".$matricula."&paciente=".$paciente."\"</script>";
+			
 			}else{
-			echo "<script>alert('Pronto atendimento encerrado com sucesso! \\n Favor preencher os dados da internação');
-			location.href=\"painel.php?int=1&id=".$id."&matricula=".$matricula."&paciente=".$paciente."\"</script>";
+				
+					echo "<script>alert('Pronto atendimento encerrado com sucesso! \\n Favor preencher os dados da internação');
+			location.href=\"painel.php?int=1&id=".$id."&matricula=".$matricula."&id_beneficiarios=".$id_beneficiarios."&paciente=".$paciente."\"</script>";
+
+			
 		}
 
 }
 
 
+	
 
 ?>

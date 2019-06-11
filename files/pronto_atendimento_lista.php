@@ -66,7 +66,7 @@ return "$horas:$minutos:$segundos";
  
  // Definição de perfil de usuário Administrador ou usuário comum.
 
- $a = "SELECT pronto_atendimento.id as autorizacao, pronto_atendimento.matricula as matricula, pronto_atendimento.nome as paciente, pronto_atendimento.dat_entrada as dat_entrada, pronto_atendimento.dat_saida as dat_saida , pronto_atendimento.motivo as motivo, usuarios.nome as credenciado, pronto_atendimento.prorrogacao as prorrogacao FROM `pronto_atendimento` INNER JOIN usuarios on usuarios.id = pronto_atendimento.id_usuario";
+ $a = "SELECT pronto_atendimento.id as autorizacao, pronto_atendimento.id_beneficiarios as id_beneficiarios , pronto_atendimento.matricula as matricula, pronto_atendimento.nome as paciente, pronto_atendimento.dat_entrada as dat_entrada, pronto_atendimento.dat_saida as dat_saida , pronto_atendimento.motivo as motivo, usuarios.nome as credenciado, pronto_atendimento.prorrogacao as prorrogacao FROM `pronto_atendimento` INNER JOIN usuarios on usuarios.id = pronto_atendimento.id_usuario";
 
 
   If( $_SESSION["perfil"] == "usuario"){
@@ -101,6 +101,8 @@ return "$horas:$minutos:$segundos";
    $query = mysqli_query($conn,$a.$b) or die("erro ao carregar consulta");
 
 ?>
+
+
 
 
 <!-- Mensagem ao passar o mouse -->
@@ -167,22 +169,59 @@ return "$horas:$minutos:$segundos";
                                     }
 
                          echo          "</div></td> -->
-                                    <td ><div align='center' style='width: 30px;'> <a href = 'pronto_atendimento_relatorio.php?id_internacao=".$registro["autorizacao"]." '>  ".$registro["autorizacao"]."</a></div></td>
+                                    <td ><div align='center' style='width: 30px;'> <a href = 'pronto_atendimento_relatorio.php?id_pronto_atendimento=".$registro["autorizacao"]." '>  ".$registro["autorizacao"]."</a></div></td>
                                     <td ><div align='center' style='width: 150px;'>".$registro["paciente"]."</div></td>
                                     <td ><div align='center' >".$registro["matricula"]."</div></td>
                                      <td ><div align='center'><font color='blue'><strong>".date("j/n/Y <\b\\r> H:i:s",strtotime($registro["dat_entrada"]))."</strong></font></div></td>
                                      <td >
                                       <div align='center'>";
 
-                                  # Configurar a permanência do paciênte no hospital "+12 minute".
-                                      $dat_previsao[$i] = strtotime(date("Y-n-j H:i:s", strtotime("+12 minute",strtotime($registro["dat_entrada"]))));
+                                  
+                                  # Configurar a pernamnencia do Pronto Atendimento 
+                                  #    1  segundos => "1  second"     
+                                  #    1 minutos   => "1  minute"                                      
+                                  #    1  hora     => "1  hour"
 
-                                      $dat_atual[$i] = strtotime(date("Y-n-j H:i:s"));
+                                      $v = "1";
+                                      $t = "minutos";
+                      
+                                  #################################################
 
+                                      switch ($t) {
+                                        case 'secondos':
+                                          $time = "+". $v . " second";
+                                          $tempo = $v . "seguntos";
+
+                                          break;
+                                        case 'minutos':
+                                          $time = "+". $v . " minute";
+                                          $tempo = $v . " minutos";
+
+                                          break;
+                                        case 'horas':
+                                          $time = "+". $v . " hour";
+                                          $tempo = $v . " horas";
+
+                                          break;                                        
+                                
+                                      }
+
+                                  #################################################
+
+                                       $dat_previsao[$i] = strtotime(date("Y-n-j H:i:s", strtotime( $time ,strtotime($registro["dat_entrada"]))));
+
+                                      // echo "previsão: ". date("Y-n-j H:i:s", strtotime( $time ,strtotime($registro["dat_entrada"]))); 
+
+                                      // echo "<br>".$time."<br>";
+
+
+                                       $dat_atual[$i] = strtotime(date("Y-n-j H:i:s"));
+
+                                       // echo "atual: " . date("Y-n-j H:i:s");
+
+                                       //  echo "<br>".$time."<br>";
 
                                       if(!empty($registro["dat_saida"])){
-
-                                        //echo $horaB = substr(date("Y-n-j H:i:s", strtotime("+30 minute",strtotime($registro["dat_entrada"]))),10);
 
                                          $horaA = $registro["dat_entrada"];                              
                                          $horaB = $registro["dat_saida"];
@@ -207,13 +246,21 @@ return "$horas:$minutos:$segundos";
                                        
 
 
-                                       if($dat_atual[$i] <= $dat_previsao[$i]){
+                                       if($dat_atual[$i] > $dat_previsao[$i]){
 
                                              $data[$i] = 1;
-                                             
-                                       }else{ 
-									   		 $data[$i] = 0;
-									    }
+
+
+									                     }else{
+
+                                            $data[$i] = 0;
+
+
+                                       }
+
+
+
+
 
                                      if ($registro["dat_saida"] == 0){
                                      
@@ -249,14 +296,14 @@ return "$horas:$minutos:$segundos";
 
                              echo " <!-- Botão sair -->
                                     <td align='right'  style='width: 220px'>                           
-                                            <a class='btn btn-primary' style='width: 50px; height: 25px' onclick='saida(".$registro['autorizacao'].",".$dat_saida[$i].",".$data[$i].")'><span style='font-size: 10px; align: center;'> Saída </center> </span> </a>                                                   
+                                            <a class='btn btn-primary' style='width: 50px; height: 25px' onclick='saida(\"".$tempo."\",".$registro['autorizacao'].",".$dat_saida[$i].",".$data[$i].")'><span style='font-size: 10px; align: center;'> Saída </center> </span> </a>                                                   
                                     ";
 
 
 
                              echo " <!-- Botão internaramento -->
                   
-                                            <a class='btn btn-success' style='width: 50px; height: 25px' onclick='internar(".$registro['autorizacao'].",".$dat_saida[$i].",".$data[$i].",\"".$registro['matricula']."\",\"".$registro['paciente']."\")'><span style='font-size: 10px; align: center'> Internar </center> </span> </a>              
+                                            <a class='btn btn-success' style='width: 50px; height: 25px' onclick='internar(\"".$tempo."\",".$registro['autorizacao'].",".$dat_saida[$i].",".$data[$i].",\"".$registro['matricula']."\",\"".$registro['paciente']."\",".$registro['id_beneficiarios'].")'><span style='font-size: 10px; align: center'> Internar </center> </span> </a>              
                                     ";
 
 

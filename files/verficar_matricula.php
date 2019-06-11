@@ -17,6 +17,7 @@ if(isset($_GET['matric'])){
 	 $matric = substr($_GET['matric'], 9, -3);
 
 
+
 	 $query = mysqli_query($conn,"SELECT * FROM `beneficiarios` WHERE matricula = '".$matric."' AND tipreg = '".$tipreg."'") or die("erro ao carregar consulta");
 
 	 	//Beneficiaário não existe
@@ -36,15 +37,18 @@ if(isset($_GET['matric'])){
         }else{
         	    		
 	        while($registro = mysqli_fetch_assoc($query)){
-	                        
-	         	$nome = $registro["nome"];
+			
+	        	$id_beneficiarios = $registro["id"];                
+	         	$data_nascimento = $registro["data_nascimento"];
+				$nome = $registro["nome"];
 	            $cpf = $registro["cpf"];
 	     		$contrato_ativo = $registro["contrato_ativo"];
 	     		$pessoa_ativa = $registro["pessoa_ativa"];
+	     		$deficiente = $registro["deficiente"];
 	                        
 	         }
 
-
+	        
 	        if($contrato_ativo <> 1){
 
 	        		if(isset($_GET['pa'])){  
@@ -71,12 +75,18 @@ if(isset($_GET['matric'])){
 	        }else{
 			        
 		            if(isset($_GET['pa'])){      
-		       					echo "<script>location.href=\"painel.php?pa=1&id=".$id."&matricula=".$matricula."&nome=".$nome."&cpf=".$cpf."\"</script>";
+		       					echo "<script>location.href=\"painel.php?pa=1&id=".$id."&matricula=".$matricula."&nome=".$nome."&cpf=".$cpf."&id_beneficiarios=".$id_beneficiarios."&data_nascimento=".$data_nascimento."&deficiente=".$deficiente."\"</script>";
 		        	}
 		        	if(isset($_GET['int'])){
-		        	 			echo "<script>location.href=\"painel.php?int=1&id=".$id."&matricula=".$matricula."&paciente=".$nome."&cpf=".$cpf."\"</script>";
+		        	 			echo "<script>location.href=\"painel.php?int=1&id=".$id."&matricula=".$matricula."&paciente=".$nome."&cpf=".$cpf."&id_beneficiarios=".$id_beneficiarios."&data_nascimento=".$data_nascimento."&deficiente=".$deficiente."\"</script>";
 		        	}
         	}
+
+			
+
+
         }
-   }     
+   }  
+   
+     
 ?>

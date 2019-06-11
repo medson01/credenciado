@@ -60,6 +60,11 @@
 												$titulo = "Cadastro de usuários";	 		
 											}
 											
+											if(isset($_GET['prorro'])){
+												$sub_menu = 6;
+												$titulo = "Prorrogação";	 		
+											}
+											
 											echo $titulo;
    									 	?>
 
