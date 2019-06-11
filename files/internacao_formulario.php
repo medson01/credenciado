@@ -51,6 +51,7 @@ mysqli_query($conn,"SET NAMES 'utf8'");
                   while($registro = mysqli_fetch_assoc($query)){
                         
                          $data_nascimento = $registro["data_nascimento"];
+                         $deficiente = $registro["deficiente"];
 
                    }
                    
@@ -141,7 +142,7 @@ mysqli_query($conn,"SET NAMES 'utf8'");
 								 <input type="checkbox" name="deficiente" id="deficiente" class="form-check-input" onclick="return false;" 
 								<?php
 
-										if( $_GET['deficiente'] == 1 ){
+										if( $deficiente == 1 ){
 											echo " value='1' checked ";
 										}else{
 											echo " value='0' ";

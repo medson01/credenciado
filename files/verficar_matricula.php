@@ -9,7 +9,7 @@ if(isset($_GET['matric'])){
 
      $matricula = $_GET['matric'];
 
-     $id = '1';
+     $id = '0';
 
 	
 	 $tipreg = substr($_GET['matric'], 16	);

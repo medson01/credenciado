@@ -7,7 +7,7 @@
  include "cabecalho.php";
 
   		      # Corrige o erro de acentuação no banco
-				mysqli_query($conn,"SET NAMES 'utf8'");
+				//mysqli_query($conn,"SET NAMES 'utf8'");
 
 		$res = $_GET["id_internacao"];
 		
@@ -51,7 +51,7 @@
 							 FROM `internamento` 
 							 INNER JOIN usuarios on usuarios.id = internamento.id_usuario 
 							 INNER JOIN cid on cid.id = internamento.id_cid
-							  INNER JOIN beneficiarios on beneficiarios.id = internamento.id_beneficiarios
+							 INNER JOIN beneficiarios on beneficiarios.id = internamento.id_beneficiarios
 							 LEFT JOIN pronto_atendimento on pronto_atendimento.id = internamento.id_pa 
 							 WHERE internamento.id =".$res) or die("erro ao carregar consulta");
 
@@ -241,18 +241,13 @@ if(!empty($_GET["id_pa"])){
   &nbsp;
   <?php 
   											
-  											if(isset($_POST["deficiente"])){
-												if($_POST["deficiente"] <> 0){
+  											
+												if($deficiente <> 0){
 													echo "Sim"; 
 												}else{
 													echo "Não";
 												}
-											}
-											if($deficiente <> 0){
-												echo "Sim"; 
-											}else{
-												echo "Não";
-											}
+											
 										?>
 										
 					       </div></th>
@@ -359,7 +354,7 @@ if(!empty($_GET["id_pa"])){
 				      </tr>
 					    <tr>
 					      <th scope='row'><div align="left">Código do CID: <br> &nbsp; <?php echo  $cid; ?> </div></th>
-					      <th scope='col'><div align="left">Descrição do CID: <br> &nbsp;<?php echo "&nbsp;&nbsp;".$cid_desc; ?></div></th>
+					      <th scope='col'><div align="left">Descrição do CID: <br> &nbsp;<?php echo "&nbsp;&nbsp;". $cid_desc ; ?></div></th>
 				      </tr>
 					    <tr>
 					      <th scope='row'><div align="left">Diárias: <br> &nbsp; <?php echo $dias; ?></div></th>

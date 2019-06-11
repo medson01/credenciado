@@ -14,6 +14,7 @@ $motivo = $_POST["motivo"];
 $cid = $_POST["cid"];
 $cid_desc = $_POST["cid_desc"];
 $id_beneficiarios = $_POST["id_beneficiarios"];
+$id_pa = $_POST["id_pa"];
 
 //$matricula = str_replace(".", "", $matricula);
 //$matricula = str_replace("-", "", $matricula);
