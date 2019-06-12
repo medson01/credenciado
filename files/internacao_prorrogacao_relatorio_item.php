@@ -8,7 +8,7 @@
 				      </tr>
 					    <tr>
 					      <th scope='row'><div align="left">C&oacute;digo do CID: <br> &nbsp; <?php echo  $cid; ?> </div></th>
-					      <th scope='col'><div align="left">Descri&ccedil;&atilde;o do CID: <br> &nbsp;<?php echo "&nbsp;&nbsp;".$cid_desc; ?></div></th>
+					      <th scope='col'><div align="left">Descri&ccedil;&atilde;o do CID: <br> &nbsp;<?php echo "&nbsp;&nbsp;".utf8_encode($cid_desc); ?></div></th>
 				      </tr>
 					    <tr>
 					      <th scope='row'><div align="left">Data de entrada: <br />
@@ -60,8 +60,8 @@
 &nbsp;
 <?php 
 					      		
-					      			if($dat_saida <> 0) {
-					      				echo date('d / m / Y \h\s H:i:s', strtotime($dat_saida));	
+					      			if($dat_saida_int <> 0) {
+					      				echo date('d / m / Y \h\s H:i:s', strtotime($dat_saida_int));	
 					      			} 
 					      		 
 					      	?>

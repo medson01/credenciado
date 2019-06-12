@@ -27,13 +27,13 @@ $id_pa = $_POST["id_pa"];
     if($_POST['id_pa'] == false){
 
 
-		    $query = "INSERT INTO `internamento`(`id`, `id_usuario`, `id_cid`, `id_beneficiarios`, `id_pa`,`nome`, `matricula`, `solicitante`, `crm`, `dat_entrada`,`motivo`, `prorrogacao`) VALUES (null ,'".$_SESSION['id']."', '".$id_cid."' , '".$id_beneficiarios."', '0' , '".$nome."' , '".$matricula."' , '".$solicitante."' , '".$crm."' , '".date("Y-m-d H:i:s" )."' , '".$motivo."', null)";
+		    $query = "INSERT INTO `internamento`(`id`, `id_usuario`, `id_cid`, `id_beneficiarios`, `id_pa`,`nome`, `matricula`, `solicitante`, `crm`, `dat_entrada`,`dat_saida`, `motivo`, `prorrogacao`) VALUES (null ,'".$_SESSION['id']."', '".$id_cid."' , '".$id_beneficiarios."', '0' , '".$nome."' , '".$matricula."' , '".$solicitante."' , '".$crm."' , '".date("Y-m-d H:i:s" )."' , null ,'".$motivo."', null)";
 
      }else{
 
         $id_pa = $_POST['id_pa'];
 
-        $query = "INSERT INTO `internamento`(`id`, `id_usuario`, `id_cid`, `id_beneficiarios`, `id_pa`,`nome`, `matricula`, `solicitante`, `crm`, `dat_entrada`,`motivo`, `prorrogacao`) VALUES (null ,'".$_SESSION['id']."', '".$id_cid."' , '".$id_beneficiarios."' , '".$id_pa."' , '".$nome."' , '".$matricula."' , '".$solicitante."' , '".$crm."' , '".date("Y-m-d H:i:s" )."' , '".$motivo."', null)";
+        $query = "INSERT INTO `internamento`(`id`, `id_usuario`, `id_cid`, `id_beneficiarios`, `id_pa`,`nome`, `matricula`, `solicitante`, `crm`, `dat_entrada`, `dat_saida` , `motivo`, `prorrogacao`) VALUES (null ,'".$_SESSION['id']."', '".$id_cid."' , '".$id_beneficiarios."' , '".$id_pa."' , '".$nome."' , '".$matricula."' , '".$solicitante."' , '".$crm."' , '".date("Y-m-d H:i:s" )."' , null , '".$motivo."', null)";
 
      }
 

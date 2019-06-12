@@ -13,10 +13,13 @@ $motivo = $_POST["motivo"];
 
 
             $query = "INSERT INTO `prorrogacao`(`id`, `id_internamento`, `id_usuario`, `medico_solicitante`, `crm`, `dias`, `motivo`, `data_prorrogacao`) VALUES ( null ,'".$id_internamento."','".$id_usuario."', '".$medico_solicitante."' , '".$crm."' , '".$dias."' , '".$motivo."' ,'".date("Y-m-d H:i:s" )."')";
+
 	 
         $insert = mysqli_query($conn, $query);
 		
-		    $res = mysqli_insert_id($conn);
+		    $id_prorrogacao = mysqli_insert_id($conn);
+
+        $update = mysqli_query($conn,"UPDATE `internamento` SET `prorrogacao`= '".$id_prorrogacao."' WHERE id = '".$id_internamento."'"); 
         
         if($insert){
           

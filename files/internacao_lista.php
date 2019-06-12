@@ -176,7 +176,16 @@ function prorrogar(id) {
                                     }
 
                          echo  "</div></td> -->
-                                    <td style='padding: 4px;'><div align='center' style='width: 30px;'> <a href = 'internacao_relatorio.php?id_internacao=".$registro["autorizacao"]."&id_pa=".$registro["id_pa"]."&prorro=1 '>  ".$registro["autorizacao"]."</a></div></td>
+                                    <td style='padding: 4px;'>
+                                      <div align='center' style='width: 30px;'> 
+
+                                        <a href = 'internacao_relatorio.php?id_internacao=".$registro["autorizacao"]."&id_pa=".$registro["id_pa"]."&prorro=".$registro["prorrogacao"]."'>  ".$registro["autorizacao"]."</a>
+
+
+                                      </div>
+                                    </td>
+
+
                                     <td style='padding: 4px;'><div align='center' style='width: 150px;'>".$registro["paciente"]."</div></td>
                                     <td ><div align='center' >".$registro["matricula"]."</div></td>
                                     <td ><div align='center'>".$registro["solicitante"]."</div></td>

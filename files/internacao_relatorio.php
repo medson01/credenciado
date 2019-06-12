@@ -14,12 +14,14 @@
 
 		//INNER JOIN beneficiarios on concat(beneficiarios.matricula, beneficiarios.tipreg) = SUBSTRING(internamento.matricula, 9,8)
 		
-			if(isset($_GET["prorro"])){
-			 $query = mysqli_query($conn,"SELECT internamento.nome as paciente, internamento.matricula as matricula, prorrogacao.medico_solicitante as solicitante, prorrogacao.crm as crm, internamento.dat_entrada as dat_entrada, internamento.dat_saida as dat_saida, cid.cid , cid.descricao as descricao ,usuarios.nome as credenciado, cid.dias as dias,  prorrogacao.motivo as motivo, prorrogacao.data_prorrogacao as data_prorrogacao, prorrogacao.dias as prorrogacao_dias FROM `internamento` INNER JOIN usuarios on usuarios.id = internamento.id_usuario
+			if(!empty($_GET["prorro"])){
+			 $query = mysqli_query($conn,"SELECT internamento.nome as paciente, internamento.matricula as matricula, prorrogacao.medico_solicitante as solicitante, prorrogacao.crm as crm, internamento.dat_entrada as dat_entrada, internamento.dat_saida as dat_saida_int, cid.cid , cid.descricao as descricao ,usuarios.nome as credenciado, cid.dias as dias,  prorrogacao.motivo as motivo, prorrogacao.data_prorrogacao as data_prorrogacao, prorrogacao.dias as prorrogacao_dias, pronto_atendimento.dat_saida as dat_saida_pa, beneficiarios.data_nascimento , beneficiarios.deficiente 
+			 FROM `internamento` 
+			 INNER JOIN usuarios on usuarios.id = internamento.id_usuario
 			 INNER JOIN cid on cid.id = internamento.id_cid 
 			 INNER JOIN beneficiarios on beneficiarios.id = internamento.id_beneficiarios
 			 INNER JOIN prorrogacao on prorrogacao.id_internamento = internamento.id 
-			 LEFT  JOIN pronto_atendimento on pronto_atendimento.id = internamento.id_pa 
+			 LEFT JOIN pronto_atendimento on pronto_atendimento.id = internamento.id_pa 
 			 WHERE internamento.id =".$res) or die("erro ao carregar consulta");
 
 
@@ -31,7 +33,7 @@
                         $solicitante = $registro[2];
                         $crm = $registro[3];
                         $dat_entrada = $registro[4];
-                        $dat_saida = $registro[5];
+                        $dat_saida_int = $registro[5];
                         $cid = $registro[6];
                         $cid_desc = $registro[7];
                         $credenciado = $registro[8];
@@ -39,15 +41,22 @@
                         $motivo = $registro[10];
                         $data_prorrogacao = $registro[11];
                         $prorrogacao_dias = $registro[12];
+                        $dat_saida_pa = $registro[13];
+                        $data_nascimento = $registro[14];
+						$deficiente = $registro[15];
                          
                    }
 			
 			
-			}else{	
-					$query = mysqli_query($conn,"SELECT internamento.nome as paciente, internamento.matricula as matricula, internamento.solicitante as solicitante,
-							 internamento.crm as crm, internamento.dat_entrada as dat_entrada, internamento.dat_saida as dat_saida, cid.cid , cid.descricao as 
-							 descricao ,usuarios.nome as credenciado, cid.dias as dias, internamento.motivo as motivo, internamento.prorrogacao as prorrogacao,
-							 beneficiarios.data_nascimento , beneficiarios.deficiente 
+			}else{
+
+			  $query = mysqli_query($conn,"SELECT internamento.nome as nome, internamento.matricula as matricula, internamento.solicitante as solicitante, 
+			  			internamento.crm as crm, internamento.dat_entrada as dat_entrada, internamento.dat_saida as dat_saida_int, internamento.motivo as motivo,
+			  	  		internamento.prorrogacao as prorrogacao,
+			  	  		cid.cid , cid.descricao as descricao , cid.dias as dias,
+			  	  		usuarios.nome as credenciado,   
+			  	  		pronto_atendimento.dat_saida as dat_saida_pa,
+			  	  		beneficiarios.data_nascimento , beneficiarios.deficiente 
 							 FROM `internamento` 
 							 INNER JOIN usuarios on usuarios.id = internamento.id_usuario 
 							 INNER JOIN cid on cid.id = internamento.id_cid
@@ -64,28 +73,33 @@
                         $solicitante = $registro[2];
                         $crm = $registro[3];
                         $dat_entrada = $registro[4];
-                        $dat_saida = $registro[5];
-                        $cid = $registro[6];
-                        $cid_desc = $registro[7];
-                        $credenciado = $registro[8];
-                        $dias = $registro[9];
-                        $motivo = $registro[10];
-                        $prorrogacao = $registro[11];
-						$data_nascimento = $registro[12];
-						$deficiente = $registro[13];
+                        $dat_saida_int = $registro[5];
+                        $motivo = $registro[6];
+                        $prorrogacao = $registro[7];
+                        $cid = $registro[8];
+                        $cid_desc = $registro[9];
+                        $dias = $registro[10];
+                        $credenciado = $registro[11];
+                        $dat_saida_pa = $registro[12];
+						$data_nascimento = $registro[13];
+						$deficiente = $registro[14];
 						
                          
                    }
 
 				}
 	}else{
-	 		 $query = mysqli_query($conn,"SELECT internamento.dat_saida as dat_saida , usuarios.nome as credenciado , internamento.dat_entrada as dat_entrada,  beneficiarios.data_nascimento , beneficiarios.deficiente FROM `internamento` INNER JOIN usuarios on usuarios.id = internamento.id_usuario  INNER JOIN beneficiarios on beneficiarios.id = internamento.id_beneficiarios WHERE internamento.id =".$res) or die("erro ao carregar consulta");
+	 		 $query = mysqli_query($conn,"SELECT internamento.dat_saida as dat_saida_int , usuarios.nome as credenciado , internamento.dat_entrada as dat_entrada,  beneficiarios.data_nascimento , beneficiarios.deficiente 
+	 		 		FROM `internamento` 
+	 		 		INNER JOIN usuarios on usuarios.id = internamento.id_usuario  
+	 		 		INNER JOIN beneficiarios on beneficiarios.id = internamento.id_beneficiarios 
+	 		 		WHERE internamento.id =".$res) or die("erro ao carregar consulta");
 	
 
 	  					
 	                    while($registro = mysqli_fetch_row($query)){
                         
-                        $dat_saida = $registro[0];
+                        $dat_saida_int = $registro[0];
                         $credenciado = $registro[1];
                         $dat_entrada = $registro[2];
                         $data_nascimento = $registro[3];
@@ -98,7 +112,7 @@
 	 } 
 
 if(!empty($_GET["id_pa"])){
-			$query_pa = mysqli_query($conn,"SELECT  pronto_atendimento.dat_entrada as dat_entrada, pronto_atendimento.dat_saida as dat_saida, usuarios.nome as credenciado, pronto_atendimento.medico as medico, pronto_atendimento.motivo as motivo FROM `pronto_atendimento` 
+			$query_pa = mysqli_query($conn,"SELECT  pronto_atendimento.dat_entrada as dat_entrada, pronto_atendimento.dat_saida as dat_saida_pa, usuarios.nome as credenciado, pronto_atendimento.medico as medico, pronto_atendimento.motivo as motivo FROM `pronto_atendimento` 
 								 INNER JOIN usuarios on usuarios.id = pronto_atendimento.id_usuario 
 								 WHERE pronto_atendimento.id =".$_GET["id_pa"]) or die("erro ao carregar consulta");
 
@@ -278,7 +292,7 @@ if(!empty($_GET["id_pa"])){
                                 &nbsp; ';
                                
 								
-								if(!empty($medico)){
+								if(!empty($medico_pa)){
 
 					      			echo $medico_pa;
 					      		}
@@ -293,9 +307,9 @@ if(!empty($_GET["id_pa"])){
                                 &nbsp; ';
                                 
 								
-								if(!empty($motivo)){
+								if(!empty($motivo_pa)){
 
-					      			echo $motivo_pa;
+					      			echo utf8_encode($motivo_pa);
 					      		}
 
 				echo '	      	
@@ -321,8 +335,8 @@ if(!empty($_GET["id_pa"])){
 					      <th scope="row"><div align="left">Data de Saíde: <br />  &nbsp;';
   
 					      		
-					      			if($dat_saida <> 0) {
-					      				echo date('d / m / Y \h\s H:i:s', strtotime($dat_saida));	
+					      			if($dat_saida_pa <> 0) {
+					      				echo date('d / m / Y \h\s H:i:s', strtotime($dat_saida_pa));	
 					      			} 
 					      		 
 				echo'	      	
@@ -330,10 +344,10 @@ if(!empty($_GET["id_pa"])){
 					      <th scope="col"><div align="left">Permanência: <br /> &nbsp;';
   
 								
-								if(!empty($dat_saida)){	
+								if(!empty($dat_saida_pa)){	
 										
 										 $date_time  = new DateTime($dat_entrada);
-										 $diff       = $date_time->diff( new DateTime($dat_saida));
+										 $diff       = $date_time->diff( new DateTime($dat_saida_pa));
 										 echo $diff->format('%H hora(s), %i minuto(s) e %s segundo(s)');
 
 					      		}
@@ -354,7 +368,7 @@ if(!empty($_GET["id_pa"])){
 				      </tr>
 					    <tr>
 					      <th scope='row'><div align="left">Código do CID: <br> &nbsp; <?php echo  $cid; ?> </div></th>
-					      <th scope='col'><div align="left">Descrição do CID: <br> &nbsp;<?php echo "&nbsp;&nbsp;". $cid_desc ; ?></div></th>
+					      <th scope='col'><div align="left">Descrição do CID: <br> &nbsp;<?php echo "&nbsp;&nbsp;". utf8_encode($cid_desc) ; ?></div></th>
 				      </tr>
 					    <tr>
 					      <th scope='row'><div align="left">Diárias: <br> &nbsp; <?php echo $dias; ?></div></th>
@@ -382,8 +396,8 @@ if(!empty($_GET["id_pa"])){
 					      <th scope='row'><div align="left">Data de Saíde: <br> &nbsp; 
 					      	<?php 
 					      		
-					      			if($dat_saida <> 0) {
-					      				echo date('d / m / Y \h\s H:i:s', strtotime($dat_saida));	
+					      			if(!empty($dat_saida_int) <> 0) {
+					      				echo date('d / m / Y \h\s H:i:s', strtotime($dat_saida_int));	
 					      			} 
 					      		 
 					      	?> </div>					      </th>
@@ -401,7 +415,7 @@ if(!empty($_GET["id_pa"])){
 				      </tr>
 					  <?php
 					  
-					  	if(isset($_GET["prorro"])){
+					  	if(!empty($_GET["prorro"])){
 					  		require_once("internacao_prorrogacao_relatorio_item.php");
 						
 						}
@@ -428,7 +442,7 @@ if(!empty($_GET["id_pa"])){
 				
 				
 					<?php 
-      if(isset($_GET["prorro"])){
+      if(!empty($_GET["prorro"])){
 	  
 	  	echo " <br>
 				<br><br>

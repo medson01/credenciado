@@ -22,7 +22,7 @@ if($update == ''){
 echo "<script>alert('Houve um erro ao atualizar!');
 location.href=\"painel.php?int=1\"</script>";
 }else{
-echo "<script>alert('Registro atulizado com sucesso!');
+echo "<script>alert('Internamento finalizado com sucesso!');
 location.href=\"painel.php?int=1\"</script>";
 }
 
