@@ -37,7 +37,7 @@ mysqli_query($conn,"SET NAMES 'utf8'");
                         $id[$i] = $registro["id"];
                         $cid[$i] = $registro["cid"];
                         $descricao[$i] = $registro["descricao"];
-                        $dias[$i] = $registro["dias"];
+                        $dia[$i] = $registro["dias"];
                         $i++; 
                    }
 
@@ -69,7 +69,7 @@ mysqli_query($conn,"SET NAMES 'utf8'");
                                               for ($x=1; $x < $i ; $x++) {
 
                                                  echo' case '.$x.':
-                                                          document.getElementById("dias").value = "'.$dias[$x].'"
+                                                          document.getElementById("dias").value = "'.$dia[$x].'"
                                                           document.getElementById("cid").value = "'.$cid[$x].'"
                                                           document.getElementById("cid_desc").value = "'.$descricao[$x].'"
                                                           break;

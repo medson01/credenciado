@@ -42,6 +42,7 @@
                               <td>&nbsp;</td>
                               <td><select class="form-matric" style="background:#faffbd;" id="perfil" name="perfil" required="required">
                                   <option  value="administrador">Administrador</option>
+                                  <option  value="medico">Médico</option>
                                   <option  value="auditor">Auditor</option>
                                   <option  value="usuario">Usuario</option>
                   <option  value="faturamento">Faturamento</option>

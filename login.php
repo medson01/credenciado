@@ -26,21 +26,29 @@
         	
               while($registro = mysqli_fetch_assoc($verifica)){
 
-        					switch ($registro["perfil"]) {
-        						case "administrador":
+        				switch ($registro["perfil"]) {
+        					case "administrador":
         								setcookie("login",$login);
         								$_SESSION["perfil"] = $registro["perfil"];	
-                                        $_SESSION["id"] = $registro["id"];	
+                        $_SESSION["id"] = $registro["id"];	
 								        $_SESSION["id_credenciado"] = $registro["id_credenciado"];
-										$_SESSION["credenciado"] = $registro["nome"];							
-        								
+										$_SESSION["credenciado"] = $registro["nome"];										
         						break;
 
+
+                 case "medico":
+                        setcookie("login",$login);
+                        $_SESSION["perfil"] = $registro["perfil"];
+                        $_SESSION["id"] = $registro["id"];    
+                        $_SESSION["credenciado"] = $registro["nome"];                       
+                    break;
+               
+
 								case "auditor":
-										setcookie("login",$login);
-										$_SESSION["perfil"] = $registro["perfil"];  
-										$_SESSION["id"] = $registro["id"];     
-										$_SESSION["credenciado"] = $registro["nome"];	         
+  										setcookie("login",$login);
+  										$_SESSION["perfil"] = $registro["perfil"];  
+  										$_SESSION["id"] = $registro["id"];     
+  										$_SESSION["credenciado"] = $registro["nome"];	         
 									
 								break;
         							

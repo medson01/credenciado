@@ -18,7 +18,7 @@
   }
 
   // Definição de perfil de usuário Administrador ou usuário comum.
- $a = "SELECT internamento.id as autorizacao, internamento.nome as paciente, internamento.matricula as matricula, internamento.solicitante as solicitante, internamento.crm as crm, internamento.dat_entrada as dat_entrada, internamento.dat_saida as dat_saida , internamento.id_beneficiarios as id_beneficiarios , cid.cid ,usuarios.nome as credenciado, cid.dias as dias, internamento.motivo as motivo, internamento.prorrogacao as prorrogacao, pronto_atendimento.id as id_pa ,pronto_atendimento.dat_entrada as data_pa FROM `internamento` LEFT JOIN pronto_atendimento on pronto_atendimento.id = internamento.id_pa INNER JOIN usuarios on usuarios.id = internamento.id_usuario INNER JOIN cid on cid.id = internamento.id_cid";
+ $a = "SELECT internamento.id as autorizacao,internamento.nome as paciente, internamento.matricula as matricula, internamento.solicitante as solicitante, internamento.crm as crm, internamento.dat_entrada as dat_entrada, internamento.dat_saida as dat_saida, internamento.id_beneficiarios as id_beneficiarios, internamento.motivo as motivo, internamento.id_prorrogacao as id_prorrogacao, internamento.prorrogacao as prorrogacao, cid.cid , cid.dias as dias, usuarios.nome as credenciado, pronto_atendimento.id as id_pa, pronto_atendimento.dat_entrada as data_pa, prorrogacao.id as id_prorrogacao, prorrogacao.dias as dias_prorrogacao ,prorrogacao.status as status FROM `internamento` LEFT JOIN pronto_atendimento on pronto_atendimento.id = internamento.id_pa INNER JOIN usuarios on usuarios.id = internamento.id_usuario INNER JOIN cid on cid.id = internamento.id_cid left JOIN prorrogacao on prorrogacao.id = internamento.id_prorrogacao";
 
 
  
@@ -106,14 +106,13 @@ function excluir(id) {
 
 <!-- Perguntar antes de prorrogar -->
 <script language="Javascript">
-function prorrogar(id) {
+function prorrogar(id,valor) {
 
      var resposta = confirm("Deseja realmente prorrogar?");
      
      if (resposta == true) {
-
-          window.location.href = "painel.php?id="+id+"&prorro=1";
-
+      
+          window.location.href = "painel.php?id="+id+"&prorro=1&valor="+valor;
 
      }
 }
@@ -190,42 +189,119 @@ function prorrogar(id) {
                                     <td ><div align='center' >".$registro["matricula"]."</div></td>
                                     <td ><div align='center'>".$registro["solicitante"]."</div></td>
                                      <td ><div align='center'>".$registro["crm"]."</div></td>
-                                     <td ><div align='center'><font color='blue'><strong>".date("j/n/Y <\b\\r> H:i:s",strtotime($registro["dat_entrada"]))."</strong></font></div></td>
-                                     <td ><div align='center'>".$registro["dias"]."</div></td>";
+                                     <td ><div align='center'><font color='blue'><strong>".date("j/n/Y <\b\\r> H:i:s",strtotime($registro["dat_entrada"]))."</strong></font></div></td>";
+                                     
 
 
 
               // Previsão de saída
-                        
-                        $dat_previsao[$i] = strtotime(date("Y-n-j", strtotime(date("Y-n-j",strtotime($registro["dat_entrada"]))."+".$registro["dias"]." days")));             
 
+                        $dias = $registro["dias"];
+                            
+
+                        if($registro["status"] == 1){
+
+                          $dias = $registro["dias"]+$registro["dias_prorrogacao"];
+
+                          $dat_previsao[$i] = strtotime(date("Y-n-j", strtotime(date("Y-n-j",strtotime($registro["dat_entrada"]))."+".$dias." days"))); 
+
+                        }else{
+
+                          $dat_previsao[$i] = strtotime(date("Y-n-j", strtotime(date("Y-n-j",strtotime($registro["dat_entrada"]))."+".$dias." days")));
+                        }
 
                                         $dat_atual[$i] = strtotime(date("Y-n-j"));
 
+               // Dias
+               
+
+                          echo "<td ><div align='center'>".$dias."</div></td>";         
+
 
               // Prorrogação
+
+              // Mendagem da prorrogação
+                          switch ($registro["status"]) {
+                            case '1':
+                              $mensagem = "Aguardando aprovação";
+                              break;
+                            
+                            case '2':
+                              $mensagem = "Data prorrogada";
+                              break;
+                            case '3':
+                               $mensagem = "Prorrogação negada";
+                              break;
+                          } 
+
+
                        if($dat_atual[$i] < $dat_previsao[$i]){
 
                                $data[$i] = 1;
 
-                           echo " <td ><div align='center'>". date("d/m/Y <\b\\r> H:i:s", strtotime(date("Y-n-j H:i:s",strtotime($registro["dat_entrada"]))."+".$registro["dias"]." days")) ."</div></td>";       
-                                             
+
+                                  echo " <td ><div align='center'>"; 
+
+                                  if(!empty($registro["status"])){     
+
+                                            echo "<font color=\"#FFA500\"><strong><a href=\"javascript:func()\" onmouseover=\"Tip(' ".$mensagem." ')\" onmouseout=\"UnTip()\">";
+
+                                                  echo date("d/m/Y <\b\\r> H:i:s", strtotime(date("Y-n-j H:i:s",strtotime($registro["dat_entrada"]))."+".$dias." days"));
+                                            
+                                            echo "</a></strong></font>";       
+                                  }else{
+
+                                                  echo date("d/m/Y <\b\\r> H:i:s", strtotime(date("Y-n-j H:i:s",strtotime($registro["dat_entrada"]))."+".$dias." days"));
+                                  }
+                                  
+                                  echo "</div></td>";               
                               
 
                         }elseif($dat_atual[$i] = $dat_previsao[$i]) {
 
                               $data[$i] = 1;
                               
-                           echo " <td style='color: #FF4000; font-weight: bold;'><div align='center'>". date("d/m/Y <\b\\r> H:i:s", strtotime(date("Y-n-j H:i:s",strtotime($registro["dat_entrada"]))."+".$registro["dias"]." days")) ."</div></td>";    
+                                  echo " <td style='color: #FF4000; font-weight: bold;'><div align='center'>";
+
+                                  if(!empty($registro["status"])){     
+
+                                      echo "<font color=\"#FFA500\"><strong><a href=\"javascript:func()\" onmouseover=\"Tip('  ".$mensagem."  ')\" onmouseout=\"UnTip()\">";
+                           
+                                                echo  date("d/m/Y <\b\\r> H:i:s", strtotime(date("Y-n-j H:i:s",strtotime($registro["dat_entrada"]))."+".$dias." days"));
+
+                                       echo "</a></strong></font>";       
+                                  }else{
+
+                                                echo  date("d/m/Y <\b\\r> H:i:s", strtotime(date("Y-n-j H:i:s",strtotime($registro["dat_entrada"]))."+".$dias." days"));
+                                  }
+      
+                           
+                                  echo "</div></td>";    
+                        
+
                         }else{
 
+                             if(!empty($registro["status"])){     
 
-                              echo " <td ><div align='center'>". date("d/m/Y <\b\\r> H:i:s", strtotime(date("Y-n-j H:i:s",strtotime($registro["dat_entrada"]))."+".$registro["dias"]." days")) ."</div></td>";    
+                                  echo " <td ><div align='center'>";
 
+                                        echo "<font color=\"#FFA500\"><strong><a href=\"javascript:func()\" onmouseover=\"Tip('  ".$mensagem."  ')\" onmouseout=\"UnTip()\">";
+                                                  echo  date("d/m/Y <\b\\r> H:i:s", strtotime(date("Y-n-j H:i:s",strtotime($registro["dat_entrada"]))."+".$dias." days"));
+                                        echo "</a></strong></font>";       
+                            }
+                                  echo "</div></td>"; 
+                                
                         }
 
+/*
+                          if($registro["status"] == 1){     
 
+                                  echo "<font color=\"#FFA500\"><strong><a href=\"javascript:func()\" onmouseover=\"Tip(' Data prorrogada ')\" onmouseout=\"UnTip()\">";
 
+                                  echo "</a></strong></font>";       
+                            }
+
+*/
 
                           echo " <td >
                                       <div align='center'>";
@@ -252,9 +328,11 @@ function prorrogar(id) {
                                            echo   "<font color='#04B45F'><strong>".date("d/m/Y <\b\\r> H:i:s",strtotime($registro["dat_saida"]))." </strong></font>";
                                            $dat_saida[$i]  = true;
 
-                                            
-                                           
+
                                     }
+
+
+
 
                       /*  echo "        </div>
                                     </td>
@@ -287,7 +365,7 @@ function prorrogar(id) {
 
                         echo "  <td style='width: 200px;'>";
 
-                  //Botão prorrogação   
+                  //Botão Saída   
                         echo " 
                                     <!-- Botão sair -->
                                             <a class='btn btn-primary' style='width: 50px; height: 25px' onclick='saida(".$registro['autorizacao'].",".$dat_saida[$i].",".$data[$i].")'><span style='font-size: 10px; align: center;'> Saída </center> </span> </a>
@@ -303,21 +381,44 @@ function prorrogar(id) {
                           } 
 
 
-                  // Botão prorrogação     
-                        If($dat_atual[$i] == $dat_previsao[$i]){
 
-                          if(empty($registro["dat_saida"])){
+            If( $dat_atual[$i] >= $dat_previsao[$i] ){
 
-                                   echo  " <!-- Botão prorrogação -->
-                                                      <a class='btn btn-danger' style='width: 70px; height: 25px' onclick='prorrogar(".$registro["autorizacao"].")'><span style='font-size: 10px; align: center;'> Prorrogar </span> </a>
+              // Botão prorrogação Credendiados 
+                  // Solicita a prorrogação do internamento. Não é visível a médicos.
+                   if( $_SESSION["perfil"] != "medico") {  
+
+                           if(empty($registro["status"])){
+                                    echo  " <!-- Botão prorrogação -->
+                                                      <a class='btn btn-danger' style=' height: 25px' onclick='prorrogar(".$registro["autorizacao"].",0)'><span style='font-size: 10px; align: center;'> Prorrogar </span> </a>
                                            ";
+                            }
+                    }                 
+               }
 
-                            }     
-                          }       
+
+
+              // Botão prorrogação Médicos 
+              // Efetiva a prorrogação da internação do paciente. visível apenas para Administradores e médicos  
+
+                    if( ($_SESSION["perfil"] == "medico") || ($_SESSION["perfil"] == "administrador")){ 
+
+
+                       if($registro["status"] == 1){
+                                   echo  " <!-- Botão prorrogação -->
+                                                      <a class='btn btn-success' style=' height: 25px' onclick='prorrogar(".$registro["autorizacao"].",1)'><span style='font-size: 10px; align: center;'> Prorrogar </span> </a>
+                          ";
+                       }
+                     }
+
+
+
+                  // -- / --              
                                
+
+
       
                                  $i++;
-
 
                           echo " </td></tr>";
 

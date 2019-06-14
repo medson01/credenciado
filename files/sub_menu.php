@@ -114,7 +114,7 @@ echo '<div id="exTab2" class="container" style="width: 980px; padding-left: 1px;
 
 	if(isset($_GET['prorro'])){
 
-		require_once("internacao_prorrogacao.php");
+		require_once("internacao_prorrogacao_formulario.php");
 
 
 	}else{
