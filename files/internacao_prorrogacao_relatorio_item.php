@@ -67,6 +67,17 @@
 					      	?>
 </div>					      	</th>
 				      </tr>
-    				
+				    
+				    <?php 
+
+				   if($_GET['prorro'] == 1){
+				      echo " 
+				      <tr>
+					      <th colspan='2' style='font-weight:bold; font-size:10px;' bgcolor='#CCCCCC' scope='row'><div align='center'> 
+					      								Atenção: </br>
+					      				 Prorrogação aguardando aprovação </div></th>
+				      </tr>";
+				     }
+    				?>
 		 		
      

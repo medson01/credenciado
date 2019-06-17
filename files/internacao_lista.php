@@ -199,11 +199,13 @@ function prorrogar(id,valor) {
 
                                     }
 
+                                    
+
                          echo  "</div></td> -->
                                     <td style='padding: 4px;'>
                                       <div align='center' style='width: 30px;'> 
 
-                                        <a href = 'internacao_relatorio.php?id_internacao=".$registro["autorizacao"]."&id_pa=".$registro["id_pa"]."&prorro=".$registro["prorrogacao"]."'>  ".$registro["autorizacao"]."</a>
+                                        <a href = 'internacao_relatorio.php?id_internacao=".$registro["autorizacao"]."&id_pa=".$registro["id_pa"]."&prorro=".$registro["status"]."'>  ".$registro["autorizacao"]."</a>
 
 
                                       </div>
