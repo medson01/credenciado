@@ -32,7 +32,7 @@
        $b = " WHERE usuarios.login = '".$login."' and MONTH(internamento.dat_entrada) = ".$mes." and Year(internamento.dat_entrada) = '".date("Y")."' order by internamento.id";
     }else{
 
-       $b = "  WHERE internamento.dat_saida IS null order by internamento.id";
+       $b = "  WHERE usuarios.login = '".$login."' and internamento.dat_saida IS null order by internamento.id";
     }
 
   }else{
@@ -445,7 +445,7 @@ function prorrogar(id,valor) {
 
           // Botão prorrogação
 
-
+                        
        
             If(($dat_atual[$i] >= $dat_previsao[$i])  && (empty($dat_saida[$i])) ){
 
