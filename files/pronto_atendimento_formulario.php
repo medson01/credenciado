@@ -112,7 +112,7 @@ function pegarMatricula() {
                             <td>&nbsp;</td>
                           </tr>
                           <tr>
-                            <td >Médico atendente </td>
+                            <td >Médico atendente Dr(a)</td>
                             <td><input name="medico" class="form-matric" id="medico" size="60"  minlength="4" required="required" placeholder="Digite o nome do médico atendente"/></td>
                           </tr>
                           <tr>

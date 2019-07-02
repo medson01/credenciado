@@ -171,7 +171,7 @@ mysqli_query($conn,"SET NAMES 'utf8'");
                             </tr>
                             
                             <tr>
-                            <td >Médico solicitante</td>
+                            <td >Médico solicitante Dr(a)</td>
                             <td><input  type="text" minlength="4"  name="solicitante" class="form-matric" id="solicitante" size="60" required="required"/></td>
                             </tr>
                             <tr>

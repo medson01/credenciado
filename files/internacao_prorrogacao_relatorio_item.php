@@ -28,6 +28,12 @@
 						  ?>
 </div></th>
 				      </tr>
+					  					    <tr>
+					      <th width="48%" scope='row'><div align="left">Fiosioterapia Respiratória p/ dia: <br> 
+					        &nbsp; <?php echo $qtd_respiratoria; ?></div></th>
+					      <th width="52%" scope='col'><div align="left">Fiosioterapia Motora p/ dia:  <br> 
+					        &nbsp; <?php echo $qtd_motora; ?></div></th>
+				      </tr>
 					    
 					    <tr>
 					      <th scope='row'><div align="left">
