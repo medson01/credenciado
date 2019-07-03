@@ -1,4 +1,4 @@
-﻿<?php 
+<?php 
 	
 	//Arquivo de configuraÃ§Ã£o
 	include "cabecalho.php";
@@ -19,7 +19,7 @@
                       
                       			<div>
 
-   									 <h1 class="documentFirstHeading"> Consulta de SituaÃ§Ã£o </h1>
+   									 <h1 class="documentFirstHeading"> Consulta de Situação </h1>
                      			
 								</div>
                     </div>

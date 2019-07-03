@@ -102,7 +102,12 @@ return "$horas:$minutos:$segundos";
 
 ?>
 
+<script type="text/javaScript">
+function autoRefresh(interval) {
+	setTimeout(function(){  window.location.href = "painel.php?pa=1"; } ,interval);
+}
 
+</script>
 
 
 <!-- Mensagem ao passar o mouse -->
@@ -131,7 +136,7 @@ return "$horas:$minutos:$segundos";
     }
 </script>
                     
-   <table width="435" align="center" class="table table-striped" style="font-size: 9px">
+   <table width="435" align="center" class="table table-striped" style="font-size: 9px" onmousemove="javascript:autoRefresh(1000);">
                <tr>
                  <td colspan="12" style="text-align: center; text-decoration-style: solid;"> <strong>Pacientes insternados </strong></td>
                </tr>
