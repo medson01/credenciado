@@ -201,7 +201,7 @@ $id = $_GET["id"];
                 											echo "<option value='".$dias_pro."' >".$dias_pro."</option>"; 
                 									}else{
                 										for ($i=1; $i <= 3; $i++) {
-                    										echo "<option value='".$i."'>0".$i."</option>";
+                    										echo "<option value='".$i."'>".$i."</option>";
                 										}
                 									} 
 									
@@ -254,11 +254,11 @@ $id = $_GET["id"];
                                      echo " </span><br />
 
                                             <select name='qtd_respiratoria' class='form-control input-sm' >
-												<option value='1' > 01 </option>
-												<option value='2' > 02 </option>
-												<option value='3' > 03 </option>
-												<option value='4' > 04 </option>
-												<option value='5' > 05 </option>
+												<option value='1' > 1 </option>
+												<option value='2' > 2 </option>
+												<option value='3' > 3 </option>
+												<option value='4' > 4 </option>
+												<option value='5' > 5 </option>
 											</select>"; 
 								}
 									
@@ -271,11 +271,11 @@ $id = $_GET["id"];
                                      echo " </span><br />
 
                                             <select name='qtd_motora' class='form-control input-sm'  >
-												<option value='1' > 01 </option>
-												<option value='2' > 02 </option>
-												<option value='3' > 03 </option>
-												<option value='4' > 04 </option>
-												<option value='5' > 05 </option>
+												<option value='1' > 1 </option>
+												<option value='2' > 2 </option>
+												<option value='3' > 3 </option>
+												<option value='4' > 4 </option>
+												<option value='5' > 5 </option>
 											</select>"; 
 								}
 

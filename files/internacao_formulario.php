@@ -19,6 +19,15 @@ mysqli_query($conn,"SET NAMES 'utf8'");
                         $dia[$i] = $registro["dias"];
                         $i++; 
                    }
+				   
+    $query = mysqli_query($conn,"SELECT * FROM acomodacao order by id") or die("erro ao carregar consulta");
+                  $z = 1;
+                  while($registro = mysqli_fetch_assoc($query)){
+                        
+                        $id[$z] = $registro["id"];
+                        $nome[$z] = $registro["nome"];
+                        $z++; 
+                   }
 
 
   if(isset($_GET['id_beneficiarios'])){
@@ -128,9 +137,7 @@ mysqli_query($conn,"SET NAMES 'utf8'");
 										
 										}
 								
-								?> />
-                             
-                              </td>
+								?> />                              </td>
                             </tr>
                             <tr>
                             <td class="style3">&nbsp;</td>
@@ -201,6 +208,25 @@ mysqli_query($conn,"SET NAMES 'utf8'");
                             
                             <td></td>
                           </tr>
+                            <tr>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                            </tr>
+                            <tr>
+                              <td>Acomodação</td>
+                              <td><select id="select"  name="id_acomodacao" class="form-control" required="required"  >
+ 										<option value="0"> </option> 
+                                              <?php 
+
+                                                  for ($x=1; $x < $z ; $x++) { 
+                                                      echo '<option value="'.$id[$x].'">'.$nome[$x].'</option>
+                                                      ';
+                                                                                              
+                                                    }
+                                               ?>
+
+                                 </select></td>
+                            </tr>
                           <tr>
                             <td>&nbsp;</td>
                             <td>&nbsp;</td>

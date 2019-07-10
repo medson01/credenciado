@@ -121,13 +121,13 @@ function atualizar(id) {
                                        
 
                                             <!-- Botão sair -->
-                                            <a class='btn btn-primary' style='width: 60px; height: 25px' onclick='atualizar(".$registro["id"].")'><span style='font-size: 10px; align: center;'> Atualizar </center> </span> </a>";
+                                            <a class='btn btn-primary  btn-xs'  onclick='atualizar(".$registro["id"].")'><span style='font-size: 10px; align: center;'> Atualizar </center> </span> </a>";
                                            
 
                                        
                     If( $_SESSION["perfil"] == "administrador"){
                          echo  " <!-- Botão exluir -->
-                                            <a class='btn btn-danger' style='width: 50px; height: 25px' onclick='excluir(".$registro["id"].")'><span style='font-size: 10px; align: center;'> Excluir </span> </a>
+                                            <a class='btn btn-danger  btn-xs'  onclick='excluir(".$registro["id"].")'><span style='font-size: 10px; align: center;'> Excluir </span> </a>
                                 
 
                                        

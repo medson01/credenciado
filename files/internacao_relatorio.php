@@ -15,12 +15,15 @@
 		//INNER JOIN beneficiarios on concat(beneficiarios.matricula, beneficiarios.tipreg) = SUBSTRING(internamento.matricula, 9,8)
 		
 			if(!empty($_GET["prorro"])){
-			 $query = mysqli_query($conn,"SELECT internamento.nome as paciente, internamento.matricula as matricula, prorrogacao.medico_solicitante as solicitante, prorrogacao.crm as crm, internamento.dat_entrada as dat_entrada, internamento.dat_saida as dat_saida_int, cid.cid , cid.descricao as descricao ,usuarios.nome as credenciado, cid.dias as dias,  prorrogacao.motivo as motivo, prorrogacao.data_prorrogacao as data_prorrogacao, prorrogacao.dias_autorizados as prorrogacao_dias, pronto_atendimento.dat_saida as dat_saida_pa, beneficiarios.data_nascimento , beneficiarios.deficiente , internamento.qtd_respiratoria , internamento.qtd_motora 
+
+			 $query = mysqli_query($conn,"SELECT internamento.nome as paciente, internamento.matricula as matricula, prorrogacao.medico_solicitante as solicitante, prorrogacao.crm as crm, internamento.dat_entrada as dat_entrada, internamento.dat_saida as dat_saida_int, cid.cid , cid.descricao as descricao ,usuarios.nome as credenciado, cid.dias as dias,  prorrogacao.motivo as motivo, prorrogacao.data_prorrogacao as data_prorrogacao, prorrogacao.dias_autorizados as prorrogacao_dias, pronto_atendimento.dat_saida as dat_saida_pa, beneficiarios.data_nascimento , beneficiarios.deficiente , internamento.qtd_respiratoria , internamento.qtd_motora, acomodacao.nome as acomodacao
 			 FROM `internamento` 
 			 INNER JOIN usuarios on usuarios.id = internamento.id_usuario
 			 INNER JOIN cid on cid.id = internamento.id_cid 
 			 INNER JOIN beneficiarios on beneficiarios.id = internamento.id_beneficiarios
 			 INNER JOIN prorrogacao on prorrogacao.id_internamento = internamento.id 
+			 INNER JOIN alocacao on alocacao.id = internamento.id_alocacao
+             INNER JOIN acomodacao on acomodacao.id = alocacao.id_acomodacao
 			 LEFT JOIN pronto_atendimento on pronto_atendimento.id = internamento.id_pa 
 			 WHERE internamento.id =".$res) or die("erro ao carregar consulta");
 
@@ -46,7 +49,7 @@
 						$deficiente = $registro[15];
 						$qtd_respiratoria = $registro[16];
 						$qtd_motora = $registro[17];
-                         
+                        $acomodacao = $registro[18];
                    }
 			
 			
@@ -58,11 +61,14 @@
 			  	  		cid.cid , cid.descricao as descricao , cid.dias as dias,
 			  	  		usuarios.nome as credenciado,   
 			  	  		pronto_atendimento.dat_saida as dat_saida_pa,
-			  	  		beneficiarios.data_nascimento , beneficiarios.deficiente 
+			  	  		beneficiarios.data_nascimento , beneficiarios.deficiente,
+			  	  		acomodacao.nome as acomodacao
 							 FROM `internamento` 
 							 INNER JOIN usuarios on usuarios.id = internamento.id_usuario 
 							 INNER JOIN cid on cid.id = internamento.id_cid
 							 INNER JOIN beneficiarios on beneficiarios.id = internamento.id_beneficiarios
+							 INNER JOIN alocacao on alocacao.id = internamento.id_alocacao
+                    		 INNER JOIN acomodacao on acomodacao.id = alocacao.id_acomodacao			 
 							 LEFT JOIN pronto_atendimento on pronto_atendimento.id = internamento.id_pa 
 							 WHERE internamento.id =".$res) or die("erro ao carregar consulta");
 
@@ -85,16 +91,20 @@
                         $dat_saida_pa = $registro[12];
 						$data_nascimento = $registro[13];
 						$deficiente = $registro[14];
+						$acomodacao = $registro[15];
+
 						
                          
                    }
 
 				}
-	}else{
-	 		 $query = mysqli_query($conn,"SELECT internamento.dat_saida as dat_saida_int , usuarios.nome as credenciado , internamento.dat_entrada as dat_entrada,  beneficiarios.data_nascimento , beneficiarios.deficiente 
+	} else {
+	 		 $query = mysqli_query($conn,"SELECT internamento.dat_saida as dat_saida_int , usuarios.nome as credenciado , internamento.dat_entrada as dat_entrada,  beneficiarios.data_nascimento , beneficiarios.deficiente, acomodacao.nome
 	 		 		FROM `internamento` 
 	 		 		INNER JOIN usuarios on usuarios.id = internamento.id_usuario  
 	 		 		INNER JOIN beneficiarios on beneficiarios.id = internamento.id_beneficiarios 
+	 		 		INNER JOIN alocacao on alocacao.id = internamento.id_alocacao
+                    INNER JOIN acomodacao on acomodacao.id = alocacao.id_acomodacao
 	 		 		WHERE internamento.id =".$res) or die("erro ao carregar consulta");
 	
 
@@ -106,6 +116,7 @@
                         $dat_entrada = $registro[2];
                         $data_nascimento = $registro[3];
                         $deficiente = $registro[4];
+                        $acomodacao = $registro[5];
                         
 
                         
@@ -374,7 +385,7 @@ if(!empty($_GET["id_pa"])){
 				      </tr>
 					    <tr>
 					      <th scope='row'><div align="left">Diárias: <br> &nbsp; <?php echo $dias; ?></div></th>
-					      <th scope='col'><div align="left"></div></th>
+					      <th scope='col'><div align="left">Acomodação: <br /> &nbsp; <?php echo $acomodacao; ?></div></th>
 				      </tr>
 					    <tr>
 					      <th scope='row'><div align="left">Data de entrada: <br> &nbsp; <?php print date('d / m / Y ', strtotime($dat_entrada));  ?></div></th>
@@ -388,7 +399,7 @@ if(!empty($_GET["id_pa"])){
 
 									echo "Motivo do internamento: <br> &nbsp;";	 
 
-					      			echo $motivo;
+					      			echo utf8_encode($motivo);
 					      		}
 
 					      	?> </div>					      </th>

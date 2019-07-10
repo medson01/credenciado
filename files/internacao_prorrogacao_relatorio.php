@@ -284,7 +284,7 @@ if(!empty($_GET["id_pa"])){
 
 									echo "Motivo do internamento: <br> &nbsp;";	 
 
-					      			echo $motivo;
+					      			echo utf8_decode($motivo);
 					      		}
 
 					      	?> </div>					      </th>

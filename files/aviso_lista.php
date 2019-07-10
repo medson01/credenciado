@@ -138,15 +138,15 @@ function excluir(id) {
                         }elseif($_SESSION["perfil"] == "administrador"){
 
                             print "   
-                                        <td style='width:25px'><a class='btn btn-success btn-sm' href=aviso_ativa.php?id=".$id[$i]."><span class='glyphicon glyphicon-ok' align: center;'></span></a></td>
+                                        <td style='width:25px'><a class='btn btn-success  btn-xs' href=aviso_ativa.php?id=".$id[$i]."> Ativar </a></td>
                                       ";
 
                             print "
-                                        <td style='width:25px'><a class='btn btn-primary btn-sm'  href=aviso_desativar.php?id=".$id[$i]."><span class='glyphicon glyphicon-remove' align: left;'></span></a></td>
+                                        <td style='width:25px'><a class='btn btn-primary  btn-xs'  href=aviso_desativar.php?id=".$id[$i]."> Desativar </a></td>
                                       ";
 
                             print "
-                                      <td style='width:25px'><div align='center'><a class='btn btn-danger btn-sm' href=aviso_deleta.php?id=".$id[$i]."><span class='glyphicon glyphicon-trash' style='align: center;'></span></a></td>
+                                      <td style='width:25px'><div align='center'><a class='btn btn-danger  btn-xs' href=aviso_deleta.php?id=".$id[$i].">  Excluir </a></td>
                                       </tr>";
                         }else{
 

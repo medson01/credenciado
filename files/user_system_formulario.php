@@ -140,7 +140,7 @@
                                     <td><div align='center'>".$registro["perfil"]."</div></td>
                   <td><div align='center'>".utf8_encode($registro["credenciado"])."</div></td>
                 
-                                    <td><div align='center'><a class='btn btn-primary delete' href=user_system_deletar.php?id=".$registro["id"].">Excluir</a></div></td>
+                                    <td><div align='center'><a class='btn btn-primary delete  btn-xs' href=user_system_deletar.php?id=".$registro["id"].">Excluir</a></div></td>
                                   </tr>";
                    }
 

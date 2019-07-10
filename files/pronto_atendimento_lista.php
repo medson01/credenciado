@@ -301,14 +301,14 @@ function autoRefresh(interval) {
 
                              echo " <!-- Botão sair -->
                                     <td align='right'  style='width: 220px'>                           
-                                            <a class='btn btn-primary' style='width: 50px; height: 25px' onclick='saida(\"".$tempo."\",".$registro['autorizacao'].",".$dat_saida[$i].",".$data[$i].")'><span style='font-size: 10px; align: center;'> Saída </center> </span> </a>                                                   
+                                            <a class='btn btn-primary  btn-xs' onclick='saida(\"".$tempo."\",".$registro['autorizacao'].",".$dat_saida[$i].",".$data[$i].")'><span style='font-size: 10px; align: center;'> Saída </center> </span> </a>                                                   
                                     ";
 
 
 
                              echo " <!-- Botão internaramento -->
                   
-                                            <a class='btn btn-success' style='width: 50px; height: 25px' onclick='internar(\"".$tempo."\",".$registro['autorizacao'].",".$dat_saida[$i].",".$data[$i].",\"".$registro['matricula']."\",\"".$registro['paciente']."\",".$registro['id_beneficiarios'].")'><span style='font-size: 10px; align: center'> Internar </center> </span> </a>              
+                                            <a class='btn btn-success  btn-xs'  onclick='internar(\"".$tempo."\",".$registro['autorizacao'].",".$dat_saida[$i].",".$data[$i].",\"".$registro['matricula']."\",\"".$registro['paciente']."\",".$registro['id_beneficiarios'].")'><span style='font-size: 10px; align: center'> Internar </center> </span> </a>              
                                     ";
 
 
@@ -317,7 +317,7 @@ function autoRefresh(interval) {
                         If( $_SESSION["perfil"] == "administrador"){
 
                              echo  " <!-- Botão exluir -->
-                                                <a class='btn btn-danger' style='width: 50px; height: 25px' onclick='excluir(".$registro["autorizacao"].")'><span style='font-size: 10px; align: center;'> Excluir </span> </a>
+                                                <a class='btn btn-danger btn-xs' onclick='excluir(".$registro["autorizacao"].")'><span style='font-size: 10px; align: center;'> Excluir </span> </a>
                                         </td>
                                      </tr>";
                               }       

@@ -429,14 +429,14 @@ function prorrogar(id,valor) {
                   //Botão Saída   
                         echo " 
                                     <!-- Botão sair -->
-                                            <a class='btn btn-primary' style='width: 50px; height: 25px' onclick='saida(".$registro['autorizacao'].",".$dat_saida[$i].",".$data[$i].")'><span style='font-size: 10px; align: center;'> Saída </center> </span> </a>
+                                            <a class='btn btn-primary  btn-xs'  onclick='saida(".$registro['autorizacao'].",".$dat_saida[$i].",".$data[$i].")'><span style='font-size: 10px; align: center;'> Saída </center> </span> </a>
                                       ";
 
                   //  Botão Ecluir                  
                     
                     If( $_SESSION["perfil"] == "administrador"){
                          echo  " <!-- Botão exluir -->
-                                            <a class='btn btn-danger' style='width: 50px; height: 25px' onclick='excluir(".$registro["autorizacao"].")'><span style='font-size: 10px; align: center;'> Excluir </span> </a>
+                                            <a class='btn btn-danger  btn-xs'  onclick='excluir(".$registro["autorizacao"].")'><span style='font-size: 10px; align: center;'> Excluir </span> </a>
                                  ";
                             
                           } 
@@ -451,15 +451,18 @@ function prorrogar(id,valor) {
 
               // Credendiados 
                   // Solicita a prorrogação do internamento. Não é visível a médicos.
-                   if( $_SESSION["perfil"] != "medico") {  
+                   if( $_SESSION["perfil"] != "medico") {
+
+                      //  if($registro["status"] != 1){  
      
                                     echo  " <!-- Botão prorrogação -->
-                                                      <a class='btn btn-danger' style=' height: 25px' onclick='prorrogar(".$registro["autorizacao"].",0)'><span style='font-size: 10px; align: center;'> Prorrogar </span> </a>
+                                                      <a class='btn btn-danger  btn-xs' onclick='prorrogar(".$registro["autorizacao"].",0)'><span style='font-size: 10px; align: center;'> Prorrogar </span> </a>
                                            ";
+                     //   }
                             
                     }                 
                
-
+              }
               
 
               // Médicos 
@@ -475,7 +478,7 @@ function prorrogar(id,valor) {
                        }
                      }
 
-                 }
+                 
 
                   // -- / --              
                                
