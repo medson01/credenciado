@@ -117,7 +117,7 @@ if(!empty($_GET["id_pa"])){
 									<span class="style2">
 										<img src="../imagem/logo_ipaseal.png" width="71" height="97" />									</span>								</span>							</div>
 							<div style="width:40px; position:relative; left:80px; width:500px; top:-60px">
-							  <div align="center"><span class="documentFirstHeading"><span class="style2">Instituto de Assist&ecirc;ncia &agrave; Sa&uacute;de dos Servidores do Estado de Alagoas</span></span></div>
+							  <div align="center"><span class="documentFirstHeading"><span style="font-size: 24px;" >Instituto de Assist&ecirc;ncia &agrave; Sa&uacute;de dos Servidores do Estado de Alagoas</span></span></div>
 							</div>
                           </div>
                         </div>

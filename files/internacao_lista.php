@@ -18,7 +18,7 @@
   }
 
   // Definição de perfil de usuário Administrador ou usuário comum.
- $a = "SELECT internamento.id as autorizacao,internamento.nome as paciente, internamento.matricula as matricula, internamento.solicitante as solicitante, internamento.crm as crm, internamento.dat_entrada as dat_entrada, internamento.dat_saida as dat_saida, internamento.id_beneficiarios as id_beneficiarios, internamento.motivo as motivo, internamento.id_prorrogacao as id_prorrogacao, internamento.prorrogacao as prorrogacao, internamento.dias as dias_internamento, cid.cid , cid.dias as dias, usuarios.nome as credenciado, pronto_atendimento.id as id_pa, pronto_atendimento.dat_entrada as data_pa, prorrogacao.id as id_prorrogacao, prorrogacao.dias_solicitados as dias_prorrogacao ,prorrogacao.status as status, prorrogacao.data_prorrogacao as data_prorrogacao, beneficiarios.data_nascimento as data_nascimento FROM `internamento` LEFT JOIN pronto_atendimento on pronto_atendimento.id = internamento.id_pa INNER JOIN usuarios on usuarios.id = internamento.id_usuario INNER JOIN cid on cid.id = internamento.id_cid left JOIN prorrogacao on prorrogacao.id = internamento.id_prorrogacao INNER JOIN beneficiarios on beneficiarios.id = internamento.id_beneficiarios";
+ $a = "SELECT internamento.id as autorizacao,internamento.nome as paciente, internamento.matricula as matricula, internamento.solicitante as solicitante, internamento.crm as crm, internamento.dat_entrada as dat_entrada, internamento.dat_saida as dat_saida, internamento.id_beneficiarios as id_beneficiarios, internamento.motivo as motivo, internamento.id_prorrogacao as id_prorrogacao, internamento.prorrogacao as prorrogacao, internamento.dias as dias_internamento, cid.cid , cid.dias as dias, usuarios.nome as credenciado, pronto_atendimento.id as id_pa, pronto_atendimento.dat_entrada as data_pa, prorrogacao.id as id_prorrogacao, prorrogacao.dias_solicitados as dias_prorrogacao ,prorrogacao.status as status, prorrogacao.data_prorrogacao as data_prorrogacao, beneficiarios.data_nascimento as data_nascimento, internamento.qtd_respiratoria , internamento.qtd_motora, acomodacao.nome as acomodacao FROM `internamento` LEFT JOIN pronto_atendimento on pronto_atendimento.id = internamento.id_pa INNER JOIN usuarios on usuarios.id = internamento.id_usuario INNER JOIN cid on cid.id = internamento.id_cid  INNER JOIN alocacao on alocacao.id = internamento.id_alocacao INNER JOIN acomodacao on acomodacao.id = alocacao.id_acomodacao left JOIN prorrogacao on prorrogacao.id = internamento.id_prorrogacao INNER JOIN beneficiarios on beneficiarios.id = internamento.id_beneficiarios";
 
 
  
@@ -87,6 +87,14 @@
 <!-- Mensagem ao passar o mouse -->
 <script type="text/javascript" src="../js/wz_tooltip.js"></script>
 
+<!-- Botão Prorrogação --> 
+<script type="text/javascript" src="../js/int_bnt_prorrogar.js"></script>
+
+<!-- Botão acomodação --> 
+<script type="text/javascript" src="../js/int_bnt_acomodacao.js"></script>
+
+
+
 <!-- Perguntar antes de saida -->
 <script language="Javascript">
 function saida(id,dat_saida,data) {
@@ -133,19 +141,7 @@ function excluir(id) {
 </script>
 
 
-<!-- Perguntar antes de prorrogar -->
-<script language="Javascript">
-function prorrogar(id,valor) {
 
-     var resposta = confirm("Deseja realmente prorrogar?");
-     
-     if (resposta == true) {
-      
-          window.location.href = "painel.php?id="+id+"&prorro=1&valor="+valor;
-
-     }
-}
-</script>
 
 		
 <?php 
@@ -172,7 +168,7 @@ function prorrogar(id,valor) {
                  <td style='padding: 4px;'><div align="left">Autorização</div></td>
                  <td style='padding: 4px;'><div align="center">Paciente</div></td>
                  <td style='padding: 4px;'><div align="center">Matricula</div></td>
-                 <td style='padding: 4px;'><div align="center">Data Nascimento</div></td>
+                 <td style='padding: 4px;'><div align="center">Acomodação</div></td>
                   <td style='padding: 4px;'><div align="center">Idade</div></td>
                   <td style='padding: 4px;'><div align="center">Entrada</div></td>
                   <td style='padding: 4px;'><div align="center">diárias</div></td>
@@ -218,7 +214,7 @@ function prorrogar(id,valor) {
 
                                     <td style='padding: 4px;'><div align='center' style='width: 150px;'>".$registro["paciente"]."</div></td>
                                     <td ><div align='center' >".$registro["matricula"]."</div></td>
-                                    <td ><div align='center'>". date('d/m/Y ', strtotime($registro["data_nascimento"]) )."</div></td>
+                                    <td ><div align='center'>". utf8_encode($registro["acomodacao"])."</div></td>
                                      <td ><div align='center'>".calc_idade($registro["data_nascimento"])."</div></td>
                                      <td ><div align='center'><font color='blue'><strong>".date("j/n/Y <\b\\r> H:i:s",strtotime($registro["dat_entrada"]))."</strong></font></div></td>";
                                      
@@ -249,7 +245,7 @@ function prorrogar(id,valor) {
                             
                             case '2':
                             
-                              $mensagem = "Data da prorrogação: ".$registro["data_prorrogacao"];
+                              $mensagem = "Ultima prorrogação: ".$registro["data_prorrogacao"];
                              
                               $dias = $registro["dias_internamento"];
 
@@ -424,7 +420,14 @@ function prorrogar(id,valor) {
 
 
 
-                        echo "  <td style='text-align:right'>";
+                        echo "  <td style='text-align:right; width: 200px;'>";
+
+
+                  //Botão Acomodação   
+                        echo " 
+                                    <!-- Botão sair -->
+                                            <a class='btn btn-warning  btn-xs'  onclick='acomodacao(".$registro['autorizacao'].",".$dat_saida[$i].")'><span style='font-size: 10px; align: center;'> Acomodação </center> </span> </a>
+                                      ";
 
                   //Botão Saída   
                         echo " 
@@ -453,12 +456,21 @@ function prorrogar(id,valor) {
                   // Solicita a prorrogação do internamento. Não é visível a médicos.
                    if( $_SESSION["perfil"] != "medico") {
 
-                      //  if($registro["status"] != 1){  
+                          
+
+                          if ($registro["status"] == 1){
+
+                                   echo  " <!-- Botão prorrogação -->
+                                                      <a class='btn btn-danger  btn-xs' onclick='prorrogar(".$registro["autorizacao"].",3)'><span style='font-size: 10px; align: center;'> Prorrogar </span> </a>
+                                           ";
+
+
+                          }else{ 
      
                                     echo  " <!-- Botão prorrogação -->
                                                       <a class='btn btn-danger  btn-xs' onclick='prorrogar(".$registro["autorizacao"].",0)'><span style='font-size: 10px; align: center;'> Prorrogar </span> </a>
                                            ";
-                     //   }
+                          }
                             
                     }                 
                
@@ -473,7 +485,7 @@ function prorrogar(id,valor) {
 
                        if($registro["status"] == 1){
                                    echo  " <!-- Botão prorrogação -->
-                                                      <a class='btn btn-success' style=' height: 25px' onclick='prorrogar(".$registro["autorizacao"].",1)'><span style='font-size: 10px; align: center;'> Prorrogar </span> </a>
+                                                      <a class='btn btn-success  btn-xs' onclick='prorrogar(".$registro["autorizacao"].",1)'><span style='font-size: 10px; align: center;'> Prorrogar </span> </a>
                           ";
                        }
                      }

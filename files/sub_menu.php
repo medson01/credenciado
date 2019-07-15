@@ -117,10 +117,13 @@ echo '<div id="exTab2" class="container" style="width: 980px; padding-left: 1px;
 		require_once("internacao_prorrogacao_formulario.php");
 
 
-	}else{
+	}elseif(isset($_GET['acomodacao'])){
 	
-	  require_once("user_system_formulario.php");
+	  require_once("internacao_acomodacao_formulario.php");
 
+	}else{
+
+		 require_once("user_system_formulario.php");
 	}
 
 }

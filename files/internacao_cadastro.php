@@ -45,7 +45,7 @@ $id_acomodacao = $_POST["id_acomodacao"];
 
 
 
-        $query = "INSERT INTO `alocacao`(`id`, `id_internamento`, `id_acomodacao`, `data`) VALUES (null , '".$res."', '".$id_acomodacao."' , '".date("Y-m-d H:i:s" )."' )";
+        $query = "INSERT INTO `alocacao`(`id`, `id_internamento`, `id_acomodacao`, `motivo`, `data`) VALUES (null , '".$res."', '".$id_acomodacao."' , null ,'".date("Y-m-d H:i:s" )."' )";
 
         $insert = mysqli_query($conn, $query);
 

@@ -64,6 +64,11 @@
 												$sub_menu = 6;
 												$titulo = "Prorrogação";	 		
 											}
+
+											if(isset($_GET['acomodacao'])){
+												$sub_menu = 7;
+												$titulo = "Alterar acomodação";	 		
+											}
 											
 											echo $titulo;
    									 	?>

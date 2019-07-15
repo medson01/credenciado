@@ -89,10 +89,10 @@ mysqli_query($conn,"SET NAMES 'utf8'");
                       <label> </label>
                       <div align="center">
                         </p>
-                        <table width="608" border="0" align="center">
+                        <table width="643" border="0" align="center">
                           <tr>
-                            <td width="235" >Matr&iacute;cula</td>
-                            <td width="363">
+                            <td width="273" >Matr&iacute;cula</td>
+                            <td width="360">
                             <input required="required" type="text" name="matricula" minlength="16" class="form-matric" id="matricula" size="20" maxlength="16"placeholder="00000000.000000.00"  onchange="pegarMatricula()" <?php if(isset($_GET['matricula'])){ echo "value=".$_GET['matricula'];} ?> /></td>
                           </tr>
                             <tr>
@@ -161,7 +161,7 @@ mysqli_query($conn,"SET NAMES 'utf8'");
 
 
                                                ?>
-                                  </select>                              </td>
+                                </select>                              </td>
                             </tr>
                             <tr>
                               <td >&nbsp;</td>
@@ -214,8 +214,8 @@ mysqli_query($conn,"SET NAMES 'utf8'");
                             </tr>
                             <tr>
                               <td>Acomodação</td>
-                              <td><select id="select"  name="id_acomodacao" class="form-control" required="required"  >
- 										<option value="0"> </option> 
+                              <td><select id="select"  name="id_acomodacao" class="form-control" required >
+ 										
                                               <?php 
 
                                                   for ($x=1; $x < $z ; $x++) { 
