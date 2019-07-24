@@ -74,11 +74,11 @@ return "$horas:$minutos:$segundos";
 
      if(isset($_GET['buscar'])){
        
-          $b = " WHERE usuarios.login = '".$login."' and (pronto_atendimento.nome like '%".$_GET['buscar']."%' or pronto_atendimento.id = '".$_GET['buscar']."' or pronto_atendimento.matricula = '".$_GET['buscar']."')order by pronto_atendimento.id";
+          $b = " WHERE usuarios.id_credenciado = '".$_SESSION["id_credenciado"]."' and (pronto_atendimento.nome like '%".$_GET['buscar']."%' or pronto_atendimento.id = '".$_GET['buscar']."' or pronto_atendimento.matricula = '".$_GET['buscar']."')order by pronto_atendimento.id";
 
      }else{ 
   
-          $b = " WHERE usuarios.login = '".$login."'and MONTH(pronto_atendimento.dat_entrada) = ".$mes." and Year(pronto_atendimento.dat_entrada) = '".date("Y")."' order by pronto_atendimento.id";
+          $b = " WHERE usuarios.id_credenciado = '".$_SESSION["id_credenciado"]."' and MONTH(pronto_atendimento.dat_entrada) = ".$mes." and Year(pronto_atendimento.dat_entrada) = '".date("Y")."' order by pronto_atendimento.id";
      }
 
   
@@ -97,7 +97,7 @@ return "$horas:$minutos:$segundos";
      }
   }
 
-
+  
    $query = mysqli_query($conn,$a.$b) or die("erro ao carregar consulta");
 
 ?>
@@ -136,7 +136,7 @@ function autoRefresh(interval) {
     }
 </script>
                     
-   <table width="435" align="center" class="table table-striped" style="font-size: 9px" onmousemove="javascript:autoRefresh(1000);">
+   <table width="435" align="center" class="table table-striped" style="font-size: 9px" onmousemove="javascript:autoRefresh(6000);">
                <tr>
                  <td colspan="12" style="text-align: center; text-decoration-style: solid;"> <strong>Pacientes insternados </strong></td>
                </tr>
@@ -187,8 +187,8 @@ function autoRefresh(interval) {
                                   #    1 minutos   => "1  minute"                                      
                                   #    1  hora     => "1  hour"
 
-                                      $v = "1";
-                                      $t = "minutos";
+                                      $v = "2";
+                                      $t = "horas";
                       
                                   #################################################
 

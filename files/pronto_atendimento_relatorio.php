@@ -14,7 +14,7 @@
 
 		//JOIN beneficiarios on concat(beneficiarios.matricula, beneficiarios.tipreg) = SUBSTRING(pronto_atendimento.matricula, 9,8) 
 
-			$query = mysqli_query($conn,"SELECT pronto_atendimento.nome as paciente, pronto_atendimento.matricula as matricula, pronto_atendimento.dat_entrada as dat_entrada, pronto_atendimento.dat_saida as dat_saida, usuarios.nome as credenciado, pronto_atendimento.medico as medico, pronto_atendimento.motivo as motivo, pronto_atendimento.prorrogacao as prorrogacao, beneficiarios.data_nascimento, beneficiarios.deficiente FROM `pronto_atendimento` INNER JOIN beneficiarios on beneficiarios.id = pronto_atendimento.id_beneficiarios INNER JOIN usuarios on usuarios.id = pronto_atendimento.id_usuario WHERE pronto_atendimento.id =".$res) or die("erro ao carregar consulta");
+			$query = mysqli_query($conn,"SELECT pronto_atendimento.nome as paciente, pronto_atendimento.matricula as matricula, pronto_atendimento.dat_entrada as dat_entrada, pronto_atendimento.dat_saida as dat_saida, usuarios.nome as atendente, pronto_atendimento.medico as medico, pronto_atendimento.motivo as motivo, pronto_atendimento.prorrogacao as prorrogacao, beneficiarios.data_nascimento, beneficiarios.deficiente, credenciado.nome as credenciado, pronto_atendimento.motivo_saida as motivo_saida  FROM `pronto_atendimento` INNER JOIN beneficiarios on beneficiarios.id = pronto_atendimento.id_beneficiarios INNER JOIN usuarios on usuarios.id = pronto_atendimento.id_usuario INNER JOIN credenciado on credenciado.id = usuarios.id_credenciado WHERE pronto_atendimento.id=".$res) or die("erro ao carregar consulta");
 
 
 						
@@ -24,29 +24,32 @@
                         $matricula = $registro[1];
                         $dat_entrada = $registro[2];
                         $dat_saida = $registro[3];
-                        $credenciado = $registro[4];
+                        $atendente = $registro[4];
                         $medico = $registro[5];
 						$motivo = $registro[6];
                         $prorrogacao = $registro[7];
 						$data_nascimento = $registro[8];
 						$deficiente = $registro[9];
+						$credenciado = $registro[10];
+						$motivo_saida = $registro[11];
 
                          
                    }
 
 
 	}else{
-	 		 $query = mysqli_query($conn,"SELECT pronto_atendimento.dat_saida as dat_saida , usuarios.nome as credenciado , pronto_atendimento.dat_entrada as dat_entrada, beneficiarios.data_nascimento, beneficiarios.deficiente  FROM `pronto_atendimento` INNER JOIN usuarios on usuarios.id = pronto_atendimento.id_usuario INNER JOIN beneficiarios on concat(beneficiarios.matricula, beneficiarios.tipreg) = SUBSTRING(pronto_atendimento.matricula, 9,8) WHERE pronto_atendimento.id =".$res) or die("erro ao carregar consulta");
+	 		 $query = mysqli_query($conn,"SELECT pronto_atendimento.dat_saida as dat_saida , usuarios.nome as credenciado , pronto_atendimento.dat_entrada as dat_entrada, beneficiarios.data_nascimento, beneficiarios.deficiente, credenciado.nome as credenciado  FROM `pronto_atendimento` INNER JOIN usuarios on usuarios.id = pronto_atendimento.id_usuario INNER JOIN beneficiarios on concat(beneficiarios.matricula, beneficiarios.tipreg) = SUBSTRING(pronto_atendimento.matricula, 9,8) INNER JOIN credenciado on credenciado.id = usuarios.id_credenciado WHERE pronto_atendimento.id =".$res) or die("erro ao carregar consulta");
 	
 
 	  					
 	                    while($registro = mysqli_fetch_row($query)){
                         
                         $dat_saida = $registro[0];
-                        $credenciado = $registro[1];
+                        $atendente = $registro[1];
                         $dat_entrada = $registro[2];
 						$data_nascimento =  $registro[3];
 						$deficiente = $registro[4];
+						$credenciado = $registro[5];
                         
 
                         
@@ -118,7 +121,7 @@
 									<span class="style2">
 										<img src="../imagem/logo_ipaseal.png" width="71" height="97" />									</span>								</span>							</div>
 							<div style="width:40px; position:relative; left:80px; width:500px; top:-60px">
-							  <div align="center"><span class="documentFirstHeading"><span class="style2">Instituto de Assistência à Saúde dos Servidores do Estado de Alagoas</span></span></div>
+							  <div align="center"><span class="documentFirstHeading"><span style="font-size: 24px;">Instituto de Assistência à Saúde dos Servidores do Estado de Alagoas</span></span></div>
 							</div>
                           </div>
                         </div>
@@ -226,17 +229,20 @@
 					      <th scope='col'><div align="left">Hora da entrada: <br> &nbsp; <?php print date('H:i:s', strtotime($dat_entrada));  ?><br> 
 					        &nbsp;</div></th>
 				      </tr>
-				       <tr>
-					      <th scope='row'><div align="left">Data de Saíde: <br> &nbsp; 
-					      	<?php 
+				        <tr>
+				          <th scope='row'><div align="left">Data de Saíde: <br />
+  &nbsp;
+  <?php 
 					      		
 					      			if($dat_saida <> 0) {
 					      				echo date('d / m / Y \h\s H:i:s', strtotime($dat_saida));	
 					      			} 
 					      		 
-					      	?> </div>					      </th>
-					      <th scope='col'><div align="left">Permanência: <br> &nbsp;
-					        <?php
+					      	?>
+			              </div></th>
+				          <th scope='col'><div align="left">Permanência: <br />
+  &nbsp;
+  <?php
 								
 								if(!empty($dat_saida)){	
 										
@@ -247,8 +253,22 @@
 					      		}
 
 					      	?>
-					      </div>
-					 </th>
+			              </div></th>
+			          </tr>
+			           <tr>
+					      <th scope='row'><div align="left"> Informações sobre a alta do paciente:<br />
+&nbsp;
+						      <?php
+								
+								if(!empty($motivo_saida)){
+
+					      			echo $motivo_saida;
+					      		}
+
+					      	?>
+<br />
+					      </div>					      </th>
+					      <th scope='col'><div align="left"></div>					 </th>
 				      </tr>
 
 				      <tr>
@@ -257,7 +277,7 @@
 				      		    Atenção</br>
  							</div>
  							<div style="text-align: justify;">
-										Caro credenciado, é considerado pronto atendimento a permanencia de 12 horas do usuário do plano no hospital.
+										Caro credenciado, é considerado pronto atendimento a permanencia de 2 horas do usuário do plano no hospital.
 
 										Caso o mesmo necessite permanecer além do prazo, o atendente deverá cadastrá-lo no sistema de internação, através do botão internação.				      	</th>
 				      </tr>

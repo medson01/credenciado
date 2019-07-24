@@ -26,13 +26,13 @@
 
     if(isset($_GET['buscar'])){
 
-       $b = " WHERE usuarios.login = '".$login."' and (internamento.nome like '%".$_GET['buscar']."%' or internamento.id = '".$_GET['buscar']."' or internamento.matricula = '".$_GET['buscar']."')order by internamento.id";
+       $b = " WHERE usuarios.id_credenciado = '".$_SESSION["id_credenciado"]."' and (internamento.nome like '%".$_GET['buscar']."%' or internamento.id = '".$_GET['buscar']."' or internamento.matricula = '".$_GET['buscar']."')order by internamento.id";
     }elseif(isset($_GET['mes'])){
 
-       $b = " WHERE usuarios.login = '".$login."' and MONTH(internamento.dat_entrada) = ".$mes." and Year(internamento.dat_entrada) = '".date("Y")."' order by internamento.id";
+       $b = " WHERE usuarios.id_credenciado = '".$_SESSION["id_credenciado"]."' and MONTH(internamento.dat_entrada) = ".$mes." and Year(internamento.dat_entrada) = '".date("Y")."' order by internamento.id";
     }else{
 
-       $b = "  WHERE usuarios.login = '".$login."' and internamento.dat_saida IS null order by internamento.id";
+       $b = "  WHERE usuarios.id_credenciado = '".$_SESSION["id_credenciado"]."' and internamento.dat_saida IS null order by internamento.id";
     }
 
   }else{

@@ -9,9 +9,6 @@
   $senha = $_POST['senha'];
 
 
- 
-  $_SESSION["login"] = $login;
-
   
     if (isset($entrar)) {
             
@@ -29,34 +26,41 @@
         				switch ($registro["perfil"]) {
         					case "administrador":
         								setcookie("login",$login);
+                        $_SESSION["login"] = $registro["nome"];
         								$_SESSION["perfil"] = $registro["perfil"];	
                         $_SESSION["id"] = $registro["id"];	
 								        $_SESSION["id_credenciado"] = $registro["id_credenciado"];
-										    $_SESSION["credenciado"] = $registro["nome"];										
+										  									
         						break;
 
 
                  case "medico":
                         setcookie("login",$login);
+                        $_SESSION["login"] = $registro["nome"];
                         $_SESSION["perfil"] = $registro["perfil"];
-                        $_SESSION["id"] = $registro["id"];    
-                        $_SESSION["credenciado"] = $registro["nome"];                       
+                        $_SESSION["id"] = $registro["id"]; 
+                        $_SESSION["id_credenciado"] = $registro["id_credenciado"];   
+                                              
                     break;
                
 
 								case "auditor":
   										setcookie("login",$login);
+                      $_SESSION["login"] = $registro["nome"];
   										$_SESSION["perfil"] = $registro["perfil"];  
-  										$_SESSION["id"] = $registro["id"];     
-  										$_SESSION["credenciado"] = $registro["nome"];	         
+  										$_SESSION["id"] = $registro["id"]; 
+                      $_SESSION["id_credenciado"] = $registro["id_credenciado"];    
+  										         
 									
 								break;
         							
         						case "usuario":
         								setcookie("login",$login);
+                        $_SESSION["login"] = $registro["nome"];
         							 	$_SESSION["perfil"] = $registro["perfil"];
-        								$_SESSION["id"] = $registro["id"];  	
-										    $_SESSION["credenciado"] = $registro["nome"];								 				
+        								$_SESSION["id"] = $registro["id"]; 
+                        $_SESSION["id_credenciado"] = $registro["id_credenciado"]; 	
+										    							 				
         						break;
         					}
         			}

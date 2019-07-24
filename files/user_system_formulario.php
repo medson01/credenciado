@@ -15,6 +15,12 @@
  ?>
 
        <!-- Formulario -->
+       <style type="text/css">
+<!--
+.style1 {font-size: 10px}
+-->
+       </style>
+       
       
     <form action ="user_system_cadastrar.php"method="post"class="form-group">
            
@@ -25,12 +31,35 @@
                           <p>&nbsp;</p>
                           <table border="0"align="center">
                             <tr>
-                              <td width="77"><font>Nome&nbsp;</font></td>
-                              <td width="36">&nbsp;</td>
+                              <td width="125"><font>Nome&nbsp;</font></td>
+                              <td width="10">&nbsp;</td>
                               <td width="385">
                                 <div align="left">
                                   <input name="nome" type="text" class="form-matric" id="nome" style="background:#faffbd;" size="60" required="required" />
                               </div></td>
+                            </tr>
+                            <tr>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                            </tr>
+                            <tr>
+                              <td width="125"><font>Sobre nome Nome&nbsp;</font></td>
+                              <td width="10">&nbsp;</td>
+                              <td width="385">
+                                <div align="left">
+                                  <input name="sobre_nome" type="text" class="form-matric" id="sobre_nome" style="background:#faffbd;" size="60" required="required" />
+                              </div></td>
+                            </tr>
+                            <tr>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                            </tr>
+                            <tr>
+                              <td>Cpf</td>
+                              <td>&nbsp;</td>
+                              <td><input class="form-matric" style="background:#faffbd;" type="text" name="login" id="cpf_cnpj"  required="required" /></td>
                             </tr>
                             <tr>
                               <td>&nbsp;</td>
@@ -47,19 +76,6 @@
                                   <option  value="usuario">Usuario</option>
                   <option  value="faturamento">Faturamento</option>
                               </select></td>
-                            </tr>
-                            <tr>
-                              <td>&nbsp;</td>
-                              <td>&nbsp;</td>
-                              <td>&nbsp;</td>
-                            </tr>
-                            <tr>
-                              <td>Login&nbsp;</td>
-                              <td>&nbsp;</td>
-                              <td>
-                                <div align="left">
-                                  <input class="form-matric" style="background:#faffbd;" type="text" name="login" id="login"  required="required" />
-                                </div></td>
                             </tr>
                             <tr>
                               <td>&nbsp;</td>

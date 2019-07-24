@@ -70,7 +70,7 @@ function iFrameHeight()
 	 <iframe src="iframe_form_consulta_situacao.php" height="900" width="100%" scrolling="no" style="border:none;"></iframe>
 -->
 	<div id="IframePos">
-<iframe id="blockrandom" name="iframe" src="http://sistemasweb.itec.al.gov.br/ipaseal/situacao_contrato/" width="100%" height="500"  scrolling="no"  style="border:none;" class="wrapper">
+<iframe id="blockrandom" name="iframe" src="http://sistemasweb.itec.al.gov.br/ipaseal/situacao_contrato/" width="100%" height="800"  scrolling="no"  style="border:none;" class="wrapper">
 	Esta opção não irá funcionar corretamente. Infelizmente, seu navegador não suporta frames.</iframe>
 </div>
 	   

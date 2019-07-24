@@ -15,11 +15,10 @@ if (isset($_GET['matricula'])){
 	    $matricula = $_GET['matricula'];
 }
         
-if(isset($_GET['motivo_saida'])){
-		$motivo_saida = $_GET['motivo_saida'];
-}else{
-		$motivo_saida = "";
+if(!empty($_GET['motivo_saida'])){
+	$motivo_saida = $_GET['motivo_saida'];
 }
+
 
 
 if(isset($_GET['prorrogacao'])){

@@ -19,6 +19,7 @@
 							$login = $_SESSION["login"];
 								
 							echo utf8_encode($login);
+							
 				
 						?>
 					</div>

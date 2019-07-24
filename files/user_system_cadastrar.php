@@ -6,6 +6,7 @@
 
 
 $nome = strtoupper($_POST["nome"]);
+$sobre_nome = strtoupper($_POST["sobre_nome"]);
 $login = strtoupper($_POST["login"]);
 $perfil = $_POST["perfil"];
 $senha = $_POST['senha'];
@@ -24,7 +25,7 @@ $logarray = $array['login'];
         die();
 
       }else{
-         $query = "INSERT INTO usuarios (id_credenciado,nome,login,senha,perfil) VALUES ('$id_credenciado','$nome','$login','$senha','$perfil')";
+         $query = "INSERT INTO usuarios (id_credenciado,nome,sobre_nome,login,senha,perfil) VALUES ('$id_credenciado','$nome','$sobre_nome','$login','$senha','$perfil')";
         $insert = mysqli_query($conn, $query);
         
         if($insert){

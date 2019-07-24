@@ -96,7 +96,7 @@
     $("#matricula").mask("00000000.000000-00");
     $("#crm").mask("0000");
     $("#codigo").mask("000000");
-    $("#cpf_cnpj").mask("00000000000000");
+    $("#cpf_cnpj").mask("00000000000");
     $("#numero").mask("00000");
     $("#dias").mask("00");
     </script>

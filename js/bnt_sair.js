@@ -25,7 +25,7 @@ function saida(tempo,id,dat_saida,data) {
 
                               var motivo_saida;
                               
-                               $motivo_saida = prompt ("Favor informar sobre a alta do paciente:");
+                               motivo_saida = prompt ("Favor informar sobre a alta do paciente:");
 
                                //window.location.href = "pronto_atendimento_saida.php?id="+id;
 

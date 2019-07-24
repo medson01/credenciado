@@ -12,7 +12,7 @@
 
 		$res = $_GET["id_internacao"];
 
-			 $query = mysqli_query($conn,"SELECT internamento.nome as paciente, internamento.matricula as matricula, prorrogacao.medico_solicitante as solicitante, prorrogacao.crm as crm, internamento.dat_entrada as dat_entrada, internamento.dat_saida as dat_saida, cid.cid , cid.descricao as descricao ,usuarios.nome as credenciado, cid.dias as dias,  prorrogacao.motivo as motivo, prorrogacao.data_prorrogacao as data_prorrogacao, prorrogacao.dias_solicitados as prorrogacao_dias FROM `internamento` INNER JOIN usuarios on usuarios.id = internamento.id_usuario INNER JOIN cid on cid.id = internamento.id_cid INNER JOIN prorrogacao on prorrogacao.id_internamento = internamento.id LEFT JOIN pronto_atendimento on pronto_atendimento.id = internamento.id_pa WHERE internamento.id =".$res) or die("erro ao carregar consulta");
+			 $query = mysqli_query($conn,"SELECT internamento.nome as paciente, internamento.matricula as matricula, prorrogacao.medico_solicitante as solicitante, prorrogacao.crm as crm, internamento.dat_entrada as dat_entrada, internamento.dat_saida as dat_saida, cid.cid , cid.descricao as descricao ,usuarios.nome as credenciado, cid.dias as dias,  prorrogacao.motivo as motivo, prorrogacao.data_prorrogacao as data_prorrogacao, prorrogacao.dias_solicitados as prorrogacao_dias, credenciado.nome as credenciado FROM `internamento` INNER JOIN usuarios on usuarios.id = internamento.id_usuario INNER JOIN cid on cid.id = internamento.id_cid INNER JOIN prorrogacao on prorrogacao.id_internamento = internamento.id LEFT JOIN pronto_atendimento on pronto_atendimento.id = internamento.id_pa INNER JOIN credenciado on credenciado.id = usuarios.id_credenciado WHERE internamento.id =".$res) or die("erro ao carregar consulta");
 
 
 						
@@ -26,25 +26,28 @@
                         $dat_saida = $registro[5];
                         $cid = $registro[6];
                         $cid_desc = $registro[7];
-                        $credenciado = $registro[8];
+                        $atendente = $registro[8];
                         $dias = $registro[9];
                         $motivo = $registro[10];
                         $data_prorrogacao = $registro[11];
                         $prorrogacao_dias = $registro[12];
+                        $credenciado = $registro[13];
+
                          
                    }
 
 
 	}else{
-	 		 $query = mysqli_query($conn,"SELECT internamento.dat_saida as dat_saida , usuarios.nome as credenciado , internamento.dat_entrada as dat_entrada  FROM `internamento` INNER JOIN usuarios on usuarios.id = internamento.id_usuario WHERE internamento.id =".$res) or die("erro ao carregar consulta");
+	 		 $query = mysqli_query($conn,"SELECT internamento.dat_saida as dat_saida , usuarios.nome as atendente , internamento.dat_entrada as dat_entrada, credenciado.nome as credenciado  FROM `internamento` INNER JOIN usuarios on usuarios.id = internamento.id_usuario INNER JOIN credenciado on credenciado.id = usuarios.id_credenciado WHERE internamento.id =".$res) or die("erro ao carregar consulta");
 	
 
 	  					
 	                    while($registro = mysqli_fetch_row($query)){
                         
                         $dat_saida = $registro[0];
-                        $credenciado = $registro[1];
+                        $atendente = $registro[1];
                         $dat_entrada = $registro[2];
+                        $credenciado = $registro[3];
                         
 
                         
@@ -53,8 +56,9 @@
 	 } 
 
 if(!empty($_GET["id_pa"])){
-			$query_pa = mysqli_query($conn,"SELECT  pronto_atendimento.dat_entrada as dat_entrada, pronto_atendimento.dat_saida as dat_saida, usuarios.nome as credenciado, pronto_atendimento.medico as medico, pronto_atendimento.motivo as motivo FROM `pronto_atendimento` 
-								 INNER JOIN usuarios on usuarios.id = pronto_atendimento.id_usuario 
+			$query_pa = mysqli_query($conn,"SELECT  pronto_atendimento.dat_entrada as dat_entrada, pronto_atendimento.dat_saida as dat_saida, usuarios.nome as atendente, pronto_atendimento.medico as medico, pronto_atendimento.motivo as motivo, credenciado.nome as credenciado FROM `pronto_atendimento` 
+								 INNER JOIN usuarios on usuarios.id = pronto_atendimento.id_usuario
+								 INNER JOIN credenciado on credenciado.id = usuarios.id_credenciado 
 								 WHERE pronto_atendimento.id =".$_GET["id_pa"]) or die("erro ao carregar consulta");
 
 
@@ -66,6 +70,7 @@ if(!empty($_GET["id_pa"])){
 			                        $credenciado_pa = $registro[2];
 			                        $medico_pa = $registro[3];
 									$motivo_pa = $registro[4];
+									$credenciado = $registro[5];
 			                      
 
 			                         
@@ -154,12 +159,9 @@ if(!empty($_GET["id_pa"])){
 			
 						 <tr>
 						   <th scope='row'><div align="left">Credenciado: <br> &nbsp; <?php echo	$credenciado;  ?> </div></th>
-						   <th scope='col'><div align="left"></div></th>
+						   <th scope='col'><div align="left">Atendente: <br />
+&nbsp; <?php echo utf8_encode($_SESSION['login']); ?></div></th>
 	      </tr>
-					    <tr>
-								<th scope='row'><div align='left'>Atendente: <br> &nbsp; <?php echo utf8_encode($_SESSION['login']); ?></div></th>
-								<th scope='col'><div align='left' style="color:#FF0000"></div></th>
-          </tr>
 		  
 		<?php  
 			
