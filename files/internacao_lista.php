@@ -42,10 +42,13 @@
 
           $b = " WHERE (internamento.nome like '%".$_GET['buscar']."%' or internamento.id = '".$_GET['buscar']."' or internamento.matricula = '".$_GET['buscar']."' or usuarios.nome like '%".$_GET['buscar']."%') order by internamento.id";
 
-         
+        }elseif(isset($_GET['mes'])){
+
+          $b= " WHERE MONTH(internamento.dat_entrada) = ".$mes." and Year(internamento.dat_entrada) = ".date("Y")." order by internamento.id";
+
         }else{
 
-          $b= " WHERE MONTH(internamento.dat_entrada) = ".$mes." and Year(internamento.dat_entrada) = ".date("Y")." or internamento.dat_saida IS null order by internamento.id";
+          $b= " WHERE internamento.dat_saida IS null order by internamento.id";
 
         }
 
@@ -165,7 +168,7 @@ function excluir(id) {
                </tr>
                <tr  style='font-weight:bold;'>
                  <!-- <td width="27"><div align="center">Status</div></td> -->
-                 <td style='padding: 4px;'><div align="left">Autorização</div></td>
+                 <td style='padding: 4px;'><div align='center' style='width: 30px;'>ID</div></td>
                  <td style='padding: 4px;'><div align="center">Paciente</div></td>
                  <td style='padding: 4px;'><div align="center">Matricula</div></td>
                  <td style='padding: 4px;'><div align="center">Acomodação</div></td>

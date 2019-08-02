@@ -127,7 +127,7 @@
                         </div>
                       </div>
                     </div>
-				<div style="height:550px">
+				<div style="height:600px">
                     <table width="100%" class='table' style='font-size: 10px';>	
 						
 						<tr>

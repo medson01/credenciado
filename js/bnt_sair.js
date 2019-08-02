@@ -1,16 +1,9 @@
-function saida(tempo,id,dat_saida,data) {
-   
-   if (dat_saida != 1){
 
-     var resposta = confirm("Deseja dar saída do paciente?");
- 
-               if (resposta == true) {
+function saida(tempo,id,saida,data) {
+   
 
                        //Previsaão < que data atual
                        if(data == 1){   // data = 0
-
-
-
 
                                var prorrogacao;
 
@@ -27,14 +20,16 @@ function saida(tempo,id,dat_saida,data) {
                               
                                motivo_saida = prompt ("Favor informar sobre a alta do paciente:");
 
+                              
+
                                //window.location.href = "pronto_atendimento_saida.php?id="+id;
 
                                window.location.href = "pronto_atendimento_saida.php?id="+id+"&motivo_saida="+motivo_saida;
                        }
-                    
-               }
 
-   }else{
-      alert("Paciente já saiu!");
-   }
+
 }
+
+
+
+

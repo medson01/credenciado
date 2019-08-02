@@ -75,10 +75,13 @@ return "$horas:$minutos:$segundos";
      if(isset($_GET['buscar'])){
        
           $b = " WHERE usuarios.id_credenciado = '".$_SESSION["id_credenciado"]."' and (pronto_atendimento.nome like '%".$_GET['buscar']."%' or pronto_atendimento.id = '".$_GET['buscar']."' or pronto_atendimento.matricula = '".$_GET['buscar']."')order by pronto_atendimento.id";
+      }elseif(isset($_GET['mes'])){
+
+         $b = " WHERE usuarios.id_credenciado = '".$_SESSION["id_credenciado"]."' and MONTH(pronto_atendimento.dat_entrada) = ".$mes." and Year(pronto_atendimento.dat_entrada) = '".date("Y")."' order by pronto_atendimento.id";
 
      }else{ 
   
-          $b = " WHERE usuarios.id_credenciado = '".$_SESSION["id_credenciado"]."' and MONTH(pronto_atendimento.dat_entrada) = ".$mes." and Year(pronto_atendimento.dat_entrada) = '".date("Y")."' order by pronto_atendimento.id";
+          $b = " WHERE usuarios.id_credenciado = '".$_SESSION["id_credenciado"]."' and pronto_atendimento.dat_saida IS null order by pronto_atendimento.id";
      }
 
   
@@ -89,10 +92,13 @@ return "$horas:$minutos:$segundos";
 
 
             $b = " WHERE (pronto_atendimento.nome like '%".$_GET['buscar']."%' or pronto_atendimento.id = '".$_GET['buscar']."' or pronto_atendimento.matricula = '".$_GET['buscar']."' or usuarios.nome like '%".$_GET['buscar']."%') order by pronto_atendimento.id";
-       
+      
+     }elseif(isset($_GET['mes'])){
+     
+            $b = " WHERE MONTH(pronto_atendimento.dat_entrada) = ".$mes." and Year(pronto_atendimento.dat_entrada) = '".date("Y")."' order by pronto_atendimento.id";       
      }else{
           
-            $b = " WHERE MONTH(pronto_atendimento.dat_entrada) = ".$mes." and Year(pronto_atendimento.dat_entrada) = '".date("Y")."' order by pronto_atendimento.id";
+            $b = " WHERE pronto_atendimento.dat_saida IS null order by pronto_atendimento.id";
   
      }
   }
@@ -113,7 +119,7 @@ function autoRefresh(interval) {
 <!-- Mensagem ao passar o mouse -->
 <script type="text/javascript" src="../js/wz_tooltip.js"></script>
 
-<!-- Botão Sair -->
+<!-- Botão Modal Sair -->
 <script type="text/javascript" src="../js/bnt_sair.js"></script>
 
 <!-- Botão Excluir -->
@@ -136,13 +142,13 @@ function autoRefresh(interval) {
     }
 </script>
                     
-   <table width="435" align="center" class="table table-striped" style="font-size: 9px" onmousemove="javascript:autoRefresh(6000);">
+   <table width="435" align="center" class="table table-striped" style="font-size: 9px" onmousemove="javascript:autoRefresh(60000);">
                <tr>
                  <td colspan="12" style="text-align: center; text-decoration-style: solid;"> <strong>Pacientes insternados </strong></td>
                </tr>
                <tr  style='font-weight:bold;'>
                  <!-- <td width="27"><div align="center">Status</div></td> -->
-                 <td ><div align="left" style='width: 30px;'>Autorização</div></td>
+                 <td ><div align='center' style='width: 30px;'>ID</div></td>
                  <td ><div align="center" style='width: 150px;'>Paciente</div></td>
                  <td ><div align="center">Matricula</div></td>
                  <td ><div align="center">Entrada</div></td>
@@ -294,33 +300,45 @@ function autoRefresh(interval) {
 									
 					             	echo"			</div></td>";
 
+
+                       
                         
                         If( ($_SESSION["perfil"] == "administrador") or ($_SESSION["perfil"] == "auditor")){
                                          echo " <td><div align='center'>".$registro["credenciado"]."</div></td>";
                                       }
 
-                             echo " <!-- Botão sair -->
-                                    <td align='right'  style='width: 220px'>                           
-                                            <a class='btn btn-primary  btn-xs' onclick='saida(\"".$tempo."\",".$registro['autorizacao'].",".$dat_saida[$i].",".$data[$i].")'><span style='font-size: 10px; align: center;'> Saída </center> </span> </a>                                                   
-                                    ";
+                            if(!isset($registro["dat_saida"])){    
+
+                                     echo " <!-- Botão sair -->
+                                            <td align='right'  >                           
+                                                    <a class='btn btn-primary  btn-xs' onclick='modal_saida(\"".$tempo."\",\"".$registro['autorizacao']."\",\"".$dat_saida[$i]."\",\"".$data[$i]."\")'><span style='font-size: 10px; align: center;'> Saída </center> </span> </a>                                                   
+                                            ";
 
 
 
-                             echo " <!-- Botão internaramento -->
-                  
-                                            <a class='btn btn-success  btn-xs'  onclick='internar(\"".$tempo."\",".$registro['autorizacao'].",".$dat_saida[$i].",".$data[$i].",\"".$registro['matricula']."\",\"".$registro['paciente']."\",".$registro['id_beneficiarios'].")'><span style='font-size: 10px; align: center'> Internar </center> </span> </a>              
-                                    ";
+                                     echo " <!-- Botão internaramento -->
+                          
+                                                    <a class='btn btn-success  btn-xs'  onclick='internar(\"".$tempo."\",".$registro['autorizacao'].",".$dat_saida[$i].",".$data[$i].",\"".$registro['matricula']."\",\"".$registro['paciente']."\",".$registro['id_beneficiarios'].")'><span style='font-size: 10px; align: center'> Internar </center> </span> </a>              
+                                            ";
+
+                              
 
 
+                                If( $_SESSION["perfil"] == "administrador"){
+
+                                     echo  " <!-- Botão exluir -->
+                                                        <a class='btn btn-danger btn-xs' onclick='excluir(".$registro["autorizacao"].")'><span style='font-size: 10px; align: center;'> Excluir </span> </a>
+                                                </td>
+                                             </tr>";
+                                      } 
 
 
-                        If( $_SESSION["perfil"] == "administrador"){
+                                    }else{
 
-                             echo  " <!-- Botão exluir -->
-                                                <a class='btn btn-danger btn-xs' onclick='excluir(".$registro["autorizacao"].")'><span style='font-size: 10px; align: center;'> Excluir </span> </a>
-                                        </td>
-                                     </tr>";
-                              }       
+                                      echo "<td></td>";
+
+                                    }
+
                                      $i++;
                          }
                   
@@ -329,5 +347,12 @@ function autoRefresh(interval) {
               ?>              
 </table>
 			       <span style="background-color: red"></span>
+
+
+  <?php
+
+  //  Acesso Modal saida
+      include("modal_saida.php");
+  ?>
 					
 	
