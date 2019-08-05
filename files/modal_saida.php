@@ -1,11 +1,19 @@
 
+
     <!-- CSS Telefone -->
     <link rel="stylesheet" type="text/css" href="../css/modal_saida.css"/>
 
+    <!-- Botão saida -- >
+    <script type='text/javascript' src='../js/bnt_sair.js'></script>
 
 
     <!-- The Modal -->
-<div id="myModal" class="modal">
+    <style type="text/css">
+<!--
+.style1 {color: #FF0000}
+-->
+    </style>
+    <div id="myModal" class="modal">
 
   <!-- Modal content -->
 
@@ -20,28 +28,44 @@
 
     <div class="modal-body" >
 	
-      <p>   Favor informar sobre a alta do paciente:  </p>
-      <p>
-       	<textarea name="motivo" form="modal_saida" class="form-control form-control-sm" placeholder="Describe yourself here..."> </textarea>
-  	  </p>
+      <?php 
+        
+            if( $_GET['data'] == 1 ){
+               echo "<p>   O paciente exedeu o per&iacute;odo referente ao Pronto Atendimento que &eacute; de ".$tempo.", favor informar o motivo:  </p>";
 
-	  <p>Data e hora:</p>
-      <p>
-	  	<input id="data" name="data" type="datetime-local" class="form-control form-control-sm" />
-	  </p>
+               echo " <p> 
+                  <textarea name='prorrogacao' form='modal_saida' class='form-control form-control-sm' placeholder='Describe yourself here...'> </textarea>
+                      </p>";
+            }else{
+               echo "<p>   Favor informar sobre a alta do paciente:  </p>";
 
-	  
-    </div>
+                echo "<p> 
+                    <textarea rows='8' cols='50' name='motivo_saida' form='modal_saida' class='form-control form-control-sm' placeholder='Describe yourself here...'> </textarea>
+                      </p>";
+            }
+      ?>
+      <table width="100%" border="0">
+        <tr>
+          <td width="45%">Data:<span class="style1">*</span></td>
+		  <td width="10%"> </td>
+          <td width="45%">Hora:<span class="style1">*</span></td>
+        </tr>
+        <tr>
+          <td><input id="data" name="data" type="date" class="form-control form-control-sm" required /></td>
+		  <td></td>
+          <td><input id="time" name="time" type="time" class="form-control form-control-sm" required /></td>
+        </tr>
+      </table>
+      </div>
 <div class="modal-footer">
 	<p>
-	<h3>
-		 <input type="hidden" id="id" name="id" />
+	<h3 align="right">
 
-     <?php
+    <input id="data" name="id" type="hidden" class="form-control form-control-sm" value="<?php echo $_GET['registro']; ?>" />
 
-       echo "<a class='btn btn-primary  btn-xs' href='pronto_atendimento_saida&' ><span style='font-size: 10px; align: center;'> Ok </center> </span> </a> ";
-	
-      ?>
+
+   <input type="submit"  class="btn btn-warning" style="color: #f3ecec; background-color: #291903; border-color: #efeff5;" value=" OK ">
+
   </h3>
     </div>
   </div>

@@ -120,8 +120,11 @@ function autoRefresh(interval) {
 <script type="text/javascript" src="../js/wz_tooltip.js"></script>
 
 <!-- Botão Modal Sair -->
-<script type="text/javascript" src="../js/bnt_sair.js"></script>
-
+<?php
+if(isset($guia)){
+  echo"  <script type='text/javascript' src='../js/modal_sair.js'></script>";
+}
+?>
 <!-- Botão Excluir -->
 <script type="text/javascript" src="../js/bnt_excluir.js"></script>
 
@@ -309,10 +312,12 @@ function autoRefresh(interval) {
 
                             if(!isset($registro["dat_saida"])){    
 
-                                     echo " <!-- Botão sair -->
+
+                                      echo " <!-- Botão sair -->
                                             <td align='right'  >                           
-                                                    <a class='btn btn-primary  btn-xs' onclick='modal_saida(\"".$tempo."\",\"".$registro['autorizacao']."\",\"".$dat_saida[$i]."\",\"".$data[$i]."\")'><span style='font-size: 10px; align: center;'> Saída </center> </span> </a>                                                   
+                                                    <a href='painel.php?pa=1&guia=1&tempo=".$tempo."&registro=".$registro['autorizacao']."&saida=".$dat_saida[$i]."&data=".$data[$i]."' name='bnt' id='bnt' class='btn btn-primary  btn-xs'><span style='font-size: 10px; align: center;'> Saída </center> </span> </a>                                                   
                                             ";
+
 
 
 
@@ -352,7 +357,9 @@ function autoRefresh(interval) {
   <?php
 
   //  Acesso Modal saida
+   if(isset($_GET['guia'])){
       include("modal_saida.php");
+  }
   ?>
 					
 	

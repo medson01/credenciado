@@ -26,7 +26,7 @@ function internar(tempo,id,dat_saida,data,matricula,paciente,id_beneficiarios) {
 
 
                              alert("Caro usuário, a internação só poderá ser realizada, após o período de "+tempo+" referente ao Pronto Atendimento. ");
-                             //  window.location.href = "pronto_atendimento_saida.php?id="+id+"&matricula="+matricula+"&paciente="+paciente;
+                            
                        
                        }
   
