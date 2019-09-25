@@ -127,7 +127,9 @@
                         </div>
                       </div>
                     </div>
-				<div style="height:600px">
+			
+			<!-- Ajuste da altura da pagina - pronto_atendimento_relat�rio.php -->
+				<div style="height:650px">
                     <table width="100%" class='table' style='font-size: 10px';>	
 						
 						<tr>
@@ -195,8 +197,14 @@
 				      </tr>
 					   	
 					    <tr>
-					      <th scope='row'><div align="left">
-					        <div align="left">Médico atendente<br />
+					      <th scope='row'><div align="left">Atendente: <br />
+  					&nbsp;   <?php 	if(!empty($atendente)){
+
+					      			echo $atendente;
+					      		}
+
+					      	?></div></th>
+					      <th scope='col'><div align="left">Médico CRM<br />
   &nbsp;
   <?php
 								
@@ -205,16 +213,13 @@
 					      			echo $medico;
 					      		}
 
-					      	?>
-                            </div>
-					        <div align="left">
-<br />
-</div>					        
-					      <div align="left"></div></th>
-						  <th scope='col'><div align="left">
-						    <div align="left">Motivo do atendimento <br />
-						      &nbsp;
-						      <?php
+					      	?>				      
+                          </div>					      </tr>
+					    <tr>
+					      <th scope='row'><div align="left">
+					        <div align="left">Motivo do atendimento <br />
+  &nbsp;
+  <?php
 								
 								if(!empty($motivo)){
 
@@ -222,10 +227,16 @@
 					      		}
 
 					      	?>
-					                                  </div>
+                            </div>
+					        <div align="left"></div>
+					        <div align="left">
+<br />
+</div>					        
+					      <div align="left"></div></th>
+						  <th scope='col'><div align="left">
+						    <div align="left"></div>
 					      <div align="left">					        </div>						  </tr>
-					    <tr>
-					      <th scope='row'><div align="left">Data da entrada: <br> &nbsp; <?php print date('j / n / Y', strtotime($dat_entrada));  ?></div></th>
+					    <tr>					      <th scope='row'><div align="left">Data da entrada: <br> &nbsp; <?php print date('j / n / Y', strtotime($dat_entrada));  ?></div></th>
 					      <th scope='col'><div align="left">Hora da entrada: <br> &nbsp; <?php print date('H:i:s', strtotime($dat_entrada));  ?><br> 
 					        &nbsp;</div></th>
 				      </tr>

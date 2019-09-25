@@ -1,4 +1,4 @@
-﻿<?php 
+<?php 
   
   //Arquivo de configuração
   include "cabecalho.php";

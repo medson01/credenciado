@@ -42,6 +42,7 @@
 
           $b = " WHERE (internamento.nome like '%".$_GET['buscar']."%' or internamento.id = '".$_GET['buscar']."' or internamento.matricula = '".$_GET['buscar']."' or usuarios.nome like '%".$_GET['buscar']."%') order by internamento.id";
 
+         
         }elseif(isset($_GET['mes'])){
 
           $b= " WHERE MONTH(internamento.dat_entrada) = ".$mes." and Year(internamento.dat_entrada) = ".date("Y")." order by internamento.id";
@@ -96,7 +97,12 @@
 <!-- Botão acomodação --> 
 <script type="text/javascript" src="../js/int_bnt_acomodacao.js"></script>
 
-
+<!-- Botão Modal Sair -->
+<?php
+if(isset($guia)){
+  echo"  <script type='text/javascript' src='../js/modal_sair.js'></script>";
+}
+?>
 
 <!-- Perguntar antes de saida -->
 <script language="Javascript">
@@ -434,8 +440,12 @@ function excluir(id) {
 
                   //Botão Saída   
                         echo " 
-                                    <!-- Botão sair -->
+                                    <!-- Botão sair 
                                             <a class='btn btn-primary  btn-xs'  onclick='saida(".$registro['autorizacao'].",".$dat_saida[$i].",".$data[$i].")'><span style='font-size: 10px; align: center;'> Saída </center> </span> </a>
+                                    -->
+
+                                    <a href='painel.php?int=1&guia=1&registro=".$registro['autorizacao']."&saida=".$dat_saida[$i]."&data=".$data[$i]."' name='bnt' id='bnt' class='btn btn-primary  btn-xs'><span style='font-size: 10px; align: center;'> Saída </center> </span> </a>
+
                                       ";
 
                   //  Botão Ecluir                  
@@ -467,12 +477,13 @@ function excluir(id) {
                                                       <a class='btn btn-danger  btn-xs' onclick='prorrogar(".$registro["autorizacao"].",3)'><span style='font-size: 10px; align: center;'> Prorrogar </span> </a>
                                            ";
 
-
+				
                           }else{ 
      
-                                    echo  " <!-- Botão prorrogação -->
+                               /*     echo  " <!-- Botão prorrogação -->
                                                       <a class='btn btn-danger  btn-xs' onclick='prorrogar(".$registro["autorizacao"].",0)'><span style='font-size: 10px; align: center;'> Prorrogar </span> </a>
                                            ";
+				*/
                           }
                             
                     }                 
@@ -512,5 +523,13 @@ function excluir(id) {
             
 </table>
 			       <span style="background-color: red"></span>
+
+  <?php
+
+  //  Acesso Modal saida
+   if(isset($_GET['guia'])){
+      include("modal_saida.php");
+  }
+  ?>
 					
 	

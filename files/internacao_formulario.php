@@ -1,4 +1,4 @@
-﻿
+
 <?php 
 
 # Corrige o erro de acentuaÃ§Ã£o no banco
@@ -198,11 +198,8 @@ mysqli_query($conn,"SET NAMES 'utf8'");
                           </tr>
                           <td >Motivo do internamento</td>
                             <td>
-                              <textarea class="form-matric" name="motivo"  style="margin: 0px; height: 100px; width: 100%;" form="internamento" placeholder="Entre com o texto aqui..."  > 
-
-                               
-
-                              </textarea>                            </td>
+                              <textarea  required class="form-matric" name="motivo"  style="margin: 0px; height: 100px; width: 100%;" form="internamento" ></textarea>                 
+                            </td>
                             </tr>
                             <tr>
                             

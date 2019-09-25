@@ -1,4 +1,4 @@
-﻿
+
 <!-- sub_menu -->
 <?php 
 
@@ -66,11 +66,11 @@ echo '<div id="exTab2" class="container" style="width: 980px; padding-left: 1px;
 			</li>" ;
 
 			If( ($_SESSION["perfil"] == "administrador") or ($_SESSION["perfil"] == "auditor")){
-			/*
+			
 				echo "	<li>
 						<a href='#3' data-toggle='tab'>Gráficos</a>
 					</li>";
-			*/	
+				
 			}
 		
 
@@ -99,11 +99,19 @@ echo '<div id="exTab2" class="container" style="width: 980px; padding-left: 1px;
 
         				
 		echo'		</div>
-        	<!--	
-        		<div class="tab-pane" id="3">
-          			     <iframe src="../grafico/graf_qtd_internacao_hospitiais.php" height="500" width="100%" scrolling="no" style="border:none;"></iframe> 
-				</div>
-			-->
+        		
+        		<div class="tab-pane" id="3">';
+				
+          		if(isset($_GET['pa'])){
+	    		 echo '<iframe src="../grafico/graf_pa.php" height="900" width="100%" scrolling="no" style="border:none;"></iframe>'; 
+			}else{
+			 echo '<iframe src="../grafico/graf_int.php" height="350" width="100%" scrolling="no" style="border:none;"></iframe>'; 
+			 echo '<iframe src="../grafico/graf_dias_internado.php" height="400" width="100%" scrolling="no" style="border:none;"></iframe>'; 
+
+			}
+
+		echo'		</div>
+					
 			</div>
   </div>
 

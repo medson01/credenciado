@@ -133,7 +133,7 @@
 	 } 
 
 if(!empty($_GET["id_pa"])){
-			$query_pa = mysqli_query($conn,"SELECT  pronto_atendimento.dat_entrada as dat_entrada, pronto_atendimento.dat_saida as dat_saida_pa, usuarios.nome as atendente, pronto_atendimento.medico as medico, pronto_atendimento.motivo as motivo FROM `pronto_atendimento`, credenciado.nome as credenciado
+			$query_pa = mysqli_query($conn,"SELECT  pronto_atendimento.dat_entrada as dat_entrada, pronto_atendimento.dat_saida as dat_saida_pa, usuarios.nome as atendente, pronto_atendimento.medico as medico, pronto_atendimento.motivo as motivo, credenciado.nome as credenciado FROM `pronto_atendimento`
 								 INNER JOIN usuarios on usuarios.id = pronto_atendimento.id_usuario
 								 INNER JOIN credenciado on credenciado.id = usuarios.id_credenciado
 								 WHERE pronto_atendimento.id =".$_GET["id_pa"]) or die("erro ao carregar consulta");

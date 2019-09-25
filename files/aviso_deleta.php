@@ -4,7 +4,7 @@
  
 $id = $_GET['id'];
 
-echo $sql = "DELETE FROM avisos WHERE id = '".$id."'";
+$sql = "DELETE FROM avisos WHERE id = '".$id."'";
 
 $deleta = mysqli_query($conn,$sql);
 

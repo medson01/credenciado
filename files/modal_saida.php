@@ -10,14 +10,14 @@
     <!-- The Modal -->
     <style type="text/css">
 <!--
-.style1 {color: #FF0000}
+.style1 {color: #8B0000}
 -->
     </style>
     <div id="myModal" class="modal">
 
   <!-- Modal content -->
 
-  <form name="modal_saida" id="modal_saida" action ="pronto_atendimento_saida.php" method="post" class="form-horizontal form-label-left">
+
 
   <div class="modal-content">
     <div class="modal-header">
@@ -29,7 +29,7 @@
     <div class="modal-body" >
 	
       <?php 
-        
+        /*	Defina se o paciente excedeu a regra tempo de atendimento , definido em contrato
             if( $_GET['data'] == 1 ){
                echo "<p>   O paciente exedeu o per&iacute;odo referente ao Pronto Atendimento que &eacute; de ".$tempo.", favor informar o motivo:  </p>";
 
@@ -43,7 +43,23 @@
                     <textarea rows='8' cols='50' name='motivo_saida' form='modal_saida' class='form-control form-control-sm' placeholder='Describe yourself here...'> </textarea>
                       </p>";
             }
-      ?>
+		*/
+		   if(!isset($_GET['int'])){
+				echo "<form name='modal_saida' id='modal_saida' action ='pronto_atendimento_saida.php' method='post' class='form-horizontal form-label-left'>";
+			}else{
+			
+			    echo "<form name='modal_saida' id='modal_saida' action ='internacao_saida.php' method='post' class='form-horizontal form-label-left'>";
+			}
+			
+			
+		        echo "<p>   Favor informar sobre a alta do paciente:<span class='style1'>*</span> </p>";
+
+                echo "<p> 
+                    <textarea rows='8' cols='50' name='motivo_saida' form='modal_saida' class='form-control form-control-sm' required='required'></textarea>
+                      </p>";
+      
+	  	    
+	  ?>
       <table width="100%" border="0">
         <tr>
           <td width="45%">Data:<span class="style1">*</span></td>

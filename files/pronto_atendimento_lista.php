@@ -66,7 +66,7 @@ return "$horas:$minutos:$segundos";
  
  // Definição de perfil de usuário Administrador ou usuário comum.
 
- $a = "SELECT pronto_atendimento.id as autorizacao, pronto_atendimento.id_beneficiarios as id_beneficiarios , pronto_atendimento.matricula as matricula, pronto_atendimento.nome as paciente, pronto_atendimento.dat_entrada as dat_entrada, pronto_atendimento.dat_saida as dat_saida , pronto_atendimento.motivo as motivo, usuarios.nome as credenciado, pronto_atendimento.prorrogacao as prorrogacao FROM `pronto_atendimento` INNER JOIN usuarios on usuarios.id = pronto_atendimento.id_usuario";
+ $a = "SELECT pronto_atendimento.id as autorizacao, pronto_atendimento.id_beneficiarios as id_beneficiarios , pronto_atendimento.matricula as matricula, pronto_atendimento.nome as paciente, pronto_atendimento.dat_entrada as dat_entrada, pronto_atendimento.dat_saida as dat_saida , pronto_atendimento.motivo as motivo, credenciado.nome_fantasia as credenciado, pronto_atendimento.prorrogacao as prorrogacao FROM `pronto_atendimento` INNER JOIN usuarios on usuarios.id = pronto_atendimento.id_usuario INNER JOIN credenciado on credenciado.id = usuarios.id_credenciado";
 
 
   If( $_SESSION["perfil"] == "usuario"){
@@ -158,7 +158,7 @@ if(isset($guia)){
                  <td ><div align="center">Permanência</div></td>
                  <td ><div align="center">Saída</div></td>
                   
-                 <?php If( $_SESSION["perfil"] == "administrador" or $_SESSION["perfil"] == "auditor"){ echo "<td style='padding: 4px;'><div align='center'>Credenciado</div></td>"; } ?>
+                 <?php If( $_SESSION["perfil"] == "administrador" or $_SESSION["perfil"] == "auditor"){ echo "<td><div align='center'>Credenciado</div></td>"; } ?>
                  
                    
                </tr>

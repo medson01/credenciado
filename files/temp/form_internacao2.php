@@ -1,4 +1,4 @@
-﻿<?php 
+<?php 
   
 # Corrige o erro de acentuação no banco
 mysqli_query($conn,"SET NAMES 'utf8'");

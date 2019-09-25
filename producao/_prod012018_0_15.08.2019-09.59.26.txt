@@ -1,0 +1,7 @@
+/rede-credenciada
+
+index.php?option=com_content&view=article&id=244
+
+{loadposition menu-rede_credenciada}
+
+index.php?option=com_content&view=article&id=244

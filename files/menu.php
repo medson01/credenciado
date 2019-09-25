@@ -1,4 +1,4 @@
-﻿<!-- Pag menu.php -->
+<!-- Pag menu.php -->
 <style type="text/css">
 <!--
 .style1 {font-size: 14px}

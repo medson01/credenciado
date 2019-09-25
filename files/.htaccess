@@ -1,0 +1,18 @@
+# Bloqueando hotlinks em imagens
+RewriteEngine on
+RewriteCond %{HTTP_REFERER} !^$
+RewriteCond %{HTTP_REFERER} !^http(s)?://(www\.)?186.249.51.185/credenciado/files [NC]
+RewriteRule \.(jpg|jpeg|png|gif)$ - [NC,F,L]
+
+# Protegendo seu arquivo .htaccess
+<files ~ "^.*\.([Hh][Tt][Aa])">
+order allow,deny
+deny from all
+satisfy all
+</files>
+
+# Evitando a listagem de diretórios 
+Options -Indexes
+
+# Acesso restrito!
+# deny from all
