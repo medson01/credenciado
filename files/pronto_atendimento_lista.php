@@ -108,6 +108,9 @@ return "$horas:$minutos:$segundos";
 
 ?>
 
+<!-- Tickt ID e usuário -->
+<link rel="stylesheet" type="text/css" href="../css/ticket.css">
+
 <script type="text/javaScript">
 function autoRefresh(interval) {
 	setTimeout(function(){  window.location.href = "painel.php?pa=1"; } ,interval);
@@ -183,8 +186,8 @@ if(isset($guia)){
                                     }
 
                          echo          "</div></td> -->
-                                    <td ><div align='center' style='width: 30px;'> <a href = 'pronto_atendimento_relatorio.php?id_pronto_atendimento=".$registro["autorizacao"]." '>  ".$registro["autorizacao"]."</a></div></td>
-                                    <td ><div align='center' style='width: 150px;'>".$registro["paciente"]."</div></td>
+                                    <td ><div id='ticket'> <a href = 'pronto_atendimento_relatorio.php?id_pronto_atendimento=".$registro["autorizacao"]." '>  ".$registro["autorizacao"]."</a></div></td>
+                                    <td ><div id='paciente'>".$registro["paciente"]."</div></td>
                                     <td ><div align='center' >".$registro["matricula"]."</div></td>
                                      <td ><div align='center'><font color='blue'><strong>".date("j/n/Y <\b\\r> H:i:s",strtotime($registro["dat_entrada"]))."</strong></font></div></td>
                                      <td >

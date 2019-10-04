@@ -1,98 +1,176 @@
 
-<?php 
+       
 
-# Corrige o erro de acentuaÃ§Ã£o no banco
-mysqli_query($conn,"SET NAMES 'utf8'");
-
-
- 
-   $query = mysqli_query($conn,"SELECT * FROM cid order by cid") or die("erro ao carregar consulta");
-                  $i = 1;
-                  while($registro = mysqli_fetch_assoc($query)){
-                        
-                        $id[$i] = $registro["id"];
-                        $cid[$i] = $registro["cid"];
-                        $descricao[$i] = $registro["descricao"];
-                        $dias[$i] = $registro["dias"];
-                        $i++; 
-                   }
-                   
-                    
-                  ?>
-                  <!--FunÃ§Ã£o para autopreenchimento -->
-                      <script>
-                      function adicionar() {
-                          switch (document.getElementById("id_cid").selectedIndex) {
-
-                                  <?php     
-
-                                              for ($x=1; $x < $i ; $x++) {
-
-                                                 echo' case '.$x.':
-                                                          document.getElementById("dias").value = "'.$dias[$x].'"
-                                                          document.getElementById("cid").value = "'.$cid[$x].'"
-                                                          document.getElementById("cid_desc").value = "'.$descricao[$x].'"
-                                                          break;
-                                                      ';
-                                              }
-                                  ?>
-
-                                  default:
-                                      document.getElementById("dias").value = "";
-                                          }
-                                      }
-                      </script>    
-
-
-                  <!-- função pegar nome de matricula -->            
-                      <script>
-                      function pegarMatricula() {
-
-                        var matric = document.getElementById("matricula").value;
-                        var int = 1;
-
-                        window.location.href = "verficar_matricula.php?int="+int+"&matric="+matric;
-
-                        //alert("The input value has changed. The new value is: " + matric);
-                      }
-                      </script>                     
                   
-                     <form name="internamento" id="internamento" action ="internacao_cadastro.php" method="post" id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
-                      <label> </label>
+<style type="text/css">
+<!--
+.style3 {color: #000000}
+.style5 {color: #000000; font-weight: bold; }
+.style13 {font-size: 10px}
+-->
+                     </style>
+                     <label> </label>
                       <div align="center">
-                        </p>
-                        <table width="549" border="0" align="center">
-                          <tr>
-                            <td width="179" >Matr&iacute;cula</td>
-                            <td width="360">
-                            <input required="required" type="text" name="matricula" minlength="16" class="form-matric" id="matricula" size="20" maxlength="16"placeholder="00000000.000000.00"  onchange="pegarMatricula()" <?php if(isset($_GET['matricula'])){ echo "value=".$_GET['matricula'];} ?> /></td>
-                          </tr>
+					  
+		   	<?php  
+              if(!((isset($status)) && ($status == 2) )){
+          
+                   echo '<form name="prorrogacao" id="prorrogacao" action ="';  
+                        if(!isset($medico_pro)){ 
+                                 echo 'internacao_prorrogacao_cadastro.php'; }
+                        else{ 
+                                 echo 'internacao_prorrogacao_update.php'; 
+                            } 
+                                 echo '" method="post" data-parsley-validate class="form-horizontal form-label-left">';
+					    }
+				?>				
+   		  
+                        <table width="100% " border="0" align="center">
+                          
+
+                              <td colspan="3" bordercolor="#999999" bgcolor="#999999"><div align="center" class="style5">Prorrogar Internação</div></td>
+                            </tr>
                             <tr>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                            </tr>
+                            
+                            <tr>
+                            <td ><span class="style13">Médico solicitante </span><br />
+                              <input name="medico_solicitante" type="text" class="form-control input-sm" style="font-size: 10px"  size="44" required="required" <?php if((isset($status)) && ($status == 2) ){ echo "value='' readonly='true' "; }else{ if( (isset($medico_pro))   ){ echo "value='".$medico_pro."' readonly='true' ";}}?> />
+                              </span></td>
+                            <td>&nbsp;</td>
+                            <td><span class="style13">CRM </span><br />
+                              <input name="crm" id ="crm" type="text" class="form-control input-sm" style="font-size: 10px" size="44" required="required" <?php if((isset($status)) && ($status == 2) ){ echo "value='' readonly='true' "; }else{if((isset($crm_pro))  ){ echo "value='".$crm_pro."' readonly='true'  ";}} ?>/>
+                              </span></td>
+                            </tr>
+                            <tr>
+                              <td colspan="3" >&nbsp;</td>
+                            </tr>
+                            <tr>
+                              <td><span class="style13">
+                  <?php 
+
+                        
+                              if((isset($status)) && ($status == 2) ){ 
+
+                                     echo "Dias solicitados ";
+
+                                     echo " </span><br />
+
+                                            <select name='dias' class='form-control input-sm' disabled>"; 
+
+
+
+                                }else{
+
+
+                                  if( (isset($medico_pro)) ){ 
+                                     echo "Dias solicitados ";
+
+                                     echo " </span><br />
+
+                                            <select name='dias' class='form-control input-sm'  readonly='true'>"; 
+
+
+                                  }else{
+                                     echo "Dias solicitados";
+
+                                     echo " </span><br />
+
+                                            <select name='dias' class='form-control input-sm'  >"; 
+                                  }
+							  	
+                              
+                									if(isset($dias_pro) ){ 
+                											echo "<option value='".$dias_pro."' >".$dias_pro."</option>"; 
+                									}else{
+                										for ($i=1; $i <= 3; $i++) {
+                    										echo "<option value='".$i."'>".$i."</option>";
+                										}
+                									}
+                                } 
+
+                         
+									
+								  ?>
+
+                        </select>                
+                              </td>
+                              <td>                              </td>
+                              <td>&nbsp;</td>
+                            </tr>
+                            <tr>
+                              <td colspan="3" >&nbsp;</td>
+                            </tr>
+                            <tr>
+                              <td colspan="3" ><span class="style13">Justificativa da prorrogação
+                                <textarea class="form-control input-sm" name="motivo"  style="font-size:12px; margin: 0px; height: 100px; width: 100%;" form="prorrogacao" placeholder="Entre com o texto aqui..."  <?php if((isset($status)) && ($status == 2) ){ echo "value='' readonly='true' "; }else{ if(isset($motivo_pro) ){ echo "value='".$motivo_pro."'  readonly='true'  ";} }    ?>>
+                               <?php
+                                    if(isset($motivo_pro)){
+                                      echo $motivo_pro;
+                                    }
+                               ?></textarea>
+                              </span></td>
+                            </tr>
+                            <tr>
+                              <td colspan="3" >                              </td>
+                            </tr>
+                            <tr>
+                              <td colspan="3" style="border-top:ridge">&nbsp;</td>
+                            </tr>
+                            <tr>
+                              <td>
+
+							  </td>
                               <td>&nbsp;</td>
                               <td>&nbsp;</td>
                             </tr>
                             <tr>
-                              <td >Nome</td>
-                              <td><input  minlength="4" id="nome" name="nome" readonly="readonly" class="form-control col-md-7 col-xs-12" required="required"  size="60" <?php if(isset($_GET['paciente'])){ echo "value='".$_GET['paciente']."'";} ?> /></td>
-                            </tr>
-                            <tr>
-                              <td class="style3">&nbsp;</td>
+                              <td><?php 
+
+
+                                  if((isset($status)) && ($status == 2) ){
+                                     echo "<span class='style13'> Dias autorizados</span>
+                                            <input name= 'dias_autorizados' id ='dias_autorizados' type='text' class='form-control input-sm' style='font-size: 10px' size='44' required='required' readonly='true'  />";
+
+                                  }else{  
+                                    if( (($_SESSION["perfil"] == "medico") || ($_SESSION["perfil"] == "administrador"))){ 
+                                     
+                                      echo "<span class='style13'> Dias autorizados</span>
+                                            <input name= 'dias_autorizados' id ='dias_autorizados' type='text' class='form-control input-sm' style='font-size: 10px' size='44' required='required'  />";
+                                    }
+                                  }
+
+								?>
+								
+								
+                                <input name="id_usuario" type="hidden" value="<?php echo $_SESSION["id"]; ?>" size="44" /></td>
+                              <td>&nbsp;</td>
                               <td>&nbsp;</td>
                             </tr>
                             <tr>
-                              <td class="style3">Motivo da Prorrogação </td>
-                              <td>&nbsp;</td>
+                              <td colspan="3">&nbsp;</td>
                             </tr>
                             <tr>
-                            <td class="style3">&nbsp;</td>
+                              <td></td>
+                              <td>&nbsp;</td>
+                              <td></td>
+                            </tr>
+                            <tr>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
                             <td>&nbsp;</td>
                             </tr>
-                            <td colspan="2" ><textarea class="form-matric" name="motivo"  style="margin: 0px; height: 100px; width: 100%;" form="internamento" placeholder="Entre com o texto aqui..."  > 
-
-                                <?php if(isset($_GET['prorrogacao'])){ echo $_GET['prorrogacao'];} ?>
-
-                              </textarea></td>
-                            </tr>
+                            <tr>
+                            
+                            <td></td>
+                          </tr>
+                          <tr>
+                            <td colspan="3">&nbsp;</td>
+                          </tr>
+                            
                             <tr>
                             
                             <td></td>
@@ -100,69 +178,61 @@ mysqli_query($conn,"SET NAMES 'utf8'");
                             <tr>
                               <td>&nbsp;</td>
                               <td>&nbsp;</td>
-                            </tr>
-                            <tr>
-                              <td>Arquivos</td>
                               <td>&nbsp;</td>
                             </tr>
                             <tr>
-                              <td>&nbsp;</td>
-                              <td>&nbsp;</td>
+                              <td colspan="3" bgcolor="#999999"><div align="center"><span style="font-weight:bold; font-size:10px;">
+                                  <div align="center">Atenção</br>
+                                  </div>
+                                  <div style="text-align: justify;">
+                                    <div align="center">Caro credenciado, a solicitação será encamihada ao setor responsável do plano para análise. . <br />
+                                    </div>
+                              </div></td>
                             </tr>
                             <tr>
-                              <td colspan="2">
-							  	<div align="right">
-                                    <p align="center"><input type="file" name="arquivo[]" /></p>
-									<p align="center"><input type="file" name="arquivo[]" /></p>
-									<p align="center"><input type="file" name="arquivo[]" /></p>
-									<p align="center"><input type="file" name="arquivo[]" /></p>
-									<p align="center"><input type="file" name="arquivo[]" /></p>
-                                 </div>							  </td>
-                            </tr>
-                            <tr>
+                              <td>&nbsp;</td>
                               <td>&nbsp;</td>
                               <td>&nbsp;</td>
                             </tr>
                           <tr>
                             <td >&nbsp;</td>
-                            <td><div align="right" class="style3">
-                              <div align="right">
-                                <strong>
-                                  <?php 
-                                    
-                                    if(isset($_GET['id'])){
-                                        $id_pa = $_GET['id'];
-                                        echo "<input type='hidden' id='id_pa' name='id_pa' value='".$id_pa."'>";
+                            <td>&nbsp;</td>
+                            <td><div align="right"><strong>
+
+                              <input name="id" type="hidden" value="<?php echo $id; ?>" />
+                              <input name="id_prorrogacao" type="hidden" value="<?php echo $id_prorrogacao; ?>" />
+                            
+                              <?php 
+
+                              
+                             
+
+                                 if(!((isset($status)) && ($status == 2) )){     
+
+                                    if(isset($medico_pro)){ 
+
+                                       echo " <input name='submit' type='submit' value='Prorrogar' class='btn btn-primary '/>";
+
                                     }else{
-                                        $id_pa = false;
-                                        echo "<input type='hidden' id='id_pa' name='id_pa' value='".$id_pa."'>";
+
+                                      echo " <input name='submit' type='submit' value='Enviar' class='btn btn-primary '/>";
+
                                     }
+                             
+                                }
 
+                              ?>
 
-                                  ?>
-                                  <input type="hidden" id="cid" name="cid">
-                                  <input type="hidden" id="cid_desc" name="cid_desc">
+                              
 
-                                <input name="submit" type="Submit" value="Cadastrar" class="btn btn-primary "/> </strong>                              </div>
-                            </div></td>
+                            </strong></div></td>
                           </tr>
                         </table>
-                      </div>
-  
-                        <br />
-                        <br /> 
-                      
-                      <div align="center"><br />
-                        <br />
-                        <br />
-                        <br />
-                      
-                        <br />
-                        <br />
-                        <br />
-                      </div>
-                    </form>
-                   
+                     </div>
+
+                </form>
+
+                
 
              
           

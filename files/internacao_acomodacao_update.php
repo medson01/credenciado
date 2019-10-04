@@ -23,11 +23,11 @@ $motivo = $_POST["motivo"];
         
         if($update){
 
-          echo"<script language='javascript' type='text/javascript'>alert('Alteração aplicada com sucesso!');window.location.href='painel.php?int=1'</script>";
+          echo"<script language='javascript' type='text/javascript'>alert('Alteração aplicada com sucesso!'); history.go(-1);</script>";
           
         }else{
          
-        //  echo"<script language='javascript' type='text/javascript'>alert('Alteração não aplicada com sucesso!');window.location.href='painel.php?int=1'</script>";
+          echo"<script language='javascript' type='text/javascript'>alert('Alteração não aplicada com sucesso!');window.location.href='painel.php?int=1'</script>";
 
         }
     

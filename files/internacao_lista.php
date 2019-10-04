@@ -18,7 +18,7 @@
   }
 
   // Definição de perfil de usuário Administrador ou usuário comum.
- $a = "SELECT internamento.id as autorizacao,internamento.nome as paciente, internamento.matricula as matricula, internamento.solicitante as solicitante, internamento.crm as crm, internamento.dat_entrada as dat_entrada, internamento.dat_saida as dat_saida, internamento.id_beneficiarios as id_beneficiarios, internamento.motivo as motivo, internamento.id_prorrogacao as id_prorrogacao, internamento.prorrogacao as prorrogacao, internamento.dias as dias_internamento, cid.cid , cid.dias as dias, usuarios.nome as credenciado, pronto_atendimento.id as id_pa, pronto_atendimento.dat_entrada as data_pa, prorrogacao.id as id_prorrogacao, prorrogacao.dias_solicitados as dias_prorrogacao ,prorrogacao.status as status, prorrogacao.data_prorrogacao as data_prorrogacao, beneficiarios.data_nascimento as data_nascimento, internamento.qtd_respiratoria , internamento.qtd_motora, acomodacao.nome as acomodacao FROM `internamento` LEFT JOIN pronto_atendimento on pronto_atendimento.id = internamento.id_pa INNER JOIN usuarios on usuarios.id = internamento.id_usuario INNER JOIN cid on cid.id = internamento.id_cid  INNER JOIN alocacao on alocacao.id = internamento.id_alocacao INNER JOIN acomodacao on acomodacao.id = alocacao.id_acomodacao left JOIN prorrogacao on prorrogacao.id = internamento.id_prorrogacao INNER JOIN beneficiarios on beneficiarios.id = internamento.id_beneficiarios";
+ $a = "SELECT internamento.id as autorizacao,internamento.nome as paciente, internamento.matricula as matricula, internamento.solicitante as solicitante, internamento.crm as crm, internamento.dat_entrada as dat_entrada, internamento.dat_saida as dat_saida, internamento.id_beneficiarios as id_beneficiarios, internamento.motivo as motivo, internamento.id_prorrogacao as id_prorrogacao, internamento.prorrogacao as prorrogacao, internamento.dias as dias_internamento, cid.cid , cid.dias as dias, usuarios.nome as credenciado, pronto_atendimento.id as id_pa, pronto_atendimento.dat_entrada as data_pa, prorrogacao.id as id_prorrogacao, prorrogacao.dias_solicitados as dias_prorrogacao ,prorrogacao.status as status, prorrogacao.data_prorrogacao as data_prorrogacao, beneficiarios.data_nascimento as data_nascimento, acomodacao.nome as acomodacao FROM `internamento` LEFT JOIN pronto_atendimento on pronto_atendimento.id = internamento.id_pa INNER JOIN usuarios on usuarios.id = internamento.id_usuario INNER JOIN cid on cid.id = internamento.id_cid  INNER JOIN alocacao on alocacao.id = internamento.id_alocacao INNER JOIN acomodacao on acomodacao.id = alocacao.id_acomodacao left JOIN prorrogacao on prorrogacao.id = internamento.id_prorrogacao INNER JOIN beneficiarios on beneficiarios.id = internamento.id_beneficiarios";
 
 
  
@@ -87,6 +87,8 @@
 
 ?>
 
+<!-- Tickt ID e usuário -->
+<link rel="stylesheet" type="text/css" href="../css/ticket.css">
 
 <!-- Mensagem ao passar o mouse -->
 <script type="text/javascript" src="../js/wz_tooltip.js"></script>
@@ -180,7 +182,7 @@ function excluir(id) {
                  <td style='padding: 4px;'><div align="center">Acomodação</div></td>
                   <td style='padding: 4px;'><div align="center">Idade</div></td>
                   <td style='padding: 4px;'><div align="center">Entrada</div></td>
-                  <td style='padding: 4px;'><div align="center">diárias</div></td>
+                  <td style='padding: 4px;'><div align="center">Diárias</div></td>
                   <td style='padding: 4px;'><div align="center">Previsão</div></td>
                   <td style='padding: 4px;'><div align="center">Saída</div></td> 
                  <?php If( $_SESSION["perfil"] == "administrador" or $_SESSION["perfil"] == "auditor" or $_SESSION["perfil"] == "medico"){ echo "<td style='padding: 4px;'><div align='center'>Credenciado</div></td>"; } ?>            
@@ -209,19 +211,19 @@ function excluir(id) {
                                     }
 
                                     
-
+                        // ID de autorizaçãp
                          echo  "</div></td> -->
                                     <td style='padding: 4px;'>
                                       <div align='center' style='width: 30px;'> 
-
-                                        <a href = 'internacao_relatorio.php?id_internacao=".$registro["autorizacao"]."&id_pa=".$registro["id_pa"]."&prorro=".$registro["status"]."'>  ".$registro["autorizacao"]."</a>
-
+                                        
+                                            <a  id='ticket' href = 'internacao_menu.php?id=".$registro["autorizacao"]."&id_pa=".$registro["id_pa"]."&prorro=".$registro["status"]."&status=2'>  ".$registro["autorizacao"]."</a>
+                                       
 
                                       </div>
                                     </td>
 
 
-                                    <td style='padding: 4px;'><div align='center' style='width: 150px;'>".$registro["paciente"]."</div></td>
+                                    <td '><div id='paciente'>".$registro["paciente"]."</div></td>
                                     <td ><div align='center' >".$registro["matricula"]."</div></td>
                                     <td ><div align='center'>". utf8_encode($registro["acomodacao"])."</div></td>
                                      <td ><div align='center'>".calc_idade($registro["data_nascimento"])."</div></td>
@@ -232,7 +234,7 @@ function excluir(id) {
 
               // Previsão de saída
 
-                        $dias = $registro["dias"];
+                        $dias = $registro["dias_internamento"];
                             
 
 
@@ -429,14 +431,15 @@ function excluir(id) {
 
 
 
-                        echo "  <td style='text-align:right; width: 200px;'>";
+                        echo "  <td style='text-align:right;'>";
 
 
                   //Botão Acomodação   
-                        echo " 
+                  /*     echo " 
                                     <!-- Botão sair -->
                                             <a class='btn btn-warning  btn-xs'  onclick='acomodacao(".$registro['autorizacao'].",".$dat_saida[$i].")'><span style='font-size: 10px; align: center;'> Acomodação </center> </span> </a>
                                       ";
+                  */
 
                   //Botão Saída   
                         echo " 
@@ -467,7 +470,9 @@ function excluir(id) {
 
               // Credendiados 
                   // Solicita a prorrogação do internamento. Não é visível a médicos.
-                   if( $_SESSION["perfil"] != "medico") {
+                 
+              /*
+                  if( $_SESSION["perfil"] != "medico") {
 
                           
 
@@ -480,14 +485,13 @@ function excluir(id) {
 				
                           }else{ 
      
-                               /*     echo  " <!-- Botão prorrogação -->
+                                    echo  " <!-- Botão prorrogação -->
                                                       <a class='btn btn-danger  btn-xs' onclick='prorrogar(".$registro["autorizacao"].",0)'><span style='font-size: 10px; align: center;'> Prorrogar </span> </a>
                                            ";
-				*/
-                          }
-                            
+				
+                          }    
                     }                 
-               
+                 */
               }
               
 
