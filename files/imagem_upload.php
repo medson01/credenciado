@@ -25,7 +25,10 @@ $tamanho = $foto['size'];
 // Formato
 if(!preg_match('/^image\/(pjpeg|jpeg|png|gif|bmp)$/', $tipo))
 {
-    echo retorno('Isso não é uma imagem válida');
+    //echo retorno('Isso não é uma imagem válida');
+
+	 echo"<script language='javascript' type='text/javascript'>alert('Imagem válida');window.location.href='internacao_menu.php?id=".$id."'</script>";
+
     exit;
 }
 
@@ -40,11 +43,8 @@ if ($tamanho > TAMANHO_MAXIMO)
 $imagem = file_get_contents($foto['tmp_name']);
 
 // Preparando comando
-if($evento == "int"){
-$stmt = $pdo->prepare('INSERT INTO imagem (id, id_internamento, id_pronto_atendimento, nome, evento, descricao, tipo, tamanho, imagem) VALUES (null,'.$id.',null,:nome,:evento ,:descricao ,:tipo,:tamanho,:imagem)');
-}else{
-$stmt = $pdo->prepare('INSERT INTO imagem (id, id_internamento, id_pronto_atendimento, nome, evento, descricao, tipo, tamanho, imagem) VALUES (null,null,'.id.',:nome,:evento ,:descricao ,:tipo,:tamanho,:imagem)');
-}
+$stmt = $pdo->prepare('INSERT INTO imagem (id, id_internamento, id_pronto_atendimento, nome, evento, descricao, tipo, tamanho, data ,imagem) VALUES (null,'.$id.',null,:nome,:evento ,:descricao ,:tipo,:tamanho, "'.date("Y-m-d H:i:s" ).'", :imagem)');
+
 // Definindo parâmetros
 $stmt->bindParam(':nome', $nome, PDO::PARAM_STR);
 $stmt->bindParam(':evento', $evento, PDO::PARAM_STR);
@@ -56,7 +56,7 @@ $stmt->bindParam(':imagem', $imagem, PDO::PARAM_LOB);
 // Executando e exibindo resultado
 if ($stmt->execute()) { 
    
-header("Location: internacao_menu.php?id=".$id);
+header("Location: internacao_menu.php?id=".$id."&status=1");
 
 } else {
     die (mysql_error());

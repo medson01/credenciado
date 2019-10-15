@@ -69,13 +69,13 @@ switch ($sub_menu) {
 ?>					
 			       
 	<ul class="nav nav-tabs">
-    	<li class="active">
+    	<li <?php if(!(isset($_GET["status"]))){ echo "class='active'"; } ?> >
 			<a data-toggle="tab" href="#menu1" class="hidden-print"><?php echo $menu1; ?></a>
 		</li>
 		<li>
 			<a data-toggle="tab" href="#menu2" class="hidden-print"><?php echo $menu2; ?></a>
 		</li>
-		<li>
+		<li <?php if(isset($_GET["status"])){ echo "class='active'"; } ?> >
 			<a data-toggle="tab" href="#menu3" class="hidden-print"><?php echo $menu3; ?></a>
 		</li>
 		<li>
@@ -87,7 +87,7 @@ switch ($sub_menu) {
 					
 <div class="tab-content">
 
-    <div id="menu1" class="tab-pane	in active">
+    <div id="menu1" class="tab-pane	  <?php if(!(isset($_GET["status"]))){ echo "in active "; } ?>    ">
 			    <?php include $link1;?>
     </div>
 
@@ -95,7 +95,7 @@ switch ($sub_menu) {
 				<?php include $link2;?>
    	</div>
 
-   	<div id="menu3" class="tab-pane fade" >
+   	<div id="menu3" class="tab-pane fade  <?php if((isset($_GET["status"]))){ echo "in active "; } ?> ">
 				<?php include $link3;?>
 				<?php include $link4;?>
    	</div>

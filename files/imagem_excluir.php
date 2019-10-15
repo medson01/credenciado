@@ -3,9 +3,10 @@
   require_once "../config/config.php";
 
 $id = $_GET["id"];
-$sqlExclusao = "DELETE FROM imagem WHERE id = '".$id."' ";
+$id_imagem = $_GET["id_imagem"];
+$sqlExclusao = "DELETE FROM imagem WHERE id = '".$id_imagem."' ";
 $queryExclusao = mysqli_query($conn, $sqlExclusao) 
 or die("Algo deu errado ao excluir a imagem. Tente novamente.");
 
-header("Location: ".$_SERVER['HTTP_REFERER']."&status=2");
+header("Location: internacao_menu.php?id=".$id."&status=");
 ?>
