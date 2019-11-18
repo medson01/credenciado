@@ -12,11 +12,9 @@ $crm = $_POST["crm"];
 $dias_solicitados = $_POST["dias"];
 $motivo = utf8_decode($_POST["motivo"]);
 $motivo_medico = utf8_decode($_POST["motivo_medico"]);
-$qtd_respiratoria = $_POST["qtd_respiratoria"];
-$qtd_motora = $_POST["qtd_motora"];
 
 
-          $query = "INSERT INTO `prorrogacao`(`id`, `id_internamento`, `id_usuario`, `medico_solicitante`, `crm`, `dias_solicitados`, `dias_autorizados` , `motivo`, `motivo_medico`, `data_prorrogacao` , `qtd_respiratoria`, `qtd_motora`,`status`) VALUES ( null ,'".$id."','".$id_usuario."', '".$medico_solicitante."' , '".$crm."' , '".$dias_solicitados."' , null ,'".$motivo."' ,'".$motivo_medico."' ,'".date("Y-m-d H:i:s" )."' ,'".$qtd_respiratoria."' ,'".$qtd_motora."' , '1' )";
+          $query = "INSERT INTO `prorrogacao`(`id`, `id_internamento`, `id_usuario`, `medico_solicitante`, `crm`, `dias_solicitados`, `dias_autorizados` , `motivo`, `motivo_medico`, `data_prorrogacao` , `status`) VALUES ( null ,'".$id."','".$id_usuario."', '".$medico_solicitante."' , '".$crm."' , '".$dias_solicitados."' , null ,'".$motivo."' ,'".$motivo_medico."' ,'".date("Y-m-d H:i:s" )."' , '1' )";
 
 	 
         $insert = mysqli_query($conn, $query);

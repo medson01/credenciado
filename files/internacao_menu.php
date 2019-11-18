@@ -50,8 +50,8 @@ switch ($sub_menu) {
 							$menu1 =  "Guia de internação";
 							$link1 =  "internacao_usuario.php";
 							
-							$menu2 =  "Autorização Exames";
-							$link2 =  "imagem_cadastro.php";	
+							//$menu2 =  "Autorização Exames";
+							//$link2 =  "imagem_cadastro.php";	
 
 							$menu3 =  "Prorrogação";
 							$link3 =  "imagem_cadastro.php";	
@@ -72,9 +72,11 @@ switch ($sub_menu) {
     	<li <?php if(!(isset($_GET["status"]))){ echo "class='active'"; } ?> >
 			<a data-toggle="tab" href="#menu1" class="hidden-print"><?php echo $menu1; ?></a>
 		</li>
+	<!-- 
 		<li>
 			<a data-toggle="tab" href="#menu2" class="hidden-print"><?php echo $menu2; ?></a>
 		</li>
+	-->
 		<li <?php if(isset($_GET["status"])){ echo "class='active'"; } ?> >
 			<a data-toggle="tab" href="#menu3" class="hidden-print"><?php echo $menu3; ?></a>
 		</li>
@@ -90,11 +92,11 @@ switch ($sub_menu) {
     <div id="menu1" class="tab-pane	  <?php if(!(isset($_GET["status"]))){ echo "in active "; } ?>    ">
 			    <?php include $link1;?>
     </div>
-
+<!--
 	<div id="menu2" class="tab-pane fade" >
 				<?php include $link2;?>
    	</div>
-
+-->
    	<div id="menu3" class="tab-pane fade  <?php if((isset($_GET["status"]))){ echo "in active "; } ?> ">
 				<?php include $link3;?>
 				<?php include $link4;?>

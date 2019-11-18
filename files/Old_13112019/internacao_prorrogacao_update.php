@@ -7,12 +7,10 @@ $id = $_POST["id"];
 $id_prorrogacao = $_POST["id_prorrogacao"];
 $dias_autorizados = $_POST["dias_autorizados"];
 $motivo_medico = utf8_decode($_POST["motivo_medico"]);
-$qtd_respiratoria = $_POST["qtd_respiratoria2"];
-$qtd_motora = $_POST["qtd_motora2"];
 
 
 
- $sql = "UPDATE `prorrogacao` SET  `dias_autorizados`= ".$dias_autorizados." ,  `motivo_medico`= '".$motivo_medico."' , `qtd_respiratoria`=".$qtd_respiratoria." , `qtd_motora`=".$qtd_motora.",`status`= 2  WHERE id = '".$id_prorrogacao."'";
+ $sql = "UPDATE `prorrogacao` SET  `dias_autorizados`= ".$dias_autorizados." ,  `motivo_medico`= '".$motivo_medico."' , `status`= 2  WHERE id = '".$id_prorrogacao."'";
 
  $update = mysqli_query($conn,$sql); 
 
@@ -29,7 +27,7 @@ $qtd_motora = $_POST["qtd_motora2"];
  $dias = $dias_autorizados + $result[0];
 
 
- $sql = "UPDATE `internamento` SET  `dias`= ".$dias.", `qtd_respiratoria`=".$qtd_respiratoria." , `qtd_motora`=".$qtd_motora." WHERE id = '".$id."'";
+ $sql = "UPDATE `internamento` SET  `dias`= ".$dias." WHERE id = '".$id."'";
 
  $update = mysqli_query($conn,$sql); 
 

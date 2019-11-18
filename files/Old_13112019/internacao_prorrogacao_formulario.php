@@ -29,8 +29,6 @@ $id = $_GET["id"];
                                   $dias_pro = $registro[6];
                                   $motivo_pro = $registro[7];
                                   $id_prorrogacao = $registro[8];
-                                  $qtd_respiratoria = $registro[9];
-                                  $qtd_motora = $registro[10];
                                  
 
 

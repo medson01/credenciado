@@ -42,7 +42,7 @@
 
                               </span></td>
                             <td>&nbsp;</td>
-                            <td><span class="style13"> CRM </span><br />
+                            <td><span class="style13">CRM </span><br />
                               <input name="crm" id ="crm" type="text" class="form-control input-sm" style="font-size: 10px" size="44" required="required" <?php if (isset($crm_pro)) { echo "value='".$crm_pro."' "; }  if(isset($desativar)){ echo $desativar;} ?>/>
 
                               </span></td>
@@ -63,7 +63,7 @@
                   								if(isset($dias_pro) ){ 
                                       echo "<option value='".$dias_pro."' >".$dias_pro."</option>"; 
                                   }else{
-                                    for ($i=1; $i <= 5; $i++) {
+                                    for ($i=1; $i <= 3; $i++) {
                                         echo "<option value='".$i."'>".$i."</option>";
                                   }
 
@@ -74,27 +74,8 @@
                               <td>&nbsp;</td>
                             </tr>
                             <tr>
-                              <td>&nbsp;</td>
-                              <td>&nbsp;</td>
-                              <td>&nbsp;</td>
+                              <td colspan="3" >&nbsp;</td>
                             </tr>
-                            <tr>
-                              <td>
-							  	<span class = 'style13'> Quantidade de sessões Fisioterapia Respiratória </span> 
-                                 </span> <br />
-											 <input name="qtd_respiratoria" id ="qtd_respiratoria" type="text" class="form-control input-sm" style="font-size: 10px" size="44" <?php if (isset($qtd_respiratoria)) { echo "value='".$qtd_respiratoria."' "; }  if(isset($desativar)){ echo $desativar;} ?>/>
-								
-							  </td>
-                              <td>&nbsp;</td>
-                              <td><span class = 'style13'>Quantidade de sessões Fisioterapia Motora </span> </span><br />		 
-                              <input name="qtd_motora" id ="qtd_motora" type="text" class="form-control input-sm" style="font-size: 10px" size="44" <?php if (isset($qtd_motora)) { echo "value='".$qtd_motora."' "; }  if(isset($desativar)){ echo $desativar;} ?>/></td>
-                            </tr>
-                            <tr>
-                              <td>&nbsp;</td>
-                              <td>&nbsp;</td>
-                              <td>&nbsp;</td>
-                            </tr>
-
                             <tr>
                               <td colspan="3" ><span class="style13">Justificativa da prorrogação
                                 <textarea id="motivo" class="form-control input-sm" name="motivo"  style="font-size:12px; margin: 0px; height: 100px; width: 100%;" form="prorrogacao" placeholder="Entre com o texto aqui..." <?php if(isset($desativar)){ echo $desativar; } ?> />
@@ -119,26 +100,7 @@
                           <td>&nbsp;</td>
 						  <td>&nbsp;</td>
                         </tr>
-                        <tr>
-                          <td>&nbsp;</td>
-                          <td>&nbsp;</td>
-                          <td>&nbsp;</td>
-                        </tr>
-                        <tr>
-                          <td>&nbsp;</td>
-                          <td>&nbsp;</td>
-                          <td>&nbsp;</td>
-                        </tr>
-                        <tr>
-                          <td>&nbsp;</td>
-                          <td>&nbsp;</td>
-                          <td>&nbsp;</td>
-                        </tr>
-                        <tr>
-                          <td>&nbsp;</td>
-                          <td>&nbsp;</td>
-                          <td>&nbsp;</td>
-                        </tr>
+                        
        </table>
 
        <table width="100% " border="0" align="center" style="<?php if(isset($exibir)){ echo $exibir; }?>" >
@@ -159,27 +121,11 @@
                                             <input name= 'dias_autorizados'  id ='dias_autorizados' type='text' class='form-control input-sm p' style='font-size: 10px; ' size='44'  />						  </td>
 						  <td>&nbsp;</td>
 						  <td>&nbsp;</td>
- <tr>
-                              <td>&nbsp;</td>
-                              <td>&nbsp;</td>
-                              <td>&nbsp;</td>
-                            </tr>
-                            <tr>
-                              <td>
-							  	<span class = 'style13'> Quantidade de sessões Fisioterapia Respiratória </span> 
-                                 </span> <br />
-											 <input name="qtd_respiratoria2" id ="qtd_respiratoria2" type="text" class="form-control input-sm" style="font-size: 10px" size="44" <?php if (isset($qtd_respiratoria)) { echo "value='".$qtd_respiratoria."' "; } ?>/>
-								
-							  </td>
-                              <td>&nbsp;</td>
-                              <td><span class = 'style13'>Quantidade de sessões Fisioterapia Motora </span> </span><br />		 
-                              <input name="qtd_motora2" id ="qtd_motora2" type="text" class="form-control input-sm" style="font-size: 10px" size="44" <?php if (isset($qtd_motora)) { echo "value='".$qtd_motora."' "; }?>/></td>
-                            </tr>
-                            <tr>
-                              <td>&nbsp;</td>
-                              <td>&nbsp;</td>
-                              <td>&nbsp;</td>
-                            </tr>          
+                        <tr>
+                         <td>&nbsp;</td>
+                         <td>&nbsp;</td>
+						 <td>&nbsp;</td>
+                        </tr>           
                         <tr>
                          <td colspan="3" >
                              <span class="style13">Justificativa do médico</span>
@@ -246,7 +192,7 @@
                               
 
                             </strong></div></td>
-        </tr>
+                          </tr>
 
 </table>
 

@@ -21,6 +21,14 @@ $id_acomodacao = $_POST["id_acomodacao"];
 //$matricula = str_replace("-", "", $matricula);
 //$matric = substr($matricula, 9, -2);
 
+//session_destroy();
+
+if ( isset($_SESSION['id'] )){
+
+  echo"<script language='javascript' type='text/javascript'>alert('Sua sess\u00e3o se expirou!\\nFavor fazer login novamente');window.location.href='http://186.249.51.185/credenciado/'</script>";
+
+}else{
+
     $query = mysqli_query($conn,"SELECT * FROM `beneficiarios` WHERE `matricula` = '".$id_beneficiarios."'") or die("erro ao selecionar");
 
 
@@ -65,6 +73,6 @@ $id_acomodacao = $_POST["id_acomodacao"];
 
         }
   
-     
+   }  
     
 ?>

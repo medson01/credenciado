@@ -17,8 +17,6 @@
 		
 			if(!empty($_GET["prorro"])){
 
-			// echo "opção 1";	
-
 			  $query = mysqli_query($conn,"SELECT internamento.nome as paciente, internamento.matricula as matricula, prorrogacao.medico_solicitante as solicitante, prorrogacao.crm as crm, internamento.dat_entrada as dat_entrada, internamento.dat_saida as dat_saida_int, cid.cid , cid.descricao as descricao ,usuarios.nome as atendente, internamento.dias as dias,  prorrogacao.motivo as motivo, prorrogacao.data_prorrogacao as data_prorrogacao, prorrogacao.dias_autorizados as prorrogacao_dias, pronto_atendimento.dat_saida as dat_saida_pa, beneficiarios.data_nascimento , beneficiarios.deficiente , internamento.qtd_respiratoria , internamento.qtd_motora, acomodacao.nome as acomodacao, credenciado.nome as credenciado
 			 FROM `internamento` 
 			 INNER JOIN usuarios on usuarios.id = internamento.id_usuario
@@ -60,8 +58,6 @@
 			
 			
 			}else{
-
-			//	echo "opção 2";	
 
 			  $query = mysqli_query($conn,"SELECT internamento.nome as nome, internamento.matricula as matricula, internamento.solicitante as solicitante, 
 			  			internamento.crm as crm, internamento.dat_entrada as dat_entrada, internamento.dat_saida as dat_saida_int, internamento.motivo as motivo,
@@ -262,9 +258,9 @@ if(!empty($_GET["id_pa"])){
 						</tr>
 			
 						 <tr>
-						   <th scope='row'><div align="left">Usuário de sistema: <br> &nbsp; <?php echo utf8_encode($_SESSION['login']);  ?> </div></th>
-						   <th scope='col'><div align="left">Credenciado: <br />
-&nbsp; <?php echo 	utf8_encode($_SESSION["credenciado"]); ?></div></th>
+						   <th scope='row'><div align="left">Credenciado: <br> &nbsp; <?php echo	$credenciado;  ?> </div></th>
+						   <th scope='col'><div align="left">Atendente: <br />
+&nbsp; <?php echo utf8_encode($_SESSION['login']); ?></div></th>
 	      </tr>
 		  
 		<?php  
@@ -361,10 +357,6 @@ if(!empty($_GET["id_pa"])){
 					    <tr>
 					      <th scope='row'><div align="left">Diárias: <br> &nbsp; <?php echo $dias; ?></div></th>
 					      <th scope='col'><div align="left">Acomodação: <br /> &nbsp; <?php echo $acomodacao; ?></div></th>
-				      </tr>
-				      <tr>
-					      <th scope='row'><div align="left">Atendente: <br> &nbsp; <?php echo $atendente; ?></div></th>
-					      <th scope='col'></div></th>
 				      </tr>
 					    <tr>
 					      <th scope='row'><div align="left">Data de entrada: <br> &nbsp; <?php print date('d / m / Y ', strtotime($dat_entrada));  ?></div></th>

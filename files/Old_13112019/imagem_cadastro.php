@@ -6,7 +6,7 @@ $id = $_GET["id"];
   
           $sql = "SELECT prorrogacao.medico_solicitante, prorrogacao.crm, prorrogacao.dias_solicitados, 
                                prorrogacao.motivo, prorrogacao.id as id_prorrogacao, prorrogacao.status, 
-                               prorrogacao.id_internamento, prorrogacao.qtd_respiratoria, prorrogacao.qtd_motora
+                               prorrogacao.id_internamento
                         FROM internamento
 
                         INNER JOIN prorrogacao on prorrogacao.id_internamento = internamento.id
@@ -25,8 +25,6 @@ $id = $_GET["id"];
                                   $id_prorrogacao = $registro[4];
                                   $status = $registro[5];
                                   $id_internamento = $registro[6];
-                                  $qtd_respiratoria = $registro[7];
-                                  $qtd_motora = $registro[8];
 
 
                                 

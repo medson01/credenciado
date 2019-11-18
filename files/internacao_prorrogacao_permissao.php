@@ -35,7 +35,11 @@
 
                                          $desativar= " disabled ";
 
-                          }
+                             }else{
+                                          $desativar= " disabled ";
+                                          $exibir = "display: none;";
+                                          $leitura = "readonly";
+                             }
 
 
            				break;
