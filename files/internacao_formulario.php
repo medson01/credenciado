@@ -247,6 +247,8 @@ mysqli_query($conn,"SET NAMES 'utf8'");
                                   ?>
                                   <input type="hidden" id="id_beneficiarios" name="id_beneficiarios" <?php if(isset($_GET['id_beneficiarios'])){ echo "value=".$_GET['id_beneficiarios'];} ?>>
 
+                                   <input type="hidden" id="id_usuario" name="id_usuario" <?php if(isset($_SESSION["id"])){ echo "value=".$_SESSION["id"];} ?>>
+
                                   <input type="hidden" id="cid" name="cid">
                                   <input type="hidden" id="cid_desc" name="cid_desc">
 

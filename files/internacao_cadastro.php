@@ -16,6 +16,7 @@ $cid_desc = utf8_decode($_POST["cid_desc"]);
 $id_beneficiarios = $_POST["id_beneficiarios"];
 $id_pa = $_POST["id_pa"];
 $id_acomodacao = $_POST["id_acomodacao"];
+$id_usuario = $_POST["id_usuario"];
 
 //$matricula = str_replace(".", "", $matricula);
 //$matricula = str_replace("-", "", $matricula);
@@ -23,11 +24,7 @@ $id_acomodacao = $_POST["id_acomodacao"];
 
 //session_destroy();
 
-if ( isset($_SESSION['id'] )){
 
-  echo"<script language='javascript' type='text/javascript'>alert('Sua sess\u00e3o se expirou!\\nFavor fazer login novamente');window.location.href='http://186.249.51.185/credenciado/'</script>";
-
-}else{
 
     $query = mysqli_query($conn,"SELECT * FROM `beneficiarios` WHERE `matricula` = '".$id_beneficiarios."'") or die("erro ao selecionar");
 
@@ -36,13 +33,13 @@ if ( isset($_SESSION['id'] )){
     if($_POST['id_pa'] == false){
 
 
-		     $query = "INSERT INTO `internamento`(`id`, `id_usuario`, `id_cid`, `id_beneficiarios`, `id_pa`, `id_prorrogacao` , `id_alocacao` , `nome`, `matricula`, `solicitante`, `crm`, `dat_entrada`,`dat_saida`, `motivo`, `prorrogacao`, `dias` , `qtd_respiratoria` ,`qtd_motora`) VALUES (null ,'".$_SESSION['id']."', '".$id_cid."' , '".$id_beneficiarios."', '0' , null  , null , '".$nome."' , '".$matricula."' , '".$solicitante."' , '".$crm."' , '".date("Y-m-d H:i:s" )."' , null ,'".$motivo."', null,'".$dias."' , null , null)";
+		     $query = "INSERT INTO `internamento`(`id`, `id_usuario`, `id_cid`, `id_beneficiarios`, `id_pa`, `id_prorrogacao` , `id_alocacao` , `nome`, `matricula`, `solicitante`, `crm`, `dat_entrada`,`dat_saida`, `motivo`, `prorrogacao`, `dias` , `qtd_respiratoria` ,`qtd_motora`) VALUES (null ,'".$id_usuario."', '".$id_cid."' , '".$id_beneficiarios."', '0' , null  , null , '".$nome."' , '".$matricula."' , '".$solicitante."' , '".$crm."' , '".date("Y-m-d H:i:s" )."' , null ,'".$motivo."', null,'".$dias."' , null , null)";
 
      }else{
 
         $id_pa = $_POST['id_pa'];
 
-        $query = "INSERT INTO `internamento`(`id`, `id_usuario`, `id_cid`, `id_beneficiarios`, `id_pa`,`id_prorrogacao` , `id_alocacao` , `nome`, `matricula`, `solicitante`, `crm`, `dat_entrada`, `dat_saida` , `motivo`, `prorrogacao`, `dias`, `qtd_respiratoria` ,`qtd_motora` ) VALUES (null ,'".$_SESSION['id']."', '".$id_cid."' , '".$id_beneficiarios."' , '".$id_pa."' , null , null , '".$nome."' , '".$matricula."' , '".$solicitante."' , '".$crm."' , '".date("Y-m-d H:i:s" )."' , null , '".$motivo."', null,'".$dias."', null , null)";
+        $query = "INSERT INTO `internamento`(`id`, `id_usuario`, `id_cid`, `id_beneficiarios`, `id_pa`,`id_prorrogacao` , `id_alocacao` , `nome`, `matricula`, `solicitante`, `crm`, `dat_entrada`, `dat_saida` , `motivo`, `prorrogacao`, `dias`, `qtd_respiratoria` ,`qtd_motora` ) VALUES (null ,'".$id_usuario."', '".$id_cid."' , '".$id_beneficiarios."' , '".$id_pa."' , null , null , '".$nome."' , '".$matricula."' , '".$solicitante."' , '".$crm."' , '".date("Y-m-d H:i:s" )."' , null , '".$motivo."', null,'".$dias."', null , null)";
 
      }
        
@@ -73,6 +70,6 @@ if ( isset($_SESSION['id'] )){
 
         }
   
-   }  
+     
     
 ?>

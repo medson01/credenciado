@@ -12,7 +12,7 @@
   
     if (isset($entrar)) {
 
-      $sql = "SELECT usuarios.nome, usuarios.perfil, usuarios.id, usuarios.id_credenciado, credenciado.nome as credenciado  FROM usuarios INNER JOIN credenciado on credenciado.id = usuarios.id_credenciado WHERE login = '$login' AND senha = '$senha' ";
+      $sql = "SELECT usuarios.nome, usuarios.perfil, usuarios.id as id, usuarios.id_credenciado, credenciado.nome as credenciado  FROM usuarios INNER JOIN credenciado on credenciado.id = usuarios.id_credenciado WHERE login = '$login' AND senha = '$senha' ";
             
       $verifica = mysqli_query($conn,$sql) or die("erro ao selecionar");
         if (mysqli_num_rows($verifica)<=0){
