@@ -12,6 +12,7 @@ $medico = $_POST["medico"];
 $motivo = $_POST["motivo"];
 //$deficiente = $_POST["deficiente"];
 $id_beneficiarios = $_POST["id_beneficiarios"];
+$id_usuario = $_POST["id_usuario"];
 
 $matricula = str_replace(".", "", $matricula);
 $matricula = str_replace("-", "", $matricula);
@@ -25,7 +26,7 @@ date_default_timezone_set('America/Maceio');
     $query = mysqli_query($conn,"SELECT * FROM `beneficiarios` WHERE `matricula` = '".$matric."'") or die("erro ao selecionar");
 
 
-    $query = "INSERT INTO `pronto_atendimento`(`id`,`id_usuario`,`id_beneficiarios` , `matricula`, `nome`,`dat_entrada`,`dat_saida`,`medico`, `motivo`) VALUES (null , '".$_SESSION['id']."' , '".$id_beneficiarios."' , '".$matricula."' , '".$nome."' , '".date("Y-m-d H:i:s" )."' , null , '".$medico."' , '".$motivo."')";
+     $query = "INSERT INTO `pronto_atendimento`(`id`,`id_usuario`,`id_beneficiarios` , `matricula`, `nome`,`dat_entrada`,`dat_saida`,`medico`, `motivo`) VALUES (null , '".$id_usuario."' , '".$id_beneficiarios."' , '".$matricula."' , '".$nome."' , '".date("Y-m-d H:i:s" )."' , null , '".$medico."' , '".$motivo."')";
 
                  
                

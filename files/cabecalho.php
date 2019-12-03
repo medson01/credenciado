@@ -1,6 +1,6 @@
 <?php
   //Acertar data e hora 
-  date_default_timezone_set('America/Recife');
+   date_default_timezone_set('America/Maceio');
 
 
    // Arquivo de configuração

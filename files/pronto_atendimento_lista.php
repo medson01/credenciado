@@ -158,7 +158,11 @@ if(isset($guia)){
                  <td ><div align="center" style='width: 150px;'>Paciente</div></td>
                  <td ><div align="center">Matricula</div></td>
                  <td ><div align="center">Entrada</div></td>
-                 <td ><div align="center">Permanência</div></td>
+                 
+                  <?php if( $_SESSION["perfil"] == "administrador" or $_SESSION["perfil"] == "auditor"){ echo '
+                        <td ><div align="center">Permanência</div></td>'; 
+                      }
+                  ?>
                  <td ><div align="center">Saída</div></td>
                   
                  <?php If( $_SESSION["perfil"] == "administrador" or $_SESSION["perfil"] == "auditor"){ echo "<td><div align='center'>Credenciado</div></td>"; } ?>
@@ -238,6 +242,8 @@ if(isset($guia)){
 
                                        //  echo "<br>".$time."<br>";
 
+                                if( $_SESSION["perfil"] == "administrador" or $_SESSION["perfil"] == "auditor"){ 
+
                                       if(!empty($registro["dat_saida"])){
 
                                          $horaA = $registro["dat_entrada"];                              
@@ -253,7 +259,7 @@ if(isset($guia)){
 
                                      }
 
-
+                                 }
 
                         echo "       </div>
                                     </td>

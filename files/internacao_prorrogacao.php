@@ -221,24 +221,23 @@
                               <input name="id_prorrogacao" type="hidden" value="<?php echo $id_prorrogacao; ?>" />
                             
                               <?php 
+ 
 
-                              
-                             
+                                   if( $_SESSION["perfil"] == "medico" ){
+                                       echo " <input name='submit' type='submit' value='Prorrogar' class='btn btn-primary '   />";
 
-                                 if(!((isset($status)) && ($status == 2) )){     
-
-                                    if(isset($medico_pro)){ 
-
-                                       echo " <input name='submit' type='submit' value='Prorrogar' class='btn btn-primary '/>";
 
                                     }else{
 
-                                      echo " <input name='submit' type='submit' value='Solicitar' class='btn btn-primary '/>";
+                                      if(!(isset($status))){
+
+                                           echo " <input name='submit' type='submit' value='Solicitar' class='btn btn-primary '  />";
+                                      }else{
+
+                                           echo " <input name='submit' type='submit' value='Solicitar' class='btn btn-primary ' disabled />";
+                                      }
 
                                     }
-                             
-                                }
-
 
 
                               ?>

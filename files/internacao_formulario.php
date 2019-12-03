@@ -147,8 +147,8 @@ mysqli_query($conn,"SET NAMES 'utf8'");
                             <tr>
                               <td >Código do C.I.D.</td>
                               <td>
-                               <select id="id_cid"  name="id_cid" class="form-control" required="required"  onchange= "adicionar()"> 
-                                                            <option value="0">*** Digite ou selecio o CID ***</option> 
+                               <select id="id_cid"  name="id_cid" class="form-control" required  onchange= "adicionar()"> 
+                                                        <option value="">*** Digite ou selecio o CID ***</option> 
                                               <?php 
 
                                                   for ($x=1; $x < $i ; $x++) { 
@@ -272,7 +272,14 @@ mysqli_query($conn,"SET NAMES 'utf8'");
                       </div>
                     </form>
                    
+  <?php
 
+  //  Acesso Modal saida
+   if(isset($_GET['matricula'])){
+      include("modal_biometria.php");
+  }
+  ?>
+      
              
           
   

@@ -11,6 +11,16 @@ function pegarMatricula() {
 }
 </script>
 
+
+<?php
+// Modal Biometria
+if(isset($_GET['matricula'])){ 
+  echo"  <script type='text/javascript' src='../js/modal_sair.js'></script>";
+}
+?>
+
+
+
 <style type="text/css">
 <!--
 .style1 {font-size: 12px}
@@ -132,8 +142,16 @@ function pegarMatricula() {
                             <td><div align="right" class="style3">
                               <div align="right">
                                 <strong>
-								
-								                <input type="hidden" id="id_beneficiarios" name="id_beneficiarios" <?php if(isset($_GET['id_beneficiarios'])){ echo "value=".$_GET['id_beneficiarios'];} ?>>
+
+                                <input type="hidden" id="id_usuario" name="id_usuario" <?php if(isset($_SESSION["id"])){ echo "value=".$_SESSION["id"];} ?>>
+								                  
+                                <?php 
+
+                                echo $id_usuario;
+                                
+                                ?>
+
+								                <input type="hidden" id="id_beneficiarios" name="id_beneficiarios" <?php if(isset($_GET['id_beneficiarios'])){ echo "value=".$_GET['id_beneficiarios'];}  ?>>
 
                                 <input name="submit" type="Submit" value="Cadastrar" class="btn btn-primary "/> 
 
@@ -175,4 +193,11 @@ function pegarMatricula() {
                       </div>
                     </form>
 
+  <?php
+
+  //  Acesso Modal Biometria
+   if(isset($_GET['matricula'])){
+      include("modal_biometria.php");
+  }
+  ?>
   
