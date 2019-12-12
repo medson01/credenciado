@@ -1,5 +1,14 @@
 <?php 
+
+if(!isset($_SESSION)){
+
+  session_start();
+}
 	
+	if(!isset($_SESSION["login"])){
+			header('Location: ../index.html');
+	}else{
+
 	//Arquivo de configuração
 	include "cabecalho.php";
 
@@ -8,7 +17,7 @@
       
                    
 
- ?>
+ echo '
     <!-- Conteudo -->        
             
             <td width="898" id="portal-column-content"> <!-- tag conteudo -->
@@ -34,8 +43,8 @@
 					  
 	                        
 										<p>					  
-							<!-- Titulo do aviso -->								  
-							<?php
+							<!-- Titulo do aviso --> ';								  
+							
 								
 							while($row = mysqli_fetch_assoc($query)){
 
@@ -65,7 +74,7 @@
                         	}				
 
                         			  
-							?>
+							 echo'
                             <!--/ Titulo do aviso -->
                           
                         
@@ -80,9 +89,11 @@
         </tbody>
     </table>
 
-</div>
+</div>';
      
-<?php 
+
 
 	include "rodape.php";	
+
+}
 ?>

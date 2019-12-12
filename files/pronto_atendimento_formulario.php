@@ -111,7 +111,7 @@ if(isset($_GET['matricula'])){
                             </tr>
                             <td >Motivo do atendimento </td>
                             <td>
-                              <textarea class="form-matric" name="motivo"  style="margin: 0px; height: 100px; width: 100%;" form="atendimento" placeholder="Entre com o texto aqui..."> </textarea>                            </td>
+                              <textarea required class="form-matric" name="motivo"  style="margin: 0px; height: 100px; width: 100%;" form="atendimento" ></textarea>                            </td>
                             </tr>
                             <tr>
                             

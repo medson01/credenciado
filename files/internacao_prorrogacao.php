@@ -1,4 +1,4 @@
-
+<div class="hidden-print">
 <style type="text/css">
 <!--
 .style3 {color: #000000}
@@ -97,15 +97,11 @@
 
                             <tr>
                               <td colspan="3" ><span class="style13">Justificativa da prorrogação
-                                <textarea id="motivo" class="form-control input-sm" name="motivo"  style="font-size:12px; margin: 0px; height: 100px; width: 100%;" form="prorrogacao" placeholder="Entre com o texto aqui..." <?php if(isset($desativar)){ echo $desativar; } ?> />
-
-                                        <?php
+                                <textarea minlength="5" required id="motivo" class="form-control input-sm" name="motivo"  style="font-size:12px; margin: 0px; height: 100px; width: 100%;" form="prorrogacao" <?php if(isset($desativar)){ echo $desativar; } ?> /><?php
                                         if(isset($motivo_pro)){
                                           echo $motivo_pro;
                                         }
-                                        ?>
-                                          
-                                        </textarea>
+                                        ?></textarea>
                               </span></td>
                           </tr>
                         <tr>
@@ -254,6 +250,7 @@
                      </div>
 
                 </form>
+</div>
 
 
              

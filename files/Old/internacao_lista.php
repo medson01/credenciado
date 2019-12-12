@@ -18,7 +18,7 @@
   }
 
   // Definição de perfil de usuário Administrador ou usuário comum.
-  $a = "SELECT internamento.prorrogacao, internamento.id as autorizacao,internamento.nome as paciente, internamento.matricula as matricula, internamento.solicitante as solicitante, internamento.crm as crm, internamento.dat_entrada as dat_entrada, internamento.dat_saida as dat_saida, internamento.id_beneficiarios as id_beneficiarios, internamento.motivo as motivo, internamento.id_prorrogacao as id_prorrogacao, internamento.prorrogacao as prorrogacao, internamento.dias as dias_internamento, cid.cid , cid.dias as dias, usuarios.nome as credenciado, pronto_atendimento.id as id_pa, 
+ $a = "SELECT internamento.id as autorizacao,internamento.nome as paciente, internamento.matricula as matricula, internamento.solicitante as solicitante, internamento.crm as crm, internamento.dat_entrada as dat_entrada, internamento.dat_saida as dat_saida, internamento.id_beneficiarios as id_beneficiarios, internamento.motivo as motivo, internamento.id_prorrogacao as id_prorrogacao, internamento.prorrogacao as prorrogacao, internamento.dias as dias_internamento, cid.cid , cid.dias as dias, usuarios.nome as credenciado, pronto_atendimento.id as id_pa, 
 pronto_atendimento.dat_entrada as data_pa, beneficiarios.data_nascimento as data_nascimento, acomodacao.nome as acomodacao FROM `internamento` LEFT JOIN pronto_atendimento on pronto_atendimento.id = internamento.id_pa INNER JOIN usuarios on usuarios.id = internamento.id_usuario INNER JOIN cid on cid.id = internamento.id_cid  INNER JOIN alocacao on alocacao.id = internamento.id_alocacao INNER JOIN acomodacao on acomodacao.id = alocacao.id_acomodacao  INNER JOIN beneficiarios on beneficiarios.id = internamento.id_beneficiarios ";
 
 /* ( SELECT
@@ -184,7 +184,7 @@ function excluir(id) {
                  <td colspan="13" style="text-align: center; text-decoration-style: solid;"> <strong>Pacientes insternados </strong></td>
                </tr>
                <tr  style='font-weight:bold;'>
-                 
+                 <!-- <td width="27"><div align="center">Status</div></td> -->
                  <td style='padding: 4px;'><div align='center' style='width: 30px;'>ID</div></td>
                  <td style='padding: 4px;'><div align="center">Paciente</div></td>
                  <td style='padding: 4px;'><div align="center">Matricula</div></td>
@@ -195,8 +195,8 @@ function excluir(id) {
                   <td style='padding: 4px;'><div align="center">Previsão</div></td>
                   <td style='padding: 4px;'><div align="center">Saída</div></td> 
                  <?php If( $_SESSION["perfil"] == "administrador" or $_SESSION["perfil"] == "auditor" or $_SESSION["perfil"] == "medico"){ echo "<td style='padding: 4px;'><div align='center'>Credenciado</div></td>"; } ?>            
-          				 <td style='padding: 4px;'><div align="center"> Entrada P.A </div></td>
-                   <td style='padding: 4px;'><div align="center">Prorrogação</div></td>       
+				 <td style='padding: 4px;'><div align="center"> Entrada P.A </div></td>
+                
                     
                </tr>
                           
@@ -250,7 +250,7 @@ function excluir(id) {
               // Prorrogação
 
               // Mendagem da prorrogação
-                          switch ($registro["prorrogacao"]) {
+                          switch ($registro["status"]) {
                             case '1':
 
                               $mensagem = "Aguardando aprovação";
@@ -303,7 +303,7 @@ function excluir(id) {
 
                                   echo " <td ><div align='center'>"; 
 
-                                  if(!empty($registro["prorrogacao"])){ 
+                                  if(!empty($registro["status"])){ 
 
                                           // $day = date("d/m/Y <\b\\r> H:i:s", strtotime(date("Y-n-j H:i:s",strtotime($registro["dat_entrada"]))."+".$dias." days"));
 
@@ -337,7 +337,7 @@ function excluir(id) {
                               // Prorrogação / Starus / Mensagens
                                   echo " <td style='color: #FF4000; font-weight: bold;'><div align='center'>";
 
-                                  if($registro["prorrogacao"] == 1){     
+                                  if($registro["status"] == 1){     
 
                                       echo "<strong><a style='color: #FF4000' href=\"javascript:func()\" onmouseover=\"Tip('  ".$mensagem."  ')\" onmouseout=\"UnTip()\">";
                            
@@ -441,21 +441,12 @@ function excluir(id) {
                      }
 
 
-                  // Colular Status
-                        echo "<td><div align='center' style='color: #FF4000; font-weight: bold;'> <font color='#FF4000'>";
-                          if($registro["prorrogacao"] == 1){ 
-                            echo "Em análise";
-                          }
-
-                        echo "</font> </td>";
-
-                        
 
                         echo "  <td style='text-align:right;'>";
 
 
                   //Botão Acomodação   
-                  /*    echo " 
+                  /*     echo " 
                                     <!-- Botão sair -->
                                             <a class='btn btn-warning  btn-xs'  onclick='acomodacao(".$registro['autorizacao'].",".$dat_saida[$i].")'><span style='font-size: 10px; align: center;'> Acomodação </center> </span> </a>
                                       ";
@@ -521,7 +512,7 @@ function excluir(id) {
               // Médicos 
               // Efetiva a prorrogação da internação do paciente. visível apenas para Administradores e médicos  
 
-              /*      if( ($_SESSION["perfil"] == "medico") || ($_SESSION["perfil"] == "administrador")){ 
+                    if( ($_SESSION["perfil"] == "medico") || ($_SESSION["perfil"] == "administrador")){ 
 
 
                        if($registro["status"] == 1){
@@ -530,7 +521,7 @@ function excluir(id) {
                           ";
                        }
                      }
-              */
+
                  
 
                   // -- / --              

@@ -2,7 +2,9 @@
   
   //Arquivo de configuração
   include "cabecalho.php";
-  
+  // Função calcular idade
+  include "../func/calc_idade.php";
+
 	
 
  ?>
@@ -54,6 +56,7 @@ switch ($sub_menu) {
 							//$link2 =  "imagem_cadastro.php";	
 
 							$menu3 =  "Prorrogação";
+							$link6 =  "internacao_usuario.php";
 							$link3 =  "imagem_cadastro.php";	
 							$link4 =  "internacao_prorrogacao.php";	
 
@@ -98,6 +101,11 @@ switch ($sub_menu) {
    	</div>
 -->
    	<div id="menu3" class="tab-pane fade  <?php if((isset($_GET["status"]))){ echo "in active "; } ?> ">
+				<?php
+				echo '<div class="visible-print">';
+					include $link6;
+				echo '</div>';
+				?>
 				<?php include $link3;?>
 				<?php include $link4;?>
    	</div>

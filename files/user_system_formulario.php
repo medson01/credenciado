@@ -135,19 +135,20 @@
           
        <table class="table table-striped" align="center">
                <tr>
-                 <td colspan="5" style="text-align: center; text-decoration-style: solid;"> <strong>Usuários cadastrados</strong></td>
+                 <td colspan="6" style="text-align: center; text-decoration-style: solid;"> <strong>Usuários cadastrados</strong></td>
                </tr>
                <tr>
                   <td width="236"><div align="center">Nome</div></td>
                   <td width="257"><div align="center">Login</div></td>
                   <td width="202"><div align="center">Perfil</div></td><br />
-          <td width="202"><div align="center">Empresa</div></td>
+                  <td width="202"><div align="center">Empresa</div></td>
+                  <td width="202"><div align="center">Último Logon</div></td>
                   <td width="202"><div align="center"></div></td>
                </tr>
                             
               <?php
 
-                  $verifica = mysqli_query($conn,"SELECT (usuarios.id) as id, (usuarios.nome) as nome, (usuarios.login) as login, (usuarios.perfil) as perfil, (credenciado.nome) as credenciado FROM usuarios INNER JOIN credenciado ON credenciado.id = usuarios.id_credenciado") or die("erro ao carregar os usuários");
+                  $verifica = mysqli_query($conn,"SELECT (usuarios.id) as id, (usuarios.nome) as nome, (usuarios.login) as login, (usuarios.perfil) as perfil, (credenciado.nome) as credenciado, (usuarios.ultimo_logon) as ultimo_logon FROM usuarios INNER JOIN credenciado ON credenciado.id = usuarios.id_credenciado order by usuarios.nome") or die("erro ao carregar os usuários order by nome");
                   
                   while($registro = mysqli_fetch_assoc($verifica)){
                          print "  <tr>
@@ -155,7 +156,16 @@
                                     <td><div align='center'>".$registro["login"]."</div></td>
                                     <td><div align='center'>".$registro["perfil"]."</div></td>
                   <td><div align='center'>".utf8_encode($registro["credenciado"])."</div></td>
-                
+                                    <td style='font-size: 10px;'><div align='center'>";
+
+                                    if($registro["ultimo_logon"] == "0000-00-00 00:00:00"){
+                                       echo ""; 
+                                    }else{
+                                     
+                                       echo date("d/m/Y <\b\\r> H:i:s",strtotime($registro["ultimo_logon"]));
+                                    }
+
+                                     echo "</div></td>
                                     <td><div align='center'><a class='btn btn-primary delete  btn-xs' href=user_system_deletar.php?id=".$registro["id"].">Excluir</a></div></td>
                                   </tr>";
                    }

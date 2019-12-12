@@ -69,7 +69,12 @@
         						break;
         					}
         			}
-          echo"<script language='javascript' type='text/javascript'>alert('Aguarde um minuto at\u00e9 a p\u00e1gina ser carregada.');window.location.href='files/principal.php';</script>";
+
+          $sql = "UPDATE `usuarios` SET `ultimo_logon`= '".date("Y-m-d H:i:s" )."' WHERE `id` = '".$_SESSION["id"]."'";
+
+          $update = mysqli_query($conn,$sql); 
+
+         echo"<script language='javascript' type='text/javascript'>alert('Aguarde um minuto at\u00e9 a p\u00e1gina ser carregada.');window.location.href='files/principal.php';</script>";
           
 			
 			

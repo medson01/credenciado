@@ -163,25 +163,46 @@ if(!empty($_GET["id_pa"])){
 
 
 
-
+ function calc_idade($nascimento) {
+            $nascimento = date("d/m/Y", strtotime($nascimento));
+            $nascimento=date($nascimento);
+            $nascimento=explode('/',$nascimento); //Cria um array com os campos da data de nascimento  
+            $data=date('d/m/Y'); 
+            $data=explode('/',$data); //Cria um array com os campos da data atual 
+            $anos=$data[2]-$nascimento[2]; //ano atual - ano de nascimento 
+            if($nascimento[1] > $data[1]){
+               return $anos-1;
+            } //Se o mês de nascimento for maior que o mês atual, diminui um ano 
+            if($nascimento[1] == $data[1]){ 
+            //se o mês de nascimento for igual ao mês atual, precisamos ver os dias 
+                  if($nascimento[0] <= $data[0]) {
+                      return $anos; 
+                  }else{
+                      return $anos-1; 
+                  }
+            }
+              
+          return $anos; 
+        
+}
 
 
 
 ?>
 
-<table width="100%" class="table" style="font-size: 10px";>	
+<table width="100%" class='table' style='font-size: 10px';>	
 						
 						<tr>
-						  <th colspan="2" bgcolor="#CCCCCC" style="font-weight:bold; font-size:14px;" scope="col">
+						  <th colspan="2" bgcolor="#CCCCCC" style="font-weight:bold; font-size:14px;" scope='col'>
 						    <div align="center"><?php echo "Número da Guia: ".$res; ?></div>
 						    <div align="center"></div><div align="center"></div></th></tr>
 						<tr>
-							<th width='48%' scope='col'><div align="left">Nome do paciente: <br> &nbsp; <?php echo $nome; ?></div></th>
+							<th width='48%' scope='col'><div align='left'>Nome do paciente: <br> &nbsp; <?php echo $nome; ?></div></th>
 			 
-							<th width="52%" scope='col'><div align="left">Matricula: <br> &nbsp; <?php echo $matricula; ?></div></th>
+							<th width="52%" scope='col'><div align='left'>Matricula: <br> &nbsp; <?php echo $matricula; ?></div></th>
 		              	</tr>
 						 <tr>
-						   <th scope="row"><div align="left">Data Nascimento: <br />
+						   <th scope='row'><div align="left">Data Nascimento: <br />
   &nbsp;
   <?php 	if(isset($_POST["data_nascimento"])){
   						echo $_POST["data_nascimento"];
@@ -203,7 +224,7 @@ if(!empty($_GET["id_pa"])){
 					       </div></th>
 	      </tr>
 						 <tr>
-						   <th scope="row"><div align="left">Deficiente: <br />
+						   <th scope='row'><div align="left">Deficiente: <br />
   &nbsp;
   <?php 
   											
@@ -220,14 +241,14 @@ if(!empty($_GET["id_pa"])){
 						   <th>&nbsp;</th>
 	      </tr>
 						 <tr>
-								<th scope="row"><div align='left'>
+								<th scope='row'><div align='left'>
 							    <div align="left">Data de Emissão: <br> &nbsp; <?php print date("j / n / Y"); ?></div></th>
 								<th> <div align="left">Hora: <br> &nbsp; <?php print date("H:i:s"); ?></div></th>
 						</tr>
 			
 						 <tr>
-						   <th scope="row"><div align="left">Usuário de sistema: <br> &nbsp; <?php echo utf8_encode($_SESSION['login']);  ?> </div></th>
-						   <th scope="col"><div align="left">Credenciado: <br />
+						   <th scope='row'><div align="left">Usuário de sistema: <br> &nbsp; <?php echo utf8_encode($_SESSION['login']);  ?> </div></th>
+						   <th scope='col'><div align="left">Credenciado: <br />
 &nbsp; <?php echo 	utf8_encode($_SESSION["credenciado"]); ?></div></th>
 	      </tr>
 		  
@@ -312,27 +333,27 @@ if(!empty($_GET["id_pa"])){
 
 		?>			    
 					    <tr>
-					      <th colspan="2" style="font-weight:bold; font-size:14px;" bgcolor="#CCCCCC" scope="row"><div align="center">Dados do internamento </div></th>
+					      <th colspan="2" style="font-weight:bold; font-size:14px;" bgcolor="#CCCCCC" scope='row'><div align="center">Dados do internamento </div></th>
 				      </tr>
 					    <tr>
-					      <th scope="row"><div align="left">Médico solicitante: <br> &nbsp; <?php echo $solicitante; ?></div></th>
-					      <th scope="col"><div align="left">CRM: <br> &nbsp; <?php echo $crm; ?></div></th>
+					      <th scope='row'><div align="left">Médico solicitante: <br> &nbsp; <?php echo $solicitante; ?></div></th>
+					      <th scope='col'><div align="left">CRM: <br> &nbsp; <?php echo $crm; ?></div></th>
 				      </tr>
 					    <tr>
-					      <th scope="row"><div align="left">Código do CID: <br> &nbsp; <?php echo  $cid; ?> </div></th>
-					      <th scope="col"><div align="left">Descrição do CID: <br> &nbsp;<?php echo "&nbsp;&nbsp;". utf8_encode($cid_desc) ; ?></div></th>
+					      <th scope='row'><div align="left">Código do CID: <br> &nbsp; <?php echo  $cid; ?> </div></th>
+					      <th scope='col'><div align="left">Descrição do CID: <br> &nbsp;<?php echo "&nbsp;&nbsp;". utf8_encode($cid_desc) ; ?></div></th>
 				      </tr>
 					    <tr>
-					      <th scope="row"><div align="left">Diárias: <br> &nbsp; <?php echo $dias; ?></div></th>
-					      <th scope="col"><div align="left">Acomodação: <br /> &nbsp; <?php echo $acomodacao; ?></div></th>
+					      <th scope='row'><div align="left">Diárias: <br> &nbsp; <?php echo $dias; ?></div></th>
+					      <th scope='col'><div align="left">Acomodação: <br /> &nbsp; <?php echo $acomodacao; ?></div></th>
 				      </tr>
 				      <tr>
-					      <th scope="row"><div align="left">Atendente: <br> &nbsp; <?php echo $atendente; ?></div></th>
-					      <th scope="col"></div></th>
+					      <th scope='row'><div align="left">Atendente: <br> &nbsp; <?php echo $atendente; ?></div></th>
+					      <th scope='col'></div></th>
 				      </tr>
 					    <tr>
-					      <th scope="row"><div align="left">Data de entrada: <br> &nbsp; <?php print date('d / m / Y ', strtotime($dat_entrada));  ?></div></th>
-					      <th scope="col"><div align="left">Previsão de  saída: <br> &nbsp;  <?php echo date('d / m / Y', strtotime($dat_entrada."+".$dias." days"));   ?> </div></th>
+					      <th scope='row'><div align="left">Data de entrada: <br> &nbsp; <?php print date('d / m / Y ', strtotime($dat_entrada));  ?></div></th>
+					      <th scope='col'><div align="left">Previsão de  saída: <br> &nbsp;  <?php echo date('d / m / Y', strtotime($dat_entrada."+".$dias." days"));   ?> </div></th>
 				      </tr>
 					    <tr>
 					      <th colspan="2" scope='row'><div align="left">
@@ -348,7 +369,7 @@ if(!empty($_GET["id_pa"])){
 					      	?> </div>					        <div align="left"></div></th>
 				      </tr>
 				       <tr>
-					      <th scope="row"><div align="left">Data de Saída: <br> &nbsp; 
+					      <th scope='row'><div align="left">Data de Saída: <br> &nbsp; 
 					      	<?php 
 					      		
 					      			if(!empty($dat_saida_int) <> 0) {
@@ -358,14 +379,14 @@ if(!empty($_GET["id_pa"])){
 					      	?> </div>					      </th>
 					      <th scope='col'><div align="left"></div> 
 					      	<?php
-								/*
+								
 								if(!empty($prorrogacao)){
 
 									echo "Motivo da Prorrogação: <br> &nbsp;";	 
 
 					      			echo $prorrogacao;
 					      		}
-								*/
+
 					      	?>					      </th>
 				      </tr>
 					  <?php
@@ -377,10 +398,10 @@ if(!empty($_GET["id_pa"])){
 						
 					  ?>
 </table>
-			<div class="hidden-print">  		
-		 		
+					
+		 		<br />
                 <div align="center">
-                  
+                  <p>
                     <!-- Remover o sublinhado -->
                     <style type="text/css">
 					a:link {
@@ -412,7 +433,9 @@ if(!empty($_GET["id_pa"])){
 	  	echo " ";
 	  }
 	?>
-	             
+                    <br />
+                    <br />
+                    
 						
 						<button class="btn btn-default glyphicon glyphicon-print hidden-print" onclick="javascript:print();"> Imprimir</button>
 					         
@@ -420,4 +443,4 @@ if(!empty($_GET["id_pa"])){
                   <p><br />
                   </p>
                 </div>
-    </div>
+    

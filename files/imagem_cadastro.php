@@ -43,8 +43,15 @@ $id = $_GET["id"];
 
 ?> 
 
+<!-- Esconde o que está dentro da div na impressão -->
 
+<div class="visible-print">
+  <center>
+<?php echo "Relatório de Prorrogações" ?>
+  </center>
+</div>
 
+<div class="hidden-print">
 								  
                         <table width="100% " border="0" align="center">
                           
@@ -77,7 +84,7 @@ $id = $_GET["id"];
 
 </form>
 
-
+</div>
 
 <br />
 <table border="1"  class="table table-bordered" >
@@ -96,13 +103,16 @@ $id = $_GET["id"];
             Motivo Solicitação
         </td>
         <td align="center">
-            Motivo Aprovação
+             Imagem
         </td>
         <td align="center">
-            Nome do arquivo
+
+             Status
+            
         </td>
         <td align="center">
-            Imagem
+             Obs.
+            
         </td>
         <?php
        if( $_SESSION["perfil"] == "administrador" ){
@@ -119,7 +129,7 @@ $id = $_GET["id"];
 
     // resolver essa consulta Edson
 
-   $querySelecao = "SELECT imagem.id as id_imagem, imagem.nome, imagem, prorrogacao.medico_solicitante, data, prorrogacao.id as id_prorrogacao, prorrogacao.medico_solicitante, prorrogacao.motivo, prorrogacao.motivo_medico  FROM imagem  LEFT JOIN prorrogacao on prorrogacao.id = imagem.id_prorrogacao WHERE imagem.id_internamento=".$id;
+   $querySelecao = "SELECT imagem.id as id_imagem, imagem.nome, imagem, prorrogacao.medico_solicitante, data, prorrogacao.id as id_prorrogacao, prorrogacao.medico_solicitante, prorrogacao.motivo, prorrogacao.motivo_medico, prorrogacao.status  FROM imagem  LEFT JOIN prorrogacao on prorrogacao.id = imagem.id_prorrogacao WHERE imagem.id_internamento=".$id;
    $resultado = mysqli_query($conn, $querySelecao);
   
   
@@ -145,21 +155,46 @@ $id = $_GET["id"];
     <td >
         <?php echo $aquivos['motivo']; ?>
     </td>
+        <td align="center">
+     <!-- Campo Imagem --> 
+        <?php 
+
+        echo '<a class="hidden-print" href="imagem_exibir.php?id='.$aquivos['id_imagem'].'"  target="_blank">Imagem '.$aquivos["id_imagem"].'</a>'; 
+
+        echo '<span class="visible-print">Imagem '.$aquivos["id_imagem"].'</span>';
+        ?>
+
+        
+    </td>
+      <td align="center">
+      <!-- Campo Autorização --> 
+        <?php 
+            if( $aquivos['status'] == 1 ){ 
+              echo "Em análise"; 
+            }elseif (is_null($aquivos['status'])) 
+            {
+              echo "";
+            }else { 
+              
+               echo "<strong style='color: #FF4000' > Autorizado </strong>";
+            }
+        ?>
+
+      </td>
         <td >
-        <?php echo $aquivos['motivo_medico']; ?>
-    </td>
-        <td align="center">
-        <?php echo $aquivos['nome']; ?>
-    </td>
-        <td align="center">
-        <?php echo '<a href="imagem_exibir.php?id='.$aquivos['id_imagem'].'"  target="_blank">Imagem '.$aquivos["id_imagem"].'</a>'; ?>
+          <!-- Campo Obs --> 
+            <?php echo $aquivos['motivo_medico']; ?>
+
+
     </td>
     <?php
         if( $_SESSION["perfil"] == "administrador") {
          
-              echo '<td align="center">
-                    <a href="imagem_excluir.php?id='.$id.'&id_imagem='.$aquivos['id_imagem'].'">Imagem'.$aquivos['id_imagem'].'</a>
+              echo '<td class="hidden-print" align="center">
+                    <a   href="imagem_excluir.php?id='.$id.'&id_imagem='.$aquivos['id_imagem'].'">Imagem'.$aquivos['id_imagem'].'</a>
               </td>';
+
+              echo '<td class="visible-print" align="center"> Imagem '.$aquivos['id_imagem'].'</tr>';
         
         }
 
@@ -170,7 +205,10 @@ $id = $_GET["id"];
             $w = $aquivos['id_prorrogacao'];
               } ?>
 </table>
+      <center>
 
+        <button style="right: all;" class="btn btn-default glyphicon glyphicon-print hidden-print" onclick="javascript:print();"> Imprimir </button>
+      </center> 
 <br>
 <?php
          

@@ -36,17 +36,15 @@ $table = $obj->selectDB();
         </div>
     </div>
       
-       <div align="center">
-         <h3>O usu&aacute;rio n&atilde;o possuir biometria cadastrada. <br />
-           
-           Favor cadastrar a biometria.       </h3>
-      </div>
-    <div class="modal-body" >
+       
+    <div class="modal-body"  >
         <table width="100%" border="0">
         <tr>
-            <?php echo $table; ?>
-        
-				
+            <div id="conteudo" style="display: block;">
+            <?php echo $table; ?> 
+            </div>
+				 <p id="demo"></p>
+
 				</table>
 			</div>&nbsp;</p>
     </div>

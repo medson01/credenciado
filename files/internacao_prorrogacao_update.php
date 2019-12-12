@@ -33,9 +33,9 @@ $qtd_motora = $_POST["qtd_motora2"];
 
  $update = mysqli_query($conn,$sql); 
 
+ $update = mysqli_query($conn,"UPDATE `internamento` SET `prorrogacao`= null WHERE id = '".$id."'");        
         
-        
-echo"<script language='javascript' type='text/javascript'>alert('Prorroga\u00e7\u00e3o efetuada com sucesso!');window.location.href='internacao_prorrogacao_relatorio.php?id_internacao=".$id."'</script>";
+echo"<script language='javascript' type='text/javascript'>alert('Prorroga\u00e7\u00e3o efetuada com sucesso!');window.location.href='internacao_menu.php?id=".$id."&prorro=1'</script>";
 
        
 

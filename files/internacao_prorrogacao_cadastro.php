@@ -25,6 +25,8 @@ $qtd_motora = $_POST["qtd_motora"];
 
         $update = mysqli_query($conn,"UPDATE `imagem` SET `id_prorrogacao`= '".$id_prorrogacao."' WHERE id = '".$id_imagem."'"); 
 
+        $update = mysqli_query($conn,"UPDATE `internamento` SET `prorrogacao`= 1 WHERE id = '".$id."'"); 
+
         
         if($insert){
           

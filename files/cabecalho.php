@@ -95,8 +95,11 @@
    <script type="text/javascript">
     $("#matricula").mask("00000000.000000-00");
     $("#qtd_motora").mask("00");
-	$("#qtd_respiratoria").mask("00");
-	$("#crm").mask("0000");
+    $("#qtd_motora2").mask("00");
+    $("#dias_autorizados").mask("00");
+	  $("#qtd_respiratoria").mask("00");
+    $("#qtd_respiratoria2").mask("00");
+	  $("#crm").mask("0000");
     $("#codigo").mask("000000");
     $("#cpf_cnpj").mask("00000000000");
     $("#numero").mask("00000");

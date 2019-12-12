@@ -6,13 +6,12 @@ require_once("Connection.php");
  verificando se o parâmetro "method" existe.
 ******************************************/
 if(isset($_REQUEST['method'])) {
-	$id_beneficiarios = $_REQUEST['id_beneficiarios'];
 	$name = $_REQUEST['name'];
 	$template = $_REQUEST['template'];
 	$method = $_REQUEST['method'];
 
 	$obj = new Controller();
-	$obj->insertDB($id_beneficiarios, $name, $template);
+	$obj->insertDB($name, $template);
 }
 
 class Controller {
@@ -35,22 +34,21 @@ class Controller {
 	public function insertDB($id_beneficiarios, $name, $template) {
 		
 		$json;
-		$sql = "INSERT INTO biometria(id_beneficiarios, name, template) VALUES ('". $id_beneficiarios ."','". $name ."','". $template ."')";
+		$sql = "INSERT INTO biometria(name, template) VALUES ('". $id_beneficiarios ."','". $name ."','". $template ."')";
 		if($this->con->execute($sql)) {
 			
 			$json = array(
 				'error' => 'false',
 				'msg' => 'Usuário Inserido com Sucesso!'
-
 			);
 		}
-		/*else {
+		else {
 			$json = array(
 				'error' => 'true',
 				'msg' => 'Usuário Não Pode ser Cadastrado!'
 			);
 		}
-		*/		
+		
 		echo json_encode($json);
 	}
 	
@@ -69,45 +67,28 @@ class Controller {
 		$result = $this->con->execute($sql);
 		
 		$tr = "";
-				if ($result->num_rows > 0) {
-
-			while ($row = $result->fetch_row()) {
-        			$biometria = $row[0];
-    		 }
+		if ($result->num_rows > 1) {
 				
 				$tr .= "
-		    	<div align='center'>
-         				<h3> Favor inserir digital para verificação de biometria.       </h3>
-      			</div>
-
 					<tr>
 					  <td class='align-middle' >
 					  	 <center> 
-					  	 	<button class='btn btn-primary btn-match'> Verificar </button>
+					  	 	<button class='btn btn-primary' btn-match' >Comparar</button>
 					  	 </center>
 					  </td>
-					</tr>
-					<input type='hidden' class='form-control' id='template' value=".$biometria.">";
+					</tr>";
 
 		} 
 		else {
 
-			//Cadastra Biometria
 		    $tr .= "
-
-		    	<div align='center'>
-         				<h3>O usu&aacute;rio n&atilde;o possuir biometria cadastrada. <br />
-           
-           					Favor cadastrar a biometria.       </h3>
-      			</div>
 
 		      <input type='hidden' class='form-control' id='inputName' value=".$_GET['matricula'].">
 			  <input type='hidden' class='form-control' id='id_beneficiarios' value=".$_GET['id_beneficiarios']."> 
-			  
 					<tr>
 					  <td class='align-middle'>
 					  	<center> 
-					  		<button class='btn btn-primary' id='btn-capture'> Cadastrar </button>
+					  		<button class='btn btn-primary' id='btn-capture'> Cadastrar biometria </button>
 					  	</center>
 					  	</td>
 					</tr>";

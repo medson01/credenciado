@@ -148,7 +148,7 @@ if(isset($guia)){
     }
 </script>
                     
-   <table width="435" align="center" class="table table-striped" style="font-size: 9px" onmousemove="javascript:autoRefresh(60000);">
+   <table width="435" align="center" class="table table-striped" style="font-size: 9px" >
                <tr>
                  <td colspan="12" style="text-align: center; text-decoration-style: solid;"> <strong>Pacientes insternados </strong></td>
                </tr>

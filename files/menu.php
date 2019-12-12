@@ -15,13 +15,54 @@
 					<div align="center" style="size:+1" ><span class="style1">Seja bem vindo,</span><br />
 				  		<br /> 
                   		
+<script>
+	var hora;
+	var muda = 1;
+	var tempo = new Number();
+	tempo = <?php echo ini_get("session.gc_maxlifetime") ?>;
+	function iniciaLogout(){
+	   if((tempo - 1) >= 0){
+		  var min = parseInt(tempo/60);
+		  var seg = tempo%60;
+		  if(min < 10){
+			 min = '0'+min;
+			 min = min.substr(0, 2);
+		  }
+		  if(seg <=9){
+			 seg = "0"+seg;
+		  }
+		  hora = min + ':' + seg;
+		  $("#cronometro").html(hora);
+		  setTimeout('iniciaLogout()',1000);
+		  if((tempo - 1) <= 25){
+			 if(muda == 1){
+				$("#cronometro").css('color', 'red').css('font-weight', 'bold');
+				muda = 0;
+
+				
+
+			 }else{
+				$("#cronometro").css('color', 'white').css('font-weight', 'normal');
+				muda = 1;
+
+
+			 }
+		  }
+		  tempo--;
+	   }else{
+		  $("#cronometro").html('00:00');
+		  window.location.href = "../index.html";
+	   }
+	}
+</script>
+
                   		<?php
 							$login = $_SESSION["login"];
 								
-							echo utf8_encode($login);
-							
-				
+						   echo utf8_encode($login);
 						?>
+							<br>
+							 <span class='hidden' id='cronometro'></span><script>iniciaLogout();</script> 
 					</div>
 				</div>
 <!-- /Boas vindas! -->

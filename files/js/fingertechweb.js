@@ -19,6 +19,8 @@ function Capture() {
 				var name = $("#inputName").val();
 				var id_beneficiarios = $("#id_beneficiarios").val();
 				insertDB(id_beneficiarios, name, data);
+
+
 			}
 			else {
 				alert("Digital não pode ser capturada!");
@@ -45,7 +47,16 @@ function Match(digital) {
 			success: function (data) {
 			
 				if (data != "") {
+
+					modal.style.display = "none";
+
+					 //document.getElementById("demo").innerHTML = 'Biometria ok!  <br> <center> <button type="button" class="btn btn-primary" >Fechar</button> </center>';
+					 //var conteudo =  document.getElementById("conteudo");
+					 //conteudo.style.display = "none";
+
+
 					alert("Digital encontrada com sucesso!");
+
 				}
 				else {
 					alert("Digitais não conferem.");
@@ -65,7 +76,7 @@ function Match(digital) {
 * 	no banco de dados.
 * Retorno: String
 *********************************************/
-function insertDB(id_beneficiarios, name, template) {
+function insertDB( id_beneficiarios, name, template) {
 	
 	$.ajax({
 		url: 'Controller.php',
@@ -83,7 +94,9 @@ function insertDB(id_beneficiarios, name, template) {
 			$("#id_beneficiarios").val("");
 
 			alert(data.msg);
-			window.location.reload();
+
+			modal.style.display = "none";
+			//window.location.reload();
 		}
 	});
 }
@@ -97,10 +110,17 @@ $(function() {
 		else {
 			alert("Por favor, preencha o nome.");
 		}
+
+		if($("#id_beneficiarios").val() != "") {
+			Capture();
+		}
+		else {
+			alert("Por favor, preencha o nome.");
+		}
 	});
 	
 	$(".btn-match").on("click", function(){
-		var digital = $(this).parent().parent().find(".td-template").html();
+		var digital = $("#template").val();
 		Match(digital);
 	});
 });
