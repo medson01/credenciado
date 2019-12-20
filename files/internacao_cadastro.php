@@ -18,6 +18,8 @@ $id_pa = $_POST["id_pa"];
 $id_acomodacao = $_POST["id_acomodacao"];
 $id_usuario = $_POST["id_usuario"];
 
+
+
 //$matricula = str_replace(".", "", $matricula);
 //$matricula = str_replace("-", "", $matricula);
 //$matric = substr($matricula, 9, -2);
@@ -60,6 +62,12 @@ $id_usuario = $_POST["id_usuario"];
 
         $update = mysqli_query($conn,$sql); 
 
+        
+        // Se não tiver biometria set 1 se não null
+        if( (isset($_GET["not_biometria"])) && ($_GET["not_biometria"]) == 1 ){
+          $sql = "UPDATE `beneficiarios` SET  `not_biometria`= 1 WHERE  `nome` = '".$matricula."'";
+          $update = mysqli_query($conn,$sql);         
+        }
         
         if($insert){
           

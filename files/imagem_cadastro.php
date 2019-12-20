@@ -44,6 +44,16 @@ $id = $_GET["id"];
 ?> 
 
 <!-- Esconde o que está dentro da div na impressão -->
+<style type="text/css">
+<!--
+.text1 {
+	font-size: 9px;
+	font-style: italic;
+}
+.style2 {font-size: 9px; font-style: italic; color: #FF0000; }
+-->
+</style>
+
 
 <div class="visible-print">
   <center>
@@ -56,7 +66,7 @@ $id = $_GET["id"];
                         <table width="100% " border="0" align="center">
                           
                           <tr>
-                              <td colspan="3" bordercolor="#999999" bgcolor="#999999">
+                              <td colspan="3" bgcolor="#CCCCCC">
                                 <div align="center" class="style5">
                                   Documento digitalizado
                                 </div>
@@ -65,11 +75,11 @@ $id = $_GET["id"];
 
                          <?php if(isset($aviso)){echo $aviso;} ?>
 
-  					     </table>
+  </table>
 <form id="formulario" name="formulario" enctype="multipart/form-data" action="imagem_upload.php" method="post"><br>
           <div>Descrição da imagem<br> 
           <input name="descricao" id ="descricao" type="text" class="form-control input-sm" value="Atesto de prorrogação" readonly="true"  >
-              </div> 
+    </div> 
           <br>
           <input name="evento" type="hidden"  value="int" />  
           <input name="id" type="hidden"  value="<?php echo $id; ?>" />  
@@ -89,31 +99,29 @@ $id = $_GET["id"];
 <br />
 <table border="1"  class="table table-bordered" >
     <tr style="font-size: 12px">
+      <td colspan="12" align="center" class="info">Solicitações de prorrogação </td>
+    </tr>
+    <tr style="font-size: 10px">
    
       <td align="center">
-            Id
-        </td>
+            Id        </td>
         <td align="center">
-            Data da solicitação
-        </td>
+            Data        </td>
+        <td align="center">Dias Sol.</td>
+        <td align="center">Dias Aut.</td>
+        <td align="center">F.M.</td>
+        <td align="center">F.R.</td>
         <td align="center">
-            Medico solicitante
-        </td>  
+            Medico solicitante        </td>  
         <td align="center">
-            Motivo Solicitação
-        </td>
+            Motivo        </td>
         <td align="center">
-             Imagem
-        </td>
+             Imagem        </td>
         <td align="center">
 
-             Status
-            
-        </td>
+             Status        </td>
         <td align="center">
-             Obs.
-            
-        </td>
+             Obs.        </td>
         <?php
        if( $_SESSION["perfil"] == "administrador" ){
           echo "<td align='center'>
@@ -121,7 +129,6 @@ $id = $_GET["id"];
           </td>";
         }
         ?>
-        
     </tr>
     <?php
 
@@ -129,7 +136,7 @@ $id = $_GET["id"];
 
     // resolver essa consulta Edson
 
-   $querySelecao = "SELECT imagem.id as id_imagem, imagem.nome, imagem, prorrogacao.medico_solicitante, data, prorrogacao.id as id_prorrogacao, prorrogacao.medico_solicitante, prorrogacao.motivo, prorrogacao.motivo_medico, prorrogacao.status  FROM imagem  LEFT JOIN prorrogacao on prorrogacao.id = imagem.id_prorrogacao WHERE imagem.id_internamento=".$id;
+   $querySelecao = "SELECT imagem.id as id_imagem, imagem.nome, imagem, prorrogacao.medico_solicitante, data, prorrogacao.id as id_prorrogacao, prorrogacao.medico_solicitante, prorrogacao.motivo, prorrogacao.motivo_medico, prorrogacao.status, prorrogacao.dias_solicitados, prorrogacao.dias_autorizados, prorrogacao.qtd_motora, prorrogacao.qtd_respiratoria  FROM imagem  LEFT JOIN prorrogacao on prorrogacao.id = imagem.id_prorrogacao WHERE imagem.id_internamento=".$id;
    $resultado = mysqli_query($conn, $querySelecao);
   
   
@@ -139,22 +146,28 @@ $id = $_GET["id"];
           $id_imagem = $aquivos['id_imagem'];
     ?>
     
-    <tr style="font-size: 11px; text-align: justify">    
+    <tr style="font-size: 10px; text-align: justify">    
         <td align="center">
-         <?php echo  $aquivos['id_prorrogacao']; ?>
+         <?php echo  $aquivos['id_prorrogacao']; ?>    </td>
+    <td align="center">
+        <?php echo date("j/n/Y,  H:i:s",strtotime($aquivos['data'])); ?>    
     </td>
     <td align="center">
-        <?php echo date("j/n/Y,  H:i:s",strtotime($aquivos['data'])); ?>
+       <div align="center"><?php echo $aquivos['dias_solicitados']; ?>          </div>   
     </td>
     <td >
-        <?php echo $aquivos['medico_solicitante']; ?>
-              
-        
+      <div align="center"><?php echo $aquivos['dias_autorizados']; ?>          </div>
     </td>
+    <td >
+	<div align="center"><?php if(isset($aquivos['qtd_motora'])){ echo  $aquivos['qtd_motora'];}else{ echo "0";} ?>  </div>
+    </td>
+    <td ><div align="center"><?php if(isset($aquivos['qtd_respiratoria'])){echo  $aquivos['qtd_respiratoria'];}else{ echo "0"; } ?>  </div>
+	</td>
+    <td >
+        <?php echo $aquivos['medico_solicitante']; ?>    </td>
    
     <td >
-        <?php echo $aquivos['motivo']; ?>
-    </td>
+        <?php echo $aquivos['motivo']; ?>    </td>
         <td align="center">
      <!-- Campo Imagem --> 
         <?php 
@@ -162,10 +175,7 @@ $id = $_GET["id"];
         echo '<a class="hidden-print" href="imagem_exibir.php?id='.$aquivos['id_imagem'].'"  target="_blank">Imagem '.$aquivos["id_imagem"].'</a>'; 
 
         echo '<span class="visible-print">Imagem '.$aquivos["id_imagem"].'</span>';
-        ?>
-
-        
-    </td>
+        ?>    </td>
       <td align="center">
       <!-- Campo Autorização --> 
         <?php 
@@ -178,15 +188,10 @@ $id = $_GET["id"];
               
                echo "<strong style='color: #FF4000' > Autorizado </strong>";
             }
-        ?>
-
-      </td>
+        ?>      </td>
         <td >
           <!-- Campo Obs --> 
-            <?php echo $aquivos['motivo_medico']; ?>
-
-
-    </td>
+            <?php echo $aquivos['motivo_medico']; ?>    </td>
     <?php
         if( $_SESSION["perfil"] == "administrador") {
          
@@ -205,7 +210,10 @@ $id = $_GET["id"];
             $w = $aquivos['id_prorrogacao'];
               } ?>
 </table>
-      <center>
+     
+      <span class="style2">*F.M.: Fisioterapia Motora<br />
+                           &nbsp; F.R.: Fisioterapia Respitarória </span><br />
+       <center>
 
         <button style="right: all;" class="btn btn-default glyphicon glyphicon-print hidden-print" onclick="javascript:print();"> Imprimir </button>
       </center> 

@@ -26,7 +26,7 @@
         <table width="100% " border="0" align="center">
                           
                             <tr>
-                              <td colspan="3" bordercolor="#999999" bgcolor="#999999">
+                              <td colspan="3" bgcolor="#CCCCCC">
                                 <div align="center" class="style5"> 
                               <div align="center">Dados da Solicitação de Prorrogação                              </div></td>
                             </tr>

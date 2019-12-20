@@ -53,8 +53,6 @@ echo '<div id="exTab2" class="container" style="width: 980px; padding-left: 1px;
 
 					echo "<a  href='#1' data-toggle='tab'>". $tituloMenu ."</a>
 
-
-
 					</li>
 
 
@@ -68,8 +66,8 @@ echo '<div id="exTab2" class="container" style="width: 980px; padding-left: 1px;
 			If( ($_SESSION["perfil"] == "administrador") or ($_SESSION["perfil"] == "auditor")){
 			
 				echo "	<li>
-						<a href='#3' data-toggle='tab'>Gráficos</a>
-					</li>";
+							<a href='#3' data-toggle='tab'>Gráficos</a>
+					    </li>";
 				
 			}
 		
@@ -79,40 +77,46 @@ echo '<div id="exTab2" class="container" style="width: 980px; padding-left: 1px;
 
 			<div class="tab-content ">
 			  	<div class="tab-pane '; 
-
 			  	if(!isset($_GET['id'])){ echo 'active';} 
+		echo'	" id="1">';
+          	        require_once $lista; 			
+		echo'	</div>
 
-		echo'	  	" id="1">';
-          				  
 
-          				        require_once $lista; 
-          				
-		echo'		</div>
 				<div class="tab-pane ';
-
 				 if(isset($_GET['id'])){ echo 'active';} 
+		echo '  " id="2">';
+        	       require_once $formulario;		
+		echo'	</div>';
+       
 
-		echo '      " id="2">';
-        				 
+        echo'	</div>		
+				<div class="tab-pane ';
+				 
+		echo '  " id="3">';
+        	       
+        If( ($_SESSION["perfil"] == "administrador") or ($_SESSION["perfil"] == "auditor")){		
 
-        				        require_once $formulario;
-
-        				
-		echo'		</div>
-        		
-        		<div class="tab-pane" id="3">';
-				
+         
           		if(isset($_GET['pa'])){
-	    		 echo '<iframe src="../grafico/graf_pa.php" height="900" width="100%" scrolling="no" style="border:none;"></iframe>'; 
-			}else{
-			 echo '<iframe src="../grafico/graf_int.php" height="350" width="100%" scrolling="no" style="border:none;"></iframe>'; 
-			 echo '<iframe src="../grafico/graf_dias_internado.php" height="400" width="100%" scrolling="no" style="border:none;"></iframe>'; 
+	    		 		echo '<iframe src="../grafico/graf_pa.php" height="900" width="100%" scrolling="no" style="border:none;"></iframe>'; 
+				}else{
+				 		
+				 		echo '<iframe src="../grafico/graf_int.php" height="350" width="100%" scrolling="no" style="border:none;"></iframe>'; 
+				 		echo '<iframe src="../grafico/graf_dias_internado.php" height="400" width="100%" scrolling="no" style="border:none;"></iframe>'; 
 
-			}
+				}	
 
-		echo'		</div>
+		}
+
+
+
+
+		echo'	</div>';
 					
-			</div>
+		echo'</div>
+
+
   </div>
 
 <hr></hr>

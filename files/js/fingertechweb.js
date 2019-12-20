@@ -24,6 +24,16 @@ function Capture() {
 			}
 			else {
 				alert("Digital não pode ser capturada!");
+
+				 document.getElementById("aviso").style.display = "none";
+				 //document.getElementById("btn-capture").style.display = "none";
+                 //document.getElementById("demo").innerHTML = '<center> <h3>  A biometria não pode ser obtida. </br> O usuário não possui digital? </center> <center> Sim </centre> </h3> <input type="checkbox" class="form-control" name="not_biometria" id="not_biometria" value="1">  <center> <br> <button onclick="myFunction()" class="btn btn-primary" id="biometria"> Fechar </button> </center> ';
+                 modal.style.display = "none";
+                
+
+
+               
+
 			}
 		}
 	})
@@ -100,6 +110,8 @@ function insertDB( id_beneficiarios, name, template) {
 		}
 	});
 }
+
+
 
 $(function() {
 	$("#btn-capture").on("click", function(){

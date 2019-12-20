@@ -55,7 +55,7 @@ $id = $_GET["id"];
 						  <input type="hidden" name="id"  />						  </td>
                           </tr>
                           
-                          <td colspan="3" bordercolor="#999999" bgcolor="#999999"><div align="center" class="style5">Alteração de Acomodação</div></td>
+                          <td colspan="3" bgcolor="#CCCCCC"><div align="center" class="style5">Alteração de Acomodação</div></td>
                             </tr>
                             <tr>
                               <td>&nbsp;</td>

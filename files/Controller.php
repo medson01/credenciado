@@ -10,10 +10,13 @@ if(isset($_REQUEST['method'])) {
 	$name = $_REQUEST['name'];
 	$template = $_REQUEST['template'];
 	$method = $_REQUEST['method'];
+	
 
 	$obj = new Controller();
 	$obj->insertDB($id_beneficiarios, $name, $template);
 }
+
+
 
 class Controller {
 	
@@ -53,6 +56,7 @@ class Controller {
 		*/		
 		echo json_encode($json);
 	}
+
 	
 	/************************************************
 	* Nome: selectDB
@@ -77,7 +81,7 @@ class Controller {
 				
 				$tr .= "
 		    	<div align='center'>
-         				<h3> Favor inserir digital para verificação de biometria.       </h3>
+         				<h3 id='aviso'> Favor inserir digital para verificação de biometria.       </h3>
       			</div>
 
 					<tr>
@@ -96,7 +100,7 @@ class Controller {
 		    $tr .= "
 
 		    	<div align='center'>
-         				<h3>O usu&aacute;rio n&atilde;o possuir biometria cadastrada. <br />
+         				<h3 id='aviso' >O usu&aacute;rio n&atilde;o possuir biometria cadastrada. <br />
            
            					Favor cadastrar a biometria.       </h3>
       			</div>
