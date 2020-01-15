@@ -55,7 +55,9 @@ return "$horas:$minutos:$segundos";
 
  if(isset($_GET['mes'])){
 
-  $mes = $_GET['mes'];
+    $mes = substr($_GET['mes'], 0, -4 );
+
+    $ano = substr($_GET['mes'], -4 );
  
 
   }else{
@@ -77,11 +79,13 @@ return "$horas:$minutos:$segundos";
           $b = " WHERE usuarios.id_credenciado = '".$_SESSION["id_credenciado"]."' and (pronto_atendimento.nome like '%".$_GET['buscar']."%' or pronto_atendimento.id = '".$_GET['buscar']."' or pronto_atendimento.matricula = '".$_GET['buscar']."')order by pronto_atendimento.id";
       }elseif(isset($_GET['mes'])){
 
-         $b = " WHERE usuarios.id_credenciado = '".$_SESSION["id_credenciado"]."' and MONTH(pronto_atendimento.dat_entrada) = ".$mes." and Year(pronto_atendimento.dat_entrada) = '".date("Y")."' order by pronto_atendimento.id";
+         $b = " WHERE usuarios.id_credenciado = '".$_SESSION["id_credenciado"]."' and MONTH(pronto_atendimento.dat_entrada) = ".$mes." and Year(pronto_atendimento.dat_entrada) = '".$ano."' order by pronto_atendimento.id";
 
      }else{ 
   
-          $b = " WHERE usuarios.id_credenciado = '".$_SESSION["id_credenciado"]."' and pronto_atendimento.dat_saida IS null order by pronto_atendimento.id";
+
+          // Consulta de entrada Dedault para usuário 
+          $b = " WHERE usuarios.id_credenciado = '".$_SESSION["id_credenciado"]."' and (pronto_atendimento.dat_saida IS null OR pronto_atendimento.dat_saida = '0000-00-00 00:00:00') order by pronto_atendimento.id";
      }
 
   
@@ -95,10 +99,10 @@ return "$horas:$minutos:$segundos";
       
      }elseif(isset($_GET['mes'])){
      
-            $b = " WHERE MONTH(pronto_atendimento.dat_entrada) = ".$mes." and Year(pronto_atendimento.dat_entrada) = '".date("Y")."' order by pronto_atendimento.id";       
+            $b = " WHERE MONTH(pronto_atendimento.dat_entrada) = ".$mes." and Year(pronto_atendimento.dat_entrada) = '".$ano."' order by pronto_atendimento.id";       
      }else{
           
-            $b = " WHERE pronto_atendimento.dat_saida IS null order by pronto_atendimento.id";
+            $b = " WHERE pronto_atendimento.dat_saida IS null OR pronto_atendimento.dat_saida = '0000-00-00 00:00:00' order by pronto_atendimento.id";
   
      }
   }
@@ -143,8 +147,11 @@ if(isset($guia)){
 <!-- pegar mes de consulta  -->
 <script language="Javascript">
     function mudarmes(){
+      var y = document.getElementById("ano").value;
       var x = document.getElementById("mes").value;
-      window.location.href = x;
+      if((x && y)){
+      window.location.href = x+y;
+      }
     }
 </script>
                     

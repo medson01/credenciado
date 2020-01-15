@@ -8,7 +8,9 @@
 
  if(isset($_GET['mes'])){
 
-  $mes = $_GET['mes'];
+    $mes = substr($_GET['mes'], 0, -4 );
+
+    $ano = substr($_GET['mes'], -4 );
  
 
   }else{
@@ -38,10 +40,12 @@ ORDER by prorrogacao.id DESC
        $b = " WHERE usuarios.id_credenciado = '".$_SESSION["id_credenciado"]."' and (internamento.nome like '%".$_GET['buscar']."%' or internamento.id = '".$_GET['buscar']."' or internamento.matricula = '".$_GET['buscar']."')order by internamento.id";
     }elseif(isset($_GET['mes'])){
 
-       $b = " WHERE usuarios.id_credenciado = '".$_SESSION["id_credenciado"]."' and MONTH(internamento.dat_entrada) = ".$mes." and Year(internamento.dat_entrada) = '".date("Y")."' order by internamento.id";
+        $b = " WHERE usuarios.id_credenciado = '".$_SESSION["id_credenciado"]."' and MONTH(internamento.dat_entrada) = ".$mes." and Year(internamento.dat_entrada) = '".$ano."' order by internamento.id";
     }else{
 
-       $b = "  WHERE usuarios.id_credenciado = '".$_SESSION["id_credenciado"]."' and internamento.dat_saida IS null order by internamento.id";
+
+      // Consulta de entrada Dedault para usuário 
+       $b = "  WHERE usuarios.id_credenciado = '".$_SESSION["id_credenciado"]."' and (internamento.dat_saida is null OR internamento.dat_saida = '0000-00-00 00:00:00')  order by internamento.id";
     }
 
   }else{
@@ -54,17 +58,17 @@ ORDER by prorrogacao.id DESC
          
         }elseif(isset($_GET['mes'])){
 
-          $b= " WHERE MONTH(internamento.dat_entrada) = ".$mes." and Year(internamento.dat_entrada) = ".date("Y")." order by internamento.id";
+          $b= " WHERE MONTH(internamento.dat_entrada) = ".$mes." and Year(internamento.dat_entrada) = ".$ano." order by internamento.id";
 
         }else{
 
-          $b= " WHERE internamento.dat_saida IS null order by internamento.id";
+           $b= " WHERE internamento.dat_saida is null OR internamento.dat_saida = '0000-00-00 00:00:00' order by internamento.id";
 
         }
 
   }
 
-  //echo $a.$b;
+  // echo $a.$b;
 ;
 
     $query = mysqli_query($conn,$a.$b) or die("erro ao carregar consulta");
@@ -174,8 +178,11 @@ function excluir(id) {
 <!-- pegar mes de consulta  -->
 <script language="Javascript">
     function mudarmes(){
+      var y = document.getElementById("ano").value;
       var x = document.getElementById("mes").value;
-      window.location.href = x;
+      if((x && y)){
+      window.location.href = x+y;
+      }
     }
 </script>
                     
