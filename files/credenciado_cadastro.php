@@ -1,4 +1,4 @@
-﻿
+
 <?php 
     // Arquivo de configuração
   require_once "../config/config.php";

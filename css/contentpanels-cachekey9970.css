@@ -237,7 +237,7 @@ margin-right:0;
 display:none;
 }
 #visual-portal-wrapper{
-width:1200px;
+/*width:1500px; */
 margin:0 auto;
 background:#fff;
 border-left:5px solid #d5d5d5;
@@ -293,7 +293,7 @@ margin-top:10px;
 #document-action-aumentar_fonte{
 float:left;
 }
-#portal-column-one{width:199px;border-right:1px solid #d5d5d5;}
+#portal-column-one{border-right:1px solid #d5d5d5;}
 #portal-column-one .visualPadding {
 padding:15px 0 1em 0;
 }

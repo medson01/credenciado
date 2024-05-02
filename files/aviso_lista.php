@@ -1,4 +1,4 @@
-﻿<?php 
+<?php 
 
 if(isset($_GET['mes'])){
 
@@ -11,22 +11,20 @@ if(isset($_GET['mes'])){
   
   }
  
-  If( $_SESSION["perfil"] == "usuario"){   
-                  $query = mysqli_query($conn,"SELECT avisos.status ,avisos.id, avisos.titulo, avisos.conteudo, usuarios.login, avisos.data FROM `avisos` INNER JOIN usuarios ON usuarios.id = avisos.id_usuarios where MONTH(avisos.data) = '".$mes."' or avisos.status = 1") or die("erro ao carregar os usuários");
-  }else{
+                  $sql = "SELECT avisos.id, status, id_credenciado, titulo, conteudo, nome_fantasia, data FROM `avisos` INNER JOIN credenciado ON credenciado.id = avisos.id_credenciado where MONTH(avisos.data) = '08' or avisos.status = 1";
                   
-                  $query = mysqli_query($conn,"SELECT avisos.status ,avisos.id, avisos.titulo, avisos.conteudo, usuarios.login, avisos.data FROM `avisos` INNER JOIN usuarios ON usuarios.id = avisos.id_usuarios where MONTH(avisos.data) = '".$mes."' or avisos.status = 1") or die("erro ao carregar os usuários");
-}
+                  $query = mysqli_query($conn,$sql) or die("erro ao carregar os usuários");
 
 
 
                   $z = 0;
                   while($row = mysqli_fetch_assoc($query)){
-                          $status[$z] = $row["status"];
                           $id[$z] = $row["id"];
+                          $status[$z] = $row["status"];
+                          $id_credenciado[$z] = $row["id_credenciado"];
                           $titulo[$z] = $row["titulo"];
                           $conteudo[$z] = $row["conteudo"];
-                          $login2[$z] = $row["login"];
+                          $nome_fantasia[$z] = $row["nome_fantasia"];
                           $data[$z] = $row["data"];
 
                           $z++;
@@ -82,11 +80,12 @@ function excluir(id) {
                     
    <table class="table table-striped" align="center" style="font-size: 9px">
                <tr>
-                 <td colspan="10" style="text-align: center; text-decoration-style: solid;"> <strong>Avisos cadastrados</strong></td>
+                 <td colspan="11" style="text-align: center; text-decoration-style: solid;"> <strong>Avisos cadastrados</strong></td>
                </tr>
                <tr>
                   <td ><div align="center">Status</div></td>
-                  <td ><div align="center">Login</div></td>
+                  <td ><div align="center">ID</div></td>
+                  <td ><div align="center">Credenciado</div></td>
                    <td ><div align="center">Data</div></td>
                   <td ><div align="center">Titulo</div></td>
                   <td ><div align="center">Aviso</div></td>
@@ -116,8 +115,8 @@ function excluir(id) {
                                             echo "<span class='glyphicon'>&#xe014;</span>";
                                     }
                         print "   </a></div></td>
-                                    
-                                    <td><div align='center'>".$login2[$i]."</div></td>
+                                    <td><div align='center'>".$id[$i]."</div></td>
+                                    <td><div align='center'>".$nome_fantasia[$i]."</div></td>
                                      <td><div align='center'>".date("j/n/Y <\b\\r> H:i:s",strtotime($data[$i]))."</div></td>
                                     <td><div align='center'>".$titulo[$i]."</div></td>
                                     <td><div align='center'>".$conteudo[$i]."</div></td>

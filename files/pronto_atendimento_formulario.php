@@ -11,6 +11,16 @@ function pegarMatricula() {
 }
 </script>
 
+
+<?php
+// Modal Biometria
+if(isset($_GET['matricula'])){ 
+  echo"  <script type='text/javascript' src='../js/modal_sair.js'></script>";
+}
+?>
+
+
+
 <style type="text/css">
 <!--
 .style1 {font-size: 12px}
@@ -96,12 +106,20 @@ function pegarMatricula() {
 								?> /></td>
                             </tr>
                             <tr>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                            </tr>
+                            <tr>
+                              <td><span class="style3">Contato</span></td>
+                              <td><input required="required" type="text" name="contato"  class="form-control col-md-7 col-xs-12" id="contato"   /></td>
+                            </tr>
+                            <tr>
                             <td>&nbsp;</td>
                             <td>&nbsp;</td>
                             </tr>
                             <td >Motivo do atendimento </td>
                             <td>
-                              <textarea class="form-matric" name="motivo"  style="margin: 0px; height: 100px; width: 100%;" form="atendimento" placeholder="Entre com o texto aqui..."> </textarea>                            </td>
+                              <textarea required class="form-matric" name="motivo"  style="margin: 0px; height: 100px; width: 100%;" form="atendimento" ></textarea>                            </td>
                             </tr>
                             <tr>
                             
@@ -132,13 +150,19 @@ function pegarMatricula() {
                             <td><div align="right" class="style3">
                               <div align="right">
                                 <strong>
-								
-								                <input type="hidden" id="id_beneficiarios" name="id_beneficiarios" <?php if(isset($_GET['id_beneficiarios'])){ echo "value=".$_GET['id_beneficiarios'];} ?>>
+
+                                <input type="hidden" id="id_usuario" name="id_usuario" <?php if(isset($_SESSION["id"])){ echo "value=".$_SESSION["id"];} ?>>
+								                  
+                                <?php 
+
+                                echo $id_usuario;
+                                
+                                ?>
+
+								                <input type="hidden" id="id_beneficiarios" name="id_beneficiarios" <?php if(isset($_GET['id_beneficiarios'])){ echo "value=".$_GET['id_beneficiarios'];}  ?>>
 
                                 <input name="submit" type="Submit" value="Cadastrar" class="btn btn-primary "/> 
-
-                                </strong>  
-                              </div>
+                                </strong>                              </div>
                             </div></td>
                           </tr>
                           <tr>
@@ -175,4 +199,14 @@ function pegarMatricula() {
                       </div>
                     </form>
 
+                
+
+  <?php
+
+  //  Acesso Modal Biometria
+   if(isset($_GET['matricula'])){
+      include("modal_biometria.php");
+  }
+  ?>
   
+ 

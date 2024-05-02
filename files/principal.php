@@ -1,17 +1,26 @@
-﻿<?php 
+<?php 
+
+if(!isset($_SESSION)){
+
+  session_start();
+}
 	
+	if(!isset($_SESSION["login"])){
+			header('Location: ../index.html');
+	}else{
+
 	//Arquivo de configuração
 	include "cabecalho.php";
 
 
-	$query = mysqli_query($conn,"SELECT avisos.titulo, avisos.conteudo, avisos.data FROM avisos INNER JOIN usuarios ON usuarios.id = avisos.id_usuarios WHERE avisos.status = '1' and usuarios.id = ".$_SESSION['id']."") or die("erro ao carregar os usuários");
+	$query = mysqli_query($conn,"SELECT avisos.titulo, avisos.conteudo, avisos.data FROM avisos INNER JOIN credenciado ON credenciado.id = avisos.id_credenciado WHERE avisos.status = '1' and credenciado.id = ".$_SESSION['id_credenciado']."") or die("erro ao carregar os usuários");
       
                    
 
- ?>
+ echo '
     <!-- Conteudo -->        
             
-            <td width="898" id="portal-column-content"> <!-- tag conteudo -->
+            <td id="portal-column-content"> <!-- tag conteudo -->
 
               
               <div>
@@ -34,8 +43,8 @@
 					  
 	                        
 										<p>					  
-							<!-- Titulo do aviso -->								  
-							<?php
+							<!-- Titulo do aviso --> ';								  
+							
 								
 							while($row = mysqli_fetch_assoc($query)){
 
@@ -65,7 +74,7 @@
                         	}				
 
                         			  
-							?>
+							 echo'
                             <!--/ Titulo do aviso -->
                           
                         
@@ -80,9 +89,11 @@
         </tbody>
     </table>
 
-</div>
+</div>';
      
-<?php 
+
 
 	include "rodape.php";	
+
+}
 ?>

@@ -1,0 +1,129 @@
+
+<?php
+// Arquivo de configuração
+ require_once "../config/config.php";
+ 
+
+
+if(isset($_GET['matric'])){
+
+     $matricula = $_GET['matric'];
+
+     $id = '0';
+
+	
+	$tipreg = substr($_GET['matric'], 17);
+	
+	$matric = substr($_GET['matric'], 10, -3);
+
+
+     $sql = "SELECT beneficiarios.id as id_beneficiarios, data_nascimento,nome,cpf, contrato_ativo, pessoa_ativa, deficiente, contato.id as id_contato, contato.fixo, contato.celular, contato.email FROM `beneficiarios` LEFT JOIN contato on contato.id_beneficiarios = beneficiarios.id  WHERE matricula = '".$matric."' AND tipreg = '".$tipreg."'";
+
+	 $query = mysqli_query($conn,$sql) or die("erro ao carregar consulta");
+
+	 
+	 	//Beneficiaário não existe
+        if ( mysqli_num_rows($query)<=0 ) {
+
+
+		     if(isset($_GET['pa'])){	
+        		    	echo "<script>alert('Matrícula não exite!');location.href=\"painel.php?pa=1&id=".$id."\"</script>";
+		     }
+
+		     if(isset($_GET['int'])){
+        				echo "<script>alert('Matr\u00edcula n\u00e3o exite!');location.href=\"painel.php?int=1&id=".$id."\"</script>";
+		        			
+		     }
+
+		    if(isset($_GET['guia'])){
+        				echo "<script>alert('Matr\u00edcula n\u00e3o exite!');location.href=\"index.php?guia=1\"</script>";
+		        			
+		     } 
+
+		//Beneficiário existe
+        }else{
+        	
+        	if(isset($_GET['guia'])){
+
+
+        			while($registro = mysqli_fetch_assoc($query)){
+			
+		        	$id_beneficiarios = $registro["id_beneficiarios"];  
+		        	$id_contato = $registro["id_contato"];                
+		         	$fixo = $registro["fixo"];
+					$celular = $registro["celular"];
+		            $email = $registro["email"];
+		                        
+	        		}
+
+					
+					 echo "<script>location.href=\"index.php?guia=1&matricula=".$matricula."&id_beneficiarios=".$id_beneficiarios."&fixo=".$fixo."&celular=".$celular."&email=".$email."&id_contato=".$id_contato."\"</script>";
+					
+
+
+        	}else{  		
+	        	
+	        	while($registro = mysqli_fetch_assoc($query)){
+			
+		        	$id_beneficiarios = $registro["id_beneficiarios"];                
+		         	$data_nascimento = $registro["data_nascimento"];
+					$nome = $registro["nome"];
+		            $cpf = $registro["cpf"];
+		     		$contrato_ativo = $registro["contrato_ativo"];
+		     		$pessoa_ativa = $registro["pessoa_ativa"];
+		     		$deficiente = $registro["deficiente"];
+		                        
+	        	}
+	     	
+				        
+
+
+				        if($contrato_ativo <> 1){
+
+				        		if(isset($_GET['pa'])){  
+
+			        		    	echo "<script>alert('Contrato bloqueado!');location.href=\"painel.php?pa=1&id=".$id."\"</script>";
+			        		    }
+			        		    if(isset($_GET['int'])){
+			        		    	
+			        		    	echo "<script>alert('contrato bloqueado!!');location.href=\"painel.php?int=1&id=".$id."\"</script>";
+
+			        		    }
+
+
+
+				        }elseif ($pessoa_ativa <> 1) {
+				        		
+				        		if(isset($_GET['pa'])){  
+
+			        		    	echo "<script>alert('Usuário bloqueado!');location.href=\"painel.php?pa=1&id=".$id."\"</script>";
+			        		    }
+			        		    if(isset($_GET['int'])){
+			        		    	
+			        		    	echo "<script>alert('Usuário bloqueado!!');location.href=\"painel.php?int=1&id=".$id."\"</script>";
+
+			        		    }
+
+				        }else{
+						        
+					            if(isset($_GET['pa'])){      
+					       					echo "<script>location.href=\"painel.php?pa=1&id=".$id."&matricula=".$matricula."&nome=".$nome."&cpf=".$cpf."&id_beneficiarios=".$id_beneficiarios."&data_nascimento=".$data_nascimento."&deficiente=".$deficiente."\"</script>";
+					        	}
+					        	if(isset($_GET['int'])){
+					        	 			echo "<script>location.href=\"painel.php?int=1&id=".$id."&matricula=".$matricula."&paciente=".$nome."&cpf=".$cpf."&id_beneficiarios=".$id_beneficiarios."&data_nascimento=".$data_nascimento."&deficiente=".$deficiente."\"</script>";
+					        	}
+			        	}
+
+			}
+
+
+        }
+
+       
+
+
+   }  
+   
+   
+     
+?>

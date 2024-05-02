@@ -76,9 +76,9 @@ function reset() {
                               <td colspan="7">&nbsp;</td>
                             </tr>
                             <tr>
-                              <td>CNPJ / CPF </td>
+                              <td>CNPJ</td>
                               <td>&nbsp;</td>
-                              <td colspan="7"><input name="cpf_cnpj" type="text" class="form-matric" id="cpf_cnpj" size="20" maxlength="14" required="required" minlength="11" <?php if(isset($_GET['id'])){ echo "value='".$cpf_cnpj."'"; }?> /></td>
+                              <td colspan="7"><input name="cpf_cnpj" type="text" class="form-matric" id="cnpj" size="20" maxlength="14" required="required" minlength="11" <?php if(isset($_GET['id'])){ echo "value='".$cpf_cnpj."'"; }?> /></td>
                             </tr>
                             <tr>
                               <td colspan="2">&nbsp;</td>

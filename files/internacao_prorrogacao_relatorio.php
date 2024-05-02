@@ -4,7 +4,7 @@
 	if(!empty($_GET["id_internacao"])){
 
 		  //Arquivo de configura?o
-  		  include "cabecalho.php";
+  		  require_once "../config/config.php";
 
   		      # Corrige o erro de acentua?o no banco
 				mysqli_query($conn,"SET NAMES 'utf8'");

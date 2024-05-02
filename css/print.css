@@ -9,9 +9,10 @@
     }
 
     body {
-        margin:0;
+        margin:20;
         padding:0;
         line-height: 1.4em;
+        font-size: 10px;
     }
 
     header {

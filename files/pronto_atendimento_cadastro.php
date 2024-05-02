@@ -8,13 +8,21 @@
 
 $matricula = $_POST["matricula"];
 $nome = $_POST["nome"];
+$contato = $_POST["contato"];
 $medico = $_POST["medico"];
 $motivo = $_POST["motivo"];
 //$deficiente = $_POST["deficiente"];
 $id_beneficiarios = $_POST["id_beneficiarios"];
+$id_usuario = $_POST["id_usuario"];
 
+// Tratamento matrícula
 $matricula = str_replace(".", "", $matricula);
 $matricula = str_replace("-", "", $matricula);
+// Tratamento contato
+$contato = str_replace("(", "", $contato);
+$contato = str_replace(")", "", $contato);
+$contato = str_replace(" ", "", $contato);
+$contato = str_replace("-", "", $contato);
 
 date_default_timezone_set('America/Maceio');
 
@@ -25,21 +33,18 @@ date_default_timezone_set('America/Maceio');
     $query = mysqli_query($conn,"SELECT * FROM `beneficiarios` WHERE `matricula` = '".$matric."'") or die("erro ao selecionar");
 
 
-    $query = "INSERT INTO `pronto_atendimento`(`id`,`id_usuario`,`id_beneficiarios` , `matricula`, `nome`,`dat_entrada`,`dat_saida`,`medico`, `motivo`) VALUES (null , '".$_SESSION['id']."' , '".$id_beneficiarios."' , '".$matricula."' , '".$nome."' , '".date("Y-m-d H:i:s" )."' , null , '".$medico."' , '".$motivo."')";
-
-                 
-               
-    $insert = mysqli_query($conn, $query);
-                
+     $query = "INSERT INTO `pronto_atendimento`(`id`,`id_usuario`,`id_beneficiarios` , `matricula`, `nome`,`dat_entrada`,`dat_saida`,`medico`, `motivo`) VALUES (null , '".$id_usuario."' , '".$id_beneficiarios."' , '".$matricula."' , '".$nome."' , '".date("Y-m-d H:i:s" )."' , null , '".$medico."' , '".$motivo."')";               
+	               
+    $insert = mysqli_query($conn, $query);              
     $res = mysqli_insert_id($conn);
-                    
-    if($insert){
-                      
-       require_once"pronto_atendimento_relatorio.php";
-                      
+	
+	$sql = "UPDATE `beneficiarios` SET  `contato`= ".$contato." WHERE id = '".$id_beneficiarios."'";    
+    $update = mysqli_query($conn,$sql); 
+	                 
+    if($insert){                    
+       require_once"pronto_atendimento_relatorio.php";                   
     }else{
        echo"<script language='javascript' type='text/javascript'>alert('O pronto atendimento não cadastrado com sucesso!');window.location.href='painel.php?pa=1'</script>";
-
     }
 
 

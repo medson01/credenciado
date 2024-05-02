@@ -16,7 +16,7 @@
 		
 			if(!empty($_GET["prorro"])){
 
-			 $query = mysqli_query($conn,"SELECT internamento.nome as paciente, internamento.matricula as matricula, prorrogacao.medico_solicitante as solicitante, prorrogacao.crm as crm, internamento.dat_entrada as dat_entrada, internamento.dat_saida as dat_saida_int, cid.cid , cid.descricao as descricao ,usuarios.nome as atendente, cid.dias as dias,  prorrogacao.motivo as motivo, prorrogacao.data_prorrogacao as data_prorrogacao, prorrogacao.dias_autorizados as prorrogacao_dias, pronto_atendimento.dat_saida as dat_saida_pa, beneficiarios.data_nascimento , beneficiarios.deficiente , internamento.qtd_respiratoria , internamento.qtd_motora, acomodacao.nome as acomodacao, credenciado.nome as credenciado
+			 $query = mysqli_query($conn,"SELECT internamento.nome as paciente, internamento.matricula as matricula, prorrogacao.medico_solicitante as solicitante, prorrogacao.crm as crm, internamento.dat_entrada as dat_entrada, internamento.dat_saida as dat_saida_int, cid.cid , cid.descricao as descricao ,usuarios.nome as atendente, cid.dias as dias,  prorrogacao.motivo as motivo, prorrogacao.data_prorrogacao as data_prorrogacao, prorrogacao.dias_autorizados as prorrogacao_dias, pronto_atendimento.dat_saida as dat_saida_pa, beneficiarios.data_nascimento , beneficiarios.deficiente , internamento.qtd_respiratoria , internamento.qtd_motora, acomodacao.nome as acomodacao, credenciado.nome as credenciado, (SELECT usuarios.nome FROM usuarios WHERE usuarios.id = internamento.id_usuario_out) as aten_saida, beneficiarios.contato
 			 FROM `internamento` 
 			 INNER JOIN usuarios on usuarios.id = internamento.id_usuario
 			 INNER JOIN cid on cid.id = internamento.id_cid 
@@ -52,6 +52,8 @@
 						$qtd_motora = $registro[17];
                         $acomodacao = $registro[18];
                         $credenciado = $registro[19];
+						$aten_saida = $registro[20];
+						$contato = $registro[21];
                         
                    }
 			
@@ -66,7 +68,8 @@
 			  	  		pronto_atendimento.dat_saida as dat_saida_pa,
 			  	  		beneficiarios.data_nascimento , beneficiarios.deficiente,
 			  	  		acomodacao.nome as acomodacao,
-			  	  		credenciado.nome as credenciado
+			  	  		credenciado.nome as credenciado,
+						(SELECT usuarios.nome FROM usuarios WHERE usuarios.id = internamento.id_usuario_out) as aten_saida, beneficiarios.contato
 							 FROM `internamento` 
 							 INNER JOIN usuarios on usuarios.id = internamento.id_usuario 
 							 INNER JOIN cid on cid.id = internamento.id_cid
@@ -98,6 +101,8 @@
 						$deficiente = $registro[14];
 						$acomodacao = $registro[15];
 						$credenciado = $registro[16];
+						$aten_saida = $registro[17];
+						$contato = $registro[18];
 
 						
                          
@@ -105,7 +110,7 @@
 
 				}
 	} else {
-	 		 $query = mysqli_query($conn,"SELECT internamento.dat_saida as dat_saida_int , usuarios.nome as atendente , internamento.dat_entrada as dat_entrada,  beneficiarios.data_nascimento , beneficiarios.deficiente, acomodacao.nome, credenciado.nome as credenciado
+	 		 $query = mysqli_query($conn,"SELECT internamento.dat_saida as dat_saida_int , usuarios.nome as atendente , internamento.dat_entrada as dat_entrada,  beneficiarios.data_nascimento , beneficiarios.deficiente, acomodacao.nome, credenciado.nome as credenciado, (SELECT usuarios.nome FROM usuarios WHERE usuarios.id = internamento.id_usuario_out) as aten_saida, beneficiarios.contato
 	 		 		FROM `internamento` 
 	 		 		INNER JOIN usuarios on usuarios.id = internamento.id_usuario  
 	 		 		INNER JOIN beneficiarios on beneficiarios.id = internamento.id_beneficiarios 
@@ -125,7 +130,8 @@
                         $deficiente = $registro[4];
                         $acomodacao = $registro[5];
                         $credenciado = $registro[6];
-                        
+                        $aten_saida = $registro[7];
+						$contato = $registro[8];
 
                         
                    }
@@ -133,7 +139,7 @@
 	 } 
 
 if(!empty($_GET["id_pa"])){
-			$query_pa = mysqli_query($conn,"SELECT  pronto_atendimento.dat_entrada as dat_entrada, pronto_atendimento.dat_saida as dat_saida_pa, usuarios.nome as atendente, pronto_atendimento.medico as medico, pronto_atendimento.motivo as motivo FROM `pronto_atendimento`, credenciado.nome as credenciado
+			$query_pa = mysqli_query($conn,"SELECT  pronto_atendimento.dat_entrada as dat_entrada, pronto_atendimento.dat_saida as dat_saida_pa, usuarios.nome as atendente, pronto_atendimento.medico as medico, pronto_atendimento.motivo as motivo, credenciado.nome as credenciado, (SELECT usuarios.nome FROM usuarios WHERE usuarios.id = pronto_atendimento.id_usuario_out) as aten_saida FROM `pronto_atendimento`
 								 INNER JOIN usuarios on usuarios.id = pronto_atendimento.id_usuario
 								 INNER JOIN credenciado on credenciado.id = usuarios.id_credenciado
 								 WHERE pronto_atendimento.id =".$_GET["id_pa"]) or die("erro ao carregar consulta");
@@ -148,6 +154,7 @@ if(!empty($_GET["id_pa"])){
 			                        $medico_pa = $registro[3];
 									$motivo_pa = $registro[4];
 									$credenciado_pa = $registro[5];
+									$aten_saida = $registro[6];
 			                      
 
 			                         
@@ -288,7 +295,8 @@ if(!empty($_GET["id_pa"])){
 										?>
 										
 					       </div></th>
-						   <th>&nbsp;</th>
+						   <th><div align="left">Contato: <br />
+  &nbsp;<?php echo	$contato;  ?></div></th>
 	      </tr>
 						 <tr>
 								<th scope='row'><div align='left'>
@@ -415,17 +423,23 @@ if(!empty($_GET["id_pa"])){
 					      	?> </div>					      </th>
 					      <th scope='col'><div align="left"></div>					      </th>
 				      </tr>
-				       <tr>
-					      <th scope='row'><div align="left">Data de Saíde: <br> &nbsp; 
-					      	<?php 
+				        <tr>
+				          <th scope='row'><div align="left">Data de Saíde: <br />
+  &nbsp;
+  <?php 
 					      		
 					      			if(!empty($dat_saida_int) <> 0) {
 					      				echo date('d / m / Y \h\s H:i:s', strtotime($dat_saida_int));	
 					      			} 
 					      		 
-					      	?> </div>					      </th>
-					      <th scope='col'><div align="left"></div> 
-					      	<?php
+					      	?>
+                          </div></th>
+				          <th scope='col'><div align="left">Atendente saída : <br />
+  &nbsp; <?php echo	$aten_saida;  ?> </div></th>
+          </tr>
+			           <tr>
+					      <th colspan="2" scope='row'><div align="left">
+					        <?php
 								
 								if(!empty($prorrogacao)){
 
@@ -434,7 +448,8 @@ if(!empty($_GET["id_pa"])){
 					      			echo $prorrogacao;
 					      		}
 
-					      	?>					      </th>
+					      	?>
+					      </div>				          </th>
 				      </tr>
 					  <?php
 					  

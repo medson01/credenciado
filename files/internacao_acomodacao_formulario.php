@@ -1,4 +1,4 @@
-﻿
+
 <?php 
   		      # Corrige o erro de acentuação no banco
 				mysqli_query($conn,"SET NAMES 'utf8'");
@@ -7,9 +7,7 @@ $id = $_GET["id"];
 
     
 
-          $query = mysqli_query($conn,"SELECT internamento.nome as paciente, internamento.matricula as matricula, internamento.solicitante as solicitante,
-                     internamento.crm as crm, internamento.dat_entrada as dat_entrada, internamento.dat_saida as dat_saida, cid.cid , cid.descricao as 
-                     descricao ,usuarios.nome as credenciado, cid.dias as dias, internamento.motivo as motivo, internamento.prorrogacao as prorrogacao, acomodacao.id as id_acomodacao, acomodacao.nome as acomodacao
+          $query = mysqli_query($conn,"SELECT acomodacao.nome as acomodacao
                      FROM `internamento` 
                      INNER JOIN usuarios on usuarios.id = internamento.id_usuario 
                      INNER JOIN cid on cid.id = internamento.id_cid
@@ -23,20 +21,7 @@ $id = $_GET["id"];
                       
                                 while($registro = mysqli_fetch_row($query)){
 
-                                  $nome = $registro[0];
-                                  $matricula = $registro[1];
-                                  $solicitante = $registro[2];
-                                  $crm = $registro[3];
-                                  $dat_entrada = $registro[4];
-                                  $dat_saida = $registro[5];
-                                  $cid = $registro[6];
-                                  $cid_desc = $registro[7];
-                                  $credenciado = $registro[8];
-                                  $dias = $registro[9];
-                                  $motivo = $registro[10];
-                                  $prorrogacao = $registro[11];
-                                  $id_acomodacao = $registro[12];
-                                  $acomodacao = $registro[13];
+                                  $acomodacao = $registro[0];
 
                                    
                              }
@@ -62,68 +47,15 @@ $id = $_GET["id"];
           
           <form name="acomodacao" id="acomodacao" action ="internacao_acomodacao_update.php" method="post" data-parsley-validate class="form-horizontal form-label-left">
    		  
-                        <table width="799" border="0" align="center">
-                          <tr>
-                            <td colspan="3" style="font-weight:bold; font-size:14px;" scope='col'><div align="center">ALTERAÇÃO DE ACOMODAÇÃO</div></td>
-                          </tr>
+                        <table width="100% " border="0" align="center">
+    
                           <tr>
                          <td colspan="3" bgcolor="#999999" style="font-weight:bold; font-size:14px;" scope='col'><div align="center">
-					      <?php echo "Número da Guia: ".$id; ?></div>
-						  <input type="hidden" name="id" <?php echo "value='".$id."'"; ?>  />						  </td>
+					     </div>
+						  <input type="hidden" name="id"  />						  </td>
                           </tr>
                           
-                          <tr>
-                            <td width="380" ><span class="style13">Matrícula</span><br />
-                                <input name="credenciado" type="text" class="form-control input-sm" style="background:#faffbd;font-size: 10px" readonly="true" value="<?php echo $matricula; ?>" size="44" />
-                            </span></td>
-                            <td width="7">&nbsp;</td>
-                            <td width="398"><span class="style13">Data do internamento </span><br />
-                              <input name="data_entrada" type="text" class="form-control input-sm" style="background:#faffbd;font-size: 10px" readonly="true" value="<?php echo date('d / m / Y ', strtotime($dat_entrada));  echo " às ".date('H:i:s', strtotime($dat_entrada)); ?>" size="44" /></td>
-                          </tr>
-                            <tr>
-                              <td>&nbsp;</td>
-                              <td>&nbsp;</td>
-                              <td>&nbsp;</td>
-                            </tr>
-                            <tr>
-                              <td colspan="3" ><span class="style13">Nome do beneficiário </span><br />
-                                <input name="credenciado2" type="text" class="form-control input-sm" style="background:#faffbd;font-size: 10px" readonly="true" value="<?php echo $nome; ?>" size="44" /></td>
-                            </tr>
-                            <tr>
-                            <td class="style3">&nbsp;</td>
-                            <td>&nbsp;</td>
-                            <td>&nbsp;</td>
-                            </tr>
-                            <tr>
-                              <td ><span class="style13">Código C.I.D</span><br />
-                                <input name="cid" type="text" class="form-control input-sm" style="background:#faffbd;font-size: 10px" readonly="true" value="<?php echo $cid; ?>" size="44" /></td>
-                              <td>&nbsp;</td>
-                              <td><span class="style13">Idade</span><br />
-                                <input name="data_entrada2" type="text" class="form-control input-sm" style="background:#faffbd;font-size: 10px" readonly="true" value="
-								<?php 
-								
-										echo date('d / m / Y ', strtotime($dat_entrada));  echo " às ".date('H:i:s', strtotime($dat_entrada)); ?>
-								
-								" size="44" /></td>
-                            </tr>
-                            <tr>
-                              <td >&nbsp;</td>
-                              <td>&nbsp;</td>
-                              <td>&nbsp;</td>
-                            </tr>
-                            <tr>
-                              <td colspan="3" ><span class="style13">Descrição do C.I.D </span><br />
-                                <input name="cid_desc" type="text" class="form-control input-sm" style="background:#faffbd;font-size: 10px" readonly="true" value="<?php echo $cid_desc; ?>" size="44" /></td>
-                            </tr>
-                            <tr>
-                              <td>&nbsp;</td>
-                              <td>&nbsp;</td>
-                              <td>&nbsp;</td>
-                            </tr>
-                            <tr>
-                    
-
-                              <td colspan="3" bordercolor="#999999" bgcolor="#999999"><div align="center" class="style5">Acomodação</div></td>
+                          <td colspan="3" bgcolor="#CCCCCC"><div align="center" class="style5">Alteração de Acomodação</div></td>
                             </tr>
                             <tr>
                               <td>&nbsp;</td>
@@ -173,13 +105,13 @@ $id = $_GET["id"];
 
                              <a href="painel.php?pa=1" >
                             
-                                <input name="button" type="button" class='btn btn-primary delete' value="Voltar" />
+                               
                             
                               </a>
                             </div></td>
                               <td>                              </td>
                               <td>
-                                <div align="left">
+                                <div align="right">
 
                                   <input name="id_internamento" type="hidden" value="<?php echo $id; ?>" />  
 

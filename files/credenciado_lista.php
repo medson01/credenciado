@@ -1,4 +1,4 @@
-﻿<?php 
+<?php 
   
   // retira os erros 
  // error_reporting(0);

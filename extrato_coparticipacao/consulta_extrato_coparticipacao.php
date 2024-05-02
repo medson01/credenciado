@@ -1,4 +1,4 @@
-﻿<!-- CSS goes in the document HEAD or added to your external stylesheet -->
+<!-- CSS goes in the document HEAD or added to your external stylesheet -->
 
 <!-- CABRCALHO -->
 

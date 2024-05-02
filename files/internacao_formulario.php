@@ -1,4 +1,4 @@
-﻿
+
 <?php 
 
 # Corrige o erro de acentuaÃ§Ã£o no banco
@@ -125,9 +125,7 @@ mysqli_query($conn,"SET NAMES 'utf8'");
                             </tr>
                             <tr>
                               <td class="style3">Deficiente</td>
-                              <td>
-
-								 <input type="checkbox" name="deficiente" id="deficiente" class="form-check-input" onclick="return false;" 
+                              <td><input type="checkbox" name="deficiente" id="deficiente" class="form-check-input" onclick="return false;" 
 								<?php
 
 										if( $deficiente == 1 ){
@@ -137,7 +135,15 @@ mysqli_query($conn,"SET NAMES 'utf8'");
 										
 										}
 								
-								?> />                              </td>
+								?> /></td>
+                            </tr>
+                            <tr>
+                              <td class="style3">&nbsp;</td>
+                              <td>&nbsp;</td>
+                            </tr>
+                            <tr>
+                              <td><span class="style3">Contato</span></td>
+                              <td><input required="required" type="text" name="contato"  class="form-control col-md-7 col-xs-12" id="contato"></td>
                             </tr>
                             <tr>
                             <td class="style3">&nbsp;</td>
@@ -147,8 +153,9 @@ mysqli_query($conn,"SET NAMES 'utf8'");
                             <tr>
                               <td >Código do C.I.D.</td>
                               <td>
-                               <select id="id_cid"  name="id_cid" class="form-control" required="required"  onchange= "adicionar()"> 
-                                                            <option value="0">*** Digite ou selecio o CID ***</option> 
+                               <select id="id_cid"  name="id_cid" class="form-control" required  onchange= "adicionar()"> 
+                                                        <option value="">*** Digite ou selecio o CID ***</option>
+								<option value="2047">U071-Infec&ccedil;&atilde;o pelo novo Coronav&iacute;rus  (COVID-19)</option> 
                                               <?php 
 
                                                   for ($x=1; $x < $i ; $x++) { 
@@ -165,7 +172,7 @@ mysqli_query($conn,"SET NAMES 'utf8'");
                             </tr>
                             <tr>
                               <td >&nbsp;</td>
-                              <td><div align="right"><span class="style1"><a href="https://www.cid10.com.br/" target="_blank"> Consulte aqui o CID <img src="../imagem/busca.png" width="18" height="17" /></a><a href="https://www.cid10.com.br/"></a></span></div></td>
+                              <td><div align="right"><span class="style1">Atenção: Código para o COVID-19 = U071.  <a href="https://www.cid10.com.br/" target="_blank"> Consulte aqui o CID <img src="../imagem/busca.png" width="18" height="17" /></a><a href="https://www.cid10.com.br/"></a></span> </div></td>
                             </tr>
                             <tr>
                               <td >Dias</td>
@@ -198,11 +205,7 @@ mysqli_query($conn,"SET NAMES 'utf8'");
                           </tr>
                           <td >Motivo do internamento</td>
                             <td>
-                              <textarea class="form-matric" name="motivo"  style="margin: 0px; height: 100px; width: 100%;" form="internamento" placeholder="Entre com o texto aqui..."  > 
-
-                               
-
-                              </textarea>                            </td>
+                              <textarea  required class="form-matric" name="motivo"  style="margin: 0px; height: 100px; width: 100%;" form="internamento" ></textarea>                            </td>
                             </tr>
                             <tr>
                             
@@ -250,6 +253,8 @@ mysqli_query($conn,"SET NAMES 'utf8'");
                                   ?>
                                   <input type="hidden" id="id_beneficiarios" name="id_beneficiarios" <?php if(isset($_GET['id_beneficiarios'])){ echo "value=".$_GET['id_beneficiarios'];} ?>>
 
+                                   <input type="hidden" id="id_usuario" name="id_usuario" <?php if(isset($_SESSION["id"])){ echo "value=".$_SESSION["id"];} ?>>
+
                                   <input type="hidden" id="cid" name="cid">
                                   <input type="hidden" id="cid_desc" name="cid_desc">
 
@@ -273,7 +278,14 @@ mysqli_query($conn,"SET NAMES 'utf8'");
                       </div>
                     </form>
                    
+  <?php
 
+  //  Acesso Modal saida
+   if(( isset( $_GET['matricula']) ) && ( $_GET['id'] == 0 ) ){
+      include("modal_biometria.php");
+  }
+  ?>
+      
              
           
   

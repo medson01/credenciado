@@ -2,8 +2,14 @@
 <?php
 // Arquivo de configuração
  require_once "../config/config.php";
- 
-$id = $_GET['id'];
+
+  	$id_usuario_out = $_SESSION["id"];
+
+if(isset($_GET['id'])){ 
+	$id = $_GET['id'];
+}else{
+	$id = $_POST['id'];
+}
 
 if(isset($_GET['paciente'])){
 		$paciente = $_GET['paciente'];
@@ -15,19 +21,33 @@ if (isset($_GET['matricula'])){
 	    $matricula = $_GET['matricula'];
 }
         
-if(!empty($_GET['motivo_saida'])){
-	$motivo_saida = $_GET['motivo_saida'];
+if(!empty($_POST['motivo_saida'])){
+	$motivo_saida = $_POST['motivo_saida'];
+}else{
+	$motivo_saida = '';
+}
+
+if(!empty($_POST['data'])){
+	$dat_saida = $_POST['data'];
+	$time = $_POST['time'];
+
+	$dat_saida = $dat_saida." ".$time;
+
+}else{
+
+	$dat_saida = date("Y-m-d H:i:s");
+
 }
 
 
 
 if(isset($_GET['prorrogacao'])){
 	$prorrogacao = $_GET['prorrogacao'];
-	$update = mysqli_query($conn,"UPDATE `pronto_atendimento` SET `dat_saida`= now(), `prorrogacao`= '".$prorrogacao."' WHERE id = '".$id."'");
+	$update = mysqli_query($conn,"UPDATE `pronto_atendimento` SET `id_usuario_out`= '".$id_usuario_out."', `dat_saida`= '".$dat_saida."', `prorrogacao`= '".$prorrogacao."' WHERE id = '".$id."'");
 	
 }else{
 
-	$update = mysqli_query($conn,"UPDATE `pronto_atendimento` SET `dat_saida`= now(), `motivo_saida`= '".$motivo_saida."'  WHERE id = '".$id."'");
+	$update = mysqli_query($conn,"UPDATE `pronto_atendimento` SET `id_usuario_out`= '".$id_usuario_out."', `dat_saida`= '".$dat_saida."', `motivo_saida`= '".$motivo_saida."'  WHERE id = '".$id."'");
 	
 }
 

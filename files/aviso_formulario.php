@@ -2,14 +2,15 @@
 		<?php 
 
      
-                  $query = mysqli_query($conn,"SELECT * FROM usuarios order by nome") or die("erro ao carregar os usuários");
+                  $query = mysqli_query($conn,"SELECT * FROM credenciado order by nome_fantasia") or die("erro ao carregar os usuários");
                  
 
                   $i = 0;
                   while($registro = mysqli_fetch_assoc($query)){
-                        
-                          $login1[$i] = $registro["login"];
-                          $id_usuarios[$i] = $registro["id"];
+                          
+                          $id_credenciado[$i] = $registro["id"];
+                          $nome_fantasia[$i] = utf8_encode($registro["nome_fantasia"]);
+                         
                           $i++;
                    }        
 
@@ -29,14 +30,14 @@
                           <p>&nbsp;</p>
                           <table width="400"border="0"align="center">
                             <tr>
-                              <td>Login</td>
+                              <td>Grupo de usuários</td>
                               <td>
-                                <select class="form-matric" style="background:#faffbd;" id="login" name="id" required="required" style="width:100%" style="background:#faffbd;">
+                                <select class="form-matric" style="background:#faffbd;" id="id_credenciado" name="id_credenciado" required="required" style="width:100%" style="background:#faffbd;">
                                       
                                   <?php 
                                      for ($x=0; $x <= $i; $x++) { 
                                         echo "
-                                            <option  value=".$id_usuarios[$x].">".$login1[$x]."</option>
+                                            <option  value=".$id_credenciado[$x].">".$nome_fantasia[$x]."</option>
                                             
                                         ";
                                      }

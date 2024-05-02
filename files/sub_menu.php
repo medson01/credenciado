@@ -1,4 +1,4 @@
-﻿
+
 <!-- sub_menu -->
 <?php 
 
@@ -32,6 +32,27 @@ switch ($sub_menu) {
 							$formulario =  "aviso_formulario.php";
 							break;
 
+						case '8':
+
+							$tituloMenu = "Lista SP/SADT";
+							$lista =  "sadt_lista.php";
+							$formulario =  "sadt_formulario.php";
+							break;
+
+						case '9':
+							$tituloMenu = "Procedimento";
+							$lista =  ".//procedimento/procedimento_lista.php";
+							$formulario =  ".//procedimento/procedimento_formulario.php";
+							break;
+
+						case '10':
+							$tituloMenu = "Lista de Atendimentos Laboratoriais ";
+							//$lista =  "..\\laboratorio\lab_lista.php";
+							//$formulario =  "..\\laboratorio\lab_formulario.php";
+							$lista =  "lab_lista.php";
+							$formulario =  "lab_formulario.php";
+							break;
+
 					}
 
 
@@ -39,75 +60,114 @@ switch ($sub_menu) {
 if (isset($tituloMenu)) {
 
 
-echo '<div id="exTab2" class="container" style="width: 980px; padding-left: 1px;">
+echo '<div id="exTab2" >
 <ul class="nav nav-tabs">';
 
 
 			
 
-					if(!isset($_GET['id'])){ 
+					if( !isset($_GET['id']) && !isset($_GET['numero_protocolo']) ){ 
 						echo '<li class="active">';
 					}else{
 						echo '<li >';
 					}
 
-					echo "<a  href='#1' data-toggle='tab'>". $tituloMenu ."</a>
-
-
+					echo "<a  href='#1' data-toggle='tab' >". $tituloMenu ."</a>
 
 					</li>
 
 
 					<li "; 
 					if(isset($_GET['id'])){ echo 'class="active"';} 
-					echo ">
+					echo ">";
+					if( $_SESSION["perfil"] != "aut_internacao") {
+					   echo "	<a href='#2' data-toggle='tab'>Cadastro</a>";
+					}
+			echo "</li>" ;
 
-					<a href='#2' data-toggle='tab'>Cadastro</a>
-			</li>" ;
+
+
 
 			If( ($_SESSION["perfil"] == "administrador") or ($_SESSION["perfil"] == "auditor")){
-			/*
+			
 				echo "	<li>
-						<a href='#3' data-toggle='tab'>Gráficos</a>
-					</li>";
-			*/	
+							<a href='#3' data-toggle='tab'>Gráficos</a>
+					    </li>";
+				
 			}
 		
+//=======================================
+		if(isset($_GET['sadt'])){
+				if(isset($_GET['numero_protocolo'])){ 
+						echo '<li class="active">';
+				}else{
+						echo '<li >';
+				}
+				
+			echo'	<a href="#sadt_autorizacao" data-toggle="tab" >Autorização SADT</a>
+	  		</li>';
+	  	}
 
+//======================================
 
 		echo '</ul>
 
 			<div class="tab-content ">
 			  	<div class="tab-pane '; 
+			  	if(!isset($_GET['id']) && !isset($_GET['numero_protocolo']) ){ echo 'active';} 
+		echo'	" id="1">';
+          	     require_once $lista; 			
+		echo'	</div>
 
-			  	if(!isset($_GET['id'])){ echo 'active';} 
-
-		echo'	  	" id="1">';
-          				  
-
-          				        require_once $lista; 
-          				
-		echo'		</div>
 				<div class="tab-pane ';
-
 				 if(isset($_GET['id'])){ echo 'active';} 
+		echo '  " id="2">';
+        	       require_once $formulario;		
+		echo'	</div>';
 
-		echo '      " id="2">';
-        				 
+        
 
-        				        require_once $formulario;
+        echo'	<div class="tab-pane ';
+				 
+		echo '  " id="3">';
+        	       
+        If( ($_SESSION["perfil"] == "administrador") or ($_SESSION["perfil"] == "auditor")){		
 
-        				
-		echo'		</div>
-        	<!--	
-        		<div class="tab-pane" id="3">
-          			     <iframe src="../grafico/graf_qtd_internacao_hospitiais.php" height="500" width="100%" scrolling="no" style="border:none;"></iframe> 
-				</div>
-			-->
-			</div>
+         
+          		if(isset($_GET['pa'])){
+	    		 		echo '<iframe src="../grafico/graf_pa.php" height="900" width="100%" scrolling="no" style="border:none;"></iframe>'; 
+				}
+				if(isset($_GET['int'])){
+				 		
+				 		echo '<iframe src="../grafico/graf_int.php" height="350" width="100%" scrolling="no" style="border:none;"></iframe>'; 
+				 		echo '<iframe src="../grafico/graf_dias_internado.php" height="400" width="100%" scrolling="no" style="border:none;"></iframe>'; 
+
+				}	
+
+		}
+		echo'	</div>';
+
+
+		//==========================================================
+		if(isset($_GET['sadt'])){
+		echo'		<div class= "tab-pane '; 
+					if(isset($_GET['numero_protocolo'])){ echo 'active in';} 
+		echo' 					" id="sadt_autorizacao"  >';
+			          include "../sadt_autorizacao/sadt_autorizacao.php";
+		
+		echo'		</div>';
+		}
+
+		//===========================================================
+
+
+					
+		echo'</div>
+
+
   </div>
 
-<hr></hr>
+
 ';
 }else{
 

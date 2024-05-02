@@ -14,7 +14,7 @@
 
 		//JOIN beneficiarios on concat(beneficiarios.matricula, beneficiarios.tipreg) = SUBSTRING(pronto_atendimento.matricula, 9,8) 
 
-			$query = mysqli_query($conn,"SELECT pronto_atendimento.nome as paciente, pronto_atendimento.matricula as matricula, pronto_atendimento.dat_entrada as dat_entrada, pronto_atendimento.dat_saida as dat_saida, usuarios.nome as atendente, pronto_atendimento.medico as medico, pronto_atendimento.motivo as motivo, pronto_atendimento.prorrogacao as prorrogacao, beneficiarios.data_nascimento, beneficiarios.deficiente, credenciado.nome as credenciado, pronto_atendimento.motivo_saida as motivo_saida  FROM `pronto_atendimento` INNER JOIN beneficiarios on beneficiarios.id = pronto_atendimento.id_beneficiarios INNER JOIN usuarios on usuarios.id = pronto_atendimento.id_usuario INNER JOIN credenciado on credenciado.id = usuarios.id_credenciado WHERE pronto_atendimento.id=".$res) or die("erro ao carregar consulta");
+			$query = mysqli_query($conn,"SELECT pronto_atendimento.nome as paciente, pronto_atendimento.matricula as matricula, pronto_atendimento.dat_entrada as dat_entrada, pronto_atendimento.dat_saida as dat_saida, usuarios.nome as atendente, pronto_atendimento.medico as medico, pronto_atendimento.motivo as motivo, pronto_atendimento.prorrogacao as prorrogacao, beneficiarios.data_nascimento, beneficiarios.deficiente,  beneficiarios.contato, credenciado.nome as credenciado, pronto_atendimento.motivo_saida as motivo_saida, (SELECT usuarios.nome FROM usuarios WHERE usuarios.id = pronto_atendimento.id_usuario_out) as aten_saida  FROM `pronto_atendimento` INNER JOIN beneficiarios on beneficiarios.id = pronto_atendimento.id_beneficiarios INNER JOIN usuarios on usuarios.id = pronto_atendimento.id_usuario INNER JOIN credenciado on credenciado.id = usuarios.id_credenciado WHERE pronto_atendimento.id=".$res) or die("erro ao carregar consulta");
 
 
 						
@@ -24,32 +24,38 @@
                         $matricula = $registro[1];
                         $dat_entrada = $registro[2];
                         $dat_saida = $registro[3];
-                        $atendente = $registro[4];
+                        $aten_entrada = $registro[4];
                         $medico = $registro[5];
 						$motivo = $registro[6];
                         $prorrogacao = $registro[7];
 						$data_nascimento = $registro[8];
 						$deficiente = $registro[9];
-						$credenciado = $registro[10];
-						$motivo_saida = $registro[11];
+						$contato = $registro[10];
+						$credenciado = $registro[11];
+						$motivo_saida = $registro[12];
+						$aten_saida = $registro[13];
+						
 
                          
                    }
 
 
 	}else{
-	 		 $query = mysqli_query($conn,"SELECT pronto_atendimento.dat_saida as dat_saida , usuarios.nome as credenciado , pronto_atendimento.dat_entrada as dat_entrada, beneficiarios.data_nascimento, beneficiarios.deficiente, credenciado.nome as credenciado  FROM `pronto_atendimento` INNER JOIN usuarios on usuarios.id = pronto_atendimento.id_usuario INNER JOIN beneficiarios on concat(beneficiarios.matricula, beneficiarios.tipreg) = SUBSTRING(pronto_atendimento.matricula, 9,8) INNER JOIN credenciado on credenciado.id = usuarios.id_credenciado WHERE pronto_atendimento.id =".$res) or die("erro ao carregar consulta");
+	 		 $query = mysqli_query($conn,"SELECT pronto_atendimento.dat_saida as dat_saida , usuarios.nome as credenciado , pronto_atendimento.dat_entrada as dat_entrada, beneficiarios.data_nascimento, beneficiarios.deficiente, beneficiarios.contato, credenciado.nome as credenciado, (SELECT usuarios.nome FROM usuarios WHERE usuarios.id = pronto_atendimento.id_usuario_out) as aten_saida  FROM `pronto_atendimento` INNER JOIN usuarios on usuarios.id = pronto_atendimento.id_usuario INNER JOIN beneficiarios on concat(beneficiarios.matricula, beneficiarios.tipreg) = SUBSTRING(pronto_atendimento.matricula, 9,8) INNER JOIN credenciado on credenciado.id = usuarios.id_credenciado WHERE pronto_atendimento.id =".$res) or die("erro ao carregar consulta");
 	
 
 	  					
 	                    while($registro = mysqli_fetch_row($query)){
                         
                         $dat_saida = $registro[0];
-                        $atendente = $registro[1];
+                        $aten_entrada = $registro[1];
                         $dat_entrada = $registro[2];
 						$data_nascimento =  $registro[3];
 						$deficiente = $registro[4];
-						$credenciado = $registro[5];
+						$contato = $registro[5];
+						$credenciado = $registro[6];
+						$aten_saida = $registro[7];
+						
                         
 
                         
@@ -89,7 +95,7 @@
 -->
 </style>
         
-            <td width="898" id="portal-column-content">
+            <td  id="portal-column-content">
 
               
                 <div class="">
@@ -127,7 +133,9 @@
                         </div>
                       </div>
                     </div>
-				<div style="height:550px">
+			
+			<!-- Ajuste da altura da pagina - pronto_atendimento_relat�rio.php -->
+				<div style="height:650px">
                     <table width="100%" class='table' style='font-size: 10px';>	
 						
 						<tr>
@@ -177,7 +185,8 @@
   
   
   </div></th>
-						   <th>&nbsp;</th>
+						   <th><div align="left">Contato: <br />
+  &nbsp;<?php echo	$contato;  ?></div></th>
 				      </tr>
 						 <tr>
 								<th scope='row'><div align='left'>
@@ -186,7 +195,7 @@
 						</tr>
 			
 						 <tr>
-						   <th scope='row'><div align="left">Credenciado: <br> &nbsp; <?php echo	$credenciado;  ?> </div></th>
+						   <th scope='row'><div align="left">Credenciado: <br> &nbsp;<?php echo	$credenciado;  ?></div></th>
 						   <th scope='col'><div align="left">Atendente: <br />
 &nbsp; <?php echo utf8_encode($_SESSION['login']); ?></div></th>
 	      </tr>
@@ -195,8 +204,14 @@
 				      </tr>
 					   	
 					    <tr>
-					      <th scope='row'><div align="left">
-					        <div align="left">Médico atendente<br />
+					      <th scope='row'><div align="left">Atendente entrada: <br />
+  					&nbsp;   <?php 	if(!empty($aten_entrada)){
+
+					      			echo $aten_entrada;
+					      		}
+
+					      	?></div></th>
+					      <th scope='col'><div align="left">Médico CRM<br />
   &nbsp;
   <?php
 								
@@ -205,16 +220,13 @@
 					      			echo $medico;
 					      		}
 
-					      	?>
-                            </div>
-					        <div align="left">
-<br />
-</div>					        
-					      <div align="left"></div></th>
-						  <th scope='col'><div align="left">
-						    <div align="left">Motivo do atendimento <br />
-						      &nbsp;
-						      <?php
+					      	?>				      
+                          </div>					      </tr>
+					    <tr>
+					      <th scope='row'><div align="left">
+					        <div align="left">Motivo do atendimento <br />
+  &nbsp;
+  <?php
 								
 								if(!empty($motivo)){
 
@@ -222,15 +234,30 @@
 					      		}
 
 					      	?>
-					                                  </div>
+                            </div>
+					        <div align="left"></div>
+					        <div align="left">
+<br />
+</div>					        
+					      <div align="left"></div></th>
+						  <th scope='col'><div align="left">
+						    <div align="left"></div>
 					      <div align="left">					        </div>						  </tr>
-					    <tr>
-					      <th scope='row'><div align="left">Data da entrada: <br> &nbsp; <?php print date('j / n / Y', strtotime($dat_entrada));  ?></div></th>
+					    <tr>					      <th scope='row'><div align="left">Data da entrada: <br> &nbsp; <?php print date('j / n / Y', strtotime($dat_entrada));  ?></div></th>
 					      <th scope='col'><div align="left">Hora da entrada: <br> &nbsp; <?php print date('H:i:s', strtotime($dat_entrada));  ?><br> 
 					        &nbsp;</div></th>
 				      </tr>
 				        <tr>
-				          <th scope='row'><div align="left">Data de Saíde: <br />
+				          <th scope='row'><div align="left">Atendente sa&iacute;da: <br />
+  &nbsp;
+  <?php 	if(!empty($aten_saida)){
+
+					      			echo $aten_saida;
+					      		}
+
+					      	?>
+			              </div></th>
+				          <th scope='col'><div align="left">Data de Sa&Atilde;&shy;de: <br />
   &nbsp;
   <?php 
 					      		
@@ -239,8 +266,10 @@
 					      			} 
 					      		 
 					      	?>
-			              </div></th>
-				          <th scope='col'><div align="left">Permanência: <br />
+                          </div></th>
+			          </tr>
+				        <tr>
+				          <th scope='row'><div align="left">Perman&Atilde;&ordf;ncia: <br />
   &nbsp;
   <?php
 								
@@ -253,7 +282,8 @@
 					      		}
 
 					      	?>
-			              </div></th>
+                          </div></th>
+				          <th scope='col'>&nbsp;</th>
 			          </tr>
 			           <tr>
 					      <th scope='row'><div align="left"> Informações sobre a alta do paciente:<br />
@@ -301,10 +331,10 @@
 					text-decoration:underline;
 					}
 				</style>
-
-  <a href="painel.php?pa=1" > <input class='btn btn-primary delete' type="button" value="Voltar"> </a>
+<p>
+  				<a class="hidden-print" href="painel.php?pa=1" > <input class='btn btn-primary delete' type="button" value="Voltar"> </a>
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	          <input class='btn btn-primary delete'  name="button" type="button" onclick="window.print();" value="Imprimir" />
+	          	<input class='btn btn-primary delete hidden-print'  name="button" type="button" onclick="window.print();" value="Imprimir" />
           </p>
 	        <p><br />
             </p>

@@ -67,6 +67,7 @@ function iFrameHeight()
 
 <!--
 <div id="IframePos" >
+<center> <hn> Caro atendente, em caso de bloqueio do usuário, favor entrar em contato com o Ipaseal Saúde pelo número (82) 3315-3232 para verificar a situação. O horário de atendimento é das 08:00 hs às 17:00hs. </hn> </center>
 	 <iframe src="iframe_form_consulta_situacao.php" height="900" width="100%" scrolling="no" style="border:none;"></iframe>
 -->
 	<div id="IframePos">

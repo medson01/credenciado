@@ -1,6 +1,6 @@
 <?php
   //Acertar data e hora 
-  date_default_timezone_set('America/Recife');
+   date_default_timezone_set('America/Maceio');
 
 
    // Arquivo de configuração
@@ -47,6 +47,7 @@
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"/>
   
 
 
@@ -94,11 +95,25 @@
 
    <script type="text/javascript">
     $("#matricula").mask("00000000.000000-00");
+    $("#qtd_motora").mask("00");
+    $("#qtd_motora2").mask("00");
+    $("#dias_autorizados").mask("00");
+    $("#qtd_respiratoria").mask("00");
+    $("#qtd_respiratoria2").mask("00");
     $("#crm").mask("0000");
     $("#codigo").mask("000000");
-    $("#cpf_cnpj").mask("00000000000");
+	$("#cpf").mask("00000000000");
+    $("#cnpj").mask("00000000000000");
     $("#numero").mask("00000");
     $("#dias").mask("00");
+    $("#cod_proc").mask("00000000");
+    $("#qtd_proc").mask("00");
+	$("#contato").mask("(00) 00000-0000");
+  	$("#telefone").mask("(00) 00000-0000");
+    $("#internacao_numero_totvs").mask("0000.0000.00.00000000");
+	$("#internacao_senha_totvs").mask("000000000");
+	$("#senha").mask("000000000");
+	$("#n_autorizacao").mask("0.000-0000.00-00000000");
     </script>
 
 

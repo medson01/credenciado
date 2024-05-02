@@ -1,7 +1,17 @@
 <?php 
-  
-  //Arquivo de configuração
-  include "cabecalho.php";
+
+
+if(!isset($_SESSION)){
+
+  session_start();
+}
+	
+	if(!isset($_SESSION["login"])){
+			header('Location: ../index.html');
+	}else{
+
+	//Arquivo de configuração
+	include "cabecalho.php";
 	
 
  ?>
@@ -38,8 +48,8 @@
    									 	<!-- Título do painel -->
 
    									 	<?php
-
-   									 		if(isset($_GET['pa'])){
+   									 	
+   									 	if(isset($_GET['pa'])){
    									 			$sub_menu= 1;
 												$titulo = "Pronto Atendimento";
 											}
@@ -68,6 +78,14 @@
 											if(isset($_GET['acomodacao'])){
 												$sub_menu = 7;
 												$titulo = "Alterar acomodação";	 		
+											}
+											if(isset($_GET['proc'])){
+												$sub_menu = 9;
+												$titulo = "Procedimento";	 		
+											}
+											if(isset($_GET['lab'])){
+   									 			$sub_menu= 10;
+												$titulo = "Atendimento Laboratório";
 											}
 											
 											echo $titulo;
@@ -121,7 +139,7 @@
 }
 </style>
 
- <div id="exTab2" class="container" style="width: 980px; padding-left: 1px;"> 
+ <div id="exTab2" > 
 
  	
 <?php
@@ -163,4 +181,6 @@
  <?php
  
  	  include "rodape.php";
+
+ }
  ?>     
