@@ -31,7 +31,7 @@ $itens_por_pagina = 25;
             FROM `sadt`
             INNER JOIN beneficiarios on beneficiarios.id = sadt.id_beneficiario 
             INNER JOIN credenciado on credenciado.id = sadt.id_credenciado            
-            LEFT JOIN internamento on internamento.id = sadt.id_internamento
+            
           ";
 
 
@@ -50,9 +50,9 @@ $itens_por_pagina = 25;
     }
 // PERFIL USUÁRIO OU ADMIN/AUDITOR
 		 if( ($_SESSION["perfil"] <> "auditor") || ($_SESSION["perfil"] <> "admin")   ){
-			$b = " WHERE credenciado.id = '".$_SESSION["id_credenciado"]."' and (credenciado.nome like '%".$_GET['buscar']."%' or beneficiarios.nome like '%".$_GET['buscar']."%' or sadt.id = '".$_GET['buscar']."' or (beneficiarios.matricula = '".$matric."'and beneficiarios.tipreg = '".$tipreg."')) order by sadt.id";
+			$b = " WHERE sadt.id_credenciado = '".$_SESSION["id_credenciado"]."' and (credenciado.nome like '%".$_GET['buscar']."%' or beneficiarios.nome like '%".$_GET['buscar']."%' or sadt.id = '".$_GET['buscar']."' or (beneficiarios.matricula = '".$matric."'and beneficiarios.tipreg = '".$tipreg."')) order by sadt.id";
 		}else{
-			$b = " WHERE credenciado.nome like '%".$_GET['buscar']."%' or beneficiarios.nome like '%".$_GET['buscar']."%' or sadt.id = '".$_GET['buscar']."' or (beneficiarios.matricula = '".$matric."'and beneficiarios.tipreg = '".$tipreg."') order by sadt.id";
+			$b = " WHERE credenciado.nome like '%".$_GET['buscar']."%' or beneficiarios.nome like '%".$_GET['buscar']."%' or sadt.id = '".$_GET['buscar']."' or (beneficiarios.matricula = '".$matric."'and beneficiarios.tipreg = '".$tipreg."') order by sadt.id DESC ";
 		}
 		
 		  $a = $a.$b;
@@ -63,24 +63,29 @@ $itens_por_pagina = 25;
     $mes = substr($_GET['mes'], 0, -4);
     $ano = substr($_GET['mes'], 2);
 
-     $b = " WHERE credenciado.id = '".$_SESSION["id_credenciado"]."' and MONTH(sadt.data_proc) = ".$mes." and Year(sadt.data_proc) = '".$ano."' order by sadt.id";
+     $b = " WHERE sadt.id_credenciado = '".$_SESSION["id_credenciado"]."' and MONTH(sadt.data_proc) = ".$mes." and Year(sadt.data_proc) = '".$ano."' order by sadt.id DESC ";
      $a = $a.$b;
   }
 
-  if($_SESSION["perfil"] == "laboratorio"){
-  	$d =  " WHERE credenciado.id = '".$_SESSION["id_credenciado"]."'   LIMIT $pagina, $itens_por_pagina";
+  if($_SESSION["perfil"] == "laboratorio" || $_SESSION["perfil"] == "clinica" || $_SESSION["perfil"] == "clin_lab"){
+  	$d =  " WHERE sadt.id_credenciado = '".$_SESSION["id_credenciado"]."'  ORDER BY `sadt`.`id` DESC   LIMIT $pagina, $itens_por_pagina";
   }else{
-  	$d =  " LIMIT $pagina, $itens_por_pagina";
+  	if($_GET['lab'] == "consulta"){
+  		$d =  " ORDER BY `sadt`.`id` DESC  LIMIT $pagina, $itens_por_pagina";
+	}else{
+		$d =  "ORDER BY `sadt`.`id` DESC  LIMIT $pagina, $itens_por_pagina";
+	
+	}
   }
 
   if(isset($_GET['prorro'])){ 
-    $int = " WHERE id_internamento = ".$_GET['id'];
+    $int = " WHERE  ORDER BY `sadt`.`id` DESC  id_internamento = ".$_GET['id'];
     $a = $a.$int;
   }
 
 
 
- $sql1 = $a.$d;
+  $sql1 = $a.$d;
 
   $stmt1 = $pdo->prepare($sql1);
 
@@ -215,8 +220,8 @@ function excluir(id) {
             <tbody>
               <?php  while($registro = $stmt1->fetch(PDO::FETCH_ASSOC)){    ?>
               <tr>
-                <td><div align='center'><?php echo "<a  id='ticket' href = 'painel.php?lab=1&id=".$registro["id"]."'>  ".$registro["id"]."</a>";  ?> </div></td>           
-                <td><?php echo "<a  href = 'painel.php?lab=1&id=".$registro["id"]."'>".$registro["nome"]."</a>"; ?> </td>  
+                <td><div align='center'><?php echo "<a  id='ticket' href = 'painel.php?lab=".$_GET['lab']."&id=".$registro["id"]."'>  ".$registro["id"]."</a>";  ?> </div></td>           
+                <td><?php echo "<a  href = 'painel.php?lab=".$_GET['lab']."&id=".$registro["id"]."'>".$registro["nome"]."</a>"; ?> </td>  
                 <td><?php echo "0001.0001.".$registro["matricula"]." - ".$registro["tipreg"]; ?></td>            
                 <td><?php echo $registro["nome_cred"]; ?></td>
                 <td><?php echo $registro["cod_cred"]; ?></td>
@@ -225,7 +230,7 @@ function excluir(id) {
 				<?php 
 				
 					if ($registro["status"] == 3 && $registro["n_autorizacao"] <> 0) { 
-						echo   "<font color=\"#FF4000\"><strong><a href = 'painel.php?lab=1&id=".$registro["id"]."' style=\"color: #F00;\"  href=\"javascript:func()\" onmouseover=\"Tip('";
+						echo   "<font color=\"#FF4000\"><strong><a href = 'painel.php?lab=".$_GET['lab']."&id=".$registro["id"]."' style=\"color: #F00;\"  href=\"javascript:func()\" onmouseover=\"Tip('";
                         echo "Clique para verificar os procedimentos autorizados!";
                         echo "')\" onmouseout=\"UnTip()\">";				   
 						echo '<span class="glyphicon glyphicon-flag btn-lg" style="color:green"></span></a></strong></font>'; 
@@ -270,7 +275,7 @@ function excluir(id) {
         <nav aria-label="Page navigation example">
             <ul class="pagination">
               <li class="page-item">
-                <a class="glyphicon glyphicon-fast-backward" href="painel.php?sadt=1&pagina=0" aria-label="Previous">
+                <a class="glyphicon glyphicon-fast-backward" href="painel.php?lab=1&pagina=0" aria-label="Previous">
 
                 </a>
               </li>
@@ -279,13 +284,13 @@ function excluir(id) {
                 $pagina = 0;
                 for ($i=1; $i < $num_paginas+1; $i++) {
 
-                 echo '<li class="page-item"><a class="page-link" href="painel.php?sadt=1&pagina='.$pagina.'"><b>'. $i .'</b></a></li>';
+                 echo '<li class="page-item"><a class="page-link" href="painel.php?lab='.$_GET["lab"].'&pagina='.$pagina.'"><b>'. $i .'</b></a></li>';
                 $pagina = $registro2;
                 }
               ?>
     <!-- REMETE PARA O ULTIMO REGISTRO -->            
               <li class="page-item">
-                <a class="glyphicon glyphicon-fast-forward"  href="painel.php?sadt=1&ultima_pagina=<?php echo $ultima_pagina; ?>" aria-label="Next">          
+                <a class="glyphicon glyphicon-fast-forward"  href="painel.php?lab=<?php echo $_GET["lab"]; ?>&ultima_pagina=<?php echo $ultima_pagina; ?>" aria-label="Next">          
                 </a>
               </li> 
             </ul>

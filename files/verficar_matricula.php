@@ -34,8 +34,11 @@ if(isset($_GET['matric'])){
 		     }
 
 		     if(isset($_GET['lab'])){
-        				echo "<script>alert('Matr\u00edcula n\u00e3o exite!');location.href=\"painel.php?lab=1&id=".$id."\"</script>";
-		        			
+			 		if($_GET['lab'] == "consulta"){
+						echo "<script>alert('Matr\u00edcula n\u00e3o exite!');location.href=\"painel.php?lab=consulta&id=".$id."\"</script>";
+        			}else{
+						echo "<script>alert('Matr\u00edcula n\u00e3o exite!');location.href=\"painel.php?lab=exame&id=".$id."\"</script>";
+		        	}		
 		     }
 
 		//Beneficiário existe
@@ -66,9 +69,11 @@ if(isset($_GET['matric'])){
 
         		    }
         		    if(isset($_GET['lab'])){
-        		    	
-        		    	echo "<script>alert('contrato bloqueado!!');location.href=\"painel.php?lab=1&id=".$id."\"</script>";
-
+        		    	if($_GET['lab'] == "consulta"){
+        		    		echo "<script>alert('contrato bloqueado!!');location.href=\"painel.php?lab=consulta&id=".$id."\"</script>";
+						}else{
+							echo "<script>alert('contrato bloqueado!!');location.href=\"painel.php?lab=exame&id=".$id."\"</script>";
+						}
         		    }
 
 	        }elseif ($pessoa_ativa <> 1) {
@@ -83,8 +88,11 @@ if(isset($_GET['matric'])){
 
         		    }
                    if(isset($_GET['lab'])){
-        		    	
-        		    	echo "<script>alert('Usuário bloqueado!!');location.href=\"painel.php?lab=1&id=".$id."\"</script>";
+        		    	if($_GET['lab'] == "consulta"){
+        		    		echo "<script>alert('Usuário bloqueado!!');location.href=\"painel.php?lab=consulta&id=".$id."\"</script>";
+						}else{
+							echo "<script>alert('Usuário bloqueado!!');location.href=\"painel.php?lab=exame&id=".$id."\"</script>";
+						}
 
         		    }
 	        }else{
@@ -96,8 +104,12 @@ if(isset($_GET['matric'])){
 		        	 			echo "<script>location.href=\"painel.php?int=1&id=".$id."&matricula=".$matricula."&paciente=".$nome."&cpf=".$cpf."&id_beneficiarios=".$id_beneficiarios."&data_nascimento=".$data_nascimento."&deficiente=".$deficiente."\"</script>";
 		        	}
 		          if(isset($_GET['lab'])){
-		        	 			echo "<script>location.href=\"painel.php?lab=1&id=".$id."&matricula=".$matricula."&paciente=".$nome."&cpf=".$cpf."&id_beneficiarios=".$id_beneficiarios."&data_nascimento=".$data_nascimento."&deficiente=".$deficiente."\"</script>";
-		        	}
+						if($_GET['lab'] == "consulta"){
+									echo "<script>location.href=\"painel.php?lab=consulta&id=".$id."&matricula=".$matricula."&paciente=".$nome."&cpf=".$cpf."&id_beneficiarios=".$id_beneficiarios."&data_nascimento=".$data_nascimento."&deficiente=".$deficiente."\"</script>";
+						}else{
+									echo "<script>location.href=\"painel.php?lab=exame&id=".$id."&matricula=".$matricula."&paciente=".$nome."&cpf=".$cpf."&id_beneficiarios=".$id_beneficiarios."&data_nascimento=".$data_nascimento."&deficiente=".$deficiente."\"</script>";
+						}
+		          }
 
         	}
 

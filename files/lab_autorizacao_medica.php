@@ -10,27 +10,6 @@
 */
 ?>
 
-<!-- Remove os espaços no textarea -->
-<script>
-	$(function () {
-	  $('#motivo_retorno').on('input', function () {
-		var texto = $(this).val();
-		texto = texto.replace(/^\s+|\s+$/g,"");
-		
-		$('#motivo_retorno').val(texto);
-	  });
-	});
-	
-	$(function () {
-	  $('#motivo').on('input', function () {
-		var texto = $(this).val();
-		texto = texto.replace(/^\s+|\s+$/g,"");
-		
-		$('#motivo').val(texto);
-	  });
-	});
-</script>
-
 
 <!-- Editor Tyni -- FIM --> 
 <table width="100% " border="0" align="center" style="<?php if(isset($exibir)){ echo $exibir; }?>" >
@@ -52,9 +31,9 @@
                         </tr>          
                         <tr>
 
-                          <td colspan="3" ><textarea id="motivo" class="form-control input-sm" name="motivo"  style="font-size:12px; margin: 0px; height: 100px; width: 100%;" form="motivo" <?php 				
-                                        if(isset($_SESSION["motivo"])){
-											if($_SESSION["motivo"] == "null"){
+                          <td colspan="3" ><textarea onclick="limpar()" id="motivo" class="form-control input-sm" name="motivo"  style="font-size:12px; margin: 0px; height: 100px; width: 100%; text-align: justify; text-justify: inter-word;" form="motivo" <?php 				
+                                        if(isset($motivo)){
+											if($motivo == "null"){
                                           		echo "";
 										  	}else{
 												echo "disabled";
@@ -63,11 +42,11 @@
 			?> 
 			/>
 										<?php
-                                        if(isset($_SESSION["motivo"])){
-											if($_SESSION["motivo"] == "null"){
+                                        if(isset($motivo)){
+											if($motivo == "null"){
                                           		echo "";
 										  	}else{
-												echo ltrim($_SESSION["motivo"]);
+												echo ltrim($motivo);
 											}
                                         }
                                         ?>                  
@@ -111,10 +90,10 @@
                         <tr>
 					
 						
-                          <td colspan="3" ><textarea id="motivo_retorno" class="form-control input-sm" name="motivo_retorno"  style="font-size:12px; margin: 0px; height: 100px; width: 100%;" form="sadt" <?php 
+                          <td colspan="3" ><textarea onclick="limpar()" id="motivo_retorno" class="form-control input-sm" name="motivo_retorno"  style="font-size:12px; margin: 0px; height: 100px; width: 100%; text-align: justify; text-justify: inter-word;" form="motivo_retorno" <?php 
 						 if($_SESSION["perfil"] == "callcenter"){	
-						  if(isset($_SESSION["motivo_retorno"])){
-								if($_SESSION["motivo_retorno"] == "null"){
+						  if(isset($motivo_retorno)){
+								if($motivo_retorno == "null"){
 								   echo "";
 								}else{
 								   echo "disabled";
@@ -126,11 +105,11 @@
 			?> 
 			/>
 										<?php
-                                        if(isset($_SESSION["motivo_retorno"])){
-											if($_SESSION["motivo_retorno"] == "null"){
+                                        if(isset($motivo_retorno)){
+											if($motivo_retorno == "null"){
                                           		echo "";
 										  	}else{
-												echo ltrim($_SESSION["motivo_retorno"]);
+												echo ltrim($motivo_retorno);
 											}
                                         }
                                         ?>                  
@@ -161,7 +140,7 @@
                          <td>&nbsp;</td>
                          <td><div align="right"><strong>
                               <input name="id" type="hidden" value="<?php isset( $id ) ? $id : ''; ?>" />
-                            <!--  <input name="id_imagem" type="hidden" value="<?php //echo $id_imagem; ?>" /> -->
+							  <!--  <input name="id_imagem" type="hidden" value="<?php //echo $id_imagem; ?>" /> -->
                             <!--  <input name="id_prorrogacao" type="hidden" value="<?php //echo $id_prorrogacao; ?>" /> -->
 
                             
@@ -174,20 +153,20 @@
 											$w = 2;
 										}
 							  
-                                        if(isset($_SESSION['senha'])){
+                                        if(isset($senha)){
                                             echo " <input name='submit' type='submit' value='Confirmar' class='btn btn-primary ' disabled />";
 
                                         }else{
 										
 									   // Botão de negação da gui quando a penas tiver 1 procedimento solicitado.		
 										if($_SESSION["perfil"] == "callcenter"){	
-									   echo '<button style="background-color: #b75233;" onclick="confirmar('.$_SESSION["guia"].', 3, 0)" class="btn btn-primary">Não autorizar </button> &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;';	
+									   echo '<button style="background-color: #b75233;" onclick="confirmar('.$guia.', 3, 0)" class="btn btn-primary">Não autorizar </button> &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;';	
 									   }
 										// Botão confirmar e gerar a senha:										
                                             echo '<button onclick="confirmar(';
 											  
-											  if(isset($_SESSION["guia"])){
-											   echo $_SESSION["guia"];
+											  if(isset($guia)){
+											   echo $guia;
 											   }else{
 											   echo "";
 											   }
@@ -195,16 +174,16 @@
 											echo', '.$w.', 1)" class="btn btn-primary"';
 														
 											//Bloqueio botão
-											if($_SESSION["perfil"] == "callcenter"  &&   isset($_SESSION["status"]) && $_SESSION["status"] == 3){
+											if($_SESSION["perfil"] == "callcenter"  &&   isset($status) && $status == 3){
 													echo" disabled "; 
 											}									
-											if(isset($_SESSION["status"])){
-												if($_SESSION["status"] == 3 ){
+											if(isset($status)){
+												if($status == 3 ){
 													 echo" disabled "; 
 												}
 											
 											
-												if(  ($_SESSION["perfil"] <> "callcenter") && ($_SESSION["status"] == 2) ){			
+												if(  ($_SESSION["perfil"] <> "callcenter") && ($status == 2) ){			
 													echo "disabled";			
 												}
 											}
@@ -212,9 +191,9 @@
 												
 											echo'>';
 											
-											if($_SESSION["perfil"] == "laboratorio"){				
+											if($_SESSION["perfil"] == "laboratorio" || $_SESSION["perfil"] == "clinica" || $_SESSION["perfil"] == "clin_lab"){				
 																					
-												if( !isset($_SESSION["status"]) ||  $_SESSION["status"] == 1  ){
+												if( !isset($status) ||  $status == 1  ){
 													echo "Solicitar";
 												}else{
 												    echo "Solicitado";
@@ -251,12 +230,10 @@
 //alert("Hello! I am an alert box!!");
   
   function confirmar(id, status,autorizar) {
-    //var medico_solicitante = document.getElementById('medico_solicitante').value;
-    //var cr = document.getElementById("cr").value;
-    //var motivo = tinyMCE.get('motivo').getContent();
-	
+
 	var id_especialidade = document.getElementById("id_especialidade").value;
 	var cr = document.getElementById("cr").value;
+	var lab = '<?php if(isset($_GET['lab'])){echo $_GET['lab'];} ?>' ;
 	var medico_solicitante = document.getElementById("medico_solicitante").value;
 	var n_autorizacao = document.getElementById("n_autorizacao").value;
 	var codsig = document.getElementById("codsig").value;	
@@ -268,13 +245,13 @@
   	var values = [];
 
 	if(status == 2){
-	var resposta = confirm("Deseja confimar a solicita\u00e7\u00e3o?");
+	var resposta = confirm("Deseja cconfimar a solicita\u00e7\u00e3o?");
 				if (resposta == true) {	
 					 for (var i = 0; i < procedimento.length; i++) {
 						// utilize o valor aqui, adicionei ao array para exemplo
 						values.push(procedimento[i].value);
 					 }
-				 window.location.href='lab_procedimento_cadastro.php?id='+id+'&status=2&motivo='+motivo+'&proc='+values+'&id_especialidade='+id_especialidade+'&cr='+cr+'&medico_solicitante='+medico_solicitante+'&codsig='+codsig; 
+				 window.location.href='lab_procedimento_cadastro.php?id='+id+'&status=2&motivo='+motivo+'&proc='+values+'&id_especialidade='+id_especialidade+'&cr='+cr+'&medico_solicitante='+medico_solicitante+'&codsig='+codsig+'&lab='+lab; 
 				}
 	}
 	

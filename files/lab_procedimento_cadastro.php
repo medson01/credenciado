@@ -18,33 +18,52 @@
 
   // Arquivo de valor procedimento
   require_once "../func/restricao.php";
+  
+	
+	  
+// VARIÁVEIS DE SESSÃO USUÁRIO DO SISTEMA E A QUAL LOCAL OU EMPRESA PERTENCE
+ $id_credenciado = $_SESSION['id_credenciado'];
+ $nome_usuario = $_SESSION['login'];  
+ 
+// VARIÁVEL DO SCRIPT confirmar(), VIA  GET, ARQUIVO lab_autorizazao_medica.php
+ $motivo = isset($_GET["motivo"])? $_GET["motivo"] : '';
+ 
+// VARIÁVEL DO SCRIPT CONFIRMAR, VIA  PSOT, ARQUIVO lab_modal_procedimento.php 
+ $lab    = isset($_POST['lab']  )? $_POST['lab'] : '';
+ $id_especialidade = isset($_POST["id_especialidade"])? $_POST["id_especialidade"] : '';
+ $id_beneficiarios = isset($_POST["id_beneficiarios"])? $_POST["id_beneficiarios"] : '';
 
-// CONFIRMAR SADT FECHAR SOLICITAÇÃO
 
-/*
- if(isset($_POST["proc"])){
-    echo $_POST["proc"];
- }
- */
- if(isset($_POST["motivo"])){
-    $motivo = $_POST["motivo"];
+ 
+
+ // Vem do arquivo lab_modal_procedimento.php via POST
+/*  if(isset($_POST["lab"])){
+   $lab = $_POST["lab"];
  }else{
- 	$motivo = "";
+ 	$lab = "";
  }
 
-/* if(isset($_POST['id_especialidade'])){
-    echo      $id_especialidade = $_POST['id_especialidade'];
-         $medico_solicitante = $_POST['medico_solicitante'];
-         $cr = $_POST['cr'];
-         $codsig = $_POST['codsig'];
-}
 */
 
-//FASES:
-// 1 GUIA NÃO VALIDADE;
-// 2 GUIA ENVIADA PARA CALLCENTER
-// 3 GUIA AUTORIZADA PELO CALLCENTER
+// TESTE VALORES VINDO DO TELA/MODAL INSERIR PROCEDIMENTOS (lab_modal_procedimento.php)
+//echo $_POST['lab'];
+//echo $_POST['id_proc'] // id_proc = 2795 -> 10101012 -> consulta.
+//echo $_SESSION["perfil"];
 
+// ================================================================================
+//                   REGRAS DE ENTRADAS
+// ================================================================================
+// 1º REGRA = LABORATÓRIO NÃO PODE SOLICITAR PROCEDIMENTO CONSULTA ID_PROC = 2795.
+if( $_SESSION["perfil"] == "laboratorio" && isset($_POST['id_proc']) && $_POST['id_proc'] == '2795' ){
+			echo"<script language='javascript' type='text/javascript'>alert('Laborat\u00f3rio n\u00e3o pode solicitar consulta!');window.history.back();</script>";	
+			exit();	
+}
+
+// 2º REGRA = CLINICA NÃO PODE SOLICITAR PROCEDIMENTO EXAMES.
+if( $_SESSION["perfil"] == "clinica" && isset($_POST['id_proc']) && $_POST['id_proc'] <> '2795' ){
+			echo"<script language='javascript' type='text/javascript'>alert('Cl\u00ednica n\u00e3o pode solicitar exames!');window.history.back();</script>";	
+			exit();	
+}
 if( isset($_GET['senha']) && !empty($_GET['senha']) ){
 	if( empty($_GET["proc"]) ){
 	
@@ -52,17 +71,42 @@ if( isset($_GET['senha']) && !empty($_GET['senha']) ){
 			exit();		
 	}				
 }
+// 3º REGRA = RETORNO = É O PERÍODO DE 30DIAS APARTIR DA ULTIMA CONSULTA DENTRO DA ESPECIALIDADE. CODIGO ID DO PRODEDIMENTO CONSULTA NO BANCO É 2795.
+	require_once "../func/retorno.php";
+	// CHAMA A FUNÇÃO E TRATA O SEU RETORNO
+	if( $_SESSION["perfil"] == "clinica" && isset($_POST['id_proc']) && $_POST['id_proc'] == '2795' ){
+		$retorno = retorno($id_beneficiarios, $id_credenciado, $id_especialidade, $pdo);
+		if(!empty($retorno["msg"])){
+			echo $retorno["msg"];
+			exit();
+		}
+	}
+
+
+//=================================================================================
+//                   INFORMAÇÕES IMPORTANTE SOBRE O PROCESSO
+//=================================================================================
+/*
+INFORMAÇÕES TÉCNICAS: 
+	- O PROCESSO É COMPOSTO POR 3 FAZES QUE É CONTROLADAS PELA VARIÁVEL $status, CADASTRADA DURANTE TODO O PROCESSO NO BANCO;
+	- AS FASES: PEOCESSO DO ENVIO DAS INFORMAÇÕES PARA O CALLCENTER E O RERORNO DESSA PARA A CLÍNICAS E LABORATÓRIOS:
+		 1 GUIA NÃO VALIDADE;
+		 2 GUIA ENVIADA PARA CALLCENTER;
+		 3 GUIA AUTORIZADA PELO CALLCENTER;
+*/
 
 if( (isset($_GET['status'])) && ($_GET['status'] == 2) ){
-;
+
+// CONCELAMENTO DE GUIA
 	if(isset($_GET["cancelar"]) && $_GET["cancelar"] == 1){
 
 			 $sql = "UPDATE `sadt` SET `status`= 3, `senha`= '0',`n_autorizacao`= '0' WHERE `id`= ".$_GET['id'];	
 			 $stmt = $pdo->prepare($sql);  
 			 $stmt->execute();	
-			 echo"<script language='javascript' type='text/javascript'>alert('Cancelada com sucesso!');window.location.href='painel.php?lab=1'</script>";	
+			 echo"<script language='javascript' type='text/javascript'>alert('Cancelada com sucesso!');window.history.back();</script>";	
 			 exit();		
 	}else{
+// PROCESSO DE INSEIR PROCEDIMENTOS NÃO CANCELADOS			
 			if(isset($_GET["proc"]) && !empty($_GET["proc"])){
 				 
 				if(isset($_GET['senha'])){
@@ -85,6 +129,7 @@ if( (isset($_GET['status'])) && ($_GET['status'] == 2) ){
 			   $proc = array();
 			   $proc = explode( ',', $_GET["proc"]);
 			   
+// ESTÁGIO FINAL 3 -  PERCORRE O ARRAY $proc E ATUALIZA O CAMPO AUTORIZAÇÃO = 1, VALIDANDO OS PROCEDIMENTOS ENVIADOS PELO CALLCENTER
 				foreach ($proc as $valor) {	
 					 $sql = "UPDATE `sadt_procedimento` SET `autorizado`=1 WHERE `id_sadt`= ".$_GET['id']." AND `id_proc` =".$valor;
 					 $stmt = $pdo->prepare($sql);  
@@ -92,7 +137,7 @@ if( (isset($_GET['status'])) && ($_GET['status'] == 2) ){
 					 
 					 
 				}	
-				
+// 	ESTÁGIO FINAL 3 - ATUALIZA O status = 3, FINALIZANDO O PROCESSO PELO CALLCENTER.			
 					 $sql = "UPDATE `sadt` SET `status`= 3, `motivo_retorno`= '".$motivo_retorno."',`senha`= '".$senha."',`n_autorizacao`= '".$n_autorizacao."' WHERE `id`= ".$_GET['id'];	 
 					 $stmt = $pdo->prepare($sql);  
 					 $stmt->execute();	
@@ -105,57 +150,36 @@ if( (isset($_GET['status'])) && ($_GET['status'] == 2) ){
 			}
 	}
 
-      unset(
-	  $_SESSION["matricula"], 
-	  $tipreg, 
-	  $_SESSION["nome"],  
-	  $_SESSION["data_nasc"], 
-	  $_SESSION["deficiente"], 
-	  $_SESSION["data_sadt"] , 
-	  $_SESSION["status"], 
-	  $_SESSION["senha"], 
-	  $_SESSION["data_aut"], 
-	  $_SESSION["perfil_bd"], 
-	  $_SESSION["motivo"], 
-	  $_SESSION["nome_cred"], 
-	  $_SESSION["nome_usuario"],
-	  $_SESSION["operador"], 
-	  $_SESSION["url"], 
-	  $_SESSION["id_beneficiarios"] , 
-	  $_SESSION['last_id'], 
-	  $_SESSION["codsig"], 
-	  $_SESSION["cr"] , 
-	  $_SESSION["especialidade"], 
-	  $_SESSION['id_profissional_saude'],
-	  $_SESSION['ultimo_proc_id']
-	  
+       
 
-	   );  
-
-   	echo"<script language='javascript' type='text/javascript'>alert('Autoriza\u00e7\u00e3o processada com sucesso!');window.location.href='painel.php?lab=1'</script>";
-
+// FINALIZA O PROCESSO DA SOLICITAÇÃO PARA O CALLCENTER	
+  	echo"<script language='javascript' type='text/javascript'>alert('Autoriza\u00e7\u00e3o processada com sucesso!');window.history.back()</script>";
+	exit();
 }else{
 
-// 1° execução após do cadasdro da especialidade e médicos.
- $qtd_proc = $_POST["qtd_proc"];
- $id_proc = $_POST["id_proc"];
- $id_usuario = $_SESSION['id'];
- $matricula = $_SESSION['matricula'];
- $nome = $_SESSION['nome'];
- $deficiente = $_SESSION['deficiente'];
- $id_beneficiarios = $_SESSION['id_beneficiarios'];
- $id_credenciado = $_SESSION['id_credenciado'];
- $nome_usuario = $_SESSION['login'];
- $id_especialidade = $_SESSION['id_especialidade'];
- $id_profissional_saude = $_SESSION['id_profissional_saude'];
- $medico_solicitante = $_SESSION['medico_solicitante'];
- $cr = $_SESSION['cr'];
- $codsig = $_SESSION['codsig'];
- $id_internamento  = isset($_POST["id_internamento"]) ? $_POST["id_internamento"]: 'null';
- $id_imagem  = isset($_POST["id_imagem"]) ? $_POST["id_imagem"]: 'null';
- $data_aut  = isset($_POST["data_aut"]) ? $_POST["data_aut"]: 'null';
 
 
+// VARIAVEIS VEM DO ARQUIVO lab_modal_procedimento.php VIA POST. 
+// 1° EXECUÇÃO APÓS O CADASTRO DOS MÉDICOS E ESPECIALIDADE.
+  	$matricula = $_POST['matricula'];
+ 	$nome = $_POST['nome'];
+ 	$deficiente = $_POST['deficiente'];
+ 	$id_beneficiarios = $_POST['id_beneficiarios'];
+	$qtd_proc = $_POST["qtd_proc"];
+	$id_proc = $_POST["id_proc"];
+ 	
+	$id_usuario = $_SESSION['id'];
+	$id_especialidade = $_POST['id_especialidade'];
+	$id_profissional_saude = $_POST['id_profissional_saude'];
+	$medico_solicitante = $_POST['medico_solicitante'];
+	$cr = $_POST['cr'];
+	$codsig = $_POST['codsig'];
+ 
+ 	$id_imagem  = isset($_POST["id_imagem"]) ? $_POST["id_imagem"]: 'null';
+	$data_aut  = isset($_POST["data_aut"]) ? $_POST["data_aut"]: 'null';
+	//$id_internamento  = isset($_POST["id_internamento"]) ? $_POST["id_internamento"]: 'null';
+	
+	
 
 	//REGRAS DE NEGÃ“CIO PROCEDIMENTOS
     // PEGAR REGRA NA TABELA PROCEDIMENTOS
@@ -217,15 +241,24 @@ if( (isset($_GET['status'])) && ($_GET['status'] == 2) ){
     }
     */
 
+
+
+
+
+
+
+
     $cadastrar = 1;
      
     // CADASTRO PROCEDIMENTO   
        if($cadastrar == 1){
-        
-            // Inserir o procedimento caso não exita com o primeiro procedmento
+      
+  
+            // Inserir o 1 procedimento caso não exita.
             if(!isset($_SESSION['last_id'])){
                          
-			$sql = "INSERT INTO sadt (id, id_beneficiario, id_usuario,id_especialidade ,id_usuario_aut, id_internamento, id_autorizacao, id_credenciado, id_profissional_saude, id_imagem, medico_solicitante, cr , codsig , motivo, data_sadt, data_aut, operador, senha, status) VALUES (null,'".$id_beneficiarios."','".$id_usuario."','".$id_especialidade."',null,".$id_internamento.", null ,'".$id_credenciado."','".$id_profissional_saude."','".$id_imagem."','".$medico_solicitante."','".$cr."','".$codsig."',null,'".date("Y-m-d H:i:s")."','".$data_aut."','".$nome_usuario."',null,1)";
+				 $sql = "INSERT INTO sadt (id, id_beneficiario, id_usuario,id_especialidade ,id_usuario_aut, id_internamento, id_autorizacao, id_credenciado, id_profissional_saude, id_imagem, medico_solicitante, cr , codsig , motivo, data_sadt, data_aut, operador, senha, status) VALUES (null,'".$id_beneficiarios."','".$id_usuario."','".$id_especialidade."',null,null, null ,'".$id_credenciado."','".$id_profissional_saude."','".$id_imagem."','".$medico_solicitante."','".$cr."','".$codsig."',null,'".date("Y-m-d H:i:s")."','".$data_aut."','".$nome_usuario."',null,1)";
+			
 			
                $stmt = $conn->prepare($sql);
                $stmt->execute();
@@ -237,24 +270,32 @@ if( (isset($_GET['status'])) && ($_GET['status'] == 2) ){
                $stmt = $conn->prepare($sql);
                $stmt->execute();
 					$_SESSION['ultimo_proc_id'] = $id_proc;
+				
+					
             }else{
 			   // Caso exista mais de um SADT   
-				if(isset($_SESSION['ultimo_proc_id']) && $id_proc == $_SESSION['ultimo_proc_id']){
-					 echo"<script language='javascript' type='text/javascript'>alert('Procedimento j\u00e1 inserido!');window.location.href='painel.php?lab=1&id=".$_SESSION['last_id']."'</script>";
+				if(isset($_SESSION['ultimo_proc_id']) && $id_proc == $_SESSION['ultimo_proc_id'] && $_GET['id'] == $_SESSION['ultimo_id'] ){
+					 echo"<script language='javascript' type='text/javascript'>alert('Procedimento j\u00e1 inserido!');window.location.href='painel.php?lab=".$lab."&id=".$_SESSION['last_id']."'</script>";
 					 exit();
 				}else{
 				   $sql = "INSERT INTO sadt_procedimento(id, id_sadt, id_proc, qtd_proc, data) VALUES (null,".$_SESSION['last_id'].",".$id_proc.",'".$qtd_proc."','".date("Y-m-d H:i:s")."')";
 				   $stmt = $conn->prepare($sql);
 				   $stmt->execute();
 				   $_SESSION['ultimo_proc_id'] = $id_proc;
+				   $_SESSION['ultimo_id'] = $_GET['id'];
 				 
 				}   	   
            }
 		
 	 // Quantidade de procedimentos
+			if($lab == "consulta"){
+				echo"<script language='javascript' type='text/javascript'>window.location.href='painel.php?lab=".$lab."&id=".$_SESSION['last_id']."&".$lab."=1'</script>";
+				exit();
+			}else{
+				echo"<script language='javascript' type='text/javascript'>window.location.href='painel.php?lab=".$lab."&id=".$_SESSION['last_id']."'</script>";
+				exit();
+			}
 
-     echo"<script language='javascript' type='text/javascript'>window.location.href='painel.php?lab=1&id=".$_SESSION['last_id']."'</script>";
-	 
        }else{
 
            echo $dados;
@@ -264,7 +305,6 @@ if( (isset($_GET['status'])) && ($_GET['status'] == 2) ){
 
 
 
-// ---    ***     ---
 }
   
 

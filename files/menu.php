@@ -73,7 +73,7 @@
 <!-- Botões do Menu -->
 <?php
 
-	if( ($_SESSION["perfil"] <> "aut_internacao")  && ($_SESSION["perfil"] <> "laboratorio") && ($_SESSION["perfil"] <> "callcenter") ) {
+	if( ($_SESSION["perfil"] <> "aut_internacao")  && ($_SESSION["perfil"] <> "laboratorio") && ($_SESSION["perfil"] <> "callcenter") && ($_SESSION["perfil"] <> "clinica") && ($_SESSION["perfil"] <> "clin_lab")  ) {
 		echo'
 		<!-- Botão consulta de situação -->
 		<a href="fom_consulta_situacao.php" > 
@@ -127,13 +127,27 @@
 
 		// ==================================== Botões Perfis  ========================================  	
     	
-    	//-- Botão Clinicas -->		
-		if( $_SESSION["perfil"] == "clinicas" or $_SESSION["perfil"] == "administrador" or $_SESSION["perfil"] == "callcenter" or $_SESSION["perfil"] == "laboratorio") {
+    	//-- Botão Laboratório -->		
+		if( $_SESSION["perfil"] == "clinicas" or $_SESSION["perfil"] == "administrador" or $_SESSION["perfil"] == "callcenter" or $_SESSION["perfil"] == "laboratorio" or $_SESSION["perfil"] == "clin_lab") {
 		echo'
-		<a  href="painel.php?lab=1"  > 
+		<a  href="painel.php?lab=exame"  > 
+			<div class="thumbnail tile tile-medium tile-teal" style="display: flex; justify-content: center; align-items: center;">	';
+				
+			if($_SESSION["perfil"] == "callcenter"){
+				echo "SADT";
+			}else{
+				echo "Exame"; 
+			}
+		echo'	</div>
+		</a>';
+		}
+		//-- Botão Clinicas -->		
+		if( $_SESSION["perfil"] == "clinica" or $_SESSION["perfil"] == "administrador" or $_SESSION["perfil"] == "clin_lab") {
+		echo'
+		<a  href="painel.php?lab=consulta"  > 
 			<div class="thumbnail tile tile-medium tile-teal" style="display: flex; justify-content: center; align-items: center;">	
 				
-				Laboratório
+				Consulta
 
 			</div>
 		</a>';

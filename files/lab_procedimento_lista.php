@@ -68,17 +68,18 @@ if(isset($guia)){
 			if($_SESSION["perfil"] == "callcenter"){
 				 echo" disabled "; 
 			}
-			if( (!empty($senha)) || (!isset($_SESSION["matricula"])) || (isset($_SESSION['senha']))  ){ 
-				 echo" disabled "; 
+			if( (!empty($senha)) || (!isset($matricula)) || (isset($senha)) ||  isset($_GET['consulta']) ){ 
+				// echo" disabled "; 
 				 $bloque = " disabled "; 
 			} 
-			if( isset($_SESSION["status"]) &&  ($_SESSION["status"] == 2) ){
+			if( isset($status) &&  ($status == 2) ){
 				echo" disabled "; 
 				 $bloque = " disabled "; 
 			}	
 		
 		
 		?> > Incluir </button>
+
       <!-- Botão para acionar procedimentos lista 
   	    <a id="btn_modal" type="hidden" data-toggle="modal" data-target="#myModal"></a></div>
   	  <br />-->
@@ -109,8 +110,13 @@ if(isset($_GET['id'])){
                      
                          echo"    <tr > 
 						 			<td ><div align='center'>".$i."</div></td>      
-                                    <td ><div align='center'>".$registro["codigo"]."</div></td>
-                                    <td ><div align='center'>".$registro["descricao"]."</div></td>
+                                    <td ><div align='center'>".$registro["codigo"]."</div></td>";
+									
+									if($registro["codigo"] == '10101012'){
+										echo '<script>	document.getElementById("incluir").disabled = true;	</script>';
+									}
+									
+						echo"		<td ><div align='center'>".$registro["descricao"]."</div></td>
                                     <td ><div align='center' >".$registro["qtd_proc"]."</div></td>
                   					<td ><div align='center' >".date('d / m / Y', strtotime($registro["data"]))."</div></td>
 									<td ><div align='center'>";
@@ -134,7 +140,7 @@ if(isset($_GET['id'])){
 									}else{
 										if( ($registro["status"] == 1) or ($registro["status"] == 2)) { 
 											echo '';
-										}elseif(($_SESSION["perfil"] == "laboratorio") && ($registro["autorizado"] == 1)){ 
+										}elseif(($_SESSION["perfil"] == "clinica") && ($registro["autorizado"] == 1)){ 
 											echo '<span class="glyphicon glyphicon-ok"></span>'; 
 										}else{
 											echo  '<span class="glyphicon glyphicon-remove"></span>'; 

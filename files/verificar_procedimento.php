@@ -6,10 +6,10 @@ $assunto = isset($_GET['assunto'])?  $assunto : '' ;
 $cod_proc = $_GET['cod_proc'];
 
 //Verifica se não verdadeiros para não repetir oprocedimento novamente de criar a sessão das variáveis.Sem isso ele não quarda os médicos que não estão cadastrados no ipaseal.
-	$_SESSION["id_especialidade"] = isset($_GET['id_especialidade'])? $_GET['id_especialidade'] : '';
-	$_SESSION["medico_solicitante"] = isset($_GET['medico_solicitante'])? $_GET['medico_solicitante'] : '';
-	$_SESSION["cr"] = isset($_GET['cr'])? $_GET['cr'] : '';
-	$_SESSION["codsig"] = isset($_GET['codsig'])? $_GET['codsig'] : '';
+	$id_especialidade = isset($_GET['id_especialidade'])? $_GET['id_especialidade'] : '';
+	$medico_solicitante = isset($_GET['medico_solicitante'])? $_GET['medico_solicitante'] : '';
+	$cr = isset($_GET['cr'])? $_GET['cr'] : '';
+	$codsig = isset($_GET['codsig'])? $_GET['codsig'] : '';
 	
 
 
@@ -40,10 +40,10 @@ If($tamanho < 8){
 		   
 	
             if(!isset($_GET['numero_protocolo'])){   
-              echo "<script>location.href=\"".$_SESSION["url"]."&codsig=".$_SESSION["codsig"]."&cr=".$_SESSION["cr"]."&medico_solicitante=".$_SESSION["medico_solicitante"]."&id_especialidade=".$_SESSION["id_especialidade"]."&desc_proc=".$desc_proc."&id_proc=".$id_proc."&cod_proc=".$cod_proc."\"</script>";
+            echo "<script>location.href=\"".$_SESSION["url"]."&codsig=".$codsig."&cr=".$cr."&medico_solicitante=".$medico_solicitante."&id_especialidade=".$id_especialidade."&desc_proc=".$desc_proc."&id_proc=".$id_proc."&cod_proc=".$cod_proc."\"</script>";
 			
             }else{
-                echo "<script>location.href=\"".$_SESSION["url"]."&desc_proc2=".$desc_proc."&id_proc2=".$id_proc."&cod_proc2=".$cod_proc."&assunto2=".$assunto."\"</script>";
+              exit();  echo "<script>location.href=\"".$_SESSION["url"]."&desc_proc2=".$desc_proc."&id_proc2=".$id_proc."&cod_proc2=".$cod_proc."&assunto2=".$assunto."\"</script>";
             }	
          }
    }else{

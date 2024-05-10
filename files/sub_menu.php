@@ -46,7 +46,14 @@ switch ($sub_menu) {
 							break;
 
 						case '10':
-							$tituloMenu = "Lista de Atendimentos Laboratoriais ";
+							$tituloMenu = "Lista de Atendimentos";
+							//$lista =  "..\\laboratorio\lab_lista.php";
+							//$formulario =  "..\\laboratorio\lab_formulario.php";
+							$lista =  "lab_lista.php";
+							$formulario =  "lab_formulario.php";
+							break;
+						case '11':
+							$tituloMenu = "Lista de Consulta";
 							//$lista =  "..\\laboratorio\lab_lista.php";
 							//$formulario =  "..\\laboratorio\lab_formulario.php";
 							$lista =  "lab_lista.php";

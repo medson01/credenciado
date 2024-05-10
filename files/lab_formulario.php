@@ -39,7 +39,7 @@ function pegarMedico() {
 <script>
 function pegarMatricula() {
   var matric = document.getElementById("matricula").value;
-  window.location.href = "verficar_matricula.php?lab=1&matric="+matric;
+  window.location.href = "verficar_matricula.php?lab=<?php echo $_GET['lab']; ?>&matric="+matric;
 }
 </script>
 
@@ -66,17 +66,8 @@ input[type=checkbox]
 
 -->
                      </style>
-  </p>
-<?php  
-	if($_SESSION["perfil"] <> "callcenter"){
- 		echo '<a href="painel.php?lab=1&id=0"> 
-				<button type="button" class="btn btn-primary" style="width:87px"> Novo </button>  
-			  </a>';
-		}
-?>
-  <br />
-  <br />
-  <div align="center">
+
+  <div >
 					  
 <?php  
 
@@ -88,11 +79,11 @@ input[type=checkbox]
               sadt.status, sadt.id, sadt.id_credenciado, sadt.id_especialidade,sadt.id_profissional_saude,sadt.data_sadt, sadt.data_aut, sadt.medico_solicitante, sadt.cr, sadt.operador,sadt.codsig,
               sadt.senha,sadt.motivo,sadt.motivo_retorno,sadt.n_autorizacao,
               beneficiarios.nome, beneficiarios.matricula, beneficiarios.tipreg, beneficiarios.data_nascimento, beneficiarios.deficiente,  
-              credenciado.codigo, credenciado.nome AS nome_cred, 
+              credenciado.codigo, credenciado.nome as nome_cred, 
               usuarios.nome AS nome_usuario, usuarios.perfil
                FROM `sadt` 
-                INNER JOIN beneficiarios on beneficiarios.id = sadt.id_beneficiario 
-                INNER JOIN credenciado on credenciado.id = sadt.id_credenciado 
+              INNER JOIN beneficiarios on beneficiarios.id = sadt.id_beneficiario 
+              LEFT JOIN credenciado on credenciado.id = sadt.id_credenciado 
               INNER JOIN usuarios on usuarios.id = sadt.id_usuario
               LEFT  JOIN profissional_saude on profissional_saude.id = sadt.id_profissional_saude 
               WHERE sadt.id =".$_GET['id'];
@@ -102,113 +93,93 @@ input[type=checkbox]
 	$stmt->execute();
 	 
 	while($registro = $stmt->fetch(PDO::FETCH_ASSOC)){  
-			$_SESSION["guia"] = $registro["id"]; 					
-            $_SESSION["matricula"] = $registro["matricula"];
-			$_SESSION["nome"] = $registro["nome"];
-			$_SESSION["data_nasc"]  = $registro["data_nascimento"];
-			$_SESSION["deficiente"] = $registro["deficiente"];
-			$_SESSION["nome_cred"] = $registro["nome_cred"];
-			$_SESSION["data_sadt"] = $registro["data_sadt"];
-			$_SESSION["operador"] = $registro["operador"];
-			$_SESSION["senha"] = $registro["senha"];
-			$_SESSION["status"] = $registro["status"];
-			$_SESSION["tipreg"] = $registro["tipreg"];
-			$_SESSION["motivo"] = $registro["motivo"];
-			$_SESSION["motivo_retorno"] = $registro["motivo_retorno"];
-      		$_SESSION["nome_usuario"] = $registro["nome_usuario"];		  
-      		$_SESSION["perfil_bd"] = $registro["perfil"];  
-      		$_SESSION["data_aut"] = $registro["data_aut"];  
-      		$_SESSION["motivo"]  = $registro["motivo"];
-      		$_SESSION["cr"] = $registro["cr"];
-            $_SESSION["medico_solicitante"] = $registro["medico_solicitante"];
-           	$_SESSION["id_especialidade"] = $registro["id_especialidade"];
-           	$_SESSION["codsig"] = $registro["codsig"];  
-            $_SESSION["n_autorizacao"] = $registro["n_autorizacao"];       
+			$guia = $registro["id"]; 					
+            $matricula = $registro["matricula"];
+			$nome = $registro["nome"];
+			$data_nasc  = $registro["data_nascimento"];
+			$deficiente = $registro["deficiente"];
+			$nome_cred = $registro["nome_cred"];
+			$data_sadt = $registro["data_sadt"];
+			$operador = $registro["operador"];
+			$senha = $registro["senha"];
+			$status = $registro["status"];
+			$tipreg = $registro["tipreg"];
+			$motivo = $registro["motivo"];
+			$motivo_retorno = $registro["motivo_retorno"];
+      		$nome_usuario = $registro["nome_usuario"];		  
+      		$perfil_bd = $registro["perfil"];  
+      		$data_aut = $registro["data_aut"];  
+      		$motivo  = $registro["motivo"];
+      		$cr = $registro["cr"];
+            $medico_solicitante = $registro["medico_solicitante"];
+           	$id_especialidade = $registro["id_especialidade"];
+           	$codsig = $registro["codsig"];  
+            $n_autorizacao = $registro["n_autorizacao"];       
                     
 
 								  								       				     		 
    		}
-		
-			if(!isset($_GET['cod_proc']) && (isset($_SESSION["matricula"])) ){
-				$_SESSION["matricula"] = "0001.0001".$_SESSION["matricula"]; 
-			}
+	// JUNTAR AS MATRÍCULAS COM O CODIGO DA FAMIILIA
+			$matricula = "00010001".$matricula."-".$tipreg; 
+			
 		
 	}else{
 
+	// VARIÁVEIS VINDA DO ARQUIVO verificar_matricuala.php. 
 		if( (isset($_GET['matricula']) && ( $_GET['id'] == 0) )){
-		
-		  $matricula = $_GET['matricula'];
-      $_SESSION["matricula"] = $matricula;
 
-      $id_beneficiarios = $_GET['id_beneficiarios'];
-      $_SESSION["id_beneficiarios"] = $id_beneficiarios;
+		  	$matricula = isset($_GET['matricula'])? $_GET['matricula'] : '';
+			$id_beneficiarios = isset($_GET['id_beneficiarios'])? $_GET['id_beneficiarios'] : '';
+			$nome =	isset($_GET['paciente'])? $_GET['paciente'] : '';
+			$data_nasc= isset($_GET['data_nascimento'])? $_GET['data_nascimento'] : '';
+			$deficiente = isset($_GET['deficiente'])? $_GET['deficiente'] : '';
+      		$data_sadt = date('d / m / Y, H:i:s\h\s');
+			// $data_inclusao = $_GET['data_inclusao'];
+			//$_SESSION["data_inclusao"] = $data_inclusao;
 
-			$nome =	$_GET['paciente'];
-      $_SESSION["nome"] = $nome;
-
-			$data_nasc= $_GET['data_nascimento'];
-      $_SESSION["data_nasc"] = $data_nasc;
-
-			$deficiente = $_GET['deficiente'];
-      $_SESSION["deficiente"] = $deficiente;
-
-     // $data_inclusao = $_GET['data_inclusao'];
-     //$_SESSION["data_inclusao"] = $data_inclusao;
-
-			$data_sadt = date('d / m / Y, H:i:s\h\s');
-      $_SESSION["data_sadt"] = $data_sadt;
-
-   $_SESSION["url"] = $_SERVER["REQUEST_URI"];
-		}
+  			$_SESSION["url"] = $_SERVER["REQUEST_URI"];
+		}		
 	}
   
 
-
+	// VARIÁVEIS VINDA DO ARQUIVO verificar_medico.php
 	  if(isset($_GET['medico_solicitante'])){
-	 		 	$medico_solicitante = $_GET['medico_solicitante'];
-      	$_SESSION["medico_solicitante"] = $medico_solicitante;
+	 		$medico_solicitante = isset($_GET['medico_solicitante'])? $_GET['medico_solicitante'] : '';
+			$cr = isset($_GET['cr'])? $_GET['cr'] : '';
+			$codsig = isset($_GET['codsig'])? $_GET['codsig'] : '';
+			$id_especialidade = isset($_GET['id_especialidade'])? $_GET['id_especialidade'] : '';
+			$id_profissional_saude = isset($_GET['id_profissional_saude'])? $_GET['id_profissional_saude'] : '';
+			$guia = isset($_GET['id'])? $_GET['id'] : '';
 	  }
-	  if(isset($_GET['cr'])){
-	  $cr = $_GET['cr'];
-      $_SESSION["cr"] = $cr;
-    }
-	  if(isset($_GET['codsig'])){
-	  $codsig = $_GET['codsig'];
-      $_SESSION["codsig"] = $codsig;
-    }
-
-    if(isset($_GET['id_especialidade'])){
-	  $id_especialidade = $_GET['id_especialidade'];
-      $_SESSION["id_especialidade"] = $id_especialidade;
-    }
-
-    if(isset($_GET['id_profissional_saude'])){
-    $id_profissional_saude = $_GET['id_profissional_saude'];
-    $_SESSION["id_profissional_saude"] = $id_profissional_saude;
-    }
-
-    if(isset($_GET['id'])){
-    $guia = $_GET['id'];
-    $_SESSION["guia"] = $guia;
-    }
 
 
-    if( empty($_GET['id']) &&  !isset($_GET['matricula']) ){
-
-     unset($_SESSION["matricula"], $tipreg, $_SESSION["nome"],  $_SESSION["data_nasc"], $_SESSION["deficiente"],  $_SESSION["data_sadt"] , $_SESSION["status"], $_SESSION["senha"], $_SESSION["data_aut"], $_SESSION["perfil_bd"], $_SESSION["motivo"], $_SESSION["nome_cred"], $_SESSION["nome_usuario"],$_SESSION["operador"], $_SESSION["url"], $_SESSION["id_beneficiarios"] , $_SESSION['last_id'], $_SESSION["codsig"], $_SESSION["cr"] , $_SESSION["id_especialidade"],$_SESSION["medico_solicitante"], $_SESSION["guia"],$_SESSION["data_inclusao"],$_SESSION["n_autorizacao"], $registro["motivo_retorno"]);  
-    }
-    else{ 
-      if( isset($_SESSION["matricula"])){
-        $matricula = $_SESSION["matricula"];
-      }
-
-    }
-
-
-
-?>				
-
-
+				
+	// MENSAGEM AGUARDANDO RESPOSTA DO CALLCENTER /
+				if(isset($status) && $status == 2){
+				
+					echo '<div class="alert alert-success" role="alert" style="text-align:center; font-size: 14px; font-style: oblique;">
+                                    Autorização solicitada! <br /> 
+									Aguadando retorno do callcenter.             
+                		  </div>';
+				}
+				if(empty($n_autorizacao) && isset($status) && $status == 3 ){
+							echo '<div class="alert alert-danger " role="alert" style="text-align:center; font-size: 14px; font-style: oblique;">
+											Guia negada ou cancelada! <br />
+								  </div>';
+				}
+				
+				
+				
+	if($_SESSION["perfil"] <> "callcenter"){
+ 		echo '
+			<p />
+			<a href="painel.php?lab='.$_GET['lab'].'&id=0"> 
+				<button type="button" class="btn btn-primary" style="width:87px"> Novo </button>  
+			  </a>
+	        <br />
+  			';
+		}
+			?>
    		  
         <table width="100% " border="0" align="center">
 		
@@ -232,12 +203,11 @@ input[type=checkbox]
 
 
 													<?php 
-														echo !empty($_SESSION["guia"]) ? $_SESSION["guia"]: null;  
+														echo !empty($guia) ? $guia: null;  
 														if(isset($desativar)){ 
 															echo $desativar;
 														} 
-														if(!empty($_SESSION["guia"]) && $_SESSION["guia"]<> 1){
-														
+														if(!empty($guia) && $guia<> 1){									
 															 $_SESSION["url"] = $_SERVER["REQUEST_URI"];
 														
 														}
@@ -248,8 +218,8 @@ input[type=checkbox]
 												 <div style="float:right; width:50%;position:relative">
 												 	<strong>Nº de autorização&nbsp; &nbsp;
 														<?php 
-															if (isset($_SESSION["n_autorizacao"])){ 
-																	echo $_SESSION["n_autorizacao"]; 
+															if (isset($n_autorizacao)){ 
+																	echo $n_autorizacao; 
 															}
 														?>
 														  </strong>
@@ -257,12 +227,12 @@ input[type=checkbox]
 									                		<strong>
 															
 																<?php 
-																if (isset($_SESSION["senha"])){ 
-																	echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Senha &nbsp;&nbsp;&nbsp; ". $_SESSION["senha"]; 
+																if (isset($senha)){ 
+																	echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Senha &nbsp;&nbsp;&nbsp; ". $senha; 
 																 } else {
 																 echo '<div style="position: absolute; left: 130px; top: -8px;">
 																 <input type="text" name="n_autorizacao" id="n_autorizacao" maxlength="32" class="form-control input-sm" style="font-size: 10px; width: 200px; text-align: right;"';
-																 if($_SESSION["perfil"] == "laboratorio"){
+																 if($_SESSION["perfil"] == "laboratorio" || $_SESSION["perfil"] == "clinica"){
 																 	echo "readonly";
 																 }
 																 echo' ></span></strong></div>';
@@ -273,7 +243,7 @@ input[type=checkbox]
 														<span style="color:#FF0000">
 									                		<strong>
 <input type="text" name="senha" id="senha" maxlength="32" class="form-control input-sm" style="font-size: 10px; width: 90px; text-align: right;"';
-																 if($_SESSION["perfil"] == "laboratorio"){
+																 if($_SESSION["perfil"] == "laboratorio" || $_SESSION["perfil"] == "clinica"){
 																 	echo "readonly";
 																 }
 																 echo' ></div>';
@@ -301,12 +271,12 @@ input[type=checkbox]
                             </tr>
                             <tr>
                               <td><span class="style13">Matrícula</span><br />
-							  <input type="text" name="matricula" id="matricula" minlength="16" class="form-control input-sm" style="font-size: 10px" size="44" required="required" onchange="pegarMatricula()"  <?php if (isset($_SESSION["matricula"])) { echo "value='".$_SESSION["matricula"]."' readonly"; }  ?>>
+							  <input type="text" name="matricula" id="matricula" minlength="16" class="form-control input-sm" style="font-size: 10px" size="44" required="required" onchange="pegarMatricula()"  <?php if (isset($matricula)) { echo "value='".$matricula."' readonly"; }  ?>>
                               <!--    <input name="matricula1" id ="matricula" type="text" class="form-control input-sm" style="font-size: 10px" size="44" required="required" onchange="pegarMatricula()" <?php //if (isset($_SESSION["matricula"])) { echo "value='".$_SESSION["matricula"]."' "; }  ?>  /> -->
                                   </span></td>
                               <td>&nbsp;</td>
                               <td><span class="style13">Data do atendimento</span><br />
-                              <input name="data_sadt2" id ="data_sadt2" type="text" class="form-control input-sm" style="font-size: 10px" size="44" required="required" <?php if (isset($_SESSION["data_sadt"])) { echo "value='".date('d / m / Y, H:i:s\h\s', strtotime($_SESSION["data_sadt"]))."'  "; }  ?> readonly /></td>
+                              <input name="data_sadt2" id ="data_sadt2" type="text" class="form-control input-sm" style="font-size: 10px" size="44" required="required" <?php if (isset($data_sadt)) { echo "value='".date('d / m / Y, H:i:s\h\s')."'  "; }  ?> readonly /></td>
                             </tr>
                             <tr>
                               <td>&nbsp;</td>
@@ -315,15 +285,15 @@ input[type=checkbox]
                             </tr>
                             <tr>
                               <td ><span class="style13">Nome do usuário</span> <br />
-                                <input name="nome" id ="nome" type="text" class="form-control input-sm" style="font-size: 10px" required="required" <?php if (isset($_SESSION["nome"])) { echo "value='".$_SESSION["nome"]."' "; } ?> readonly />
+                                <input name="nome" id ="nome" type="text" class="form-control input-sm" style="font-size: 10px" required="required" <?php if (isset($nome)) { echo "value='".$nome."' "; } ?> readonly />
                                 </span></td>
 								                              <td>&nbsp;</td>
                                                               <td><span class="style13">Deficiente</span> <br />
   &nbsp;
   <input type="checkbox" name="deficiente" id="deficiente" disabled="disabled"
 								<?php
-      									if (isset($_SESSION["deficiente"]) ) {
-      										if( $_SESSION["deficiente"] == 1 ){
+      									if (isset($deficiente) ) {
+      										if( $deficiente == 1 ){
       											echo " value='1' checked ";
       										}else{ echo " disabled"; }
       									}
@@ -338,7 +308,7 @@ input[type=checkbox]
                             </tr>
                             <tr>
                               <td><span class="style13">Idade</span><br />
-                                <input name="idade" id ="idade" type="text" class="form-control input-sm" style="font-size: 10px" size="44" required="required" <?php if (isset($_SESSION["data_nasc"])) { echo "value='".calc_idade($_SESSION["data_nasc"])."'  "; }  ?> readonly />
+                                <input name="idade" id ="idade" type="text" class="form-control input-sm" style="font-size: 10px" size="44" required="required" <?php if (isset($data_nasc)) { echo "value='".calc_idade($data_nasc)."'  "; }  ?> readonly />
                                 </span></td>
                               <td>&nbsp;</td>
                               <td>&nbsp;</td>
@@ -350,11 +320,11 @@ input[type=checkbox]
                             </tr>
                             <tr>
                               <td><span class="style13">Credenciado</span><br />
-                                <input name="nome_cred" id ="nome_cred" type="text" class="form-control input-sm" style="font-size: 10px" size="44" required="required" <?php if (isset($_SESSION["nome_cred"])) { echo "value='".$_SESSION["nome_cred"]."' readonly "; }else { echo "value='".$_SESSION["credenciado"]."' readonly ";} ?> readonly />
+                                <input name="nome_cred" id ="nome_cred" type="text" class="form-control input-sm" style="font-size: 10px" size="44" required="required" <?php if (isset($nome_cred)) { echo "value='".$nome_cred."' readonly "; }else { echo "value='".$_SESSION["credenciado"]."' readonly ";} ?> readonly />
                                 </span></td>
                               <td>&nbsp;</td>
                               <td><span class="style13">Atendente</span><br />
-                                <input name="nome_usuario" id ="nome_usuario" type="text" class="form-control input-sm" style="font-size: 10px" size="44" required="required" <?php if (isset($_SESSION["nome_usuario"])) { echo "value='".$_SESSION["nome_usuario"]."'  "; }else{ echo "value='".$_SESSION["login"]."' readonly ";} ?> readonly />
+                                <input name="nome_usuario" id ="nome_usuario" type="text" class="form-control input-sm" style="font-size: 10px" size="44" required="required" <?php if (isset($nome_usuario)) { echo "value='".$nome_usuario."'  "; }else{ echo "value='".$_SESSION["login"]."' readonly ";} ?> readonly />
                                 </span></td>
                             </tr>
                             <tr>
@@ -374,7 +344,7 @@ input[type=checkbox]
 
     while($registro = $stmt->fetch(PDO::FETCH_ASSOC)){  
      echo' <option value="'.$registro["id"].'"';
-     if( (!empty($_GET['id_especialidade']) &&  $registro["id"] == $_GET['id_especialidade']) || (isset($_SESSION["cr"]) && $_SESSION["id_especialidade"] == $registro["id"]) ){
+     if( (!empty($_GET['id_especialidade']) &&  $registro["id"] == $_GET['id_especialidade']) || (isset($cr) && $id_especialidade == $registro["id"]) ){
        echo 'selected'; 
       /* if(!isset($_SESSION["id_especialidade"])){
          $_SESSION["id_especialidade"] = $_GET['id_especialidade'];
@@ -396,7 +366,7 @@ $data_aut  = isset($_POST["data_aut"]) ? $_POST["data_aut"]: 'null';
                           <td><span class="style13">CR<br>
                           </span>
                             <span class="style13">
-                            <input name="cr" id ="cr" type="text" class="form-control input-sm" style="font-size: 10px" size="44" required="required" onchange="pegarMedico()" <?php if (isset($_SESSION["cr"]) || !empty($_GET['cr']) ) { echo "value='".$_SESSION["cr"]."' readonly  "; }   if(isset($desativar)){ echo $desativar;}   if(!empty($_SESSION["senha"])){ echo "readonly"; } ?> />
+                            <input name="cr" id ="cr" type="text" class="form-control input-sm" style="font-size: 10px" size="44" required="required" onchange="pegarMedico()" <?php if (isset($cr) || !empty($_GET['cr']) ) { echo "value='".$cr."' readonly  "; }   if(isset($desativar)){ echo $desativar;}   if(!empty($senha)){ echo "readonly"; } ?> />
                             </span></td>
                         </tr>
                             <tr>
@@ -406,10 +376,10 @@ $data_aut  = isset($_POST["data_aut"]) ? $_POST["data_aut"]: 'null';
                             </tr>
                             <tr>
                               <td><span class="style13">Médico solicitante</span><br />
-                                  <input id="medico_solicitante"  name="medico_solicitante" type="text" class="form-control input-sm" style="font-size: 10px"  size="44" required="required" <?php if (isset($_SESSION["medico_solicitante"]) &&  !empty($_SESSION["medico_solicitante"])) { echo "value='".$_SESSION["medico_solicitante"]."' readonly  "; }    ?>  onkeyup="maiuscula()"/>
+                                  <input id="medico_solicitante"  name="medico_solicitante" type="text" class="form-control input-sm" style="font-size: 10px"  size="44" required="required" <?php if (isset($medico_solicitante) &&  !empty($medico_solicitante)) { echo "value='".$medico_solicitante."' readonly  "; }    ?>  onkeyup="maiuscula()"/>
                               <td>&nbsp;</td>
                               <td><span class="style13">Sigla CR </span><br />
-                                  <input id="codsig"  name="codsig" type="text" class="form-control input-sm" style="font-size: 10px"  size="44" required="required" <?php if (isset($_SESSION["codsig"]) &&  !empty($_SESSION["codsig"])) { echo "value='".$_SESSION["codsig"]."' readonly  "; }    ?>  onkeyup="maiuscula()"/></td>
+                                  <input id="codsig"  name="codsig" type="text" class="form-control input-sm" style="font-size: 10px"  size="44" required="required" <?php if (isset($codsig) &&  !empty($codsig)) { echo "value='".$codsig."' readonly  "; }    ?>  onkeyup="maiuscula()"/></td>
                             </tr>
                             <tr>
                               <td>&nbsp;</td>

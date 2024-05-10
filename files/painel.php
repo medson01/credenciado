@@ -85,7 +85,15 @@ if(!isset($_SESSION)){
 											}
 											if(isset($_GET['lab'])){
    									 			$sub_menu= 10;
-												$titulo = "Atendimento Laboratório";
+												if($_SESSION["perfil"] == 'callcenter'){
+													$titulo = "Atendimento SADT";
+												}else{
+													$titulo = "Atendimento ".$_GET['lab'];
+												}
+											}
+											if(isset($_GET['consul'])){
+   									 			$sub_menu= 11;
+												$titulo = "Atendimento Consulta";
 											}
 											
 											echo $titulo;
