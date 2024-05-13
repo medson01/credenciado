@@ -29,6 +29,7 @@
  $motivo = isset($_GET["motivo"])? $_GET["motivo"] : '';
  
 // VARIÁVEL DO SCRIPT CONFIRMAR, VIA  PSOT, ARQUIVO lab_modal_procedimento.php 
+ $id_paciente = isset($_POST["id_paciente"])? $_POST["id_paciente"] : '';
  $lab    = isset($_POST['lab']  )? $_POST['lab'] : '';
  $id_especialidade = isset($_POST["id_especialidade"])? $_POST["id_especialidade"] : '';
  $id_beneficiarios = isset($_POST["id_beneficiarios"])? $_POST["id_beneficiarios"] : '';
@@ -73,7 +74,6 @@ if( isset($_GET['senha']) && !empty($_GET['senha']) ){
 }
 // 3º REGRA = RETORNO = É O PERÍODO DE 30DIAS APARTIR DA ULTIMA CONSULTA DENTRO DA ESPECIALIDADE. CODIGO ID DO PRODEDIMENTO CONSULTA NO BANCO É 2795.
 	require_once "../func/retorno.php";
-	// CHAMA A FUNÇÃO E TRATA O SEU RETORNO
 	if( $_SESSION["perfil"] == "clinica" && isset($_POST['id_proc']) && $_POST['id_proc'] == '2795' ){
 		$retorno = retorno($id_beneficiarios, $id_credenciado, $id_especialidade, $pdo);
 		if(!empty($retorno["msg"])){
@@ -81,8 +81,16 @@ if( isset($_GET['senha']) && !empty($_GET['senha']) ){
 			exit();
 		}
 	}
-
-
+// 4º REGRA = CONSULTA POD DIA PROFISSIONAL SAÚDE = UM MÉDICO SÓ PODE ATENDER UMA DETERNINADA QUANTIDADE DE PESSOAS POR DIA. EX.: 4 PACIENTES 
+/*	require_once "../func/consulta_dia.php";
+	if( $_SESSION["perfil"] == "clinica" && isset($_POST['id_proc']) && $_POST['id_proc'] == '2795' ){
+		$consulta_dia = consulta_dia($id_beneficiarios, $id_credenciado, $id_especialidade, $id_profissional_saude, $pdo);
+		if(!empty($consulta_dia["msg"])){
+			echo $consulta_dia["msg"];
+			exit();
+		}
+	}
+*/
 //=================================================================================
 //                   INFORMAÇÕES IMPORTANTE SOBRE O PROCESSO
 //=================================================================================
@@ -253,7 +261,7 @@ if( (isset($_GET['status'])) && ($_GET['status'] == 2) ){
     // CADASTRO PROCEDIMENTO   
        if($cadastrar == 1){
       
-  
+
             // Inserir o 1 procedimento caso não exita.
             if(!isset($_SESSION['last_id'])){
                          
@@ -269,31 +277,32 @@ if( (isset($_GET['status'])) && ($_GET['status'] == 2) ){
                $sql = "INSERT INTO sadt_procedimento(id, id_sadt, id_proc, qtd_proc, data,autorizado) VALUES (null,".$_SESSION['last_id'].",".$id_proc.",'".$qtd_proc."','".date("Y-m-d H:i:s")."',null)";
                $stmt = $conn->prepare($sql);
                $stmt->execute();
-					$_SESSION['ultimo_proc_id'] = $id_proc;
-				
+			   $_SESSION['ultimo_proc_id'] = $id_proc;
+	
 					
             }else{
-			   // Caso exista mais de um SADT   
-				if(isset($_SESSION['ultimo_proc_id']) && $id_proc == $_SESSION['ultimo_proc_id'] && $_GET['id'] == $_SESSION['ultimo_id'] ){
-					 echo"<script language='javascript' type='text/javascript'>alert('Procedimento j\u00e1 inserido!');window.location.href='painel.php?lab=".$lab."&id=".$_SESSION['last_id']."'</script>";
-					 exit();
+			   // CASO EXISTA MAIS DE UMA SOLICITAÇÃO DE PROCEDIMENTO PARA NÃO REPETIR O PROCEDIMENTO AO DIGITADO 
+				if(isset($_SESSION['ultimo_proc_id']) && $id_proc == $_SESSION['ultimo_proc_id'] ){
+				 echo"<script language='javascript' type='text/javascript'>alert('Procedimento j\u00e1 inserido!');window.history.back()</script>";
+				 exit();
 				}else{
 				   $sql = "INSERT INTO sadt_procedimento(id, id_sadt, id_proc, qtd_proc, data) VALUES (null,".$_SESSION['last_id'].",".$id_proc.",'".$qtd_proc."','".date("Y-m-d H:i:s")."')";
 				   $stmt = $conn->prepare($sql);
 				   $stmt->execute();
 				   $_SESSION['ultimo_proc_id'] = $id_proc;
-				   $_SESSION['ultimo_id'] = $_GET['id'];
+				   
 				 
 				}   	   
            }
-		
+
 	 // Quantidade de procedimentos
 			if($lab == "consulta"){
-				echo"<script language='javascript' type='text/javascript'>window.location.href='painel.php?lab=".$lab."&id=".$_SESSION['last_id']."&".$lab."=1'</script>";
+				echo"<script language='javascript' type='text/javascript'>window.location.href='painel.php?lab=".$lab."&id=".$_SESSION['last_id']."&".$lab."=1'</script>";				
 				exit();
-			}else{
-				echo"<script language='javascript' type='text/javascript'>window.location.href='painel.php?lab=".$lab."&id=".$_SESSION['last_id']."'</script>";
+			}else{	
+				echo"<script language='javascript' type='text/javascript'>window.location.href='painel.php?lab=".$lab."&id=".$_SESSION['last_id']."'</script>";				
 				exit();
+				
 			}
 
        }else{

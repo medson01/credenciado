@@ -7,10 +7,9 @@
 	- No formulário para o laboratório fica no campo autorizado em banco, porém no perfil callcenter fica com chekbox;
 	
  
- */
- 	// $_SESSION["status"]; 
+ */ 
 
- 	
+	
  ?>
 <script>
 function maiuscula() {
@@ -178,7 +177,25 @@ input[type=checkbox]
 			  </a>
 	        <br />
   			';
+			// APAGA AS VARIAVEIS DE SESSÃO E CONTROLE PARA INSERÇÃO DE DADOS NO BANDO.
+			if(empty($_GET["id"])){
+				unset($_SESSION['ultimo_proc_id'], $_SESSION['last_id'], $_SESSION['last_id']);
+			}
 		}
+		
+/*		
+		// TESTE DE FUNÇÃO
+	require_once "../func/consulta_dia.php";
+	$consulta_dia = consulta_dia(22, 29, 1, 1779 , $pdo);
+		if(!empty($consulta_dia["msg"])){
+			echo $consulta_dia["msg"];
+			exit();
+		}
+*/		
+		
+		
+		
+		
 			?>
    		  
         <table width="100% " border="0" align="center">

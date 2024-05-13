@@ -26,11 +26,13 @@ $itens_por_pagina = 25;
   $a= "SELECT DISTINCT sadt.status, sadt.id, sadt.data_sadt,sadt.n_autorizacao,
             
             beneficiarios.nome, beneficiarios.matricula, beneficiarios.tipreg,  
-            credenciado.codigo AS cod_cred, credenciado.nome AS nome_cred 
+            credenciado.codigo AS cod_cred, credenciado.nome AS nome_cred, 
+			especialidade.nome AS nome_especialidade
            
             FROM `sadt`
             INNER JOIN beneficiarios on beneficiarios.id = sadt.id_beneficiario 
-            INNER JOIN credenciado on credenciado.id = sadt.id_credenciado            
+            INNER JOIN credenciado on credenciado.id = sadt.id_credenciado 
+			INNER JOIN especialidade on especialidade.id = sadt.id_especialidade           
             
           ";
 
@@ -210,9 +212,9 @@ function excluir(id) {
                <tr  style='font-weight:bold;'>
                 <td style='padding: 4px;'><div align="center"> ID  </div></td>
                 <td style='padding: 4px;'><div align="center">Nome Usuário</div></td>
-                <td style='padding: 4px;'><div align="center">matrícula</div></td>
-                <td style='padding: 4px;'><div align="center">Credenciado </div></td>
-                <td style='padding: 4px;'><div align="center">Cod. RDA </div></td>
+                <td style='padding: 4px;'><div align="center">matrícula</div></td>                
+                <td style='padding: 4px;'><div align="center">Especialidade </div></td>
+				<td style='padding: 4px;'><div align="center">Credenciado </div></td>
                 <td style='padding: 4px;'><div align="center">Data da Guia</div></td>
                 <td style='padding: 4px;'><div align="center">Retorno</div></td>
               </tr>
@@ -222,9 +224,9 @@ function excluir(id) {
               <tr>
                 <td><div align='center'><?php echo "<a  id='ticket' href = 'painel.php?lab=".$_GET['lab']."&id=".$registro["id"]."'>  ".$registro["id"]."</a>";  ?> </div></td>           
                 <td><?php echo "<a  href = 'painel.php?lab=".$_GET['lab']."&id=".$registro["id"]."'>".$registro["nome"]."</a>"; ?> </td>  
-                <td><?php echo "0001.0001.".$registro["matricula"]." - ".$registro["tipreg"]; ?></td>            
-                <td><?php echo $registro["nome_cred"]; ?></td>
-                <td><?php echo $registro["cod_cred"]; ?></td>
+                <td><?php echo "0001.0001.".$registro["matricula"]." - ".$registro["tipreg"]; ?></td>                         
+                <td><?php echo $registro["nome_especialidade"]; ?></td>
+				<td><?php echo $registro["nome_cred"]; ?></td>
                 <td><div align=' right'><?php echo date("j/n/Y <\b\\r> H:i:s",strtotime($registro["data_sadt"])); ?></div></td>
                 <td><div align='center'>
 				<?php 

@@ -140,7 +140,7 @@ if(isset($_GET['id'])){
 									}else{
 										if( ($registro["status"] == 1) or ($registro["status"] == 2)) { 
 											echo '';
-										}elseif(($_SESSION["perfil"] == "clinica") && ($registro["autorizado"] == 1)){ 
+										}elseif(($_SESSION["perfil"] == "clinica") || ($registro["autorizado"] == 1)){ 
 											echo '<span class="glyphicon glyphicon-ok"></span>'; 
 										}else{
 											echo  '<span class="glyphicon glyphicon-remove"></span>'; 
