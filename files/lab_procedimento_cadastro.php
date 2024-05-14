@@ -33,6 +33,7 @@
  $lab    = isset($_POST['lab']  )? $_POST['lab'] : '';
  $id_especialidade = isset($_POST["id_especialidade"])? $_POST["id_especialidade"] : '';
  $id_beneficiarios = isset($_POST["id_beneficiarios"])? $_POST["id_beneficiarios"] : '';
+ $id_proc = isset($_POST["id_proc"])? $_POST["id_proc"] : '';
 
 
  
@@ -55,13 +56,13 @@
 //                   REGRAS DE ENTRADAS
 // ================================================================================
 // 1º REGRA = LABORATÓRIO NÃO PODE SOLICITAR PROCEDIMENTO CONSULTA ID_PROC = 2795.
-if( $_SESSION["perfil"] == "laboratorio" && isset($_POST['id_proc']) && $_POST['id_proc'] == '2795' ){
+if( $_SESSION["perfil"] == "laboratorio" && isset($id_proc) && $id_proc == '2795' ){
 			echo"<script language='javascript' type='text/javascript'>alert('Laborat\u00f3rio n\u00e3o pode solicitar consulta!');window.history.back();</script>";	
 			exit();	
 }
 
 // 2º REGRA = CLINICA NÃO PODE SOLICITAR PROCEDIMENTO EXAMES.
-if( $_SESSION["perfil"] == "clinica" && isset($_POST['id_proc']) && $_POST['id_proc'] <> '2795' ){
+if( $_SESSION["perfil"] == "clinica" && isset($id_proc) && $id_proc <> '2795' ){
 			echo"<script language='javascript' type='text/javascript'>alert('Cl\u00ednica n\u00e3o pode solicitar exames!');window.history.back();</script>";	
 			exit();	
 }
@@ -74,7 +75,7 @@ if( isset($_GET['senha']) && !empty($_GET['senha']) ){
 }
 // 3º REGRA = RETORNO = É O PERÍODO DE 30DIAS APARTIR DA ULTIMA CONSULTA DENTRO DA ESPECIALIDADE. CODIGO ID DO PRODEDIMENTO CONSULTA NO BANCO É 2795.
 	require_once "../func/retorno.php";
-	if( $_SESSION["perfil"] == "clinica" && isset($_POST['id_proc']) && $_POST['id_proc'] == '2795' ){
+	if( $_SESSION["perfil"] == "clinica" && isset($id_proc) && $id_proc == '2795' ){
 		$retorno = retorno($id_beneficiarios, $id_credenciado, $id_especialidade, $pdo);
 		if(!empty($retorno["msg"])){
 			echo $retorno["msg"];
@@ -83,15 +84,15 @@ if( isset($_GET['senha']) && !empty($_GET['senha']) ){
 	}
 // A REGRA TEM QUE SER QUANTIDADE DE CONSULTA POR MÊS, MAIS EFICIENTE,	
 // 4º REGRA = CONSULTA POD DIA PROFISSIONAL SAÚDE = UM MÉDICO SÓ PODE ATENDER UMA DETERNINADA QUANTIDADE DE PESSOAS POR DIA. EX.: 4 PACIENTES 
-/*	require_once "../func/consulta_dia.php";
-	if( $_SESSION["perfil"] == "clinica" && isset($_POST['id_proc']) && $_POST['id_proc'] == '2795' ){
-		$consulta_dia = consulta_dia($id_beneficiarios, $id_credenciado, $id_especialidade, $id_profissional_saude, $pdo);
+	require_once "../func/quantidade.php";
+	if( isset($id_proc) ){
+		$consulta_dia = consulta_dia($id_proc , $pdo);
 		if(!empty($consulta_dia["msg"])){
 			echo $consulta_dia["msg"];
 			exit();
 		}
 	}
-*/
+
 //=================================================================================
 //                   INFORMAÇÕES IMPORTANTE SOBRE O PROCESSO
 //=================================================================================

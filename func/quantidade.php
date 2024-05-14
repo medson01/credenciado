@@ -1,110 +1,56 @@
-<?php
+ <?php
 
-// 1 - REGRA QUANTIDADE
-// QUANTIDADE VEZES QUE O MESMO PROCEDIMENTO PODE SER UTILIZADO DENTRO DE UM PER√çODO PELO USU√ÅRIO NO ANO 
-// AQUI A UNIDADE DE TEMPO EST√Å DEFINIDA EM DIAS, ENT√ÉO A UNIDADE M√çNIMA DE TEMPO √â 1 DIA.
-
-   function quantidade($quantidade ,$id_beneficiarios ,$unid_quantidade ,$pdo ) {
-
-        $unid = $unid_quantidade; 
-        global $id_proc, $qtd_proc, $id_especialidade; 
-             
-
-        if(!empty($quantidade)){
-            $sql = "SELECT * FROM beneficiarios WHERE id=".$id_beneficiarios;
+// 1 - REGRA RETORNO
+/* 
+INFORMA«’ES T…CNICAS: 
+   - VARI¡VEL DE CONEX√O $pdo, TEM QUE EXISTIR PARA A FUN«√O FUNCIONAR;
+   - INSTRU«√O DE SQL QUE PEGA OS ULTIMOS 30DIAS DA DATA ATUAL => BETWEEN DATE_SUB(NOW(), INTERVAL 30 DAY) AND NOW();
+   - O RETONRO … 30 DIAS EM CIMA DA ESPECIALIDADE;
+	
+*/
+   function retorno($id_beneficiario, $id_credenciado, $id_especialidade  , $pdo) { 	 
+	$sql = "SELECT sadt.id, sadt.operador, sadt.id_beneficiario, sadt.medico_solicitante, especialidade.nome,  DATE_FORMAT(sadt.data_sadt, '%d/%m/%Y, ‡s %H:%i:%s') as data, sadt.data_sadt
+		FROM    sadt	
+						INNER JOIN sadt_procedimento ON sadt_procedimento.id_sadt = sadt.id
+						INNER JOIN especialidade ON especialidade.id = sadt.id_especialidade
+						INNER JOIN procedimento ON procedimento.id = sadt_procedimento.id_proc
+		WHERE   
+			data_sadt BETWEEN DATE_SUB(NOW(), INTERVAL 30 DAY) AND NOW()
+			AND sadt.id_especialidade = ".$id_especialidade."
+			AND sadt.id_credenciado = ".$id_credenciado."
+			AND sadt.id_beneficiario = ".$id_beneficiario."
+			AND procedimento.codigo = 10101012
+			ORDER BY `data` DESC";          
+		
             $stmt = $pdo->prepare($sql);  
             $stmt->execute();
-            while($registro = $stmt->fetch(PDO::FETCH_ASSOC)){   
-               $data_inclusao = $registro["data_inclusao"];
-               $_SESSION["data_inclusao"] = $data_inclusao;
+			$i = 0;
+            while($registro = $stmt->fetch(PDO::FETCH_ASSOC)){ 
+			   $medico_solicitante[$i] = $registro["medico_solicitante"]; 
+			   $nome[$i] = $registro["nome"];
+			   $data[$i] =  $registro["data"]; 
+			   $data_sadt[$i] =  $registro["data_sadt"]; 
+			   $i++;
             }
-         
-            $ano_atual = date("Y"); 
-            $ano_inclusao =  date("Y", strtotime($data_inclusao));
-
-            $mes =  date("m", strtotime($data_inclusao));
-            $dia =  date("d", strtotime($data_inclusao));
-
-
-             $idade1 = calc_idade($data_inclusao);
-             $idade2 = $ano_atual - $ano_inclusao;  
-
-            // Quantidade, Comparando as Datas
-            if ( $idade1 < $idade2 ) {
-               // VERDADEIRO => Usu√°rio N√£o est√° em quantidade
-                $dados['quantidade'] = 1;
-                $a  = $ano_atual - 1;
-                $b = $dia - 1;
-                $data_inicial = $a.'-'.$mes.'-'.$dia;
-                $data_final = $ano_atual.'-'.$mes.'-'.$b;
-
+			// PEGA A DATA DO BANCO data_sadt E ADICIONA 30 DIAS NO FUTURO.
+			if(isset($data_sadt[0])){
+				$data_uso = date('d/m/Y', strtotime("+30 days",strtotime($data_sadt[0])));
+			}
+			// N√O TEVE CONSULTA A MENOS DE 30 DIAS
+            if ( $i <= 0 ) {   
+                $dados = 0; 
+			// TEVE CONUSLTA A MENOS DE 30 DIAS.	
             }else{
-               // FALSO => Usu√°rio est√° em quantidade
-                $dados['quantidade'] = 0;  
-                $a  = $ano_atual + 1; 
-                $b = $dia - 1;
-                $data_inicial = $ano_atual.'-'.$mes.'-'.$dia;   
-                $data_final = $a.'-'.$mes.'-'.$b;
-            }  
+              $msg = "<script language='javascript' type='text/javascript'>alert(' Usu\u00e1rio est\u00e1 em retono! \\n Especialidade ".$nome[0]." \\n Ultima consulta realizada no dia ".$data[0].", m\u00e9dico ".$medico_solicitante[0].". \\n Sa\u00edda do retorno ap\u00f3s a data ".$data_uso.".');window.history.back();</script>";
+				
+               $dados['msg'] = $msg;
+            }   
+      // USADO PARA TESTE DE VARI¿VEL
+      // $dados['msg'] = $data[1];
 
-            
-            // Verificar quantos procedimentos no ano foram feitos
-              $sql = "SELECT sadt_procedimento.qtd_proc, sadt.data_sadt FROM sadt_procedimento 
-                     INNER JOIN sadt on sadt.id = sadt_procedimento.id_sadt 
-                     INNER JOIN especialidade on especialidade.id = sadt.id_especialidade
-                     WHERE 
-                     sadt_procedimento.id_proc = ".$id_proc."
-                     AND sadt.id_beneficiario =  ".$id_beneficiarios."
-                     AND sadt.id_especialidade = ".$id_especialidade."
-                     AND sadt.data_sadt BETWEEN '".$data_inicial."' AND '".$data_final."'";
-            $stmt = $pdo->prepare($sql);  
-            $stmt->execute();
-
-            $qtd = $qtd_proc;
-            
-            while($registro = $stmt->fetch(PDO::FETCH_ASSOC)){   
-               $data_sadt = $registro["data_sadt"];
-               $qtd =  $qtd + $registro["qtd_proc"];
-            
-            }
-
-            //Tabela procedimentos &quantidade
-            //Tabela sadt_procedimento $qtd que √© $qtd_proc, que tem que somar com o que est√° sendo solicitado
-
-            if ($qtd <= $quantidade) {
-
-               // ====================================
-               // 3 - REGRA PERIODICIDADE
-                 if(!empty($data_sadt)){
-                  $data_ultomo_proc = $data_sadt;
-                 }else{
-                  $data_ultomo_proc = 0; 
-                 }
-
-                $dados = $data_ultomo_proc;
-
-            }else{
-               if(isset($_SESSION['last_id'])){
-                  $id = $_SESSION['last_id'];
-               }else{
-                  $id = 0;
-               }
-
-               $msg = "<script language='javascript' type='text/javascript'>alert('Limite anual exedido de procedimentos executados pelo usuario.');window.location.href='painel.php?sadt=1&id=".$id."&matricula=".$_SESSION["matricula"]."&paciente=".$_SESSION["nome"]."&cpf=0&id_beneficiarios=".$_SESSION["id_beneficiarios"]."&data_nascimento=".$_SESSION["data_nasc"]."&deficiente=".$_SESSION["deficiente"]."&data_inclusao=".$_SESSION["data_inclusao"]."'</script>";
-
-               $dados['msg']  = $msg;
-
-            }
+        return $dados;  	
+	}
 
 
-      }
-    
-      // USADO PARA TESTE DE VARI√ÄVEL
-       // $dados['msg'] = $data_sadt;
-
-
-        return $dados; 
-        
-}
 
 ?>
