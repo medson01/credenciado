@@ -15,6 +15,15 @@
 function maiuscula() {
   let x = document.getElementById("medico_solicitante");
   let y = document.getElementById("codsig");
+  
+  // SÓ PERMITE LETRAS NO CAMPO codsig
+  y.addEventListener("keypress", function(e) {
+    var keyCode = (e.keyCode ? e.keyCode : e.which);
+	  if (keyCode > 47 && keyCode < 58) {
+		e.preventDefault();
+	  }
+	});
+	
   x.value = x.value.toUpperCase();
   y.value = y.value.toUpperCase();
 }
@@ -380,12 +389,12 @@ $data_aut  = isset($_POST["data_aut"]) ? $_POST["data_aut"]: 'null';
 ?>
   </select>						  </td>
                           <td>&nbsp; </td>
-                          <td><span class="style13">CR<br>
+                          <td><span class="style13">CR médico solicitante<br>
                           </span>
                             <span class="style13">
                             <input name="cr" id ="cr" type="text" class="form-control input-sm" style="font-size: 10px" size="44" required="required" onchange="pegarMedico()" <?php if (isset($cr) || !empty($_GET['cr']) ) { echo "value='".$cr."' readonly  "; }   if(isset($desativar)){ echo $desativar;}   if(!empty($senha)){ echo "readonly"; } ?> />
-                            </span></td>
-                        </tr>
+        </span></td>
+          </tr>
                             <tr>
                               <td>&nbsp;</td>
                               <td>&nbsp;</td>
@@ -396,7 +405,7 @@ $data_aut  = isset($_POST["data_aut"]) ? $_POST["data_aut"]: 'null';
                                   <input id="medico_solicitante"  name="medico_solicitante" type="text" class="form-control input-sm" style="font-size: 10px"  size="44" required="required" <?php if (isset($medico_solicitante) &&  !empty($medico_solicitante)) { echo "value='".$medico_solicitante."' readonly  "; }    ?>  onkeyup="maiuscula()"/>
                               <td>&nbsp;</td>
                               <td><span class="style13">Sigla CR </span><br />
-                                  <input id="codsig"  name="codsig" type="text" class="form-control input-sm" style="font-size: 10px"  size="44" required="required" <?php if (isset($codsig) &&  !empty($codsig)) { echo "value='".$codsig."' readonly  "; }    ?>  onkeyup="maiuscula()"/></td>
+                                  <input id="codsig"  name="codsig" type="text" class="form-control input-sm" style="font-size: 10px"  size="44" required="required" <?php if (isset($codsig) &&  !empty($codsig)) { echo "value='".$codsig."' readonly  "; }    ?>  onkeyup="maiuscula()" onkeypress="return numeros()" /></td>
                             </tr>
                             <tr>
                               <td>&nbsp;</td>

@@ -68,14 +68,11 @@ if(isset($guia)){
 			if($_SESSION["perfil"] == "callcenter"){
 				 echo" disabled "; 
 			}
-			if( (!empty($senha)) || (!isset($matricula)) || (isset($senha)) ||  isset($_GET['consulta']) ){ 
-				// echo" disabled "; 
+			if( !isset($matricula) || isset($status) && ( ($status == 3) || ($status == 2) ) ){ 
+				 echo" disabled "; 
 				 $bloque = " disabled "; 
 			} 
-			if( isset($status) &&  ($status == 2) ){
-				echo" disabled "; 
-				 $bloque = " disabled "; 
-			}	
+
 		
 		
 		?> > Incluir </button>
@@ -116,7 +113,7 @@ if(isset($_GET['id'])){
 										echo '<script>	document.getElementById("incluir").disabled = true;	</script>';
 									}
 									
-						echo"		<td ><div align='center'>".$registro["descricao"]."</div></td>
+						echo"		<td ><div align='center'>".utf8_encode($registro["descricao"])."</div></td>
                                     <td ><div align='center' >".$registro["qtd_proc"]."</div></td>
                   					<td ><div align='center' >".date('d / m / Y', strtotime($registro["data"]))."</div></td>
 									<td ><div align='center'>";

@@ -81,6 +81,7 @@ if( isset($_GET['senha']) && !empty($_GET['senha']) ){
 			exit();
 		}
 	}
+// A REGRA TEM QUE SER QUANTIDADE DE CONSULTA POR MÊS, MAIS EFICIENTE,	
 // 4º REGRA = CONSULTA POD DIA PROFISSIONAL SAÚDE = UM MÉDICO SÓ PODE ATENDER UMA DETERNINADA QUANTIDADE DE PESSOAS POR DIA. EX.: 4 PACIENTES 
 /*	require_once "../func/consulta_dia.php";
 	if( $_SESSION["perfil"] == "clinica" && isset($_POST['id_proc']) && $_POST['id_proc'] == '2795' ){

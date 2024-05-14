@@ -60,7 +60,7 @@ function pegarProcedimento(){
                                     </tr>
                                     <tr>
                                       <td colspan="3" ><span class = 'style13'>Descri&ccedil;&atilde;o do Procedimento</span> <br />
-                                        <input id="desc_proc"  name="desc_proc" type="text" class="form-control input-sm" style="font-size: 10px" required="required" <?php if (isset($_GET['desc_proc'])) { echo "value='".$_GET['desc_proc']."'  readonly "; }   ?> /></td>
+                                        <input id="desc_proc"  name="desc_proc" type="text" class="form-control input-sm" style="font-size: 10px" required="required" <?php if (isset($_GET['desc_proc'])) { echo "value='".utf8_decode($_GET['desc_proc'])."'  readonly "; }   ?> /></td>
                                     </tr>
                                     <tr>
                                       <td >&nbsp;</td>
