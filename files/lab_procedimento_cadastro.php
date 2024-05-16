@@ -29,28 +29,29 @@
  $motivo = isset($_GET["motivo"])? $_GET["motivo"] : '';
  
 // VARIÁVEL DO SCRIPT CONFIRMAR, VIA  PSOT, ARQUIVO lab_modal_procedimento.php 
- $id_paciente = isset($_POST["id_paciente"])? $_POST["id_paciente"] : '';
+
+// DADOS DE SESSÃO
+ $id_usuario = isset($_SESSION['id'])? $_SESSION['id'] : '';
  $lab    = isset($_POST['lab']  )? $_POST['lab'] : '';
- $id_especialidade = isset($_POST["id_especialidade"])? $_POST["id_especialidade"] : '';
+// DADOS DO USUÁRIO 
+ $id_paciente = isset($_POST["id_paciente"])? $_POST["id_paciente"] : '';
  $id_beneficiarios = isset($_POST["id_beneficiarios"])? $_POST["id_beneficiarios"] : '';
+ $nome = isset($_POST["nome"])? $_POST["nome"] : '';
+ $matricula = isset($_POST["matricula"])? $_POST["matricula"] : '';
+ $deficiente = isset($_POST["deficiente"])? $_POST["deficiente"] : '';
+ $data_inclusao = isset($_POST["data_inclusao"])? $_POST["data_inclusao"] : '';
+//DADPS DO PROFISIONAL SAUDE E ESPECIALIDADE 
+ $id_profissional_saude = isset($_POST['id_profissional_saude'])? $_POST['id_profissional_saude'] : '';
+ $medico_solicitante = isset($_POST['medico_solicitante'])? $_POST['medico_solicitante'] : '';
+ $id_especialidade = isset($_POST["id_especialidade"])? $_POST["id_especialidade"] : '';
+ $cr = isset($_POST['cr'])? $_POST['cr'] : '';
+ $codsig = isset($_POST['codsig'])? $_POST['codsig'] : '';
+ $data_aut  = isset($_POST["data_aut"]) ? $_POST["data_aut"]: 'null';
+// DADOS DO PROCEDIMENTO
  $id_proc = isset($_POST["id_proc"])? $_POST["id_proc"] : '';
-
-
+ $qtd_proc = isset($_POST["qtd_proc"])? $_POST["qtd_proc"] : '';
+ $id_imagem  = isset($_POST["id_imagem"]) ? $_POST["id_imagem"]: 'null';
  
-
- // Vem do arquivo lab_modal_procedimento.php via POST
-/*  if(isset($_POST["lab"])){
-   $lab = $_POST["lab"];
- }else{
- 	$lab = "";
- }
-
-*/
-
-// TESTE VALORES VINDO DO TELA/MODAL INSERIR PROCEDIMENTOS (lab_modal_procedimento.php)
-//echo $_POST['lab'];
-//echo $_POST['id_proc'] // id_proc = 2795 -> 10101012 -> consulta.
-//echo $_SESSION["perfil"];
 
 // ================================================================================
 //                   REGRAS DE ENTRADAS
@@ -83,16 +84,16 @@ if( isset($_GET['senha']) && !empty($_GET['senha']) ){
 		}
 	}
 // A REGRA TEM QUE SER QUANTIDADE DE CONSULTA POR MÊS, MAIS EFICIENTE,	
-// 4º REGRA = CONSULTA POD DIA PROFISSIONAL SAÚDE = UM MÉDICO SÓ PODE ATENDER UMA DETERNINADA QUANTIDADE DE PESSOAS POR DIA. EX.: 4 PACIENTES 
-	require_once "../func/quantidade.php";
+// 4º REGRA = CONSULTA POD DIA PROFISSIONAL SAÚDE = UM MÉDICO SÓ PODE ATENDER UMA DETERNINADA QUANTIDADE DE PESSOAS POR DIA. EX.: 4 PACIENTES 	
+/*	require_once "../func/quantidade.php";
 	if( isset($id_proc) ){
-		$consulta_dia = consulta_dia($id_proc , $pdo);
-		if(!empty($consulta_dia["msg"])){
-			echo $consulta_dia["msg"];
+		$quantidade = quantidade($id_beneficiarios, $id_especialidade, $data_inclusao, $id_proc, $qtd_proc, $pdo);
+		if(!empty($quantidade["msg"])){
+			echo $quantidade["msg"];
 			exit();
 		}
 	}
-
+*/
 //=================================================================================
 //                   INFORMAÇÕES IMPORTANTE SOBRE O PROCESSO
 //=================================================================================
@@ -167,122 +168,24 @@ if( (isset($_GET['status'])) && ($_GET['status'] == 2) ){
 	exit();
 }else{
 
-
-
-// VARIAVEIS VEM DO ARQUIVO lab_modal_procedimento.php VIA POST. 
-// 1° EXECUÇÃO APÓS O CADASTRO DOS MÉDICOS E ESPECIALIDADE.
-  	$matricula = $_POST['matricula'];
- 	$nome = $_POST['nome'];
- 	$deficiente = $_POST['deficiente'];
- 	$id_beneficiarios = $_POST['id_beneficiarios'];
-	$qtd_proc = $_POST["qtd_proc"];
-	$id_proc = $_POST["id_proc"];
- 	
-	$id_usuario = $_SESSION['id'];
-	$id_especialidade = $_POST['id_especialidade'];
-	$id_profissional_saude = $_POST['id_profissional_saude'];
-	$medico_solicitante = $_POST['medico_solicitante'];
-	$cr = $_POST['cr'];
-	$codsig = $_POST['codsig'];
- 
- 	$id_imagem  = isset($_POST["id_imagem"]) ? $_POST["id_imagem"]: 'null';
-	$data_aut  = isset($_POST["data_aut"]) ? $_POST["data_aut"]: 'null';
-	//$id_internamento  = isset($_POST["id_internamento"]) ? $_POST["id_internamento"]: 'null';
-	
-	
-
-	//REGRAS DE NEGÃ“CIO PROCEDIMENTOS
-    // PEGAR REGRA NA TABELA PROCEDIMENTOS
-    /* $sql = "SELECT * FROM procedimento WHERE id=".$id_proc;
-
-     $stmt = $pdo->prepare($sql);  
-     $stmt->execute();
-
-    while($registro = $stmt->fetch(PDO::FETCH_ASSOC)){    
-       $carencia = $registro["carencia"];
-       $quantidade = $registro["quantidade"];
-       //$perioticidade = $registro["pedioticidade"];
-       $bloqueio = $registro["bloqueio"];
-      
-    }
-    */
-	
-	
-    /*
-    // 1 - REGRA CARÊNCIA RETORNO 0 OU MSG
-    // TEMPO ESTIMADO PARA COMEÇAR A USAR O PLANO
-    $carencia = carencia($carencia,$id_beneficiarios, $unid_carencia, $pdo);
-    if(empty($carencia["msg"])){
-        echo $carencia["msg"];
-        $cadastrar = 0; 
-    }else{
-        $cadastrar = 1;
-    } 
-    
-    // 2 - REGRA RESTRIÇÃO RETORNO 0 OU MSG
-    // RESTRIÇÃO DEVIDO O VALOR , A COMPLEXIDADE E AO BLOQUEIO
-    if($cadastrar <> 0){
-        $restricao = restricao($id_proc, $pdo);
-        if(empty($restricao["msg"])){
-            echo $restricao["msg"];
-            $cadastrar = 0; 
-        }else{
-            $cadastrar = 1;
-        }
-    }
-        
-    // 3 - REGRA QUANTIDADE RETORNO 0 OU MSG
-    // QUANTIDADE VEZES QUE O MESMO PROCEDIMENTO PODE SER UTILIZADO DENTRO DE UM PERÍODO PELO USUÁRIO NO ANO 
-    $quantidade =  quantidade($quantidade ,$id_beneficiarios ,$unid_quantidade ,$pdo);
-    if (!empty($quantidade["msg"])){
-            echo $quantidade["msg"];
-            $cadastrar = 0; 
-    }else{
-        $cadastrar = 1;
-    }
-
-    // 4 - REGRA PERIODICIDADE PEDA A DATA DO ULTIMO PROCEDIMENTO DA REGRA QUANTIDADADE QUE RETONA A ULTIMO PROCEDIMENTO EXECUTADO OU MSG  
-    $periodicidade = periodicidade($quantidade);
-    if (!empty($periodicidade["msg"])){
-       echo $periodicidade["msg"]; 
-       $cadastrar = 0; 
-    }else{
-        $cadastrar = 1; 
-    }
-    */
-
-
-
-
-
-
-
-
-    $cadastrar = 1;
-     
-    // CADASTRO PROCEDIMENTO   
-       if($cadastrar == 1){
-      
-
-            // Inserir o 1 procedimento caso não exita.
-            if(!isset($_SESSION['last_id'])){
+    // CRIA O A GUIA SADT E INSERI O 1º PROCEDIMENTO
+        if(!isset($_SESSION['last_id'])){
                          
-				 $sql = "INSERT INTO sadt (id, id_beneficiario, id_usuario,id_especialidade ,id_usuario_aut, id_internamento, id_autorizacao, id_credenciado, id_profissional_saude, id_imagem, medico_solicitante, cr , codsig , motivo, data_sadt, data_aut, operador, senha, status) VALUES (null,'".$id_beneficiarios."','".$id_usuario."','".$id_especialidade."',null,null, null ,'".$id_credenciado."','".$id_profissional_saude."','".$id_imagem."','".$medico_solicitante."','".$cr."','".$codsig."',null,'".date("Y-m-d H:i:s")."','".$data_aut."','".$nome_usuario."',null,1)";
-			
-			
+				// CRIA A GUIA
+				$sql = "INSERT INTO sadt (id, id_beneficiario, id_usuario,id_especialidade ,id_usuario_aut, id_internamento, id_autorizacao, id_credenciado, id_profissional_saude, id_imagem, medico_solicitante, cr , codsig , motivo, data_sadt, data_aut, operador, senha, status) VALUES (null,'".$id_beneficiarios."','".$id_usuario."','".$id_especialidade."',null,null, null ,'".$id_credenciado."','".$id_profissional_saude."','".$id_imagem."','".$medico_solicitante."','".$cr."','".$codsig."',null,'".date("Y-m-d H:i:s")."','".$data_aut."','".$nome_usuario."',null,1)";
+	
                $stmt = $conn->prepare($sql);
                $stmt->execute();
                $_SESSION['last_id'] = $conn->insert_id;
 
-                //Inserir procedimento no SADT
-
+                // INSERI O 1º PROCEDIMENTO 
                $sql = "INSERT INTO sadt_procedimento(id, id_sadt, id_proc, qtd_proc, data,autorizado) VALUES (null,".$_SESSION['last_id'].",".$id_proc.",'".$qtd_proc."','".date("Y-m-d H:i:s")."',null)";
                $stmt = $conn->prepare($sql);
                $stmt->execute();
 			   $_SESSION['ultimo_proc_id'] = $id_proc;
 	
 					
-            }else{
+        }else{
 			   // CASO EXISTA MAIS DE UMA SOLICITAÇÃO DE PROCEDIMENTO PARA NÃO REPETIR O PROCEDIMENTO AO DIGITADO 
 				if(isset($_SESSION['ultimo_proc_id']) && $id_proc == $_SESSION['ultimo_proc_id'] ){
 				 echo"<script language='javascript' type='text/javascript'>alert('Procedimento j\u00e1 inserido!');window.history.back()</script>";
@@ -292,35 +195,19 @@ if( (isset($_GET['status'])) && ($_GET['status'] == 2) ){
 				   $stmt = $conn->prepare($sql);
 				   $stmt->execute();
 				   $_SESSION['ultimo_proc_id'] = $id_proc;
-				   
-				 
 				}   	   
-           }
+        }
 
-	 // Quantidade de procedimentos
-			if($lab == "consulta"){
+	// Quantidade de procedimentos
+		if($lab == "consulta"){
 				echo"<script language='javascript' type='text/javascript'>window.location.href='painel.php?lab=".$lab."&id=".$_SESSION['last_id']."&".$lab."=1'</script>";				
 				exit();
-			}else{	
+		}else{	
 				echo"<script language='javascript' type='text/javascript'>window.location.href='painel.php?lab=".$lab."&id=".$_SESSION['last_id']."'</script>";				
 				exit();
 				
-			}
-
-       }else{
-
-           echo $dados;
-
-       }
-
-
-
-
+		}
 }
   
-
-
-
-
     
 ?>

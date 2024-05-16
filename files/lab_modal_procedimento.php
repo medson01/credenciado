@@ -87,6 +87,7 @@ function pegarProcedimento(){
 			  <input type="hidden" name="matricula" value="<?php echo $_GET['matricula']; ?>" />
 			  <input type="hidden" name="nome" value="<?php echo $_GET['nome']; ?>" />
 			  <input type="hidden" name="deficiente" value="<?php echo $_GET['deficiente']; ?>" />
+			  <input type="hidden" name="data_inclusao" value="<?php echo $_GET['data_inclusao']; ?>" />
 			  <input type="hidden" name="id_especialidade" value="<?php echo $_GET['id_especialidade']; ?>" />
               <input type="hidden" name="id_beneficiarios" value="<?php echo $_GET['id_beneficiarios']; ?>" />
 			  <input type="hidden" name="id_credenciado" value="<?php echo $_GET['id_credenciado']; ?>" />
@@ -96,6 +97,7 @@ function pegarProcedimento(){
 			  <input type="hidden" name="codsig" value="<?php echo $_GET['codsig']; ?>" />
               <input type="hidden" name="id_proc" value="<?php echo $_GET['id_proc']; ?>" />
 			  <input type="hidden" name="lab" value="<?php echo $_GET['lab']; ?>" />
+			  
 				 
         		 </div>
 				  <div class="modal-footer" style="background-color: red;">

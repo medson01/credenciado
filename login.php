@@ -25,11 +25,11 @@
         	
               while($registro = mysqli_fetch_assoc($verifica)){
 
-        								setcookie("login",$login);
+        				setcookie("login",$login);
                         $_SESSION["login"] = $registro["nome"];
-        								$_SESSION["perfil"] = $registro["perfil"];	
+        				$_SESSION["perfil"] = $registro["perfil"];	
                         $_SESSION["id"] = $registro["id"];	
-								        $_SESSION["id_credenciado"] = $registro["id_credenciado"];
+					    $_SESSION["id_credenciado"] = $registro["id_credenciado"];
                         $_SESSION["credenciado"] = $registro["credenciado"];
 
         			}

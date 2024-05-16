@@ -86,7 +86,7 @@ input[type=checkbox]
     $sql = "SELECT 
               sadt.status, sadt.id, sadt.id_credenciado, sadt.id_especialidade,sadt.id_profissional_saude,sadt.data_sadt, sadt.data_aut, sadt.medico_solicitante, sadt.cr, sadt.operador,sadt.codsig,
               sadt.senha,sadt.motivo,sadt.motivo_retorno,sadt.n_autorizacao,
-              beneficiarios.nome, beneficiarios.matricula, beneficiarios.tipreg, beneficiarios.data_nascimento, beneficiarios.deficiente,  
+              beneficiarios.nome, beneficiarios.matricula, beneficiarios.tipreg, beneficiarios.data_nascimento, beneficiarios.deficiente,  beneficiarios.data_inclusao,
               credenciado.codigo, credenciado.nome as nome_cred, 
               usuarios.nome AS nome_usuario, usuarios.perfil
                FROM `sadt` 
@@ -105,6 +105,7 @@ input[type=checkbox]
             $matricula = $registro["matricula"];
 			$nome = $registro["nome"];
 			$data_nasc  = $registro["data_nascimento"];
+			$data_inclusao  = $registro["data_inclusao"];
 			$deficiente = $registro["deficiente"];
 			$nome_cred = $registro["nome_cred"];
 			$data_sadt = $registro["data_sadt"];
@@ -142,7 +143,7 @@ input[type=checkbox]
 			$data_nasc= isset($_GET['data_nascimento'])? $_GET['data_nascimento'] : '';
 			$deficiente = isset($_GET['deficiente'])? $_GET['deficiente'] : '';
       		$data_sadt = date('d / m / Y, H:i:s\h\s');
-			// $data_inclusao = $_GET['data_inclusao'];
+			$data_inclusao =  date('d / m / Y',strtotime($_GET['data_inclusao']));
 			//$_SESSION["data_inclusao"] = $data_inclusao;
 
   			$_SESSION["url"] = $_SERVER["REQUEST_URI"];
@@ -337,7 +338,9 @@ input[type=checkbox]
                                 <input name="idade" id ="idade" type="text" class="form-control input-sm" style="font-size: 10px" size="44" required="required" <?php if (isset($data_nasc)) { echo "value='".calc_idade($data_nasc)."'  "; }  ?> readonly />
                                 </span></td>
                               <td>&nbsp;</td>
-                              <td>&nbsp;</td>
+                              <td><span class="style13">Data de Inclusão</span> <br />
+                                <input name="data_inclusao" id ="data_inclusao" type="text" class="form-control input-sm" style="font-size: 10px" size="44" required="required" <?php if (isset($data_inclusao)) { echo "value='".$data_inclusao."'  "; }  ?> readonly="readonly" />
+                              </span></td>
                             </tr>
                             <tr>
                               <td>&nbsp;</td>

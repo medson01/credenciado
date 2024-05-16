@@ -47,7 +47,7 @@
                 $data_final = $a.'-'.$mes.'-'.$b;
             }  
 
-            
+     exit();       
             // Verificar quantos procedimentos no ano foram feitos
               $sql = "SELECT sadt_procedimento.qtd_proc, sadt.data_sadt FROM sadt_procedimento 
                      INNER JOIN sadt on sadt.id = sadt_procedimento.id_sadt 
@@ -90,7 +90,7 @@
                   $id = 0;
                }
 
-               $msg = "<script language='javascript' type='text/javascript'>alert('Limite anual exedido de procedimentos executados pelo usuario.');window.location.href='painel.php?sadt=1&id=".$id."&matricula=".$_SESSION["matricula"]."&paciente=".$_SESSION["nome"]."&cpf=0&id_beneficiarios=".$_SESSION["id_beneficiarios"]."&data_nascimento=".$_SESSION["data_nasc"]."&deficiente=".$_SESSION["deficiente"]."&data_inclusao=".$_SESSION["data_inclusao"]."'</script>";
+              $msg = "<script language='javascript' type='text/javascript'>alert('Limite anual exedido de procedimentos executados pelo usuario.');window.location.href='painel.php?sadt=1&id=".$id."&matricula=".$_SESSION["matricula"]."&paciente=".$_SESSION["nome"]."&cpf=0&id_beneficiarios=".$_SESSION["id_beneficiarios"]."&data_nascimento=".$_SESSION["data_nasc"]."&deficiente=".$_SESSION["deficiente"]."&data_inclusao=".$_SESSION["data_inclusao"]."'</script>";
 
                $dados['msg']  = $msg;
 

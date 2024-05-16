@@ -53,6 +53,7 @@ if(isset($_GET['matric'])){
 	     		$contrato_ativo = $registro["contrato_ativo"];
 	     		$pessoa_ativa = $registro["pessoa_ativa"];
 	     		$deficiente = $registro["deficiente"];
+		    	$data_inclusao = $registro["data_inclusao"];
 	                        
 	         }
 
@@ -95,19 +96,21 @@ if(isset($_GET['matric'])){
 						}
 
         		    }
-	        }else{
-			        
+	        }else{		
+			        $date = $data_inclusao;
+					$date = str_replace('/', '-', $date);
+					echo date('Y-m-d', strtotime($date));
+					
 		            if(isset($_GET['pa'])){      
-		       					echo "<script>location.href=\"painel.php?pa=1&id=".$id."&matricula=".$matricula."&nome=".$nome."&cpf=".$cpf."&id_beneficiarios=".$id_beneficiarios."&data_nascimento=".$data_nascimento."&deficiente=".$deficiente."\"</script>";
+		       					echo "<script>location.href=\"painel.php?pa=1&id=".$id."&matricula=".$matricula."&nome=".$nome."&cpf=".$cpf."&id_beneficiarios=".$id_beneficiarios."&data_nascimento=".$data_nascimento."&deficiente=".$deficiente."&data_inclusao=".$$data_inclusao."\"</script>";
 		        	}
 		        	if(isset($_GET['int'])){
-		        	 			echo "<script>location.href=\"painel.php?int=1&id=".$id."&matricula=".$matricula."&paciente=".$nome."&cpf=".$cpf."&id_beneficiarios=".$id_beneficiarios."&data_nascimento=".$data_nascimento."&deficiente=".$deficiente."\"</script>";
-		        	}
+		        	 			echo "<script>location.href=\"painel.php?int=1&id=".$id."&matricula=".$matricula."&paciente=".$nome."&cpf=".$cpf."&id_beneficiarios=".$id_beneficiarios."&data_nascimento=".$data_nascimento."&deficiente=".$deficiente."&data_inclusao=".$data_inclusao."\"</script>";		        	}
 		          if(isset($_GET['lab'])){
 						if($_GET['lab'] == "consulta"){
-									echo "<script>location.href=\"painel.php?lab=consulta&id=".$id."&matricula=".$matricula."&paciente=".$nome."&cpf=".$cpf."&id_beneficiarios=".$id_beneficiarios."&data_nascimento=".$data_nascimento."&deficiente=".$deficiente."\"</script>";
+									echo "<script>location.href=\"painel.php?lab=consulta&id=".$id."&matricula=".$matricula."&paciente=".$nome."&cpf=".$cpf."&id_beneficiarios=".$id_beneficiarios."&data_nascimento=".$data_nascimento."&deficiente=".$deficiente."&data_inclusao=".$data_inclusao."\"</script>";
 						}else{
-									echo "<script>location.href=\"painel.php?lab=exame&id=".$id."&matricula=".$matricula."&paciente=".$nome."&cpf=".$cpf."&id_beneficiarios=".$id_beneficiarios."&data_nascimento=".$data_nascimento."&deficiente=".$deficiente."\"</script>";
+									echo "<script>location.href=\"painel.php?lab=exame&id=".$id."&matricula=".$matricula."&paciente=".$nome."&cpf=".$cpf."&id_beneficiarios=".$id_beneficiarios."&data_nascimento=".$data_nascimento."&deficiente=".$deficiente."&data_inclusao=".$data_inclusao."\"</script>";
 						}
 		          }
 
