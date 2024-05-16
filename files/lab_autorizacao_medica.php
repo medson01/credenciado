@@ -280,7 +280,7 @@
 							values.push(procedimento[i].value);
 						 }
 					
-					 window.location.href='lab_procedimento_cadastro.php?id='+id+'&status=2&motivo='+motivo+'&proc='+values+'&senha=0&n_autorizacao=0&cancelar=1'; 
+					 window.location.href='lab_procedimento_cadastro.php?id='+id+'&status=2&motivo='+motivo+'&proc='+values+'&senha=0&n_autorizacao=0&cancelar=1&motivo_retorno='+motivo_retorno; 
 			}
 		}
 		

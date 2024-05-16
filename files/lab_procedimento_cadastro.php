@@ -26,7 +26,12 @@
  $nome_usuario = $_SESSION['login'];  
  
 // VARIÁVEL DO SCRIPT confirmar(), VIA  GET, ARQUIVO lab_autorizazao_medica.php
+ $senha = isset($_GET["senha"])? $_GET["senha"] : '';
+ $n_autorizacao = isset($_GET["n_autorizacao"])? $_GET["n_autorizacao"] : '';
  $motivo = isset($_GET["motivo"])? $_GET["motivo"] : '';
+ $motivo_retorno = isset($_GET["motivo_retorno"])? $_GET["motivo_retorno"] : '';
+ 
+
  
 // VARIÁVEL DO SCRIPT CONFIRMAR, VIA  PSOT, ARQUIVO lab_modal_procedimento.php 
 
@@ -83,8 +88,8 @@ if( isset($_GET['senha']) && !empty($_GET['senha']) ){
 			exit();
 		}
 	}
-// A REGRA TEM QUE SER QUANTIDADE DE CONSULTA POR MÊS, MAIS EFICIENTE,	
-// 4º REGRA = CONSULTA POD DIA PROFISSIONAL SAÚDE = UM MÉDICO SÓ PODE ATENDER UMA DETERNINADA QUANTIDADE DE PESSOAS POR DIA. EX.: 4 PACIENTES 	
+	
+// 4º REGRA = QUANTIDADE DE PROCEDIMENTOS EXECUTADOS EM UM DETERMINADO PERÍODO	
 /*	require_once "../func/quantidade.php";
 	if( isset($id_proc) ){
 		$quantidade = quantidade($id_beneficiarios, $id_especialidade, $data_inclusao, $id_proc, $qtd_proc, $pdo);
@@ -111,7 +116,7 @@ if( (isset($_GET['status'])) && ($_GET['status'] == 2) ){
 // CONCELAMENTO DE GUIA
 	if(isset($_GET["cancelar"]) && $_GET["cancelar"] == 1){
 
-			 $sql = "UPDATE `sadt` SET `status`= 3, `senha`= '0',`n_autorizacao`= '0' WHERE `id`= ".$_GET['id'];	
+			 $sql = "UPDATE `sadt` SET `status`= 3, `senha`= '0',`n_autorizacao`= '0', `motivo_retorno`= '".$motivo_retorno."' WHERE `id`= ".$_GET['id'];	
 			 $stmt = $pdo->prepare($sql);  
 			 $stmt->execute();	
 			 echo"<script language='javascript' type='text/javascript'>alert('Cancelada com sucesso!');window.history.back();</script>";	
@@ -119,7 +124,7 @@ if( (isset($_GET['status'])) && ($_GET['status'] == 2) ){
 	}else{
 // PROCESSO DE INSEIR PROCEDIMENTOS NÃO CANCELADOS			
 			if(isset($_GET["proc"]) && !empty($_GET["proc"])){
-				 
+			/*	 
 				if(isset($_GET['senha'])){
 					 $senha = $_GET['senha'];
 					
@@ -136,7 +141,7 @@ if( (isset($_GET['status'])) && ($_GET['status'] == 2) ){
 				}else{
 					 $motivo_retorno = "null";
 				}
-
+			*/
 			   $proc = array();
 			   $proc = explode( ',', $_GET["proc"]);
 			   
