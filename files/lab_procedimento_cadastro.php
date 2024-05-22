@@ -21,23 +21,21 @@
   
 	
 	  
-// VARIÁVEIS DE SESSÃO USUÁRIO DO SISTEMA E A QUAL LOCAL OU EMPRESA PERTENCE
+// VARIÁVEIS DE SESSÃO
  $id_credenciado = $_SESSION['id_credenciado'];
  $nome_usuario = $_SESSION['login'];  
- 
-// VARIÁVEL DO SCRIPT confirmar(), VIA  GET, ARQUIVO lab_autorizazao_medica.php
- $senha = isset($_GET["senha"])? $_GET["senha"] : '';
- $n_autorizacao = isset($_GET["n_autorizacao"])? $_GET["n_autorizacao"] : '';
- $motivo = isset($_GET["motivo"])? $_GET["motivo"] : '';
- $motivo_retorno = isset($_GET["motivo_retorno"])? $_GET["motivo_retorno"] : '';
- 
-
- 
-// VARIÁVEL DO SCRIPT CONFIRMAR, VIA  PSOT, ARQUIVO lab_modal_procedimento.php 
-
-// DADOS DE SESSÃO
  $id_usuario = isset($_SESSION['id'])? $_SESSION['id'] : '';
- $lab    = isset($_POST['lab']  )? $_POST['lab'] : '';
+
+ 
+/*===============================================================
+	INFORMAÇÕES TÉCNICOS
+  ===============================================================	
+	TUDO 	QUE VIR VIA POST, VIRÁ DO ARQUIVO lab_modal_procedimento.php E TUDO QUE VIR DO GET VIRA DO 
+SCRIPT confirmar() e do arquivo lab_autorizazao_medica.php.
+	ESSAS VARIÁVEIS VEM COM APENAS UMA VALOR DO PROCEDIMENTO, AO CONTRÁTR DO GET, QUE VEM COMO UM ARRAY.
+OS if TEM QUE DIFERENCIAR OS RECEBIMENTOS E COM ISSO AS ETAPAS ATRAVÉS POR ESSES MÉTIDOS(GET E POST).
+*/ 
+// VARIÁVEL VIA  POST, ARQUIVO lab_modal_procedimento.php  
 // DADOS DO USUÁRIO 
  $id_paciente = isset($_POST["id_paciente"])? $_POST["id_paciente"] : '';
  $id_beneficiarios = isset($_POST["id_beneficiarios"])? $_POST["id_beneficiarios"] : '';
@@ -56,19 +54,26 @@
  $id_proc = isset($_POST["id_proc"])? $_POST["id_proc"] : '';
  $qtd_proc = isset($_POST["qtd_proc"])? $_POST["qtd_proc"] : '';
  $id_imagem  = isset($_POST["id_imagem"]) ? $_POST["id_imagem"]: 'null';
+ $lab    = isset($_POST['lab']  )? $_POST['lab'] : '';
+ 
+ // VARIÁVEL DO SCRIPT confirmar(), VIA  GET, ARQUIVO lab_autorizazao_medica.php
+ $senha = isset($_GET["senha"])? $_GET["senha"] : '';
+ $n_autorizacao = isset($_GET["n_autorizacao"])? $_GET["n_autorizacao"] : '';
+ $motivo = isset($_GET["motivo"])? $_GET["motivo"] : '';
+ $motivo_retorno = isset($_GET["motivo_retorno"])? $_GET["motivo_retorno"] : '';
  
 
 // ================================================================================
 //                   REGRAS DE ENTRADAS
 // ================================================================================
 // 1º REGRA = LABORATÓRIO NÃO PODE SOLICITAR PROCEDIMENTO CONSULTA ID_PROC = 2795.
-if( $_SESSION["perfil"] == "laboratorio" && isset($id_proc) && $id_proc == '2795' ){
+if( $_SESSION["perfil"] == "laboratorio" && !empty($id_proc) && $id_proc == '2795' ){
 			echo"<script language='javascript' type='text/javascript'>alert('Laborat\u00f3rio n\u00e3o pode solicitar consulta!');window.history.back();</script>";	
 			exit();	
 }
 
 // 2º REGRA = CLINICA NÃO PODE SOLICITAR PROCEDIMENTO EXAMES.
-if( $_SESSION["perfil"] == "clinica" && isset($id_proc) && $id_proc <> '2795' ){
+if( $_SESSION["perfil"] == "clinica" && !empty($id_proc) && $id_proc <> '2795' ){
 			echo"<script language='javascript' type='text/javascript'>alert('Cl\u00ednica n\u00e3o pode solicitar exames!');window.history.back();</script>";	
 			exit();	
 }

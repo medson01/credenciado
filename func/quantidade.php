@@ -17,7 +17,7 @@ INFORMAÇÕES TÉCNICAS:
             $stmt1 = $pdo->prepare($sql);  
             $stmt1->execute();
             while($registro1 = $stmt1->fetch(PDO::FETCH_ASSOC)){ 
-			   $quantidade = $registro1["quantidade"]; 
+			 echo  $quantidade = $registro1["quantidade"]; 
 			   $unid_quantidade = $registro1["unid_quantidade"];
             }
 
@@ -29,13 +29,15 @@ INFORMAÇÕES TÉCNICAS:
 			$data_inicial = $dia_mes_inclusao."-".$ano_atual;
 			$data_final = date('d-m-Y', strtotime("+30 days",strtotime($data_inicial)));
 			
-   $sql = "SELECT sadt_procedimento.qtd_proc, sadt.data_sadt FROM sadt_procedimento 
+   // PEGA TODOS OS PROCEDIMENTO ID_SADT CAMPO AUTORIZADO = 1, SÓ CONTO OS AUTORIZADOS
+   $sql = "SELECT sadt_procedimento.qtd_proc, sadt.data_sadt 
+   		   			 FROM sadt_procedimento 
                      INNER JOIN sadt on sadt.id = sadt_procedimento.id_sadt 
                      INNER JOIN especialidade on especialidade.id = sadt.id_especialidade
                      WHERE 
-                     sadt_procedimento.id_proc = ".$id_proc."
-                     AND sadt.id_beneficiario =  ".$id_beneficiarios."
+                         sadt.id_beneficiario =  ".$id_beneficiarios."
                      AND sadt.id_especialidade = ".$id_especialidade."
+					 AND sadt_procedimento.autorizado = 1
                      AND sadt.data_sadt BETWEEN '".$data_inicial."' AND '".$data_final."'";	 
             
 			$stmt2 = $pdo->prepare($sql);  
@@ -47,10 +49,10 @@ INFORMAÇÕES TÉCNICAS:
                $qtd =  $qtd + $registro2["qtd_proc"];
             
             }
-					
+	// SOMA DA QUANTIDADES QUE EXITE NO BANCO PEDIDAS + O QUE ESTÁ SENDO PEDIDO.  		
            $qtd_total = $qtd_proc + $qtd;
-
-           if($qtd_total >= $quantidade) {
+	// A SOMA NÃO PODE SER MAIOR DO QUE O VALOR PARAMETRIZADO
+           if($qtd_total > $quantidade) {
 					$msg = "<script language='javascript' type='text/javascript'>alert('Limite anual exedido de procedimentos executados pelo usuario.');window.history.back();</script>";
                $dados['msg']  = $msg;
 			

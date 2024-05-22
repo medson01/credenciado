@@ -245,7 +245,7 @@
   	var values = [];
 
 	if(status == 2){
-	var resposta = confirm("Deseja cconfimar a solicita\u00e7\u00e3o?");
+	var resposta = confirm("Deseja confimar a solicita\u00e7\u00e3o?");
 				if (resposta == true) {	
 					 for (var i = 0; i < procedimento.length; i++) {
 						// utilize o valor aqui, adicionei ao array para exemplo

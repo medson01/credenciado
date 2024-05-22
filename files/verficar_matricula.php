@@ -99,7 +99,7 @@ if(isset($_GET['matric'])){
 	        }else{		
 			        $date = $data_inclusao;
 					$date = str_replace('/', '-', $date);
-					echo date('Y-m-d', strtotime($date));
+					
 					
 		            if(isset($_GET['pa'])){      
 		       					echo "<script>location.href=\"painel.php?pa=1&id=".$id."&matricula=".$matricula."&nome=".$nome."&cpf=".$cpf."&id_beneficiarios=".$id_beneficiarios."&data_nascimento=".$data_nascimento."&deficiente=".$deficiente."&data_inclusao=".$$data_inclusao."\"</script>";

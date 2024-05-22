@@ -1,20 +1,27 @@
 <?php
 
+/*
+VARI¡VEIS ALTERADAS 
+  senha => pwd
+  usuario => user
+  banco => bd 
+*/
+
   //Conex√£o com o banco 
   $host = 'localhost';
-  $usuario = 'root';
-  $senha = '';
-  $banco = 'credenciado_prod';
+  $username = 'root';
+  $password = '';
+  $dbname = 'credenciado_prod';
   
-  $conn = mysqli_connect($host,$usuario ,$senha,$banco);
+  $conn = mysqli_connect($host,$username ,$password ,$dbname);
 
-  $dsn = "mysql:host={$host};port=3306;dbname={$banco}";
+  $dsn = "mysql:host={$host};port=3306;dbname={$dbname}";
 
 
   try 
 {
     // Conectando
-    $pdo = new PDO($dsn, $usuario, $senha);
+    $pdo = new PDO($dsn, $username, $password );
 } 
 catch (PDOException $e) 
 {

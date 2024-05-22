@@ -6,8 +6,10 @@ INFORMAÇÕES TÉCNICAS:
    - VARIÁVEL DE CONEXÃO $pdo, TEM QUE EXISTIR PARA A FUNÇÃO FUNCIONAR;
    - INSTRUÇÃO DE SQL QUE PEGA OS ULTIMOS 30DIAS DA DATA ATUAL => BETWEEN DATE_SUB(NOW(), INTERVAL 30 DAY) AND NOW();
    - O RETONRO É 30 DIAS EM CIMA DA ESPECIALIDADE;
-	
+   - O RETORNO DESCONSIDERA AS GUIAS CANCELADAS, OU SEJA, O SQL SÓ PEGA AS CONSULTAS AUTORIZADAS( SENHA = 0  E N_AUTORIZACAO = 0);
 */
+
+
    function retorno($id_beneficiario, $id_credenciado, $id_especialidade  , $pdo) { 	 
 	$sql = "SELECT sadt.id, sadt.operador, sadt.id_beneficiario, sadt.medico_solicitante, especialidade.nome,  DATE_FORMAT(sadt.data_sadt, '%d/%m/%Y, às %H:%i:%s') as data, sadt.data_sadt
 		FROM    sadt	
@@ -20,6 +22,8 @@ INFORMAÇÕES TÉCNICAS:
 			AND sadt.id_credenciado = ".$id_credenciado."
 			AND sadt.id_beneficiario = ".$id_beneficiario."
 			AND procedimento.codigo = 10101012
+			AND sadt.senha = 0
+			AND sadt.n_autorizacao = 0
 			ORDER BY `data` DESC";          
 		
             $stmt = $pdo->prepare($sql);  
