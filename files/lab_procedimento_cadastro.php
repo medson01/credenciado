@@ -37,7 +37,7 @@ OS if TEM QUE DIFERENCIAR OS RECEBIMENTOS E COM ISSO AS ETAPAS ATRAVÉS POR ESSES
 */ 
 // VARIÁVEL VIA  POST, ARQUIVO lab_modal_procedimento.php  
 // DADOS DO USUÁRIO 
- $id_paciente = isset($_POST["id_paciente"])? $_POST["id_paciente"] : '';
+ $id = isset($_POST["id"])? $_POST["id"] : '';
  $id_beneficiarios = isset($_POST["id_beneficiarios"])? $_POST["id_beneficiarios"] : '';
  $nome = isset($_POST["nome"])? $_POST["nome"] : '';
  $matricula = isset($_POST["matricula"])? $_POST["matricula"] : '';
@@ -66,44 +66,50 @@ OS if TEM QUE DIFERENCIAR OS RECEBIMENTOS E COM ISSO AS ETAPAS ATRAVÉS POR ESSES
 // ================================================================================
 //                   REGRAS DE ENTRADAS
 // ================================================================================
-// 1º REGRA = LABORATÓRIO NÃO PODE SOLICITAR PROCEDIMENTO CONSULTA ID_PROC = 2795.
-if( $_SESSION["perfil"] == "laboratorio" && !empty($id_proc) && $id_proc == '2795' ){
-			echo"<script language='javascript' type='text/javascript'>alert('Laborat\u00f3rio n\u00e3o pode solicitar consulta!');window.history.back();</script>";	
-			exit();	
-}
 
-// 2º REGRA = CLINICA NÃO PODE SOLICITAR PROCEDIMENTO EXAMES.
-if( $_SESSION["perfil"] == "clinica" && !empty($id_proc) && $id_proc <> '2795' ){
-			echo"<script language='javascript' type='text/javascript'>alert('Cl\u00ednica n\u00e3o pode solicitar exames!');window.history.back();</script>";	
-			exit();	
-}
-if( isset($_GET['senha']) && !empty($_GET['senha']) ){
-	if( empty($_GET["proc"]) ){
-	
-			echo"<script language='javascript' type='text/javascript'>alert('Verifique se o procedimento foi ticado!');window.history.back();</script>";	
-			exit();		
-	}				
-}
-// 3º REGRA = RETORNO = É O PERÍODO DE 30DIAS APARTIR DA ULTIMA CONSULTA DENTRO DA ESPECIALIDADE. CODIGO ID DO PRODEDIMENTO CONSULTA NO BANCO É 2795.
-	require_once "../func/retorno.php";
-	if( $_SESSION["perfil"] == "clinica" && isset($id_proc) && $id_proc == '2795' ){
-		$retorno = retorno($id_beneficiarios, $id_credenciado, $id_especialidade, $pdo);
-		if(!empty($retorno["msg"])){
-			echo $retorno["msg"];
-			exit();
+// USA O POST PARA SÓ EXECUTAR OS COMANDOS VIA MODAL DE INCLUSÃO DE PROCEDIMENTOS lab_modal_procedimento.php
+	if(isset($_POST["matricula"])){
+		// 1º REGRA = LABORATÓRIO NÃO PODE SOLICITAR PROCEDIMENTO CONSULTA ID_PROC = 2795.
+		if( $_SESSION["perfil"] == "laboratorio" && !empty($id_proc) && $id_proc == '2795' ){
+					echo"<script language='javascript' type='text/javascript'>alert('Laborat\u00f3rio n\u00e3o pode solicitar consulta!');window.history.back();</script>";	
+					exit();	
 		}
-	}
-	
-// 4º REGRA = QUANTIDADE DE PROCEDIMENTOS EXECUTADOS EM UM DETERMINADO PERÍODO	
-/*	require_once "../func/quantidade.php";
-	if( isset($id_proc) ){
-		$quantidade = quantidade($id_beneficiarios, $id_especialidade, $data_inclusao, $id_proc, $qtd_proc, $pdo);
-		if(!empty($quantidade["msg"])){
-			echo $quantidade["msg"];
-			exit();
+		
+		// 2º REGRA = CLINICA NÃO PODE SOLICITAR PROCEDIMENTO EXAMES.
+		if( $_SESSION["perfil"] == "clinica" && !empty($id_proc) && $id_proc <> '2795' ){
+					echo"<script language='javascript' type='text/javascript'>alert('Cl\u00ednica n\u00e3o pode solicitar exames!');window.history.back();</script>";	
+					exit();	
 		}
+		if( isset($_GET['senha']) && !empty($_GET['senha']) ){
+			if( empty($_GET["proc"]) ){
+			
+					echo"<script language='javascript' type='text/javascript'>alert('Verifique se o procedimento foi ticado!');window.history.back();</script>";	
+					exit();		
+			}				
+		}
+		// 3º REGRA = RETORNO = É O PERÍODO DE 30DIAS APARTIR DA ULTIMA CONSULTA DENTRO DA ESPECIALIDADE. CODIGO ID DO PRODEDIMENTO CONSULTA NO BANCO É 2795.
+			require_once "../func/retorno.php";
+			if( $_SESSION["perfil"] == "clinica" && isset($id_proc) && $id_proc == '2795' ){
+				$retorno = retorno($id_beneficiarios, $id_credenciado, $id_especialidade, $pdo);
+				if(!empty($retorno["msg"])){
+					echo $retorno["msg"];
+					exit();
+				}
+			}
+			
+		// 4º REGRA = QUANTIDADE DE PROCEDIMENTOS EXECUTADOS EM UM DETERMINADO PERÍODO	
+			require_once "../func/quantidade.php";
+			if( isset($id_proc) && $id_proc <> '2795' ){
+				$quantidade = quantidade($id_beneficiarios, $id_especialidade, $data_inclusao, $id_proc, $qtd_proc, $id, $pdo);
+				if(!empty($quantidade["msg"])){
+					echo $quantidade["msg"];
+					exit();
+				}else{
+					// DAR UM AVISO SOBRE A REGRA QUE FALTA CONFIGUARA E CONTINUAR O PROCESSO INSERINDO O PROCEDIMENTO NA GUIA.  
+					echo $quantidade["go"];
+				}
+			}
 	}
-*/
 //=================================================================================
 //                   INFORMAÇÕES IMPORTANTE SOBRE O PROCESSO
 //=================================================================================
@@ -171,7 +177,7 @@ if( (isset($_GET['status'])) && ($_GET['status'] == 2) ){
 			}
 	}
 
-       
+// exit();      
 
 // FINALIZA O PROCESSO DA SOLICITAÇÃO PARA O CALLCENTER	
   	echo"<script language='javascript' type='text/javascript'>alert('Autoriza\u00e7\u00e3o processada com sucesso!');window.history.back()</script>";
@@ -198,7 +204,7 @@ if( (isset($_GET['status'])) && ($_GET['status'] == 2) ){
         }else{
 			   // CASO EXISTA MAIS DE UMA SOLICITAÇÃO DE PROCEDIMENTO PARA NÃO REPETIR O PROCEDIMENTO AO DIGITADO 
 				if(isset($_SESSION['ultimo_proc_id']) && $id_proc == $_SESSION['ultimo_proc_id'] ){
-				 echo"<script language='javascript' type='text/javascript'>alert('Procedimento j\u00e1 inserido!');window.history.back()</script>";
+			exit();	 echo"<script language='javascript' type='text/javascript'>alert('Procedimento j\u00e1 inserido!');window.history.back()</script>";
 				 exit();
 				}else{
 				   $sql = "INSERT INTO sadt_procedimento(id, id_sadt, id_proc, qtd_proc, data) VALUES (null,".$_SESSION['last_id'].",".$id_proc.",'".$qtd_proc."','".date("Y-m-d H:i:s")."')";

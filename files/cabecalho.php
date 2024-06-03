@@ -101,7 +101,7 @@
     $("#qtd_respiratoria").mask("00");
     $("#qtd_respiratoria2").mask("00");
     $("#crm").mask("0000");
-    $("#codigo").mask("000000");
+    $("#codigo").mask("00000000");
 	$("#cpf").mask("00000000000");
     $("#cnpj").mask("00000000000000");
     $("#numero").mask("00000");
@@ -114,6 +114,7 @@
 	$("#internacao_senha_totvs").mask("000000000");
 	$("#senha").mask("000000000");
 	$("#n_autorizacao").mask("0.000-0000.00-00000000");
+
     </script>
 
 

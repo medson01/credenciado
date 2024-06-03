@@ -32,13 +32,13 @@
                         <tr>
 
                           <td colspan="3" ><textarea onclick="limpar()" id="motivo" class="form-control input-sm" name="motivo"  style="font-size:12px; margin: 0px; height: 100px; width: 100%; text-align: justify; text-justify: inter-word;" form="motivo" <?php 				
-                                        if(isset($motivo)){
-											if($motivo == "null"){
-                                          		echo "";
+                                        
+											if($_SESSION["perfil"] == "callcenter" || !empty($motivo) ){
+                                          		echo "disabled";
 										  	}else{
-												echo "disabled";
+												echo "";
 											}
-                                        }
+                                       
 			?> 
 			/>
 										<?php

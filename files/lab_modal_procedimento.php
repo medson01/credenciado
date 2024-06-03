@@ -82,7 +82,7 @@ function pegarProcedimento(){
                 </div>
         	     <!-- /Conteúdo Modal -->
      
-        	  <input type="hidden" name="id_paciente" value="<?php echo $_GET['id']; ?>" />
+        	  <input type="hidden" name="id" value="<?php echo $_GET['id']; ?>" />
               <input type="hidden" name="data_proc" value="<?php echo date("Y-m-d H:i:s"); ?>" />
 			  <input type="hidden" name="matricula" value="<?php echo $_GET['matricula']; ?>" />
 			  <input type="hidden" name="nome" value="<?php echo $_GET['nome']; ?>" />

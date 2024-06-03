@@ -188,7 +188,7 @@ function excluir(id) {
 				<td style='padding: 4px;'><div align="center">Und.</div></td>
                 <td style='padding: 4px;'><div align="center">Quantidade</div></td>
 				<td style='padding: 4px;'><div align="center">Und.</div></td>
-                <td style='padding: 4px;'><div align="center">Perioticidade</div></td>
+                <td style='padding: 4px;'><div align="center">Periodicidade</div></td>
 				<td style='padding: 4px;'><div align="center">Und.</div></td>
                 <td style='padding: 4px;'><div align="center">Valor Tabela</div></td>
                 <td style='padding: 4px;'><div align="center">Valor Cobrado</div></td>
@@ -208,9 +208,9 @@ function excluir(id) {
                 <td><div align="center" ><?php echo $registro["quantidade"]; ?></div></td>
 				<td><div align="center" style="color: #243bcd;
     font-weight: bold;"><?php echo  periodo($registro["unid_quantidade"]); ?> </div></td>
-                <td><div align="center"><?php echo $registro["perioticidade"]; ?> </div></td>  
+                <td><div align="center"><?php echo $registro["periodicidade"]; ?> </div></td>  
 				<td><div align="center" style="color: #243bcd;
-    font-weight: bold;"><?php echo  periodo($registro["unid_perioticidade"]); ?> </div></td>          
+    font-weight: bold;"><?php echo  periodo($registro["unid_periodicidade"]); ?> </div></td>          
                 <td><div align="center"><?php echo $registro["valor_tabela"]; ?> </div></td>  
                 <td><div align="center"><?php echo $registro["valor_cobrado"]; ?> </div></td>  
                 <td><div align="center"><?php if ($registro["bloqueio"] == 1) { echo '<span class="glyphicon glyphicon-remove"></span>';}else{ echo '<span class="glyphicon glyphicon-ok"></span>'; } ?> </div></td>
