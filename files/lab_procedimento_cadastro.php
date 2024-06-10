@@ -97,7 +97,9 @@ OS if TEM QUE DIFERENCIAR OS RECEBIMENTOS E COM ISSO AS ETAPAS ATRAVÉS POR ESSES
 				}
 			}
 			
-		// 4º REGRA = QUANTIDADE DE PROCEDIMENTOS EXECUTADOS EM UM DETERMINADO PERÍODO	
+		// 4º REGRA = QUANTIDADE DE PROCEDIMENTOS EXECUTADOS EM UM DETERMINADO PERÍODO. 
+		// - RETORNA FALSO SE ESTIVER DENTRO DA QUANTIDADE
+		// - RETORNA UMA INFORMAÇÃO DE NÃO CONFIGURADO OS PARÂMETROS DE QUANTIDADE E UNIDADE DA QUANTIDADE
 			require_once "../func/quantidade.php";
 			if( isset($id_proc) && $id_proc <> '2795' ){
 				$quantidade = quantidade($id_beneficiarios, $id_especialidade, $data_inclusao, $id_proc, $qtd_proc, $id, $pdo);
@@ -109,6 +111,8 @@ OS if TEM QUE DIFERENCIAR OS RECEBIMENTOS E COM ISSO AS ETAPAS ATRAVÉS POR ESSES
 					echo $quantidade["go"];
 				}
 			}
+			
+			
 	}
 //=================================================================================
 //                   INFORMAÇÕES IMPORTANTE SOBRE O PROCESSO
@@ -204,7 +208,7 @@ if( (isset($_GET['status'])) && ($_GET['status'] == 2) ){
         }else{
 			   // CASO EXISTA MAIS DE UMA SOLICITAÇÃO DE PROCEDIMENTO PARA NÃO REPETIR O PROCEDIMENTO AO DIGITADO 
 				if(isset($_SESSION['ultimo_proc_id']) && $id_proc == $_SESSION['ultimo_proc_id'] ){
-			exit();	 echo"<script language='javascript' type='text/javascript'>alert('Procedimento j\u00e1 inserido!');window.history.back()</script>";
+				 echo"<script language='javascript' type='text/javascript'>alert('Procedimento j\u00e1 inserido!');window.history.back()</script>";
 				 exit();
 				}else{
 				   $sql = "INSERT INTO sadt_procedimento(id, id_sadt, id_proc, qtd_proc, data) VALUES (null,".$_SESSION['last_id'].",".$id_proc.",'".$qtd_proc."','".date("Y-m-d H:i:s")."')";

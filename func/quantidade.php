@@ -23,7 +23,7 @@ INFORMAÇÕES TÉCNICAS:
 		    $ano_atual = date("Y");
 			$mes_atual = date("m");
 			$dia_atual = date("d");
-			$dia_mes_inclusao =  date("m-d", strtotime($data_inclusao)); 
+		    $dia_mes_inclusao =  date("m-d", strtotime($data_inclusao)); 
 			
 	// COMPOSIÇÃO DA DATA INICIAL PARA CONSULTA NO SQL DOS PROCEDIMENTOS EXECUTADOS PELO USUÁRIO
 			$data_inicial = $ano_atual."-".$dia_mes_inclusao;
@@ -66,7 +66,7 @@ INFORMAÇÕES TÉCNICAS:
                      INNER JOIN especialidade on especialidade.id = sadt.id_especialidade
                      WHERE 
                          sadt.id_beneficiario =  ".$id_beneficiarios."
-                     AND sadt.id_especialidade = ".$id_especialidade."
+					 AND sadt_procedimento.id_proc = ".$id_proc."
 					 AND sadt_procedimento.autorizado = 1 "
 					 .$data;
                      
@@ -90,6 +90,9 @@ INFORMAÇÕES TÉCNICAS:
 					$msg = "<script language='javascript' type='text/javascript'>alert('Limite ".$periodo." exedido de procedimentos executados pelo usuario.');window.history.back();</script>";
 				   $dados['msg']  = $msg;
 				
+				}else{
+	// SE NÃO EXEDER A QUANTIDADE 
+				   $dados = false;
 				}
 	}else{
 

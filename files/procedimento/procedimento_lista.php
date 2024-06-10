@@ -200,8 +200,8 @@ function excluir(id) {
               <tr>
                 <td><div align='center'><?php echo "<a  id='ticket' href = 'painel.php?proc=1&id=".$registro["id"]."'>  ".$registro["id"]."</a>";  ?> </div></td>
                 
-                <td><div align="center"><?php echo $registro["codigo"]; ?></div></td>
-                <td><?php echo $registro["descricao"]; ?></td>
+                <td><div align="center"><?php echo "<a  id='ticket' href = 'painel.php?proc=1&id=".$registro["id"]."'>  ".$registro["codigo"]."</a>"; ?></div></td>
+                <td><?php echo "<a style='color: #243bcd;' id='ticket' href = 'painel.php?proc=1&id=".$registro["id"]."'>  ".$registro["descricao"]."</a>"; ?></td>
                 <td><div align="center"><?php echo $registro["carencia"]; ?> </div></td>  
 				<td><div align="center" style="color: #243bcd;
     font-weight: bold;"><?php periodo($registro["unid_carencia"]); ?> </div></td>

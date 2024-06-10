@@ -192,13 +192,7 @@
 							</div>
 						</a>
 				";
-				//Botão Procedimento 
-				echo' <a  href="painel.php?proc"  > 
-					<div class="thumbnail tile tile-medium tile-teal" style="display: flex; justify-content: center; align-items: center; background-color: #0047ff;">	
-						
-						Procedimento	
-					</div>
-				</a>';
+
 				
 		 		//  botão Cadastro de usuários 
 				echo "	
@@ -230,6 +224,15 @@
 	
 	
 		 If( ($_SESSION["perfil"] == "administrador") or ($_SESSION["perfil"] == "auditor")){
+		 		
+				//Botão Procedimento 
+				echo' <a  href="painel.php?proc"  > 
+					<div class="thumbnail tile tile-medium tile-teal" style="display: flex; justify-content: center; align-items: center; background-color: #0047ff;">	
+						
+						Procedimento	
+					</div>
+				</a>';
+		 
 		 		//  botão Avidos 
 				echo "	
 						<a href='painel.php?aviso=1' > 

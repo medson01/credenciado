@@ -9,7 +9,7 @@ mysqli_query($conn,"SET NAMES 'utf8'");
 
 
  
-   $query = mysqli_query($conn,"SELECT * FROM cid order by cid") or die("erro ao carregar consulta");
+   $query = mysqli_query($conn,"SELECT * FROM cid ORDER BY `cid`.`cid` DESC") or die("erro ao carregar consulta");
                   $i = 1;
                   while($registro = mysqli_fetch_assoc($query)){
                         
@@ -54,7 +54,7 @@ mysqli_query($conn,"SET NAMES 'utf8'");
 
                                   <?php     
 
-                                              for ($x=1; $x < $i ; $x++) {
+                                              for ($x=1; $x < $i ; ++$x) {
 
                                                  echo' case '.$x.':
                                                           document.getElementById("dias").value = "'.$dia[$x].'"
@@ -155,7 +155,7 @@ mysqli_query($conn,"SET NAMES 'utf8'");
                               <td>
                                <select id="id_cid"  name="id_cid" class="form-control" required  onchange= "adicionar()"> 
                                                         <option value="">*** Digite ou selecio o CID ***</option>
-								<option value="2047">U071-Infec&ccedil;&atilde;o pelo novo Coronav&iacute;rus  (COVID-19)</option> 
+								
                                               <?php 
 
                                                   for ($x=1; $x < $i ; $x++) { 

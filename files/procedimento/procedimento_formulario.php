@@ -74,8 +74,9 @@ input[type=checkbox]
 					  $unid_periodicidade = $registro["unid_periodicidade"];
 					  $valor_tabela = $registro["valor_tabela"];
 					  $valor_cobrado = $registro["valor_cobrado"];
-					  $complexidadde = $registro["complexidade"];
+					  $complexidade = $registro["complexidade"];
 					  $bloqueio = $registro["bloqueio"];
+					  $observacao = $registro["observacao"];
 								  								       				     		 
    		}
 		$desativar = "readonly";
@@ -85,7 +86,7 @@ input[type=checkbox]
              
 					    
 ?>				
-    <form name="procedimento" id="procedimento" action ="procedimento/procedimento_update.php" method="post" data-parsley-validate class="form-horizontal form-label-left">
+    <form name="procedimento" id="procedimento" action ="procedimento/procedimento_update.php" method="POST" data-parsley-validate class="form-horizontal form-label-left">
         <table width="100% " border="0" align="center">
                           
                             <tr>
@@ -174,7 +175,7 @@ $data_aut  = isset($_POST["data_aut"]) ? $_POST["data_aut"]: 'null';
                                 <input id="carencia"  name="carencia" type="text" class="form-control input-sm" style="font-size: 10px"  size="44" required="required" <?php if (isset($carencia)) { echo "value='".$carencia."' "; }   if(isset($desativar)){ echo $desativar;} ?> /></td>
                               <td bgcolor="#1ce6e6">&nbsp;</td>
                               <td bgcolor="#1ce6e6">Unidadede<br />
-							  <select id="unid_carencia" nome="unid_carencia"class="form-control input-sm"    required="required" <?php if(isset($desativar)){ echo 'disabled';}?> >
+							  <select id="unid_carencia" name="unid_carencia"class="form-control input-sm"    required="required" <?php if(isset($desativar)){ echo 'disabled';}?> >
                                   <option value="1" <?php if(isset($unid_carencia) && $unid_carencia == 1){echo 'selected';} ?> >Dia</option>
 								  <option value="2" <?php if(isset($unid_carencia) && $unid_carencia == 2){echo 'selected';} ?> >Mês</option>
 								  <option value="3" <?php if(isset($unid_carencia) && $unid_carencia == 3){echo 'selected';} ?> >Ano</option>
@@ -191,7 +192,7 @@ $data_aut  = isset($_POST["data_aut"]) ? $_POST["data_aut"]: 'null';
                                 <input name="periodicidade" id ="periodicidade" type="text" class="form-control input-sm" style="font-size: 10px" size="44" required="required" <?php if (isset($periodicidade)) { echo "value='".$periodicidade."' "; }  if(isset($desativar)){ echo $desativar;} ?>/></td>
                               <td bgcolor="#1ce6e6">&nbsp;</td>
                               <td bgcolor="#1ce6e6">Unidadede<br />
-                             <select id="unid_periodicidade" nome="unid_periodicidade"class="form-control input-sm"    required="required" <?php if(isset($desativar)){ echo 'disabled';}?> >
+                             <select id="unid_periodicidade" name="unid_periodicidade"class="form-control input-sm"    required="required" <?php if(isset($desativar)){ echo 'disabled';}?> >
                                   <option value="1" <?php if(isset($unid_periodicidade) && $unid_periodicidade == 1){echo 'selected';} ?> >Dia</option>
 								  <option value="2" <?php if(isset($unid_periodicidade) && $unid_periodicidade == 2){echo 'selected';} ?> >Mês</option>
 								  <option value="3" <?php if(isset($unid_periodicidade) && $unid_periodicidade == 3){echo 'selected';} ?> >Ano</option>
@@ -209,7 +210,7 @@ $data_aut  = isset($_POST["data_aut"]) ? $_POST["data_aut"]: 'null';
                                 <input name="quantidade" id ="quantidade" type="text" class="form-control input-sm" style="font-size: 10px" size="44" <?php if (isset($quantidade)) { echo "value='".$quantidade."' "; }  if(isset($desativar)){ echo $desativar;} ?>/></td>
                               <td bgcolor="#1ce6e6">&nbsp;</td>
                               <td bgcolor="#1ce6e6">Unidadede<br />
-                              <select id="unid_quantidade" nome="unid_quantidade"class="form-control input-sm"    required="required" <?php if(isset($desativar)){ echo 'disabled';}?> >
+                              <select id="unid_quantidade" name="unid_quantidade"class="form-control input-sm"    required="required" <?php if(isset($desativar)){ echo 'disabled';}?> >
                                   <option value="1" <?php if(isset($unid_quantidade) && $unid_quantidade == 1){echo 'selected';} ?> >Dia</option>
 								  <option value="2" <?php if(isset($unid_quantidade) && $unid_quantidade == 2){echo 'selected';} ?> >Mês</option>
 								  <option value="3" <?php if(isset($unid_quantidade) && $unid_quantidade == 3){echo 'selected';} ?> >Ano</option>
@@ -239,7 +240,7 @@ $data_aut  = isset($_POST["data_aut"]) ? $_POST["data_aut"]: 'null';
                                   <input name="valor_tabela" id ="valor_tabela" type="number" step="0.010" class="form-control input-sm" style="font-size: 10px" size="44" <?php if (isset($valor_tabela)) { echo "value='".$valor_tabela."' "; }  if(isset($desativar)){ echo $desativar;} ?>/></td>
                               <td>&nbsp;</td>
                               <td>Valor Cobrado<br />
-                                  <input name="valor_cobrado" id ="valor_cobrado" type="number" step="0.010" class="form-control input-sm" style="font-size: 10px" size="44" required="required" <?php if (isset($valor_cobrado)) { echo "value='".$valor_cobrado."' "; }  if(isset($desativar)){ echo $desativar;} ?>/></td>
+                                  <input name="valor_cobrado" id ="valor_cobrado" type="number" step="0.010" class="form-control input-sm" style="font-size: 10px" size="44"  <?php if (isset($valor_cobrado)) { echo "value='".$valor_cobrado."' "; }  if(isset($desativar)){ echo $desativar;} ?>/></td>
                             </tr>
                             <tr>
                               <td >&nbsp;</td>
@@ -248,7 +249,7 @@ $data_aut  = isset($_POST["data_aut"]) ? $_POST["data_aut"]: 'null';
                             </tr>
                             <tr>
                               <td >Grau de Complexidade<br />
-                                <select id="complexidade" nome="complexidade"class="form-control input-sm"    required="required" <?php if(isset($desativar)){ echo 'disabled';}?> >
+                                <select id="complexidade" name="complexidade"class="form-control input-sm"    required="required" <?php if(isset($desativar)){ echo 'disabled';}?> >
                                   <option value="baixa" <?php if(isset($complexidade) && $complexidade == "baixa"){echo 'selected';} ?> >Baixa</option>
 								  <option value="media" <?php if(isset($complexidade) && $complexidade == "media"){echo 'selected';} ?> >Mádia</option>
 								  <option value="alta" <?php if(isset($complexidade) && $complexidade == "alta"){echo 'selected';} ?> >Alta</option>
@@ -277,10 +278,10 @@ $data_aut  = isset($_POST["data_aut"]) ? $_POST["data_aut"]: 'null';
 
                             <tr>
                               <td colspan="3" >Observações sobre o procedimento
-                                <textarea minlength="5" required id="motivo_proc" class="form-control input-sm" name="motivo_proc"  style="font-size:12px; margin: 0px; height: 100px; width: 100%;" form="procedimento" <?php if(isset($desativar)){ echo $desativar; } ?> />
+                                <textarea minlength="5" id="observacao" class="form-control input-sm" name="observacao"  style="text-align:left; font-size:12px; margin: 0px; height: 100px; width: 100%;" form="procedimento" <?php if(isset($desativar)){ echo $desativar; } ?> />
 										<?php
-											if(isset($motivo_proc)){
-											  echo $motivo_proc;
+											if(isset($observacao)){
+											  echo $observacao;
 											}
                                         ?></textarea>   							  </td>
                           </tr>
@@ -357,7 +358,7 @@ $data_aut  = isset($_POST["data_aut"]) ? $_POST["data_aut"]: 'null';
 		document.getElementById("periodicidade").readOnly = false;
 		document.getElementById("valor_tabela").readOnly = false;
 		document.getElementById("valor_cobrado").readOnly = false;
-		document.getElementById("motivo_proc").readOnly = false;
+		document.getElementById("observacao").readOnly = false;
 		document.getElementById("complexidade").disabled = false;
 		document.getElementById("bloqueio").disabled = false;
 		document.getElementById("Confirmar").value = "Enviar";

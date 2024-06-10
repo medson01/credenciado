@@ -83,7 +83,7 @@ $contato = str_replace("-", "", $contato);
         }
         
         if($insert){
-          
+
           require_once"internacao_relatorio.php";
           
         }else{
