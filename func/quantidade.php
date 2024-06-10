@@ -83,11 +83,12 @@ INFORMAÇÕES TÉCNICAS:
             }
 	// SOMA DA QUANTIDADES QUE EXITE NO BANCO PEDIDAS + O QUE ESTÁ SENDO PEDIDO.  		
 		   $qtd_total = $qtd_proc + $qtd;
-
+		   
 			   		   	
 	// A SOMA NÃO PODE SER MAIOR DO QUE O VALOR PARAMETRIZADO
 				 if($qtd_total > $quantidade ) {
-					$msg = "<script language='javascript' type='text/javascript'>alert('Limite ".$periodo." exedido de procedimentos executados pelo usuario.');window.history.back();</script>";
+				 	$resta = $quantidade - $qtd;
+					$msg = "<script language='javascript' type='text/javascript'>alert('Limite ".$periodo." exedido de procedimentos executados pelo usuario. Saldo apenas de ".$resta."');window.history.back();</script>";
 				   $dados['msg']  = $msg;
 				
 				}else{
