@@ -100,7 +100,7 @@
     $("#dias_autorizados").mask("00");
     $("#qtd_respiratoria").mask("00");
     $("#qtd_respiratoria2").mask("00");
-    $("#crm").mask("0000");
+    $("#crm").mask("000000");
     $("#codigo").mask("00000000");
 	$("#cpf").mask("00000000000");
     $("#cnpj").mask("00000000000000");

@@ -87,6 +87,21 @@ OS if TEM QUE DIFERENCIAR OS RECEBIMENTOS E COM ISSO AS ETAPAS ATRAVÉS POR ESSES
 					exit();		
 			}				
 		}
+		
+		// 3º REGRA = CARÊNCIA = CADA PROCEDIMENTO TEM UMA CARÊNCIA, SÓ PODE USAR DA DATA DE CARÊNCA EM DIANTE APARTIR DA DATA DE INCLUSÃO.
+			require_once "../func/carencia.php";
+			// CONSULTA NÃO TEM CARÊNCIA
+			if( isset($id_proc) && $id_proc <> '2795' ){
+				$carencia = carencia($id_beneficiarios, $id_especialidade, $data_inclusao, $id_proc, $qtd_proc, $id, $pdo);
+				if(!empty($carencia["msg"])){
+					echo $carencia["msg"];
+					exit();
+				}else{
+					// DAR UM AVISO SOBRE A REGRA QUE FALTA CONFIGUARA E CONTINUAR O PROCESSO INSERINDO O PROCEDIMENTO NA GUIA.  
+					echo $carencia["go"];
+				}
+			}
+		
 		// 3º REGRA = RETORNO = É O PERÍODO DE 30DIAS APARTIR DA ULTIMA CONSULTA DENTRO DA ESPECIALIDADE. CODIGO ID DO PRODEDIMENTO CONSULTA NO BANCO É 2795.
 			require_once "../func/retorno.php";
 			if( $_SESSION["perfil"] == "clinica" && isset($id_proc) && $id_proc == '2795' ){
