@@ -67,7 +67,7 @@ OS if TEM QUE DIFERENCIAR OS RECEBIMENTOS E COM ISSO AS ETAPAS ATRAVÉS POR ESSES
 //                   REGRAS DE ENTRADAS
 // ================================================================================
 
-// USA O POST PARA SÓ EXECUTAR OS COMANDOS VIA MODAL DE INCLUSÃO DE PROCEDIMENTOS lab_modal_procedimento.php
+	// 1º REGRA =USA O POST PARA SÓ EXECUTAR OS COMANDOS VIA MODAL DE INCLUSÃO DE PROCEDIMENTOS lab_modal_procedimento.php
 	if(isset($_POST["matricula"])){
 		// 1º REGRA = LABORATÓRIO NÃO PODE SOLICITAR PROCEDIMENTO CONSULTA ID_PROC = 2795.
 		if( $_SESSION["perfil"] == "laboratorio" && !empty($id_proc) && $id_proc == '2795' ){
@@ -75,7 +75,7 @@ OS if TEM QUE DIFERENCIAR OS RECEBIMENTOS E COM ISSO AS ETAPAS ATRAVÉS POR ESSES
 					exit();	
 		}
 		
-		// 2º REGRA = CLINICA NÃO PODE SOLICITAR PROCEDIMENTO EXAMES.
+	// 2º REGRA = CLINICA NÃO PODE SOLICITAR PROCEDIMENTO EXAMES.
 		if( $_SESSION["perfil"] == "clinica" && !empty($id_proc) && $id_proc <> '2795' ){
 					echo"<script language='javascript' type='text/javascript'>alert('Cl\u00ednica n\u00e3o pode solicitar exames!');window.history.back();</script>";	
 					exit();	
@@ -88,7 +88,7 @@ OS if TEM QUE DIFERENCIAR OS RECEBIMENTOS E COM ISSO AS ETAPAS ATRAVÉS POR ESSES
 			}				
 		}
 		
-		// 3º REGRA = CARÊNCIA = CADA PROCEDIMENTO TEM UMA CARÊNCIA, SÓ PODE USAR DA DATA DE CARÊNCA EM DIANTE APARTIR DA DATA DE INCLUSÃO.
+	// 3º REGRA = CARÊNCIA = CADA PROCEDIMENTO TEM UMA CARÊNCIA, SÓ PODE USAR DA DATA DE CARÊNCA EM DIANTE APARTIR DA DATA DE INCLUSÃO.
 			require_once "../func/carencia.php";
 			// CONSULTA NÃO TEM CARÊNCIA
 			if( isset($id_proc) && $id_proc <> '2795' ){
@@ -102,7 +102,7 @@ OS if TEM QUE DIFERENCIAR OS RECEBIMENTOS E COM ISSO AS ETAPAS ATRAVÉS POR ESSES
 				}
 			}
 		
-		// 3º REGRA = RETORNO = É O PERÍODO DE 30DIAS APARTIR DA ULTIMA CONSULTA DENTRO DA ESPECIALIDADE. CODIGO ID DO PRODEDIMENTO CONSULTA NO BANCO É 2795.
+	// 3º REGRA = RETORNO = É O PERÍODO DE 30DIAS APARTIR DA ULTIMA CONSULTA DENTRO DA ESPECIALIDADE. CODIGO ID DO PRODEDIMENTO CONSULTA NO BANCO É 2795.
 			require_once "../func/retorno.php";
 			if( $_SESSION["perfil"] == "clinica" && isset($id_proc) && $id_proc == '2795' ){
 				$retorno = retorno($id_beneficiarios, $id_credenciado, $id_especialidade, $pdo);
@@ -112,7 +112,7 @@ OS if TEM QUE DIFERENCIAR OS RECEBIMENTOS E COM ISSO AS ETAPAS ATRAVÉS POR ESSES
 				}
 			}
 			
-		// 4º REGRA = QUANTIDADE DE PROCEDIMENTOS EXECUTADOS EM UM DETERMINADO PERÍODO. 
+	// 4º REGRA = QUANTIDADE DE PROCEDIMENTOS EXECUTADOS EM UM DETERMINADO PERÍODO. 
 		// - RETORNA FALSO SE ESTIVER DENTRO DA QUANTIDADE
 		// - RETORNA UMA INFORMAÇÃO DE NÃO CONFIGURADO OS PARÂMETROS DE QUANTIDADE E UNIDADE DA QUANTIDADE
 			require_once "../func/quantidade.php";
@@ -127,6 +127,18 @@ OS if TEM QUE DIFERENCIAR OS RECEBIMENTOS E COM ISSO AS ETAPAS ATRAVÉS POR ESSES
 				}
 			}
 			
+	// 5º REGRA = QUANTIDADE DE PROCEDIMENTOS EXECUTADOS EM UM DETERMINADO PERÍODO. 
+			require_once "../func/periodicidade.php";
+			if( isset($id_proc) && $id_proc <> '2795' ){
+				$periodicidade = periodicidade($id_beneficiarios, $id_especialidade, $data_inclusao, $id_proc, $id, $pdo);
+				if(!empty($periodicidade["msg"])){
+					echo $periodicidade["msg"];
+					exit();
+				}else{
+					// DAR UM AVISO SOBRE A REGRA QUE FALTA CONFIGUARA E CONTINUAR O PROCESSO INSERINDO O PROCEDIMENTO NA GUIA.  
+					echo $periodicidade["go"];
+				}
+			}		
 			
 	}
 //=================================================================================
