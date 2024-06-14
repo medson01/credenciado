@@ -44,34 +44,36 @@ INFORMAÇÕES TÉCNICAS:
 	if(!empty($periodicidade) && !empty($unid_periodicidade)){	
 			switch ($unid_periodicidade) {
 				case 1:								
-					$data_final = date('d/m/Y', strtotime("+".$i." days",strtotime($ultimo_data_sadt)));
+					$data_periodicidade = date('Y-m-d', strtotime("+".$i." days",strtotime($ultimo_data_sadt)));
 					$texto = "di\u00e1rio";
 					break;
 				case 2:
 					$texto =  "m\u00eas";			
-					$data_final = date('d/m/Y', strtotime("+".$i." month",strtotime($ultimo_data_sadt)));
+					$data_periodicidade = date('Y-m-d', strtotime("+".$i." month",strtotime($ultimo_data_sadt)));
 					break;
 				case 3:
 					$texto =  "ano";
-					$data_final = date('d/m/Y', strtotime("+".$i." year",strtotime($ultimo_data_sadt)));			
+					$data_periodicidade = date('Y-m-d', strtotime("+".$i." year",strtotime($ultimo_data_sadt)));			
 					break;
 			}	
+	//echo $ultimo_data_sadt;
 	
-           $hoje = date('Y-m-d');
+     $hoje = date('Y-m-d');
+	 $data_final = date('d/m/Y',strtotime($data_periodicidade));
 
 			// Comparando as Datas
-			if(strtotime($hoje) > strtotime($data_final)) {
+			if(strtotime($data_periodicidade) < strtotime($hoje) ) {
 				// SEM PERIODICIDADE. PODE USAR O PLANO. 
 					$dados = false;
 				
 			}elseif(strtotime($hoje) == strtotime($data_final))	{
 				// ESTA EM PERIODICIDADE. SÓ AMANHÁ PODERÁ USAR O PLANNO
-				$msg = "<script language='javascript' type='text/javascript'>alert('Encontra-se em Periodicidade. Amanhã poderá executar o procedimento');window.history.back();</script>";
+				$msg = "<script language='javascript' type='text/javascript'>alert('Procedimento encontra-se em Periodicidade!\\nAmanhã poderá ser executado.');window.history.back();</script>";
 				   $dados['msg']  = $msg;
 				
 			}else{
 				// ESTÁ EM PERIODICIDADE, S´P APÓS A DATA $data_final PODERÁ EXECUTAR O PROCEDIMETO
-				$msg = "<script language='javascript' type='text/javascript'>alert('Encontra-se em Periodicidade, só após ".$data_final.", poderá executar o procedimento.');window.history.back();</script>";
+				$msg = "<script language='javascript' type='text/javascript'>alert('Procedimento encontra-se em Periodicidade!\\nEstará liberado após ".$data_final.".');window.history.back();</script>";
 				   $dados['msg']  = $msg;
 			}  
 	}else{
