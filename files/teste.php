@@ -1,13 +1,16 @@
 <html>
 <head>
-<script type="text/javaScript">
-function autoRefresh(interval) {
-	setTimeout("location.reload();",interval);
-}
 
-</script>
 <title>Titulo...</title></head>
-<body onload="javascript:autoRefresh(1000);">
-<p>executarÃ¡ a funÃ§Ã£o a cada 1 segundos...
+<body>
+<script>
+if (confirm("É nessetário enviar este procedimento separadamente em uma única guia para análise.\\nEstá guia contém apenas ele.")) {
+   //continua...
+} else {
+  history.back();
+}
+</script>
+<div id="minhaDiv">Conteudo</div>
+<button type="button" onClick="Mudarestado('minhaDiv')">Mostrar / Esconder</button>
 </body>
 </html>

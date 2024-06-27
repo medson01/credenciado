@@ -12,7 +12,7 @@
 
 <div align="right" style="    background-color: #d5d5d5;"><!-- java script bootstrap-->
     <script type="text/javascript" src="../bootstrap/js/bootstrap.min.js"></script>
-    <h5 align="center"><img src="../imagem/brasao.png" alt="" /><br />
+    <h5 align="center"><img src="../imagem/brasao.png" alt="" /><br /><br /><br />
   IPASEAL SA&Uacute;DE</h5>
     <h6 align="center"><span class="style2">Instituto de Assist&ecirc;ncia &agrave; Sa&uacute;de dos Servidores do Estado de Alagoas<br />
     <strong>Pr&eacute;dio Sede</strong>: Rua Cincinato Pinto, N&ordm; 226, 57020-050 Macei&oacute;-AL, Centro&nbsp;<br />

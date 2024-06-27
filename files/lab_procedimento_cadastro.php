@@ -43,6 +43,8 @@ OS if TEM QUE DIFERENCIAR OS RECEBIMENTOS E COM ISSO AS ETAPAS ATRAVÉS POR ESSES
  $matricula = isset($_POST["matricula"])? $_POST["matricula"] : '';
  $deficiente = isset($_POST["deficiente"])? $_POST["deficiente"] : '';
  $data_inclusao = isset($_POST["data_inclusao"])? $_POST["data_inclusao"] : '';
+ $imagem = !empty($_FILES['imagem'])? $_FILES['imagem'] : '';
+
 //DADPS DO PROFISIONAL SAUDE E ESPECIALIDADE 
  $id_profissional_saude = isset($_POST['id_profissional_saude'])? $_POST['id_profissional_saude'] : '';
  $medico_solicitante = isset($_POST['medico_solicitante'])? $_POST['medico_solicitante'] : '';
@@ -55,27 +57,48 @@ OS if TEM QUE DIFERENCIAR OS RECEBIMENTOS E COM ISSO AS ETAPAS ATRAVÉS POR ESSES
  $qtd_proc = isset($_POST["qtd_proc"])? $_POST["qtd_proc"] : '';
  $id_imagem  = isset($_POST["id_imagem"]) ? $_POST["id_imagem"]: 'null';
  $lab    = isset($_POST['lab']  )? $_POST['lab'] : '';
+ $qtd_proc_guia = isset($_POST['i']  )? $_POST['i'] : ''; 
  
  // VARIÁVEL DO SCRIPT confirmar(), VIA  GET, ARQUIVO lab_autorizazao_medica.php
  $senha = isset($_GET["senha"])? $_GET["senha"] : '';
  $n_autorizacao = isset($_GET["n_autorizacao"])? $_GET["n_autorizacao"] : '';
  $motivo = isset($_GET["motivo"])? $_GET["motivo"] : '';
  $motivo_retorno = isset($_GET["motivo_retorno"])? $_GET["motivo_retorno"] : '';
+ $imagem = isset($_GET["imagem"])? $_GET["imagem"] : '';
  
 
+
+
+// USA O POST PARA SÓ EXECUTAR OS COMANDOS VIA MODAL DE INCLUSÃO DE PROCEDIMENTOS lab_modal_procedimento.php
+	if(isset($_POST["matricula"])){
+	
 // ================================================================================
 //                   REGRAS DE ENTRADAS
-// ================================================================================
+// ================================================================================	
 
-	// 1º REGRA =USA O POST PARA SÓ EXECUTAR OS COMANDOS VIA MODAL DE INCLUSÃO DE PROCEDIMENTOS lab_modal_procedimento.php
-	if(isset($_POST["matricula"])){
-		// 1º REGRA = LABORATÓRIO NÃO PODE SOLICITAR PROCEDIMENTO CONSULTA ID_PROC = 2795.
+	// 1º REGRA = VALOR PROCEDIMENTO. 
+			require_once "../func/valor_procedimento.php";
+			if( isset($id_proc) && $id_proc <> '2795' ){
+				$valor_procedimento = valor_procedimento($qtd_proc_guia, $id_proc ,$pdo);
+				if(!empty($valor_procedimento["msg"])){
+					echo $valor_procedimento["msg"];
+					exit();
+				}else{
+					// DAR UM AVISO SOBRE A REGRA QUE FALTA CONFIGUARA E CONTINUAR O PROCESSO INSERINDO O PROCEDIMENTO NA GUIA.  
+					//echo isset($valor_procedimento["go"])? $valor_procedimento["go"]: '' ;
+					//$aviso = $valor_procedimento["procedimento"];
+					echo $valor_procedimento["go"];
+					$imagem=0;		
+				}
+			}
+			
+	// 2º REGRA = LABORATÓRIO NÃO PODE SOLICITAR PROCEDIMENTO CONSULTA ID_PROC = 2795.
 		if( $_SESSION["perfil"] == "laboratorio" && !empty($id_proc) && $id_proc == '2795' ){
 					echo"<script language='javascript' type='text/javascript'>alert('Laborat\u00f3rio n\u00e3o pode solicitar consulta!');window.history.back();</script>";	
 					exit();	
 		}
 		
-	// 2º REGRA = CLINICA NÃO PODE SOLICITAR PROCEDIMENTO EXAMES.
+	// 3º REGRA = CLINICA NÃO PODE SOLICITAR PROCEDIMENTO EXAMES.
 		if( $_SESSION["perfil"] == "clinica" && !empty($id_proc) && $id_proc <> '2795' ){
 					echo"<script language='javascript' type='text/javascript'>alert('Cl\u00ednica n\u00e3o pode solicitar exames!');window.history.back();</script>";	
 					exit();	
@@ -88,7 +111,7 @@ OS if TEM QUE DIFERENCIAR OS RECEBIMENTOS E COM ISSO AS ETAPAS ATRAVÉS POR ESSES
 			}				
 		}
 		
-	// 3º REGRA = CARÊNCIA = CADA PROCEDIMENTO TEM UMA CARÊNCIA, SÓ PODE USAR DA DATA DE CARÊNCA EM DIANTE APARTIR DA DATA DE INCLUSÃO.
+	// 4º REGRA = CARÊNCIA = CADA PROCEDIMENTO TEM UMA CARÊNCIA, SÓ PODE USAR DA DATA DE CARÊNCA EM DIANTE APARTIR DA DATA DE INCLUSÃO.
 			require_once "../func/carencia.php";
 			// CONSULTA NÃO TEM CARÊNCIA
 			if( isset($id_proc) && $id_proc <> '2795' ){
@@ -102,7 +125,7 @@ OS if TEM QUE DIFERENCIAR OS RECEBIMENTOS E COM ISSO AS ETAPAS ATRAVÉS POR ESSES
 				}
 			}
 		
-	// 3º REGRA = RETORNO = É O PERÍODO DE 30DIAS APARTIR DA ULTIMA CONSULTA DENTRO DA ESPECIALIDADE. CODIGO ID DO PRODEDIMENTO CONSULTA NO BANCO É 2795.
+	// 5º REGRA = RETORNO = É O PERÍODO DE 30DIAS APARTIR DA ULTIMA CONSULTA DENTRO DA ESPECIALIDADE. CODIGO ID DO PRODEDIMENTO CONSULTA NO BANCO É 2795.
 			require_once "../func/retorno.php";
 			if( $_SESSION["perfil"] == "clinica" && isset($id_proc) && $id_proc == '2795' ){
 				$retorno = retorno($id_beneficiarios, $id_credenciado, $id_especialidade, $pdo);
@@ -112,7 +135,7 @@ OS if TEM QUE DIFERENCIAR OS RECEBIMENTOS E COM ISSO AS ETAPAS ATRAVÉS POR ESSES
 				}
 			}
 			
-	// 4º REGRA = QUANTIDADE DE PROCEDIMENTOS EXECUTADOS EM UM DETERMINADO PERÍODO. 
+	// 6º REGRA = QUANTIDADE DE PROCEDIMENTOS EXECUTADOS EM UM DETERMINADO PERÍODO. 
 		// - RETORNA FALSO SE ESTIVER DENTRO DA QUANTIDADE
 		// - RETORNA UMA INFORMAÇÃO DE NÃO CONFIGURADO OS PARÂMETROS DE QUANTIDADE E UNIDADE DA QUANTIDADE
 			require_once "../func/quantidade.php";
@@ -127,7 +150,7 @@ OS if TEM QUE DIFERENCIAR OS RECEBIMENTOS E COM ISSO AS ETAPAS ATRAVÉS POR ESSES
 				}
 			}
 			
-	// 5º REGRA = QUANTIDADE DE PROCEDIMENTOS EXECUTADOS EM UM DETERMINADO PERÍODO. 
+	// 7º REGRA = QUANTIDADE DE PROCEDIMENTOS EXECUTADOS EM UM DETERMINADO PERÍODO. 
 			require_once "../func/periodicidade.php";
 			if( isset($id_proc) && $id_proc <> '2795' ){
 				$periodicidade = periodicidade($id_beneficiarios, $id_especialidade, $data_inclusao, $id_proc, $id, $pdo);
@@ -138,7 +161,9 @@ OS if TEM QUE DIFERENCIAR OS RECEBIMENTOS E COM ISSO AS ETAPAS ATRAVÉS POR ESSES
 					// DAR UM AVISO SOBRE A REGRA QUE FALTA CONFIGUARA E CONTINUAR O PROCESSO INSERINDO O PROCEDIMENTO NA GUIA.  
 					echo $periodicidade["go"];
 				}
-			}		
+			}	
+
+		
 			
 	}
 //=================================================================================
@@ -211,7 +236,7 @@ if( (isset($_GET['status'])) && ($_GET['status'] == 2) ){
 // exit();      
 
 // FINALIZA O PROCESSO DA SOLICITAÇÃO PARA O CALLCENTER	
-  	echo"<script language='javascript' type='text/javascript'>alert('Autoriza\u00e7\u00e3o processada com sucesso!');window.history.back()</script>";
+  	echo"<script language='javascript' type='text/javascript'>alert('Autoriza\u00e7\u00e3o processada com sucesso!');window.history.back();</script>";
 	exit();
 }else{
 
@@ -225,20 +250,23 @@ if( (isset($_GET['status'])) && ($_GET['status'] == 2) ){
                $stmt->execute();
                $_SESSION['last_id'] = $conn->insert_id;
 
-                // INSERI O 1º PROCEDIMENTO 
+// 	ESTÁGIO 2 - LANÇAMENTO DOS PROCEDIMENTOS NA LISTA DE PROCEDIMENTOS lab_lista.php
+		// INSERI APENAS O 1º PROCEDIMENTO DA LISTA			
                $sql = "INSERT INTO sadt_procedimento(id, id_sadt, id_proc, qtd_proc, data,autorizado) VALUES (null,".$_SESSION['last_id'].",".$id_proc.",'".$qtd_proc."','".date("Y-m-d H:i:s")."',null)";
                $stmt = $conn->prepare($sql);
                $stmt->execute();
 			   $_SESSION['ultimo_proc_id'] = $id_proc;
-	
+			   
+
 					
         }else{
-			   // CASO EXISTA MAIS DE UMA SOLICITAÇÃO DE PROCEDIMENTO PARA NÃO REPETIR O PROCEDIMENTO AO DIGITADO 
+			   // PARA NÃO REPETIR OS PROCEDIMENTOS AO DIGITADOS 
 				if(isset($_SESSION['ultimo_proc_id']) && $id_proc == $_SESSION['ultimo_proc_id'] ){
 				 echo"<script language='javascript' type='text/javascript'>alert('Procedimento j\u00e1 inserido!');window.history.back()</script>";
 				 exit();
 				}else{
-				   $sql = "INSERT INTO sadt_procedimento(id, id_sadt, id_proc, qtd_proc, data) VALUES (null,".$_SESSION['last_id'].",".$id_proc.",'".$qtd_proc."','".date("Y-m-d H:i:s")."')";
+		// INSERI APARTIR DO 2º PROCEDIMENTO DA LISTA EM DIANTE. 			
+				   $sql = "INSERT INTO sadt_procedimento(id, id_sadt, id_proc, qtd_proc, data,autorizado, critica) VALUES (null,".$_SESSION['last_id'].",".$id_proc.",'".$qtd_proc."','".date("Y-m-d H:i:s")."', null, null)";
 				   $stmt = $conn->prepare($sql);
 				   $stmt->execute();
 				   $_SESSION['ultimo_proc_id'] = $id_proc;
@@ -250,7 +278,7 @@ if( (isset($_GET['status'])) && ($_GET['status'] == 2) ){
 				echo"<script language='javascript' type='text/javascript'>window.location.href='painel.php?lab=".$lab."&id=".$_SESSION['last_id']."&".$lab."=1'</script>";				
 				exit();
 		}else{	
-				echo"<script language='javascript' type='text/javascript'>window.location.href='painel.php?lab=".$lab."&id=".$_SESSION['last_id']."'</script>";				
+				echo"<script language='javascript' type='text/javascript'>window.location.href='painel.php?lab=".$lab."&id=".$_SESSION['last_id']."&imagem=".$id_imagem."'</script>";				
 				exit();
 				
 		}

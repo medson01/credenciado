@@ -3,7 +3,15 @@
 // Arquivo de configuração
  require_once "../config/config.php";
  
+/*
+			  Contrato_contrato.ativo / Contrato_contrato.bloqueado
+							V					V					=> 			ATIVO
+							V					F					=> 			BLOQUEADO (continua pagando)
+							F					V					=> 			CANCELADO
+							F					F					=>			CANCELADO
 
+        
+*/
 
 if(isset($_GET['matric'])){
 
@@ -16,13 +24,13 @@ if(isset($_GET['matric'])){
 	 
 	 $matric = substr($_GET['matric'], 9, -3);
 
+	 $sql = "SELECT * FROM `beneficiarios` WHERE matricula = '".$matric."' AND tipreg = '".$tipreg."'";	
+	
+	 $query = mysqli_query($conn, $sql) or die("erro ao carregar consulta");
 
-
-	 $query = mysqli_query($conn,"SELECT * FROM `beneficiarios` WHERE matricula = '".$matric."' AND tipreg = '".$tipreg."'") or die("erro ao carregar consulta");
 
 	 	//Beneficiaário não existe
         if (mysqli_num_rows($query)<=0) {
-
 
 		     if(isset($_GET['pa'])){	
         		    	echo "<script>alert('Matrícula não exite!');location.href=\"painel.php?pa=1&id=".$id."\"</script>";
@@ -48,17 +56,18 @@ if(isset($_GET['matric'])){
 			
 	        	$id_beneficiarios = $registro["id"];                
 	         	$data_nascimento = $registro["data_nascimento"];
-				$nome = $registro["nome"];
-	            $cpf = $registro["cpf"];
-	     		$contrato_ativo = $registro["contrato_ativo"];
-	     		$pessoa_ativa = $registro["pessoa_ativa"];
-	     		$deficiente = $registro["deficiente"];
+			$nome = $registro["nome"];
+	          $cpf = $registro["cpf"];
+	     	$contrato_ativo = $registro["contrato_ativo"];
+	     	$contrato_bloqueado = $registro["contrato_bloqueado"];
+	     	$pessoa_ativa = $registro["pessoa_ativa"];
+	     	$deficiente = $registro["deficiente"];
 		    	$data_inclusao = $registro["data_inclusao"];
 	                        
 	         }
 
-	        
-	        if($contrato_ativo <> 1){
+	    
+	        if($contrato_ativo <> 1 || $contrato_bloqueado == 1){
 
 	        		if(isset($_GET['pa'])){  
 
@@ -102,7 +111,7 @@ if(isset($_GET['matric'])){
 					
 					
 		            if(isset($_GET['pa'])){      
-		       					echo "<script>location.href=\"painel.php?pa=1&id=".$id."&matricula=".$matricula."&nome=".$nome."&cpf=".$cpf."&id_beneficiarios=".$id_beneficiarios."&data_nascimento=".$data_nascimento."&deficiente=".$deficiente."&data_inclusao=".$$data_inclusao."\"</script>";
+		       					echo "<script>location.href=\"painel.php?pa=1&id=".$id."&matricula=".$matricula."&nome=".$nome."&cpf=".$cpf."&id_beneficiarios=".$id_beneficiarios."&data_nascimento=".$data_nascimento."&deficiente=".$deficiente."&data_inclusao=".$data_inclusao."\"</script>";
 		        	}
 		        	if(isset($_GET['int'])){
 		        	 			echo "<script>location.href=\"painel.php?int=1&id=".$id."&matricula=".$matricula."&paciente=".$nome."&cpf=".$cpf."&id_beneficiarios=".$id_beneficiarios."&data_nascimento=".$data_nascimento."&deficiente=".$deficiente."&data_inclusao=".$data_inclusao."\"</script>";		        	}

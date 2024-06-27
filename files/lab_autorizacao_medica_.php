@@ -1,11 +1,6 @@
-		<div class="panel panel-primary" >
-						  		<?php		
-								if(isset($_GET['imagem'])){					
-										include("sadt_formulario_imagem.php");
-								}
-								?>
-			<div class="panel-heading" style="font-size: 10px; font-weight: bold;">JUSTIFICATIVA DA SOLICITAÇÃO</div>  
-				                                  						
+
+		<div class="panel panel-primary " >
+			<div class="panel-heading" style="font-size: 10px; font-weight: bold;">JUSTIFICATIVA DA SOLICITAÇÃO</div>                                    
 							<textarea id="motivo" class="form-control input-sm" name="motivo"  style="font-size:12px; margin: 0px; height: 100px; width: 100%; text-align: justify; text-justify: inter-word;" form="motivo" <?php 				
                                         
 											if($_SESSION["perfil"] == "callcenter" || !empty($motivo) ){
@@ -13,8 +8,9 @@
 										  	}else{
 												echo "";
 											}
-                           echo '/>';            
-
+                                       
+			?> 
+			/><?php
 										if(isset($motivo)){
 											if($motivo == "null"){
                                           		echo "";
@@ -26,7 +22,11 @@
 																										
     
 						
-
+				  				<?php
+									if(isset($_GET['imagem'])){
+										include("sadt_formulario_imagem.php");  
+									}
+								?>
 
 
     </div> 

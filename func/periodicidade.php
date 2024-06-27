@@ -40,54 +40,61 @@ INFORMAÇÕES TÉCNICAS:
 			$i = 1;
 			$i = $i * $periodicidade;
 			
-	//DEFINIÇÃO DE PERÍODO 	
-	if(!empty($periodicidade) && !empty($unid_periodicidade)){	
-			switch ($unid_periodicidade) {
-				case 1:								
-					$data_periodicidade = date('Y-m-d', strtotime("+".$i." days",strtotime($ultimo_data_sadt)));
-					$texto = "di\u00e1rio";
-					break;
-				case 2:
-					$texto =  "m\u00eas";			
-					$data_periodicidade = date('Y-m-d', strtotime("+".$i." month",strtotime($ultimo_data_sadt)));
-					break;
-				case 3:
-					$texto =  "ano";
-					$data_periodicidade = date('Y-m-d', strtotime("+".$i." year",strtotime($ultimo_data_sadt)));			
-					break;
-			}	
-	//echo $ultimo_data_sadt;
+	if(isset($ultimo_data_sadt)){			
+		//DEFINIÇÃO DE PERÍODO 	
+		if(!empty($periodicidade) && !empty($unid_periodicidade)){	
+			
+				switch ($unid_periodicidade) {
+					case 1:								
+						$data_periodicidade = date('Y-m-d', strtotime("+".$i." days",strtotime($ultimo_data_sadt)));
+						$texto = "di\u00e1rio";
+						break;
+					case 2:
+						$texto =  "m\u00eas";			
+						$data_periodicidade = date('Y-m-d', strtotime("+".$i." month",strtotime($ultimo_data_sadt)));
+						break;
+					case 3:
+						$texto =  "ano";
+						$data_periodicidade = date('Y-m-d', strtotime("+".$i." year",strtotime($ultimo_data_sadt)));			
+						break;
+				}
 	
-     $hoje = date('Y-m-d');
-	 $data_final = date('d/m/Y',strtotime($data_periodicidade));
-
-			// Comparando as Datas
-			if(strtotime($data_periodicidade) < strtotime($hoje) ) {
-				// SEM PERIODICIDADE. PODE USAR O PLANO. 
-					$dados = false;
-				
-			}elseif(strtotime($hoje) == strtotime($data_final))	{
-				// ESTA EM PERIODICIDADE. SÓ AMANHÁ PODERÁ USAR O PLANNO
-				$msg = "<script language='javascript' type='text/javascript'>alert('Procedimento encontra-se em Periodicidade!\\nAmanhã poderá ser executado.');window.history.back();</script>";
-				   $dados['msg']  = $msg;
-				
-			}else{
-				// ESTÁ EM PERIODICIDADE, S´P APÓS A DATA $data_final PODERÁ EXECUTAR O PROCEDIMETO
-				$msg = "<script language='javascript' type='text/javascript'>alert('Procedimento encontra-se em Periodicidade!\\nEstará liberado após ".$data_final.".');window.history.back();</script>";
-				   $dados['msg']  = $msg;
-			}  
+		//echo $ultimo_data_sadt;
+		
+		 $hoje = date('Y-m-d');
+		 $data_final = date('d/m/Y',strtotime($data_periodicidade));
+	
+				// Comparando as Datas
+				if(strtotime($data_periodicidade) < strtotime($hoje) ) {
+					// SEM PERIODICIDADE. PODE USAR O PLANO. 
+						$dados = false;
+					
+				}elseif(strtotime($hoje) == strtotime($data_final))	{
+					// ESTA EM PERIODICIDADE. SÓ AMANHÁ PODERÁ USAR O PLANNO
+					$msg = "<script language='javascript' type='text/javascript'>alert('Procedimento encontra-se em Periodicidade!\\nAmanhã poderá ser executado.');window.history.back();</script>";
+					   $dados['msg']  = $msg;
+					
+				}else{
+					// ESTÁ EM PERIODICIDADE, S´P APÓS A DATA $data_final PODERÁ EXECUTAR O PROCEDIMETO
+					$msg = "<script language='javascript' type='text/javascript'>alert('Procedimento encontra-se em Periodicidade!\\nEstará liberado após ".$data_final.".');window.history.back();</script>";
+					   $dados['msg']  = $msg;
+				}  
+		}else{
+						if(!empty($id)){
+						$msg = "<script language='javascript' type='text/javascript'>alert('AVISO: \\n Falta defini\u00e7\u00e3o de Periodicidade e Per\u00edodo para esse procedimento! \\n Clique em Ok para continuar? ');window.location.href = 'painel.php?lab=exame&id=".$id."';</script>";
+						}else{
+						$msg = "<script language='javascript' type='text/javascript'>alert('AVISO: \\n Falta defini\u00e7\u00e3o de Periodicidade e Per\u00edodo para esse procedimento! \\n Clique em Ok para continuar? ');</script>";
+						}
+						$dados['go']  = $msg;
+					 
+		}
+	
 	}else{
-					if(!empty($id)){
-					$msg = "<script language='javascript' type='text/javascript'>alert('AVISO: \\n Falta defini\u00e7\u00e3o de Periodicidade e Per\u00edodo para esse procedimento! \\n Clique em Ok para continuar? ');window.location.href = 'painel.php?lab=exame&id=".$id."';</script>";
-					}else{
-					$msg = "<script language='javascript' type='text/javascript'>alert('AVISO: \\n Falta defini\u00e7\u00e3o de Periodicidade e Per\u00edodo para esse procedimento! \\n Clique em Ok para continuar? ');</script>";
-					}
-				    $dados['go']  = $msg;
-                 
-    }
-
+		// NÃO EXISTINDO ULTIMA PROCEDIMENTO O VALOR É FALSO. 1º VEZ QUE EXECUTA UM PROCEDIMENTO
+		$dados = false;
+	}
         return $dados; 
      
-  }
+ }
 
 ?>

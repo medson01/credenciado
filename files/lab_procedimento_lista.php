@@ -76,10 +76,8 @@ if(isset($guia)){
 		
 		
 		?> > Incluir </button>
-
-      <!-- Botão para acionar procedimentos lista 
-  	    <a id="btn_modal" type="hidden" data-toggle="modal" data-target="#myModal"></a></div>
-  	  <br />-->
+	</div>	
+ 
   <div class="panel-body">
     <table width="435" align="center" class="table table-striped" style="font-size: 12px" >
 

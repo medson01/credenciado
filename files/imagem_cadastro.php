@@ -146,7 +146,7 @@ $id = $_GET["id"];
 
     // resolver essa consulta Edson
 
-   $querySelecao = "SELECT imagem.id as id_imagem, imagem.nome, imagem, prorrogacao.medico_solicitante, data, prorrogacao.id as id_prorrogacao, prorrogacao.medico_solicitante, prorrogacao.motivo, prorrogacao.motivo_medico, prorrogacao.status, prorrogacao.dias_solicitados, prorrogacao.dias_autorizados, prorrogacao.qtd_motora, prorrogacao.qtd_respiratoria  FROM imagem  LEFT JOIN prorrogacao on prorrogacao.id = imagem.id_prorrogacao WHERE imagem.id_internamento=".$id;
+   $querySelecao = "SELECT imagem.id as id_imagem, imagem.nome, imagem, prorrogacao.medico_solicitante, data, prorrogacao.id as id_prorrogacao, prorrogacao.medico_solicitante, prorrogacao.motivo, prorrogacao.motivo_medico, prorrogacao.status, prorrogacao.dias_solicitados, prorrogacao.dias_autorizados, prorrogacao.qtd_motora, prorrogacao.qtd_respiratoria  FROM imagem  LEFT JOIN prorrogacao on prorrogacao.id = imagem.id_prorrogacao WHERE prorrogacao.id_internamento=".$id;
    $resultado = mysqli_query($conn, $querySelecao);
   
   

@@ -30,7 +30,7 @@ function pegarProcedimento(){
 <!-- Modal -->
 
 <div class="modal" id="labModal">
-	<div class="modal-dialog" style="margin-left:15%; width:85%">	
+	<div class="modal-dialog" style="margin-left:15%; width:100%">	
 	  <div class="modal-content">
 		<div class="modal-header">			 	 
 			  <span class="close" id="fechar">&times;</span>			  	   
@@ -51,7 +51,7 @@ function pegarProcedimento(){
                                     </tr>
                                     
                                     <tr>
-                                      <td ><span class="style13">C&oacute;digo do Procedimento<br />
+                                      <td ><span class="style13">C&oacute;digo do Procedimento  <br />
                                       <input onchange="pegarProcedimento()" name="cod_proc" id ="cod_proc" type="text" class="form-control input-sm" style="font-size: 10px " size="8" minlength="8" required="required" <?php if (isset($_GET['cod_proc'])) { echo "value='".$_GET['cod_proc']."' "; }  if(isset($desativar)){ echo $desativar;} ?>/>
                                       </span></td>
                                     </tr>
@@ -72,11 +72,10 @@ function pegarProcedimento(){
                                     <tr>
                                     <td >&nbsp;</td>
                                     </tr>
+									
         			</table>
-        			
 
-        			
-                  <p>&nbsp;</p>
+               
         		    
                 </div>
                 </div>
@@ -97,6 +96,7 @@ function pegarProcedimento(){
 			  <input type="hidden" name="codsig" value="<?php echo $_GET['codsig']; ?>" />
               <input type="hidden" name="id_proc" value="<?php echo $_GET['id_proc']; ?>" />
 			  <input type="hidden" name="lab" value="<?php echo $_GET['lab']; ?>" />
+			  <input type="hidden" name="i" value="<?php echo $i; ?>" />
 			  
 				 
         		 </div>

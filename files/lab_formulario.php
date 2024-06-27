@@ -88,11 +88,13 @@ input[type=checkbox]
               sadt.senha,sadt.motivo,sadt.motivo_retorno,sadt.n_autorizacao,
               beneficiarios.nome, beneficiarios.matricula, beneficiarios.tipreg, beneficiarios.data_nascimento, beneficiarios.deficiente,  beneficiarios.data_inclusao,
               credenciado.codigo, credenciado.nome as nome_cred, 
-              usuarios.nome AS nome_usuario, usuarios.perfil
+              usuarios.nome AS nome_usuario, usuarios.perfil,
+			  imagem.id as id_imagem, imagem.nome as nome_imagem
                FROM `sadt` 
               INNER JOIN beneficiarios on beneficiarios.id = sadt.id_beneficiario 
               LEFT JOIN credenciado on credenciado.id = sadt.id_credenciado 
               INNER JOIN usuarios on usuarios.id = sadt.id_usuario
+			  LEFT JOIN imagem on imagem.id_sadt = sadt.id
               LEFT  JOIN profissional_saude on profissional_saude.id = sadt.id_profissional_saude 
               WHERE sadt.id =".$_GET['id'];
 
@@ -123,7 +125,9 @@ input[type=checkbox]
             $medico_solicitante = $registro["medico_solicitante"];
            	$id_especialidade = $registro["id_especialidade"];
            	$codsig = $registro["codsig"];  
-            $n_autorizacao = $registro["n_autorizacao"];       
+            $n_autorizacao = $registro["n_autorizacao"];   
+			$id_imagem = $registro["id_imagem"];     
+			$nome_imagem = $registro["nome_imagem"];
                     
 
 								  								       				     		 
@@ -420,8 +424,6 @@ $data_aut  = isset($_POST["data_aut"]) ? $_POST["data_aut"]: 'null';
           </tr>
        </table>
   </div>   
-
-    
 <?php 
 
 
@@ -433,8 +435,7 @@ $data_aut  = isset($_POST["data_aut"]) ? $_POST["data_aut"]: 'null';
          include("lab_procedimento_lista.php"); 
   
 // PÁGIAN PARA AUTORIZAR PROCEDIMENTOS 
-
-          include("lab_autorizacao_medica.php");
+        include("lab_autorizacao_medica.php");
 
      
 ?>
