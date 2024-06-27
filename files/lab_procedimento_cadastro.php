@@ -79,7 +79,7 @@ OS if TEM QUE DIFERENCIAR OS RECEBIMENTOS E COM ISSO AS ETAPAS ATRAVÉS POR ESSES
 	// 1º REGRA = VALOR PROCEDIMENTO. 
 			require_once "../func/valor_procedimento.php";
 			if( isset($id_proc) && $id_proc <> '2795' ){
-				$valor_procedimento = valor_procedimento($qtd_proc_guia, $id_proc ,$pdo);
+				$valor_procedimento = valor_procedimento($qtd_proc_guia, $qtd_proc, $id_proc ,$pdo);
 				if(!empty($valor_procedimento["msg"])){
 					echo $valor_procedimento["msg"];
 					exit();

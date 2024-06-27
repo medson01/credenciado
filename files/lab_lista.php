@@ -27,12 +27,14 @@ $itens_por_pagina = 25;
             
             beneficiarios.nome, beneficiarios.matricula, beneficiarios.tipreg,  
             credenciado.codigo AS cod_cred, credenciado.nome AS nome_cred, 
-			especialidade.nome AS nome_especialidade
+			especialidade.nome AS nome_especialidade,
+			imagem.id as id_imagem
            
             FROM `sadt`
             INNER JOIN beneficiarios on beneficiarios.id = sadt.id_beneficiario 
             INNER JOIN credenciado on credenciado.id = sadt.id_credenciado 
-			INNER JOIN especialidade on especialidade.id = sadt.id_especialidade           
+			INNER JOIN especialidade on especialidade.id = sadt.id_especialidade 
+			LEFT JOIN imagem on imagem.id_sadt = sadt.id          
             
           ";
 
@@ -222,7 +224,7 @@ function excluir(id) {
             <tbody>
               <?php  while($registro = $stmt1->fetch(PDO::FETCH_ASSOC)){    ?>
               <tr>
-                <td><div align='center'><?php echo "<a  id='ticket' href = 'painel.php?lab=".$_GET['lab']."&id=".$registro["id"]."'>  ".$registro["id"]."</a>";  ?> </div></td>           
+                <td><div align='center'><?php echo "<a  id='ticket' href = 'painel.php?lab=".$_GET['lab']."&id=".$registro["id"]."&imagem=".$registro["id_imagem"]."'>  ".$registro["id"]."</a>";  ?> </div></td>           
                 <td><?php echo "<a  href = 'painel.php?lab=".$_GET['lab']."&id=".$registro["id"]."'>".$registro["nome"]."</a>"; ?> </td>  
                 <td><?php echo "0001.0001.".$registro["matricula"]." - ".$registro["tipreg"]; ?></td>                         
                 <td><?php echo $registro["nome_especialidade"]; ?></td>

@@ -1,6 +1,6 @@
 		<div class="panel panel-primary" >
 						  		<?php		
-								if(isset($_GET['imagem'])){					
+								if(isset($_GET['imagem']) && !empty($_GET['imagem'])){					
 										include("sadt_formulario_imagem.php");
 								}
 								?>
@@ -68,8 +68,7 @@
                          <td>&nbsp;</td>
                          <td><div align="right"><strong>
                               <input name="id" type="hidden" value="<?php isset( $id ) ? $id : ''; ?>" />
-							  <!--  <input name="id_imagem" type="hidden" value="<?php //echo $id_imagem; ?>" /> -->
-                            <!--  <input name="id_prorrogacao" type="hidden" value="<?php //echo $id_prorrogacao; ?>" /> -->
+
 
                             
                               <?php 
