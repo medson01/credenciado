@@ -95,11 +95,13 @@
 
    <script type="text/javascript">
     $("#matricula").mask("00000000.000000-00");
-    $("#qtd_motora").mask("00");
-    $("#qtd_motora2").mask("00");
+    $("#qtd_motora1").mask("00");
+	$("#qtd_motora2").mask("00");
     $("#dias_autorizados").mask("00");
-    $("#qtd_respiratoria").mask("00");
+    $("#qtd_respiratoria1").mask("00");
     $("#qtd_respiratoria2").mask("00");
+	$("#qtd_motora").mask("00");
+    $("#qtd_alimentacao_parenteral").mask("00");
     $("#crm").mask("000000");
     $("#codigo").mask("00000000");
 	$("#cpf").mask("00000000000");

@@ -1,6 +1,10 @@
 ﻿ <!-- Mensagem ao passar o mouse -->
 <script type="text/javascript" src="../js/wz_tooltip.js"></script>
- 
+<?php
+if(isset($guia)){
+  echo"  <script type='text/javascript' src='../js/modal_sair.js'></script>";
+}
+?> 
   <?php
 
 // NAVEGAÇÃO ENTRE AS PÁGINAS
@@ -51,9 +55,15 @@ $resultado = mysqli_query($conn, $a);
 ?>
 <br>
   
-  	    <button class="hidden-print" type="button btn-default" class="btn btn-primary" style="width:87px" id="incluir" >
-		 Incluir 
-		 </button>
+    <div align="left">
+  	    <button type="button" class="btn btn-primary" style="width:87px" id="incluir" 
+		<?php 
+			if($_SESSION["perfil"] == "callcenter"){
+				 echo" disabled "; 
+			}		
+		
+		?> > Incluir </button>
+	</div>	
 		<div style="width:40px;float: right;" >
 		<button  class="btn btn-default glyphicon glyphicon-print hidden-print" onclick="javascript:print();"> 
 		 
@@ -246,3 +256,7 @@ if( ($aquivos['status'] == 1)  && ($_SESSION["perfil"] <> "medico")){
             </ul>
       </nav>
   <!-- // -->
+ <?php 
+   //  Acesso Modal Prorrogacao
+  include("internacao_prorrogacao_modal.php"); 
+  ?>
