@@ -97,7 +97,8 @@ switch ($sub_menu) {
 $tabela = array
 					(
             array("Guia_internação","internacao_usuario.php"),  
-						array("Prorrogação","imagem_cadastro.php","internacao_prorrogacao.php"),
+						array("Prorrogação","internacao_prorrogacao_lista.php"),
+						//array("Prorrogação","internacao_prorrogacao.php","imagem_cadastro.php"),
 						array("Acomodação","internacao_acomodacao_formulario.php")
   
 					);
@@ -107,16 +108,25 @@ $tabela = array
 <p>
  <ul class="nav nav-tabs">
 <?php
+//  ATIVA A ABA QUE SESEJA 			  
+ if($_GET['prorro'] == 1){ 
+ 	$aba = 1;
+ }else{
+ 	$aba = 0;
+ }
 
 $i=0;
          foreach ($tabela as $key => $value) {   
               foreach ($tabela[$key] as $cedula => $campo){   
                 if($cedula == '0'){    
-                  echo '<li ';
-                  if ($i == 0) {
+                  echo '<li ';	
+				  ///			  
+				  if($_GET['prorro'] == 1){ $i == 1; }
+				  
+                  if ($i == $aba) {
                   	echo 'class="active"';
                   }
-                  echo'><a data-toggle="tab" href="#'.$campo.'">'.$campo.'</a></li>';
+                  echo'><a data-toggle="tab" href="#'.$campo.'" class="hidden-print">'.$campo.'</a></li>';
                   $i++;
                 }
                
@@ -124,16 +134,14 @@ $i=0;
           }
  ?>           
  </ul>
- <div class="tab-content">
+ <div class="tab-content " >
  <?php
 $i=0;
          foreach ($tabela as $key => $value) {   
-              foreach ($tabela[$key] as $cedula => $campo){ 
-              	 
+              foreach ($tabela[$key] as $cedula => $campo){           	 
                 if($cedula == '0'){    
-
                   echo'<div id="'.$campo.'" class="tab-pane fade ';
-                  if ($i == 0) {
+                  if ($i == $aba) {
                   	echo 'active in';
                   }
                   echo'">';

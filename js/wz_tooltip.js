@@ -56,7 +56,7 @@ var TagsToTip	= true		// false or true - if true, HTML elements to be converted 
 // Example: onmouseover="Tip('Tooltip text', LEFT, true, BGCOLOR, '#FF9900', FADEIN, 400)"
 
 config. Above			= false		// false or true - tooltip above mousepointer
-config. BgColor			= '#FFFFCE'	// Background colour (HTML colour value, in quotes)
+config. BgColor			= '#cacafc'	// Background colour (HTML colour value, in quotes)
 config. BgImg			= ''		// Path to background image, none if empty string ''
 config. BorderColor		= '#CCC'
 config. BorderStyle		= 'dashed'	// Any permitted CSS value, but I recommend 'solid', 'dotted' or 'dashed'
@@ -77,8 +77,8 @@ config. FadeInterval	= 30		// Duration of each fade step in ms (recommended: 30)
 config. Fix				= null		// Fixated position, two modes. Mode 1: x- an y-coordinates in brackets, e.g. [210, 480]. Mode 2: Show tooltip at a position related to an HTML element: [ID of HTML element, x-offset, y-offset from HTML element], e.g. ['SomeID', 10, 30]. Value null (default) for no fixated positioning.
 config. FollowMouse		= true		// false or true - tooltip follows the mouse
 config. FontColor		= '#666'
-config. FontFace		= 'Georgia, "Trebuchet MS", Arial'
-config. FontSize		= '13px'		// E.g. '9pt' or '12px' - unit is mandatory
+config. FontFace		= 'Verdana, Arial, Helvetica, sans-serif'
+config. FontSize		= '12px'		// E.g. '9pt' or '12px' - unit is mandatory
 config. FontWeight		= 'normal'	// 'normal' or 'bold';
 config. Height			= 0			// Tooltip height; 0 for automatic adaption to tooltip content, < 0 (e.g. -100) for a maximum for automatic adaption
 config. JumpHorz		= false		// false or true - jump horizontally to other side of mouse if tooltip would extend past clientarea boundary
@@ -100,7 +100,7 @@ config. TitleFontColor	= '#FFFFFF'	// Color of title text - if '', BgColor (of t
 config. TitleFontFace	= ''		// If '' use FontFace (boldified)
 config. TitleFontSize	= ''		// If '' use FontSize
 config. TitlePadding	= 2
-config. Width			= 400			// Tooltip width; 0 for automatic adaption to tooltip content; < -1 (e.g. -240) for a maximum width for that automatic adaption;
+config. Width			= 200			// Tooltip width; 0 for automatic adaption to tooltip content; < -1 (e.g. -240) for a maximum width for that automatic adaption;
 									// -1: tooltip width confined to the width required for the titlebar
 //=======  END OF TOOLTIP CONFIG, DO NOT CHANGE ANYTHING BELOW  ==============//
 

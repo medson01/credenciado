@@ -247,6 +247,11 @@ function excluir(id) {
     }
 </script>
                     
+   <style type="text/css">
+<!--
+.style1 {font-family: Verdana, Arial, Helvetica, sans-serif}
+-->
+   </style>
    <table width="834" align="center" class="table table-striped" style="font-size: 9px">
                <tr>
                  <td colspan="14" style="text-align: center; text-decoration-style: solid;"> <strong>Pacientes insternados </strong></td>
@@ -522,7 +527,7 @@ function excluir(id) {
                         echo "<td><div align='center' style='color: #FF4000; font-weight: bold;'> <font color='#FF4000'>";
                         
                           if($registro["prorrogacao"] == 1){ 
-                            echo "<font ><strong><a  style='font-family: Andale monospace;'  ".$cor." href=\"javascript:func()\" onmouseover=\"Tip(' Prorrogação em analise ')\" onmouseout=\"UnTip()\"> ";
+                            echo "<font ><strong><a  style='font-family: Andale monospace;'  ".$cor." href=\"javascript:func()\" onmouseover=\"Tip(' Prorrogação em análise ')\" onmouseout=\"UnTip()\"> ";
 
                             echo "<span class='glyphicon glyphicon-warning-sign' style='color: slategrey; font-size: 15px;' ></span>";
                           }
@@ -695,7 +700,8 @@ function excluir(id) {
   ?>
 					
 	<table class="table table-sm table-dark">
-    <tr class="table-danger"><td>Atenção:</td></tr>
+    <tr class="table-danger"><td><span class="style1">Atenção:</span></td>
+    </tr>
     <tr><td>
      <span id="ticket"> Os Atendimentos estão organizados por ordem decrente. A visualisação não apresenta os atendimentos fechados. Caso queira visualizá-los, vá em pesquisar por id, nome, matrícula e código do atendimento. Favor fechar os atendimentos já finalizados.</span></td>
     </tr>
