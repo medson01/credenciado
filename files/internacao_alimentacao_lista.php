@@ -1,10 +1,6 @@
 ﻿ <!-- Mensagem ao passar o mouse -->
 <script type="text/javascript" src="../js/wz_tooltip.js"></script>
-<?php
-if(isset($guia)){
- // echo"  <script type='text/javascript' src='../js/modal_sair.js'></script>";
-}
-?> 
+ 
   <?php
 
 // NAVEGAÇÃO ENTRE AS PÁGINAS
@@ -56,7 +52,7 @@ $resultado = mysqli_query($conn, $a);
 <br>
   
     <div align="left">
-  	    <button type="button" class="btn btn-primary" style="width:87px" id="incluir" onclick="abrirProModal()"
+  	    <button type="button" class="btn btn-primary" style="width:87px" id="incluir"  onclick="abrirModal()" 
 		<?php 
 			if($_SESSION["perfil"] == "callcenter"){
 				 echo" disabled "; 
@@ -69,7 +65,7 @@ $resultado = mysqli_query($conn, $a);
 		 
 		</button>
 		</div>		
-     <h5 align="center" class="visible-print"> HIST&Oacute;RICO DE PRORROGA&Ccedil;&Otilde;ES </h3>
+     <h5 align="center" class="visible-print"> HIST&Oacute;RICO DE ALIMENTAÇÃO </h3>
      
         <table width="100% " border="0" align="center" class="hidden-print">
 		<tr >
@@ -90,7 +86,7 @@ $resultado = mysqli_query($conn, $a);
 	</table>	
 <table width="996" border="0"  class="table table-bordered" >
     <tr style="font-size: 12px">
-      <td colspan="20" align="center" class="info">SOLICITAÇÕES DE PRORROGAÇÃO </td>
+      <td colspan="20" align="center" class="info">SOLICITAÇÕES DE ALIMENTAÇÃO </td>
     </tr>
 
     <?php
@@ -120,14 +116,12 @@ $resultado = mysqli_query($conn, $a);
           <?php if(isset($aquivos['qtd_respiratoria'])){echo  $aquivos['qtd_respiratoria'];}else{ echo "0"; } ?>
   	  </td>
       <!-- DATA DE AUTORIZAÇÃO 
-	  <td width="136" >
-      <div align="left">Data
+	  <td width="136" ><div align="left">Data
         Autoriza&ccedil;&atilde;o<br>
         <?php if(!empty($aquivos['data_autorizacao'])){
       				echo date("j/n/Y,  H:i:s",strtotime($aquivos['data_autorizacao'])); 
 			      }
-		?></div>
-    </td>
+		?></div></td>
 	 -->
       <td width="120" align="left">Arquivo <br />
             <?php 
@@ -184,8 +178,7 @@ if( ($aquivos['status'] == 1)  && ($_SESSION["perfil"] <> "medico")){
               } ?>
 </table>
      
-      <span class="style2">*F.M.: Fisioterapia Motora<br />
-                           &nbsp; F.R.: Fisioterapia Respitarória </span><br />
+      <br />
 
 <br />
 <?php
@@ -260,6 +253,6 @@ if( ($aquivos['status'] == 1)  && ($_SESSION["perfil"] <> "medico")){
   <!-- // -->
  <?php 
    //  Acesso Modal Prorrogacao
-  include("internacao_prorrogacao_modal.php"); 
+  include("internacao_alimentacao_modal.php"); 
   ?>
-</div>
+ </div>

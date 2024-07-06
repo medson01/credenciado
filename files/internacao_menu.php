@@ -17,32 +17,21 @@
 }
 -->
 </style>
-        
-            <td id="portal-column-content">
-
-              
+   
+            <td id="portal-column-content">          
                 <div class="">
-                  <div id="region-content" class="documentContent">
-                    
-
-                                      
+                  <div id="region-content" class="documentContent">                                      
                     <div id="viewlet-above-content"></div>
-
-                    
-                    <div id="content">
-                      
-                      			<div>
-
-   									<h1 class="documentFirstHeading"> Interna&ccedil;&atilde;o  </h1>
-								</div>
-                    </div>
-
- 
-                    <p><br />
-		            </p>
-                     <div class="x"></div>
-			<div id="feature"></div>
-  </div>		
+                     <div>
+   										<h1 class="documentFirstHeading"> Interna&ccedil;&atilde;o  </h1>
+										 </div>
+                  </div>
+                  <p>
+                  	<br />
+		              </p>
+                  <div class="x"></div>
+									<div id="feature"></div>
+  							</div>		
 <!-- Conteudo -->
 	<?php 
 /*
@@ -94,15 +83,24 @@ switch ($sub_menu) {
 //===================================================================================
 //EX.: array(TITULO, PAGINAS)
 
+If( $_SESSION["perfil"] <> "aut_internacao") {
 $tabela = array
 					(
             array("Guia_internação","internacao_usuario.php"),  
-						array("Prorrogação","internacao_prorrogacao_lista.php"),
-						//array("Prorrogação","internacao_prorrogacao.php","imagem_cadastro.php"),
-						array("Acomodação","internacao_acomodacao_formulario.php")
+			array("Prorrogação","internacao_prorrogacao_lista.php"),
+			///array("Prorrogação","internacao_prorrogacao_lista.php"),
+			array("Alimentação","internacao_alimentacao_lista.php"),
+			array("Acomodação","internacao_acomodacao_formulario.php")
   
 					);
-
+}else{
+$tabela = array
+					(
+            array("Guia_internação","internacao_usuario.php"),  
+						array("Autorização_TOTVS","internacao_aut_totvs_formulario.php")
+  
+					);
+}
 //====================================================================================
 ?>
 <p>
@@ -171,9 +169,7 @@ $i=0;
 	        </tbody>
 	    </table>
 
-	</div>
-	  
-	  
+		  
 	 <?php
 	 
 	 	  include "rodape.php";
