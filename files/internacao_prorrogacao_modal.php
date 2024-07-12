@@ -1,4 +1,9 @@
 ﻿<?php 
+
+// FORMATA A DATA QUE ESTÁ NO FORMATO ENG PARA BR NO BANCO
+	require_once "../func/formatar_data_banco.php";
+
+
 	if(isset($_GET['prorro']) && !empty($_GET['prorro']) ){
 		$sql='SELECT prorrogacao.id as id_prorrogacao, prorrogacao.medico_solicitante,  prorrogacao.crm, prorrogacao.data_inicial, prorrogacao.data_final, prorrogacao.motivo, prorrogacao.motivo_medico, prorrogacao.dias_solicitados, prorrogacao.dias_autorizados, prorrogacao.qtd_motora, prorrogacao.qtd_respiratoria, data, prorrogacao.status, imagem.id as id_imagem, acomodacao.nome  as acomodacao 
 		FROM prorrogacao 
@@ -26,9 +31,9 @@
 	}
 // CONTROLE DE EXIBIÇÃO DE FORMULARIOS
 	if($_SESSION["perfil"] == 'medico'){
-		$exibir_medico =  'style="display: none;"';
+		$exibir_medico =  'style="display: block;;"';
 	}else{
-		$exibir_credenciado =  'style="display: none;"';
+		$exibir_medico =  'style="display: none;"';
 	}
 
 ?>
@@ -65,7 +70,7 @@
 
 
 <!-- FORMULÁRIO DE SOLICITAÇÃO DE PRORROGAÇÃO DE INTERNAMENTO -->
-<table width="100%" <?php if(isset($exibir_medico)){ echo $exibir_medico; } ?> border="0" align="center">
+<table width="100%" border="0" align="center">
                           
                             <tr>
                               <td colspan="6" bgcolor="#CCCCCC">
@@ -82,7 +87,7 @@
                             </tr>
                             
                             <tr>
-                              <td colspan="6" >&nbsp;</td>
+                              <td colspan="6" ></td>
                             </tr>
                             <tr>
                               <td colspan="6" >&nbsp;</td>
@@ -106,9 +111,9 @@
                               <td colspan="2"><span class = 'style13'>Data Inicial </span> <br />
 								<?php
 									if(isset($data_inicial)){
-									echo ' <input class="form-control" type="text"  data-date-format="mm/dd/yyyy" maxlength="10"size="10" required value="'.$data_inicial.'" readonly /> ';
+									echo ' <input class="form-control" type="text"  data-date-format="mm/dd/yyyy" maxlength="10"size="10" required value="'.formatar_banco_data($data_inicial).'" readonly /> ';
 									}else{
-									echo ' <input class="form-control" name="data_inicial" id="data_inicial" type="text"  data-date-format="mm/dd/yyyy" maxlength="10"size="10" required   /> ';
+									echo ' <input id="data_inicial" name="data_inicial" class="form-control"   type="text"  data-date-format="mm/dd/yyyy" maxlength="10"size="10" required   /> ';
 									}
 								?>
                                 
@@ -116,7 +121,14 @@
 								</td>
                               <td>&nbsp;</td>
                               <td colspan="3"><span class="style13">Data Final </span><br />
-                                <input  onchange="calcularData()" class="form-control"name="data_final"type="text" id="data_final" data-date-format="mm/dd/yyyy" maxlength="10"size="10" required <?php if (isset($data_final)) { echo "value='".$data_final."' readonly"; }   ?>	/></td>
+							  <?php
+								if(isset($data_final)){
+                                	echo ' <input class="form-control" type="text"  data-date-format="mm/dd/yyyy" maxlength="10"size="10" required value="'.formatar_banco_data($data_final).'" readonly /> ';
+								}else{
+									echo ' <input  id="data_final" name="data_final" onchange="calcularData()" class="form-control" type="text"  data-date-format="mm/dd/yyyy" maxlength="10"size="10" required  />';
+									}
+							  ?>
+								</td>
                             </tr>
                             <tr>
                               <td>&nbsp;</td>
@@ -127,47 +139,17 @@
                               <td>&nbsp;</td>
                             </tr>
                             <tr>	
-							
-							
-	<!-- CALCULA A QUANTIDADE DE DIAS DE UMA DATA PARA OUTRA  -->	
-		<script>
-			function calcularData() {	
-				// Converte o padrão BR para ENG 
-				function FormataStringData(data) {
-				  var dia  = data.split("/")[0];
-				  var mes  = data.split("/")[1];
-				  var ano  = data.split("/")[2];
-				
-				  return ano + '-' + ("0"+mes).slice(-2) + '-' + ("0"+dia).slice(-2);
-				  // Utilizo o .slice(-2) para garantir o formato com 2 digitos.
-				}
-				
-				var d1 = document.getElementById("data_inicial").value;
-				var d2 = document.getElementById("data_final").value
-				
-				var date1 = new Date(FormataStringData(d1));
-				var date2 = new Date(FormataStringData(d2));
-		
-				var timeDiff = Math.abs(date2 - date1);
-				var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24)); 
-				
-				if(diffDays > 5){
-					document.getElementById("demo").innerHTML = '<div style="font-size: x-small; font-family: system-ui; font-weight: 400;" class="alert alert-danger" role="alert">Périodo exede ao máximo de diárias permitida que é 5 diárias!</div>';
-				}else{
-					document.getElementById("demo").innerHTML = '';
-				}
-				document.getElementById("dias").value = diffDays;
-				diffDays = 0;
-			}
-		</script>						
-						
-						
-							
-							
-                              <td colspan="2"><span class="style13">Qtd Diárias</span><br />
-                              <input name="dias" id ="dias" type="text" class="form-control input-sm" style="font-size: 10px" size="44" <?php if (isset($dias)) { echo "value='".$dias."' readonly"; }  ?> readonly /></td>
+	                           <td colspan="2"><span class="style13">Qtd Diárias</span><br />
+							   <?php
+							if(isset($dias) ){
+                             	echo ' <input type="text" class="form-control input-sm" style="font-size: 10px" size="44" value="'.$dias.'" readonly />';
+							}else{
+								echo ' <input name="dias" id ="dias" type="text" class="form-control input-sm" style="font-size: 10px" size="44" readonly />';
+							}
+							  ?>
+							  </td>
                               <td>&nbsp;</td>
-                              <td colspan="3"><p id= "demo"> </td>
+                              <td colspan="3" ><p id= "aviso1" > </td>
                             </tr>
                             <tr>
                               <td>&nbsp;</td>
@@ -305,8 +287,8 @@
 <!-- ################################################################################################################################# -->
 
 <!-- FORMULÁRIO DE AUTORIZAÇÃO DA PRORROGAÇÃO DE INTERNAMENTO  -->
-<div class="alert alert-danger">
- <table width="100%" border="0" align="center">
+<div class="alert alert-danger"  <?php echo $exibir_medico; ?> >
+ <table width="100%" border="0" align="center"  >
                 <!-- autorização do médico -->
                       <!-- Cabeçalho de autorização médica-->
                         <tr>
@@ -320,10 +302,10 @@
                         </tr>
                         <tr>  
                           <td><span class = 'style13'>Data Inicial </span> <br />
-                          <input class="form-control"name="data_inicial2"type="text" id="data_inicial2" data-date-format="mm/dd/yyyy" maxlength="10"size="10" required="required" <?php if (isset($data_inicial)) { echo "value='".$data_inicial."' readonly"; }   ?>/></td><td>&nbsp;</td>
+                          <input class="form-control"name="data_inicial"type="text" id="data_inicial" data-date-format="mm/dd/yyyy" maxlength="10"size="10" required="required" <?php if (isset($data_inicial)) { echo "value='".formatar_banco_data($data_inicial)."' "; }   ?>  /></td><td>&nbsp;</td>
 						  <td><br />
 						    <span class="style13">Data Final </span><br />
-                            <input  onchange="calcularData()" class="form-control"name="data_final2"type="text" id="data_final2" data-date-format="mm/dd/yyyy" maxlength="10"size="10" required="required" <?php if (isset($data_final)) { echo "value='".$data_final."' readonly"; }   ?>></td>
+                            <input  onchange="calcularData()" class="form-control"name="data_final"type="text" id="data_final" data-date-format="mm/dd/yyyy" maxlength="10"size="10" required="required" <?php if (isset($data_final)) { echo "value='".formatar_banco_data($data_final)."' "; }   ?>></td>
                         <tr>
                           <td>&nbsp;</td>
                           <td>&nbsp;</td>
@@ -331,9 +313,9 @@
                         </tr>
                         <tr>
                           <td><span class="style13">Qtd Diárias</span><br />
-                            <input name="dias2" id ="dias2" type="text" class="form-control input-sm" style="font-size: 10px" size="44" <?php if (isset($dias)) { echo "value='".$dias."' readonly"; }  ?> readonly="readonly" /></td>
+                            <input name="dias" id ="dias" type="text" class="form-control input-sm" style="font-size: 10px" size="44" <?php if (isset($dias)) { echo "value='".$dias."' readonly"; }  ?> readonly="readonly" /></td>
                           <td>&nbsp;</td>
-                          <td>&nbsp;</td>
+                          <td><p id= "aviso2" ></td>
                         </tr>
                         <tr>
                               <td>&nbsp;</td>
@@ -423,9 +405,8 @@
 </div>
 </form> 
 
-
 				
-<!-- Script de controle da modal -->			
+<!-- SCRIPT DE CONTROLE DO MODAL -->			
 <script>
 	function abrirProModal() {
 	   document.getElementById('labModal').style.display = "block";
@@ -433,10 +414,44 @@
 	function fecharProModal() {
 	   document.getElementById('labModal').style.display = "none";
 	}
-</script>  	  
+</script> 
+
+<!-- CALCULA A QUANTIDADE DE DIAS DE UMA DATA PARA OUTRA  -->	
+		<script>
+			function calcularData() {	
+				// Converte o padrão BR para ENG 
+				function FormataStringData(data) {
+				  var dia  = data.split("/")[0];
+				  var mes  = data.split("/")[1];
+				  var ano  = data.split("/")[2];
+				
+				  return ano + '-' + ("0"+mes).slice(-2) + '-' + ("0"+dia).slice(-2);
+				  // Utilizo o .slice(-2) para garantir o formato com 2 digitos.
+				}
+				
+				var d1 = document.getElementById("data_inicial").value;
+				var d2 = document.getElementById("data_final").value
+				
+				var date1 = new Date(FormataStringData(d1));
+				var date2 = new Date(FormataStringData(d2));
+		
+				var timeDiff = Math.abs(date2 - date1);
+				var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24)); 
+				
+				if(diffDays > 5){
+					document.getElementById("aviso1").innerHTML = '<div style="font-size: x-small; font-family: system-ui; font-weight: 400;" class="alert alert-danger" role="alert">Périodo exede ao máximo de diárias permitida que é 5 diárias!</div>';
+					document.getElementById("aviso2").innerHTML = '<div style="font-size: x-small; font-family: system-ui; font-weight: 400;" class="alert alert-info" role="alert">Périodo exede ao máximo de diárias permitida que é 5 diárias!</div>';
+				}else{
+					document.getElementById("aviso1").innerHTML = '';
+					document.getElementById("aviso2").innerHTML = '';
+				}
+				document.getElementById("dias").value = diffDays;
+				diffDays = 0;
+			}
+		</script>	 	  
 <?php				
 		if(isset($_GET['prorro']) ){
-			if($_GET['prorro'] >= 0 && $_GET['prorro'] <> 'x'){	
+			if($_GET['prorro'] >= 0 && $_GET['prorro'] <> 'x' && !isset($_GET['pagina']) ){	
 				echo "
 					<script>
 						document.getElementById('labModal').style.display = 'block';

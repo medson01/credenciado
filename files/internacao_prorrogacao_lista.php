@@ -1,11 +1,15 @@
 ﻿ <!-- Mensagem ao passar o mouse -->
 <script type="text/javascript" src="../js/wz_tooltip.js"></script>
-<?php
-if(isset($guia)){
- // echo"  <script type='text/javascript' src='../js/modal_sair.js'></script>";
-}
-?> 
+
   <?php
+  
+// CONTROLE DE EXIBIÇÃO DE FORMULARIOS
+	if($_SESSION["perfil"] <> 'medico'){
+		$exibir_medico =  'style="display: block;;"';
+	}else{
+		$exibir_medico =  'style="display: none;"';
+	}
+  
 
 // NAVEGAÇÃO ENTRE AS PÁGINAS
 // ==========================================
@@ -55,7 +59,7 @@ $d =  "    LIMIT ".$pagina.", ".$itens_por_pagina;
 ?>
 <br>
   
-    <div align="left">
+    <div align="left" <?php echo $exibir_medico; ?> >
 	<a href="internacao_menu.php?id=<?php echo $_GET['id']?>&prorro=0">
   	    <button type="button" class="btn btn-primary" style="width:87px" id="incluir"
 		<?php 

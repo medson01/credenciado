@@ -67,7 +67,7 @@ ORDER by prorrogacao.id DESC
 
         if(isset($_GET['buscar'])){
 
-          $b = " WHERE  (internamento.nome like '%".$_GET['buscar']."%' or credenciado.nome like '%".$_GET['buscar']."%' or internamento.id = '".$_GET['buscar']."' or internamento.matricula = '".$_GET['buscar']."' or usuarios.nome like '%".$_GET['buscar']."%') order by internamento.id , credenciado.nome";
+          $b = " WHERE  (internamento.nome like '%".$_GET['buscar']."%' or credenciado.nome like '%".$_GET['buscar']."%' or internamento.id = '".$_GET['buscar']."' or internamento.matricula = '".$_GET['buscar']."' or usuarios.nome like '%".$_GET['buscar']."%') order by  credenciado.nome, internamento.id ";
 
          
         }elseif(isset($_GET['mes'])){
@@ -76,7 +76,7 @@ ORDER by prorrogacao.id DESC
 
         }else{
 
-           $b= " WHERE  (internamento.internacao_numero_totvs = '' or internamento.internacao_numero_totvs is null) AND (internamento.dat_saida is null OR internamento.dat_saida = '0000-00-00 00:00:00') order by internamento.id , credenciado.nome";
+           $b= " WHERE  (internamento.internacao_numero_totvs = '' or internamento.internacao_numero_totvs is null) AND (internamento.dat_saida is null OR internamento.dat_saida = '0000-00-00 00:00:00') order by credenciado.nome,internamento.id  ";
             
           }
 
@@ -87,7 +87,7 @@ ORDER by prorrogacao.id DESC
 
         if(isset($_GET['buscar'])){
 
-          $b = " WHERE (internamento.nome like '%".$_GET['buscar']."%' or credenciado.nome like '%".$_GET['buscar']."%' or internamento.id = '".$_GET['buscar']."' or internamento.matricula = '".$_GET['buscar']."' or usuarios.nome like '%".$_GET['buscar']."%') order by internamento.id , credenciado.nome";
+          $b = " WHERE (internamento.nome like '%".$_GET['buscar']."%' or credenciado.nome like '%".$_GET['buscar']."%' or internamento.id = '".$_GET['buscar']."' or internamento.matricula = '".$_GET['buscar']."' or usuarios.nome like '%".$_GET['buscar']."%') order by  credenciado.nome , internamento.id ";
 
          
         }elseif(isset($_GET['mes'])){
@@ -96,7 +96,7 @@ ORDER by prorrogacao.id DESC
 
         }else{
 
-           $b= " WHERE internamento.dat_saida is null OR internamento.dat_saida = '0000-00-00 00:00:00' order by internamento.id , credenciado.nome";
+           $b= " WHERE internamento.dat_saida is null OR internamento.dat_saida = '0000-00-00 00:00:00' order by  credenciado.nome, internamento.id ";
 
         }
 
@@ -109,7 +109,7 @@ ORDER by prorrogacao.id DESC
     $d =  "  DESC LIMIT $pagina, $itens_por_pagina ;";
 
   
-    $sql1 = $a.$d;
+  $sql1 = $a.$d;
 
   
   $stmt1 = $pdo->prepare($sql1);
