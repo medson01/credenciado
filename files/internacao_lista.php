@@ -299,7 +299,7 @@ function excluir(id) {
                                     <td style='padding: 4px;'>
                                       <div align='center' style='width: 30px;'> 
                                         
-                                            <a  id='ticket' href = 'internacao_menu.php?id=".$registro["autorizacao"]."&id_pa=".$registro["id_pa"]."&prorro=".$registro["status"]."&proc=".$registro["id_proc"]."'>  ".$registro["autorizacao"]."</a>
+                                            <a  id='ticket' href = 'internacao_menu.php?id=".$registro["autorizacao"]."'>  ".$registro["autorizacao"]."</a>
                                        
 
                                       </div>

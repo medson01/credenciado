@@ -1,37 +1,4 @@
-﻿<?php 
-	if(isset($_GET['prorro']) && !empty($_GET['prorro']) ){
-		$sql='SELECT prorrogacao.id as id_prorrogacao, prorrogacao.medico_solicitante,  prorrogacao.crm, prorrogacao.data_inicial, prorrogacao.data_final, prorrogacao.motivo, prorrogacao.motivo_medico, prorrogacao.dias_solicitados, prorrogacao.dias_autorizados, prorrogacao.qtd_motora, prorrogacao.qtd_respiratoria, data, prorrogacao.status, imagem.id as id_imagem, acomodacao.nome  as acomodacao 
-		FROM prorrogacao 
-		INNER JOIN acomodacao on acomodacao.id = prorrogacao.id_acomodacao 
-		INNER JOIN imagem on imagem.id_prorrogacao = prorrogacao.id 
-		WHERE prorrogacao.id='.$_GET['prorro'];
-	
-		$stmt = $pdo->prepare($sql);
-		$stmt->execute();
-
-		while($registro = $stmt->fetch(PDO::FETCH_ASSOC)) { 
-			$medico_pro = $registro["medico_solicitante"];
-			$crm_pro = $registro["crm"];
-			$data_inicial = $registro["data_inicial"];
-			$data_final = $registro["data_final"];
-			$dias = $registro["dias_solicitados"];
-			$acomodacao = utf8_encode($registro["acomodacao"]);
-			$qtd_respiratoria = $registro["qtd_respiratoria"];
-			$qtd_motora = $registro["qtd_motora"];
-			$id_imagem  = $registro["id_imagem"];
-			$motivo_pro = $registro["motivo"];
-					
-		}
-		
-	}
-// CONTROLE DE EXIBIÇÃO DE FORMULARIOS
-	if($_SESSION["perfil"] == 'medico'){
-		$exibir_medico =  'style="display: none;"';
-	}else{
-		$exibir_credenciado =  'style="display: none;"';
-	}
-
-?>
+﻿
 
 <!-- Script calendario data -->
 	<link rel="stylesheet" href="http://code.jquery.com/ui/1.9.0/themes/base/jquery-ui.css" />
@@ -40,13 +7,24 @@
 	<script src="../js/data.js"></script>	
 	
 	
-	<link rel="stylesheet" type="text/css" href="../css/modal.css"/>
-	<style type="text/css">
-	<!--
-	.style1 {color: #FFFFFF}
-	.style13 {font-size: 10px}
-	-->
-	</style>
+<link rel="stylesheet" type="text/css" href="../css/modal.css"/>
+<style type="text/css">
+<!--
+.style1 {color: #FFFFFF}
+.style13 {font-size: 10px}
+-->
+</style>
+
+
+<?php
+// CONTROLE DE EXIBIÇÃO DE FORMULARIOS
+	if($_SESSION["perfil"] == 'medico'){
+		$exibir_medico =  'style="display: none;"';
+	}else{
+		$exibir_credenciado =  'style="display: none;"';
+	}
+
+?>
 
 
 <!-- Modal -->
@@ -89,10 +67,10 @@
                             </tr>
                             <tr>
                               <td colspan="4"><span class="style13">Médico solicitante </span><br />
-                                <input id="medico_solicitante"  name="medico_solicitante" type="text" class="form-control input-sm" style="font-size: 10px"  size="44" required="required" <?php if (isset($medico_pro)) { echo "value='".$medico_pro."' readonly"; }  ?> /></td>
+                                <input id="medico_solicitante"  name="medico_solicitante" type="text" class="form-control input-sm" style="font-size: 10px"  size="44" required="required" <?php if (isset($medico_pro)) { echo "value='".$medico_pro."' "; }   if(isset($desativar)){ echo $desativar;} ?> /></td>
                               <td>&nbsp;</td>
                               <td><span class="style13">CRM </span><br />
-                                <input name="crm" id ="crm" type="text" class="form-control input-sm" style="font-size: 10px" size="44" required="required" <?php if (isset($crm_pro)) { echo "value='".$crm_pro."' readonly"; }   ?>/></td>
+                                <input name="crm" id ="crm" type="text" class="form-control input-sm" style="font-size: 10px" size="44" required="required" <?php if (isset($crm_pro)) { echo "value='".$crm_pro."' "; }  if(isset($desativar)){ echo $desativar;} ?>/></td>
                             </tr>
                             <tr>
                               <td>&nbsp;</td>
@@ -104,19 +82,11 @@
                             </tr>
                             <tr>
                               <td colspan="2"><span class = 'style13'>Data Inicial </span> <br />
-								<?php
-									if(isset($data_inicial)){
-									echo ' <input class="form-control" type="text"  data-date-format="mm/dd/yyyy" maxlength="10"size="10" required value="'.$data_inicial.'" readonly /> ';
-									}else{
-									echo ' <input class="form-control" name="data_inicial" id="data_inicial" type="text"  data-date-format="mm/dd/yyyy" maxlength="10"size="10" required   /> ';
-									}
-								?>
-                                
-								
-								</td>
+
+                                <input class="form-control"name="data_inicial"type="text" id="data_inicial" data-date-format="mm/dd/yyyy" maxlength="10"size="10" required /></td>
                               <td>&nbsp;</td>
                               <td colspan="3"><span class="style13">Data Final </span><br />
-                                <input  onchange="calcularData()" class="form-control"name="data_final"type="text" id="data_final" data-date-format="mm/dd/yyyy" maxlength="10"size="10" required <?php if (isset($data_final)) { echo "value='".$data_final."' readonly"; }   ?>	/></td>
+                                <input  onchange="calcularData()" class="form-control"name="data_final"type="text" id="data_final" data-date-format="mm/dd/yyyy" maxlength="10"size="10" required	/></td>
                             </tr>
                             <tr>
                               <td>&nbsp;</td>
@@ -165,7 +135,7 @@
 							
 							
                               <td colspan="2"><span class="style13">Qtd Diárias</span><br />
-                              <input name="dias" id ="dias" type="text" class="form-control input-sm" style="font-size: 10px" size="44" <?php if (isset($dias)) { echo "value='".$dias."' readonly"; }  ?> readonly /></td>
+                              <input name="dias" id ="dias" type="text" class="form-control input-sm" style="font-size: 10px" size="44" <?php if (isset($dias)) { echo "value='".$dias."' "; }  if(isset($desativar)){ echo $desativar;} ?> readonly /></td>
                               <td>&nbsp;</td>
                               <td colspan="3"><p id= "demo"> </td>
                             </tr>
@@ -221,10 +191,10 @@
                             
                             <tr>
                               <td colspan="2"><span class = 'style13'>Qtd Respiratória </span> <br />
-                                <input name="qtd_respiratoria1" id ="qtd_respiratoria1" type="text" class="form-control input-sm" style="font-size: 10px" size="44" <?php if (isset($qtd_respiratoria)) { echo "value='".$qtd_respiratoria."' readonly"; }   ?> /></td>
+                                <input name="qtd_respiratoria1" id ="qtd_respiratoria1" type="text" class="form-control input-sm" style="font-size: 10px" size="44" <?php if (isset($qtd_respiratoria)) { echo "value='".$qtd_respiratoria."' "; }  if(isset($desativar)){ echo $desativar;} ?> /></td>
                               <td>&nbsp;</td>
                               <td colspan="3"><span class = 'style13'>Qtd Motora </span> <br />
-                                <input name="qtd_motora1" id ="qtd_motora1" type="text" class="form-control input-sm" style="font-size: 10px" size="44" <?php if (isset($qtd_motora)) { echo "value='".$qtd_motora."' readonly"; }  ?> /></td>
+                                <input name="qtd_motora1" id ="qtd_motora1" type="text" class="form-control input-sm" style="font-size: 10px" size="44" <?php if (isset($qtd_motora)) { echo "value='".$qtd_motora."' "; }  if(isset($desativar)){ echo $desativar;} ?> /></td>
                             </tr>
                             <tr>
                               <td>&nbsp;</td>
@@ -246,23 +216,12 @@
                               <td>&nbsp;</td>
                             </tr>
                             <tr>
-                              <td colspan="6">
-								<?php
-								
-								if(isset($_GET['prorro']) && !empty($_GET['prorro']) ){	
-								  	echo '<a class="hidden-print" href="imagem_exibir.php?id='.$id_imagem.'"  target="_blank">'.$id_imagem.'</a>'; 
-								}else{
-									echo '
-									<span class = "style13">Anexar a imagem da solicitação </span> </span>
+                              <td colspan="6"><span class = 'style13'>Anexar a imagem da solicitação </span> </span>
                                 <br />
-									
-									<div class="mb-3">
-											<input class="form-control form-control-sm" id="formFileSm" type="file" name="imagem" required >
-										  </div>';
-								}
-									
-								  ?>
-							 </td>
+						<div class="mb-3">
+  							
+						  		<input class="form-control form-control-sm" id="formFileSm" type="file" name="imagem" required >
+						</div>								 </td>
                             </tr>
                             <tr>
                               <td colspan="6">							  </td>
@@ -289,7 +248,7 @@
 
                             <tr>
                               <td colspan="6" ><span class="style13">Justificativa da prorrogação
-                                <textarea minlength="5" required id="motivo" class="form-control input-sm" name="motivo"  style="font-size:12px; margin: 0px; height: 100px; width: 100%;" form="internacao_prorrogacao_cadastro" <?php if (isset($medico_pro)) { echo "readonly"; }  ?> /><?php
+                                <textarea minlength="5" required id="motivo" class="form-control input-sm" name="motivo"  style="font-size:12px; margin: 0px; height: 100px; width: 100%;" form="internacao_prorrogacao_cadastro" <?php if(isset($desativar)){ echo $desativar; } ?> /><?php
                                         if(isset($motivo_pro)){
                                           echo $motivo_pro;
                                         }
@@ -300,18 +259,18 @@
                           <td colspan="6" >                              </td>
           </tr>
 </table>
-<div> <br /></div>
+
 
 <!-- ################################################################################################################################# -->
 
 <!-- FORMULÁRIO DE AUTORIZAÇÃO DA PRORROGAÇÃO DE INTERNAMENTO  -->
-<div class="alert alert-danger">
- <table width="100%" border="0" align="center">
+
+ <table width="100%" <?php if(isset($exibir_credenciado)){ echo $exibir_credenciado; } ?> border="0" align="center">
                 <!-- autorização do médico -->
                       <!-- Cabeçalho de autorização médica-->
                         <tr>
-                          <td colspan="3" bgcolor="#CCCCCC">
-                          <div align="center" style="color: black;">Autorização Médica </div>                          </td>
+                          <td colspan="3" bordercolor="#999999" bgcolor="#999999">
+                          <div align="center">Autorização Médica </div>                          </td>
                         </tr>
                         <tr>
                           <td width="49%">&nbsp;</td>
@@ -319,23 +278,11 @@
                           <td width="48%">&nbsp;</td>
                         </tr>
                         <tr>  
-                          <td><span class = 'style13'>Data Inicial </span> <br />
-                          <input class="form-control"name="data_inicial2"type="text" id="data_inicial2" data-date-format="mm/dd/yyyy" maxlength="10"size="10" required="required" <?php if (isset($data_inicial)) { echo "value='".$data_inicial."' readonly"; }   ?>/></td><td>&nbsp;</td>
-						  <td><br />
-						    <span class="style13">Data Final </span><br />
-                            <input  onchange="calcularData()" class="form-control"name="data_final2"type="text" id="data_final2" data-date-format="mm/dd/yyyy" maxlength="10"size="10" required="required" <?php if (isset($data_final)) { echo "value='".$data_final."' readonly"; }   ?>></td>
-                        <tr>
-                          <td>&nbsp;</td>
-                          <td>&nbsp;</td>
-                          <td>&nbsp;</td>
-                        </tr>
-                        <tr>
-                          <td><span class="style13">Qtd Diárias</span><br />
-                            <input name="dias2" id ="dias2" type="text" class="form-control input-sm" style="font-size: 10px" size="44" <?php if (isset($dias)) { echo "value='".$dias."' readonly"; }  ?> readonly="readonly" /></td>
-                          <td>&nbsp;</td>
-                          <td>&nbsp;</td>
-                        </tr>
-                        <tr>
+                          <td><span  id="t1"  class="style13"> Diárias</span> <br />
+                          <input name="dias_autorizados" id ="dias_autorizados" type="text" class="form-control input-sm" style="font-size: 10px" size="44" <?php if (isset($dias_autorizados)) { echo "value='".$dias_autorizados."' "; } ?>/></td><td>&nbsp;</td>
+						  <td><span class = 'style13'>Qtd Motora </span> <br />
+                            <input name="qtd_motora2" id ="qtd_motora2" type="text" class="form-control input-sm" style="font-size: 10px" size="44" <?php if (isset($qtd_motora)) { echo "value='".$qtd_motora."' "; }  if(isset($desativar)){ echo $desativar;} ?> /></td>
+ <tr>
                               <td>&nbsp;</td>
                               <td>&nbsp;</td>
                               <td>&nbsp;</td>
@@ -396,7 +343,6 @@
         </tr>
 
 </table>
-</div>
 		<!-- DADOS DE ENVIO PRORROGAÇÃO -->
 			<!-- IMAGEM -->
 			<input type="hidden" name="id"            value="<?php echo $_GET['id']; ?>" /> 
@@ -433,16 +379,5 @@
 	function fecharProModal() {
 	   document.getElementById('labModal').style.display = "none";
 	}
-</script>  	  
-<?php				
-		if(isset($_GET['prorro']) ){
-			if($_GET['prorro'] >= 0 && $_GET['prorro'] <> 'x'){	
-				echo "
-					<script>
-						document.getElementById('labModal').style.display = 'block';
-					</script>
-					";
-			}
-		
-		}
-?>		
+</script>  	  				
+				

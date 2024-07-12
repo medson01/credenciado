@@ -10,14 +10,19 @@
 
 ?>
 
-
+    <style>
+        input.largerCheckbox {
+            width: 40px;
+            height: 20px;
+        }
+    </style>
 <!-- Modal -->
 
 <div class="modal" id="aliModal" >
 	<div class="modal-dialog" style="width:100%">	
-	  <div class="modal-content">
+	  <div class="modal-content" style="width:80%">
 		<div class="modal-header">			 	 
-			  <span class="close" id="fechar">&times;</span>			  	   
+			 <a onclick="fecharModal()"> <span class="close"> &times;</span> </a>			  	   
 		</div>
 		<div class="modal-body" >
         <form nome="internacao_prorrogacao_cadastro2" id="internacao_prorrogacao_cadastro2" action="internacao_prorrogacao_cadastro2.php" method="post" class="form-group" enctype="multipart/form-data">
@@ -27,29 +32,32 @@
 
 
 <!-- FORMULÁRIO DE SOLICITAÇÃO DE PRORROGAÇÃO DE INTERNAMENTO -->
-<table width="100%" <?php if(isset($a)){ echo $a; } ?> border="0" align="center">
+<table width="92%" <?php if(isset($a)){ echo $a; } ?> border="0" align="center">
                           
                             <tr>
-                              <td colspan="8" bgcolor="#CCCCCC">
+                              <td colspan="11" bgcolor="#CCCCCC">
                                 <div align="center" class="style5"> 
                               <div align="center">ALIMENTA&Ccedil;&Atilde;O</div></td>
                             </tr>
                             <tr>
-                              <td width="13%">&nbsp;</td>
+                              <td width="8%">&nbsp;</td>
                               <td width="6%">&nbsp;</td>
-                              <td width="18%">&nbsp;</td>
+                              <td width="8%">&nbsp;</td>
+                              <td width="15%">&nbsp;</td>
+                              <td width="5%">&nbsp;</td>
+                              <td width="16%">&nbsp;</td>
+                              <td width="6%">&nbsp;</td>
+                              <td width="8%">&nbsp;</td>
+                              <td width="4%">&nbsp;</td>
                               <td width="13%">&nbsp;</td>
-                              <td width="1%">&nbsp;</td>
-                              <td width="25%">&nbsp;</td>
                               <td width="11%">&nbsp;</td>
-                              <td width="13%">&nbsp;</td>
                             </tr>
                             
                             <tr>
-                              <td colspan="4" ><span class="style13">M&eacute;dico solicitante </span><br />
+                              <td colspan="6" ><span class="style13">Nome m&eacute;dico solicitante </span><br />
                                 <input id="medico_solicitante2"  name="medico_solicitante2" type="text" class="form-control input-sm" style="font-size: 10px"  size="44" required="required" <?php if (isset($medico_pro)) { echo "value='".$medico_pro."' "; }   if(isset($desativar)){ echo $desativar;} ?> /></td>
                               <td>&nbsp;</td>
-                              <td colspan="3"><span class="style13">CRM </span><br />
+                              <td colspan="4"><span class="style13">CRM </span><br />
                                 <input name="crm2" id ="crm2" type="text" class="form-control input-sm" style="font-size: 10px" size="44" required="required" <?php if (isset($crm_pro)) { echo "value='".$crm_pro."' "; }  if(isset($desativar)){ echo $desativar;} ?>/></td>
                             </tr>
                             <tr>
@@ -61,14 +69,17 @@
                               <td>&nbsp;</td>
                               <td>&nbsp;</td>
                               <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
                             </tr>
                             <tr>
-                            <td colspan="4" ><span class="style13">Nutrólogo </span><br />
+                            <td colspan="6" ><span class="style13">Nome médico Nutrólogo </span><br />
                               <input id="medico_solicitante"  name="medico_solicitante" type="text" class="form-control input-sm" style="font-size: 10px"  size="44" required="required" <?php if (isset($medico_pro)) { echo "value='".$medico_pro."' "; }   if(isset($desativar)){ echo $desativar;} ?> />
 
                               </span></td>
                             <td>&nbsp;</td>
-                            <td colspan="3"><span class="style13"> RQE </span><br />
+                            <td colspan="4"><span class="style13"> CRM/RQE </span><br />
                               <input name="crm" id ="crm" type="text" class="form-control input-sm" style="font-size: 10px" size="44" required="required" <?php if (isset($crm_pro)) { echo "value='".$crm_pro."' "; }  if(isset($desativar)){ echo $desativar;} ?>/>
 
                               </span></td>
@@ -82,10 +93,12 @@
                               <td>&nbsp;</td>
                               <td>&nbsp;</td>
                               <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
                             </tr>
-                            
                             <tr>
-                              <td colspan="4"><span class="style13">Qtd Alimentação p/ dia </span><br />
+                              <td><span class="style13">Qtd Diárias</span><br />
                                 <select id='select' name='dias' class='form-control input-sm' <?php if(isset($desativar)){ echo $desativar;} ?> required >
                                   <?php
                   								
@@ -98,13 +111,9 @@
 
                                 }
 								               ?>
-                              </select></td>
+                                </select></td>
                               <td>&nbsp;</td>
                               <td>&nbsp;</td>
-                              <td>&nbsp;</td>
-                              <td><br /></td>
-                            </tr>
-                            <tr>
                               <td>&nbsp;</td>
                               <td>&nbsp;</td>
                               <td>&nbsp;</td>
@@ -115,33 +124,96 @@
                               <td>&nbsp;</td>
                             </tr>
                             <tr>
-                              <td colspan="8" bgcolor="#fcf8e3"><div align="center">TERAPIA NUTRICIONAL </div></td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
                             </tr>
                             <tr>
-                              <td>Terapia Nutricional </td>
+                              <td colspan="11" bgcolor="#F1E07E"><div align="center">TERAPIA NUTRICIONAL </div></td>
+                            </tr>
+                            <tr>
+                              <td colspan="2">&nbsp;</td>
                               <td>&nbsp;</td>
                               <td>&nbsp;</td>
-                              <td colspan="3">Enteral </td>
-                              <td colspan="2">Parenteral</td>
+                              <td colspan="4">&nbsp;</td>
+                              <td colspan="3">&nbsp;</td>
+                            </tr>
+                            <tr>
+                              <td colspan="2">Terapia Nutricional </td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td colspan="4">Enteral </td>
+                              <td colspan="3">Parenteral</td>
+                            </tr>
+                            <tr>
+                              <td colspan="2">&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td colspan="4"><div class="form-check"></td>
+                              <td colspan="3"><div class="form-check"></td>
                             </tr>
                             <tr>
                               <td colspan="2"><div class="form-check">
-                                <input name="checkbox" type="checkbox" class="form-check-input" id="checkbox" value="" />
-                               <span class="style13"> Via Oral (TNO) </span>
-                              </div></td>
+                                <input name="checkbox" type="checkbox" class="largerCheckbox" id="checkbox" value="" />
+                                <span class="style13"> Via Oral (TNO) </span> </div></td>
+                              <td><span class="style13">Qtd  p/ dia </span><br />
+                                <select id='select3' name='select2' class='form-control input-sm' <?php if(isset($desativar)){ echo $desativar;} ?> required="required" >
+                                  <?php
+                  								
+                  								if(isset($dias_pro) ){ 
+                                      echo "<option value='".$dias_pro."' >".$dias_pro."</option>"; 
+                                  }else{
+                                    for ($i=0; $i <= 5; $i++) {
+                                        echo "<option value='".$i."'>".$i."</option>";
+                                  }
+
+                                }
+								               ?>
+                                </select></td>
                               <td>&nbsp;</td>
-                              <td colspan="3"><div class="form-check">
-                                  <input class="form-check-input" type="checkbox" name="enteral_sne" value="enteral_sne" />
-                                  <span class="style13"> Via Sonda Nasoenteral (SNE) </span> </div>
-                                  <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="enteral_sng" value="enteral_sng" />
-                                    <span class="style13"> Via Sonda Nasogástrica (SNG) </span> </div></td>
-                              <td colspan="2">
-							    <div class="form-check">
-								  <input class="form-check-input" type="checkbox" name="parenteral_npp" value="parenteral_npp" >
-								<span class="style13">  Via Periférica (NPP) </span>								</div>							    <div class="form-check">
-								  <input class="form-check-input" type="checkbox" name="parenteral_npt" value="parenteral_npt" >
-							  <span class="style13">  Via Total (NPT) </span>								</div></td>
+                              <td colspan="2"><div class="form-check">
+                                <input class="largerCheckbox" type="checkbox" name="enteral_sne" value="enteral_sne" />
+                                <span class="style13"> Via Sonda Nasoenteral (SNE) </span> </div></td>
+                              <td><span class="style13">Qtd  p/ dia </span><br />
+                                <select id='select4' name='select3' class='form-control input-sm' <?php if(isset($desativar)){ echo $desativar;} ?> required="required" >
+                                  <?php
+                  								
+                  								if(isset($dias_pro) ){ 
+                                      echo "<option value='".$dias_pro."' >".$dias_pro."</option>"; 
+                                  }else{
+                                    for ($i=0; $i <= 5; $i++) {
+                                        echo "<option value='".$i."'>".$i."</option>";
+                                  }
+
+                                }
+								               ?>
+                                </select></td>
+                              <td>&nbsp;</td>
+                              <td colspan="2"><div class="form-check">
+                                <input class="largerCheckbox" type="checkbox" name="parenteral_npp" value="parenteral_npp" />
+                                <span class="style13"> Via Periférica (NPP) </span> </div></td>
+                              <td><span class="style13">Qtd  p/ dia </span><br />
+                                  <select id='select2' name='select' class='form-control input-sm' <?php if(isset($desativar)){ echo $desativar;} ?> required="required" >
+                                    <?php
+                  								
+                  								if(isset($dias_pro) ){ 
+                                      echo "<option value='".$dias_pro."' >".$dias_pro."</option>"; 
+                                  }else{
+                                    for ($i=0; $i <= 5; $i++) {
+                                        echo "<option value='".$i."'>".$i."</option>";
+                                  }
+
+                                }
+								               ?>
+                                </select></td>
                             </tr>
                             <tr>
                               <td>&nbsp;</td>
@@ -152,6 +224,12 @@
                               <td>&nbsp;</td>
                               <td>&nbsp;</td>
                               <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                            </tr>
+                            <tr>
+                              <td colspan="11" bgcolor="#F1E07E"><div align="center">ARQUIVO</div></td>
                             </tr>
                             <tr>
                               <td>&nbsp;</td>
@@ -162,22 +240,12 @@
                               <td>&nbsp;</td>
                               <td>&nbsp;</td>
                               <td>&nbsp;</td>
-                            </tr>
-                            <tr>
-                              <td colspan="8" bgcolor="#fcf8e3"><div align="center">ARQUIVO</div></td>
-                            </tr>
-                            <tr>
-                              <td>&nbsp;</td>
-                              <td>&nbsp;</td>
-                              <td>&nbsp;</td>
-                              <td>&nbsp;</td>
-                              <td>&nbsp;</td>
                               <td>&nbsp;</td>
                               <td>&nbsp;</td>
                               <td>&nbsp;</td>
                             </tr>
                             <tr>
-                              <td colspan="8"><span class = 'style13'>Anexar a imagem da solicitação </span> </span>
+                              <td colspan="11"><span class = 'style13'>Anexar a imagem da solicitação </span> </span>
                                 <br />
 						<div class="mb-3">
   							
@@ -185,9 +253,28 @@
 						</div>								 </td>
                             </tr>
                             <tr>
-                              <td colspan="8">							  </td>
+                              <td colspan="11">							  </td>
                             </tr>
                             <tr>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                            </tr>
+                            <tr bgcolor="#F1E07E">
+                              <td colspan="11">&nbsp;</td>
+                            </tr>
+                            <tr>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
                               <td>&nbsp;</td>
                               <td>&nbsp;</td>
                               <td>&nbsp;</td>
@@ -199,7 +286,7 @@
                             </tr>
 
                             <tr>
-                              <td colspan="8" class="style13" >Justificativa da prorrogação
+                              <td colspan="11" class="style13" >Justificativa da prorrogação
                                 <textarea minlength="5" required id="motivo" class="form-control input-sm" name="motivo"  style="font-size:12px; margin: 0px; height: 100px; width: 100%;" form="prorrogacao" <?php if(isset($desativar)){ echo $desativar; } ?> /><?php
                                         if(isset($motivo_pro)){
                                           echo $motivo_pro;
@@ -207,7 +294,7 @@
                                         ?></textarea>                              </td>
                           </tr>
                         <tr>
-                          <td colspan="8" >                              </td>
+                          <td colspan="11" >                              </td>
           </tr>
 </table>
 

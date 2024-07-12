@@ -39,29 +39,23 @@
   <!-- Bootstrap -->
     
     <script src="http://code.jquery.com/jquery.js"></script>
-    <link href="../bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" media="screen">
-    <script src="../bootstrap/js/bootstrap.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="../bootstrap/js/bootstrap.min.js"></script>
+    <link href="../bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" media="screen">   
     <link rel="stylesheet" type="text/css" href="../css/metro-bootstrap.min.css">
-    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">  
 	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"/>
-  
-
-
+ 	<script src="../bootstrap/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    
 <title>Credenciado Ipaseal Saúde</title>
-
+<!-- -        
+Revisão links Bootstrap
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+->
 
 
     <!-- Disable IE6 image toolbar -->
-    <meta http-equiv="imagetoolbar" content="no">
-        
-    <!-- Script calendario data -->
-    <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.0/themes/base/jquery-ui.css" />
-    <script src="http://code.jquery.com/jquery-1.8.2.js"></script>
-    <script src="http://code.jquery.com/ui/1.9.0/jquery-ui.js"></script>
+    <meta http-equiv="imagetoolbar" content="no">       
 
     
     <style type="text/css">

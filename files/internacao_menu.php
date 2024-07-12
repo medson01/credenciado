@@ -90,7 +90,7 @@ $tabela = array
 			array("Prorrogação","internacao_prorrogacao_lista.php"),
 			///array("Prorrogação","internacao_prorrogacao_lista.php"),
 			array("Alimentação","internacao_alimentacao_lista.php"),
-			array("Acomodação","internacao_acomodacao_formulario.php")
+			//array("Acomodação","internacao_acomodacao_formulario.php")
   
 					);
 }else{
@@ -107,7 +107,7 @@ $tabela = array
  <ul class="nav nav-tabs">
 <?php
 //  ATIVA A ABA QUE SESEJA 			  
- if($_GET['prorro'] == 1){ 
+ if(isset($_GET['prorro'])){ 
  	$aba = 1;
  }else{
  	$aba = 0;
@@ -119,7 +119,7 @@ $i=0;
                 if($cedula == '0'){    
                   echo '<li ';	
 				  ///			  
-				  if($_GET['prorro'] == 1){ $i == 1; }
+				  if(isset($_GET['prorro']) && $_GET['prorro'] == 1){ $i == 1; }
 				  
                   if ($i == $aba) {
                   	echo 'class="active"';

@@ -21,11 +21,11 @@ $itens_por_pagina = 5;
  }
 // ===========================================
 
-  $a = "SELECT prorrogacao.id as id_prorrogacao, prorrogacao.medico_solicitante, prorrogacao.motivo, prorrogacao.motivo_medico, prorrogacao.dias_solicitados, prorrogacao.dias_autorizados, prorrogacao.qtd_motora, prorrogacao.qtd_respiratoria, data, prorrogacao.status, imagem.id as id_imagem, imagem.nome, imagem FROM imagem INNER JOIN prorrogacao on prorrogacao.id = imagem.id_prorrogacao  WHERE prorrogacao.id_internamento=".$_GET['id']; 
+  $a = "SELECT prorrogacao.id as id_prorrogacao, prorrogacao.medico_solicitante, prorrogacao.motivo, prorrogacao.motivo_medico, prorrogacao.dias_solicitados, prorrogacao.dias_autorizados, prorrogacao.qtd_motora, prorrogacao.qtd_respiratoria, data, prorrogacao.status, imagem.id as id_imagem, imagem.nome, imagem FROM prorrogacao INNER JOIN imagem on imagem.id_prorrogacao = prorrogacao.id WHERE prorrogacao.id_internamento=".$_GET['id']; 
 
 $d =  "    LIMIT ".$pagina.", ".$itens_por_pagina;
 
- $sql1 = $a.$d;
+  $sql1 = $a.$d;
 
   $stmt1 = $pdo->prepare($sql1);
 
@@ -49,20 +49,21 @@ $d =  "    LIMIT ".$pagina.", ".$itens_por_pagina;
   $ultima_pagina  = $num_total - ($itens_por_pagina*$num_paginas - $num_total); 
  
 
-$resultado = mysqli_query($conn, $a);
+   $resultado = mysqli_query($conn, $a);
 
 
 ?>
 <br>
   
     <div align="left">
-  	    <button type="button" class="btn btn-primary" style="width:87px" id="incluir" onclick="abrirProModal()"
+	<a href="internacao_menu.php?id=<?php echo $_GET['id']?>&prorro=0">
+  	    <button type="button" class="btn btn-primary" style="width:87px" id="incluir"
 		<?php 
 			if($_SESSION["perfil"] == "callcenter"){
 				 echo" disabled "; 
 			}		
 		
-		?> > Incluir </button>
+		?> > Incluir </button> </a>
 	</div>	
 		<div style="width:40px;float: right;" >
 		<button  class="btn btn-default glyphicon glyphicon-print hidden-print" onclick="javascript:print();"> 
@@ -101,9 +102,12 @@ $resultado = mysqli_query($conn, $a);
     
     <tr style="font-size: 10px; text-align: justify">
       <td width="26" rowspan="3" align="center" style="vertical-align: inherit;">
-        <br><span style="font-size: small; font-weight: 800; ">
-      <?php echo  $aquivos['id_prorrogacao']; ?></span></td>
- 
+        <br>
+		<span style="font-size: small; font-weight: 800; ">
+      		<?php  
+				echo "<a  id='ticket' href = 'internacao_menu.php?id=".$_GET['id']."&prorro=".$aquivos["id_prorrogacao"]."'>".$aquivos['id_prorrogacao']."</a>"; ?>
+	  	</span>
+	  </td>
       <td width="279"  align="left">Medico solicitante <br />
             <?php echo $aquivos['medico_solicitante']; ?></td>
       <td width="91" align="left"> Dias Solicitado(s): <br />
@@ -132,7 +136,7 @@ $resultado = mysqli_query($conn, $a);
       <td width="120" align="left">Arquivo <br />
             <?php 
 
-        echo '<a class="hidden-print" href="imagem_exibir.php?id='.$aquivos['id_imagem'].'"  target="_blank">Arquivo '.$aquivos["id_imagem"].'</a>'; 
+        echo '<a class="hidden-print" href="imagem_exibir.php?id='.$aquivos['id_imagem'].'"  target="_blank">'.$aquivos["id_imagem"].'</a>'; 
 
 
         echo '<span class="visible-print">Imagem '.$aquivos["id_imagem"].'</span>';

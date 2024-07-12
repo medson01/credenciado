@@ -7,26 +7,25 @@ $id = $_GET["id"];
 
     
 
-          $query = mysqli_query($conn,"SELECT acomodacao.nome as acomodacao
-                     FROM `internamento` 
-                     INNER JOIN usuarios on usuarios.id = internamento.id_usuario 
-                     INNER JOIN cid on cid.id = internamento.id_cid
-                     INNER JOIN alocacao on alocacao.id = internamento.id_alocacao 
-                     INNER JOIN acomodacao on acomodacao.id = alocacao.id_acomodacao 
-                     LEFT JOIN pronto_atendimento on pronto_atendimento.id = internamento.id_pa 
-              
-                     WHERE internamento.id =".$id) or die("erro ao carregar consulta");
-
+         	 $sql = "SELECT acomodacao.nome as acomodacao
+                     FROM `prorrogacao` 
+                     INNER JOIN internamento on internamento.id = prorrogacao.id_internamento 
+                     INNER JOIN acomodacao on acomodacao.id = prorrogacao.id_acomodacao 
+                     WHERE internamento.id =".$id."
+					 ORDER BY prorrogacao.id DESC limit 1
+					 ";
+			  $stmt1 = $pdo->prepare($sql1);
+			  $stmt1->execute();
 
                       
-                                while($registro = mysqli_fetch_row($query)){
+                                while($aquivos = $stmt1->fetch(PDO::FETCH_ASSOC)){ 
 
                                   $acomodacao = $registro[0];
 
                                    
                              }
 
-       $query = mysqli_query($conn,"SELECT * FROM acomodacao order by id") or die("erro ao carregar consulta");
+      
 	   					
 
 
