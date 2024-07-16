@@ -5,7 +5,7 @@
 
 
 	if(isset($_GET['prorro']) && !empty($_GET['prorro']) ){
-		$sql='SELECT prorrogacao.id as id_prorrogacao, prorrogacao.medico_solicitante,  prorrogacao.crm, prorrogacao.data_inicial, prorrogacao.data_final, prorrogacao.motivo, prorrogacao.motivo_medico, prorrogacao.dias_solicitados, prorrogacao.dias_autorizados, prorrogacao.qtd_motora, prorrogacao.qtd_respiratoria, data, prorrogacao.status, imagem.id as id_imagem, acomodacao.nome  as acomodacao 
+		$sql='SELECT prorrogacao.id as id_prorrogacao, prorrogacao.medico_solicitante,  prorrogacao.crm, prorrogacao.data_inicial, prorrogacao.data_final, prorrogacao.data_inicial_aut, prorrogacao.data_final_aut,prorrogacao.motivo, prorrogacao.motivo_medico, prorrogacao.dias_solicitados, prorrogacao.dias_autorizados, prorrogacao.qtd_motora, prorrogacao.qtd_respiratoria, data, prorrogacao.status, imagem.id as id_imagem, acomodacao.nome  as acomodacao, acomodacao.id as id_acomodacao 
 		FROM prorrogacao 
 		INNER JOIN acomodacao on acomodacao.id = prorrogacao.id_acomodacao 
 		INNER JOIN imagem on imagem.id_prorrogacao = prorrogacao.id 
@@ -19,12 +19,18 @@
 			$crm_pro = $registro["crm"];
 			$data_inicial = $registro["data_inicial"];
 			$data_final = $registro["data_final"];
-			$dias = $registro["dias_solicitados"];
+			$data_inicial_aut = $registro["data_inicial_aut"];
+			$data_final_aut = $registro["data_final_aut"];
+			$dias_solicitados = $registro["dias_solicitados"];
+			$dias_autorizados = $registro["dias_autorizados"];
 			$acomodacao = utf8_encode($registro["acomodacao"]);
+			$id_acomodacao =  $registro["id_acomodacao"];
 			$qtd_respiratoria = $registro["qtd_respiratoria"];
 			$qtd_motora = $registro["qtd_motora"];
 			$id_imagem  = $registro["id_imagem"];
-			$motivo_pro = $registro["motivo"];
+			$motivo = $registro["motivo"];
+			$motivo_medico = $registro["motivo_medico"];
+			$status = $registro["status"];
 					
 		}
 		
@@ -48,8 +54,12 @@
 	<link rel="stylesheet" type="text/css" href="../css/modal.css"/>
 	<style type="text/css">
 	<!--
-	.style1 {color: #FFFFFF}
 	.style13 {font-size: 10px}
+.style14 {
+	font-size: 10px;
+	font-family: Arial, Helvetica, sans-serif;
+	font-style: italic;
+}
 	-->
 	</style>
 
@@ -141,10 +151,11 @@
                             <tr>	
 	                           <td colspan="2"><span class="style13">Qtd Diárias</span><br />
 							   <?php
-							if(isset($dias) ){
-                             	echo ' <input type="text" class="form-control input-sm" style="font-size: 10px" size="44" value="'.$dias.'" readonly />';
+							if(isset($dias_solicitados) ){
+                             	echo ' <input name="dias_solicitados" type="text" class="form-control input-sm" style="font-size: 10px" size="44" value="'.$dias_solicitados.'"readonly />';
+								
 							}else{
-								echo ' <input name="dias" id ="dias" type="text" class="form-control input-sm" style="font-size: 10px" size="44" readonly />';
+								echo ' <input name="dias_solicitados" id ="dias" type="text" class="form-control input-sm" style="font-size: 10px" size="44" value="" readonly />';
 							}
 							  ?>
 							  </td>
@@ -163,16 +174,18 @@
                               <td colspan="2"><span class="style13">Acomodação</span><br />
                                 <select name='id_acomodacao' class='form-control input-sm' >
                                   <?php 
+				   if(isset($acomodacao) && isset($id_acomodacao)){
+				   	echo '<option value="'.$id_acomodacao.'" disabled selected  >'.$acomodacao.'</option>';
+				   }else{
+				   				  
 				   $sql = 'SELECT * FROM `acomodacao`';
 				   $stmt1 = $pdo->prepare($sql);
-				   $stmt1->execute();
-
-                    while($registro = $stmt1->fetch(PDO::FETCH_ASSOC)){ 
-
-                       echo '<option value="'.$registro["id"].'">'.utf8_encode($registro["nome"]).'</option>';
-                                                                                              
-                    }
-                              
+				   $stmt1->execute();	
+						while($registro = $stmt1->fetch(PDO::FETCH_ASSOC)){ 
+							echo '<option value="'.$registro["id"].'">'.utf8_encode($registro["nome"]).'</option>';
+																								  
+						}
+                    }     
                   
                   ?>
                                 </select></td>
@@ -190,7 +203,7 @@
                               <td>&nbsp;</td>
                             </tr>
                             <tr>
-                              <td colspan="6" bgcolor="#F1E07E"><div align="center">FISIOTERAPIAS</div></td>
+                              <td <?php if(isset($status) && $status == 2){ echo 'style="display: none;"'; }  ?> colspan="6" bgcolor="#F1E07E"><div align="center">FISIOTERAPIAS</div></td>
                             </tr>
                             <tr>
                               <td>&nbsp;</td>
@@ -201,7 +214,7 @@
                               <td>&nbsp;</td>
                             </tr>
                             
-                            <tr>
+                            <tr <?php if(isset($status) && $status == 2){ echo 'style="display: none;"'; }  ?> >
                               <td colspan="2"><span class = 'style13'>Qtd Respiratória </span> <br />
                                 <input name="qtd_respiratoria1" id ="qtd_respiratoria1" type="text" class="form-control input-sm" style="font-size: 10px" size="44" <?php if (isset($qtd_respiratoria)) { echo "value='".$qtd_respiratoria."' readonly"; }   ?> /></td>
                               <td>&nbsp;</td>
@@ -229,7 +242,8 @@
                             </tr>
                             <tr>
                               <td colspan="6">
-								<?php
+								<div align="center">
+								  <?php
 								
 								if(isset($_GET['prorro']) && !empty($_GET['prorro']) ){	
 								  	echo '<a class="hidden-print" href="imagem_exibir.php?id='.$id_imagem.'"  target="_blank">'.$id_imagem.'</a>'; 
@@ -244,7 +258,7 @@
 								}
 									
 								  ?>
-							 </td>
+						         </div></td>
                             </tr>
                             <tr>
                               <td colspan="6">							  </td>
@@ -271,9 +285,9 @@
 
                             <tr>
                               <td colspan="6" ><span class="style13">Justificativa da prorrogação
-                                <textarea minlength="5" required id="motivo" class="form-control input-sm" name="motivo"  style="font-size:12px; margin: 0px; height: 100px; width: 100%;" form="internacao_prorrogacao_cadastro" <?php if (isset($medico_pro)) { echo "readonly"; }  ?> /><?php
-                                        if(isset($motivo_pro)){
-                                          echo $motivo_pro;
+                                <textarea minlength="5" required id="motivo" class="form-control input-sm" name="motivo"  style="font-size:12px; margin: 0px; height: 100px; width: 100%;" form="internacao_prorrogacao_cadastro" <?php if (isset($motivo)) { echo "readonly"; }  ?> /><?php
+                                        if(isset($motivo)){
+                                          echo $motivo;
                                         }
                                         ?></textarea>
                               </span></td>
@@ -286,9 +300,10 @@
 
 <!-- ################################################################################################################################# -->
 
+
 <!-- FORMULÁRIO DE AUTORIZAÇÃO DA PRORROGAÇÃO DE INTERNAMENTO  -->
 <div class="alert alert-danger"  <?php echo $exibir_medico; ?> >
- <table width="100%" border="0" align="center"  >
+ <table width="100%" border="0" align="center"  <?php echo $exibir_medico; ?> >
                 <!-- autorização do médico -->
                       <!-- Cabeçalho de autorização médica-->
                         <tr>
@@ -300,12 +315,18 @@
                           <td width="3%">&nbsp;</td>
                           <td width="48%">&nbsp;</td>
                         </tr>
+                        <tr>
+                          <td colspan="3"><div align="center" class="style14">CONFIRME O PERÍODO CLICANDO EM DATA FINAL </div></td>
+                        </tr>
+                        <tr>
+                          <td colspan="3">&nbsp;</td>
+                        </tr>
                         <tr>  
                           <td><span class = 'style13'>Data Inicial </span> <br />
-                          <input class="form-control"name="data_inicial"type="text" id="data_inicial" data-date-format="mm/dd/yyyy" maxlength="10"size="10" required="required" <?php if (isset($data_inicial)) { echo "value='".formatar_banco_data($data_inicial)."' "; }   ?>  /></td><td>&nbsp;</td>
-						  <td><br />
-						    <span class="style13">Data Final </span><br />
-                            <input  onchange="calcularData()" class="form-control"name="data_final"type="text" id="data_final" data-date-format="mm/dd/yyyy" maxlength="10"size="10" required="required" <?php if (isset($data_final)) { echo "value='".formatar_banco_data($data_final)."' "; }   ?>></td>
+						  <input id="data_inicial" <?php if (isset($data_inicial)) { echo "value='".formatar_banco_data($data_inicial)."' "; }  ?>  style="display: none;" />
+                          <input name="data_inicial2" class="form-control"type="text" id="data_inicial" data-date-format="mm/dd/yyyy" maxlength="10"size="10" <?php if (isset($data_inicial)) { echo "value='".formatar_banco_data($data_inicial)."' "; }  ?> readonly /></td><td>&nbsp;</td>
+						  <td><span class="style13">Data Final </span><br />
+                            <input name="data_final2"  onchange="calcularData()" class="form-control"type="text"  <?php if(isset($status) && $status == 1){ echo 'id="data_final"'; }?>  data-date-format="mm/dd/yyyy" maxlength="10"size="10" <?php if (isset($data_final_aut)) { echo "value='".formatar_banco_data($data_final_aut)."' "; }else{ echo "value='".formatar_banco_data($data_final)."' "; } if(isset($status) && $status == 2){ echo "readonly"; }  ?>></td>
                         <tr>
                           <td>&nbsp;</td>
                           <td>&nbsp;</td>
@@ -313,7 +334,7 @@
                         </tr>
                         <tr>
                           <td><span class="style13">Qtd Diárias</span><br />
-                            <input name="dias" id ="dias" type="text" class="form-control input-sm" style="font-size: 10px" size="44" <?php if (isset($dias)) { echo "value='".$dias."' readonly"; }  ?> readonly="readonly" /></td>
+                            <input name="dias2" id ="dias" type="text" class="form-control input-sm" style="font-size: 10px" size="44" value='<?php if (isset($dias_autorizados)) { echo $dias_autorizados; }  ?>' readonly="readonly" /></td>
                           <td>&nbsp;</td>
                           <td><p id= "aviso2" ></td>
                         </tr>
@@ -323,16 +344,19 @@
                               <td>&nbsp;</td>
         </tr>
                             <tr>
+                              <td colspan="3" bgcolor="#CCCCCC"><div align="center" style="color: black;">Fisioterapias</div></td>
+                            </tr>
+                            <tr>
                               <td>&nbsp;</td>
                               <td>&nbsp;</td>
                               <td>&nbsp;</td>
                             </tr>
                             <tr>
                               <td><span class = 'style13'>Qtd Respiratória </span> <br />
-                                <input name="qtd_respiratoria2" id ="qtd_respiratoria2" type="text" class="form-control input-sm" style="font-size: 10px" size="44" <?php if (isset($qtd_respiratoria)) { echo "value='".$qtd_respiratoria."' "; }  if(isset($desativar)){ echo $desativar;} ?> /></td>
+                                <input name="qtd_respiratoria2" id ="qtd_respiratoria2" type="text" class="form-control input-sm" style="font-size: 10px" size="44" <?php if (isset($qtd_respiratoria2)){ echo "value='".$qtd_respiratoria2."' "; }else{ echo "value='".$qtd_respiratoria."' "; }  if(isset($desativar)){ echo $desativar;} if(isset($status) && $status == 2){ echo "readonly"; } ?> /></td>
                               <td>&nbsp;</td>
                               <td><span class = 'style13'>Qtd Fisioterapia Motora </span> </span><br />		 
-                              <input name="qtd_motora" id ="qtd_motora2" type="text" class="form-control input-sm" style="font-size: 10px" size="44" <?php if (isset($qtd_motora)) { echo "value='".$qtd_motora."' "; }?>/></td>
+                              <input name="qtd_motora2" id ="qtd_motora2" type="text" class="form-control input-sm" style="font-size: 10px" size="44" <?php if (isset($qtd_motora2)) { echo "value='".$qtd_motora2."' "; }else{ echo "value='".$qtd_motora."' "; }  if(isset($status) && $status == 2){ echo "readonly"; } ?>/></td>
                             </tr>
                             <tr>
                               <td>&nbsp;</td>
@@ -342,7 +366,7 @@
                         <tr>
                          <td colspan="3" >
                              <span class="style13">Justificativa do médico</span>
-                                <textarea id="motivo_medico" class="form-control input-sm" name="motivo_medico"  style="font-size:12px; margin: 0px; height: 100px; width: 100%;" form="internacao_prorrogacao_cadastro" placeholder="Entre com o texto aqui..." />
+                                <textarea id="motivo_medico" class="form-control input-sm" name="motivo_medico"  style="font-size:12px; margin: 0px; height: 100px; width: 100%;" form="internacao_prorrogacao_cadastro"  <?php if(isset($status) && $status == 2){ echo "readonly"; } ?>/>
                                         <?php
                                         if(isset($motivo_medico)){
                                           echo $motivo_medico;
@@ -381,12 +405,13 @@
 </div>
 		<!-- DADOS DE ENVIO PRORROGAÇÃO -->
 			<!-- IMAGEM -->
-			<input type="hidden" name="id"            value="<?php echo $_GET['id']; ?>" /> 
+			<input type="hidden" name="id_internamento"            value="<?php echo $_GET['id']; ?>" /> 
+			<input type="hidden" name="id_prorro"            value="<?php echo $_GET['prorro']; ?>" /> 
           	<input type="hidden" name="evento"        value="int" /> 
 			<input type="hidden" name="descricao"     value="Solicitação médica de prorrogação" />  
           	<input type="hidden" name="MAX_FILE_SIZE" value="99999999" />  
 			<input type="hidden" name="url"           value="<?php echo $_SERVER['REQUEST_URI']; ?>" /> 
-        	<input type="hidden" name="status"           value="<?php if(isset($exibir_credenciado)){ echo 1;}else{ echo 2; } ?>" /> 	    
+        	<input type="hidden" name="status"           value="<?php if($_SESSION["perfil"] == 'medico'){ echo 2;}else{ echo 1; } ?>" /> 	    
                 </div>
                 </div>
         	     <!-- /Conteúdo Modal -->
@@ -397,7 +422,7 @@
             <button id="cancelar" onclick="fecharProModal()" type="button" class="btn btn-default" data-dismiss="modal" style="color:#FFFFFF;  background-color: black; border-color: #f4f7fb;" >
         		 		Cancelar 
         		</button>
-        		<button type="submit" class="btn btn-default" style="color:#FFFFFF;  background-color: black; border-color: #f4f7fb;" /> Incluir 
+        		<button type="submit" <?php if(isset($status) && $status == 2){ echo "disabled"; } ?> class="btn btn-default" style="color:#FFFFFF;  background-color: black; border-color: #f4f7fb;" /> Incluir 
             </button>
         	</div>	
       </div>

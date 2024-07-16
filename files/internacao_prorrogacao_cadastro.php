@@ -6,17 +6,18 @@
   
 // ENTRADA DE DADOS
 	// SOLICITAÇÃO
-	// ESTATUS TEM QUE SER 1
+	
+
 	if($_POST["status"] == 1){ 	
 		$status = $_POST["status"];
-		$id = $_POST["id"];
+		$id_internamento = $_POST["id_internamento"];
 		$id_acomodacao = $_POST["id_acomodacao"];
 		$id_usuario = $_SESSION["id"];
 		$data_inicial  = formatar_data_banco($_POST["data_inicial"]);
-		$data_final  = formatar_data_banco($_POST["data_final"]);
+	 	$data_final  = formatar_data_banco($_POST["data_final"]);
 		$medico_solicitante  = $_POST["medico_solicitante"];
 		$crm  = $_POST["crm"];
-		$dias_solicitados  = $_POST["dias"];
+		$dias_solicitados  = $_POST["dias_solicitados"];
 		$qtd_respiratoria1  = $_POST["qtd_respiratoria1"];
 		$qtd_motora1  = $_POST["qtd_motora1"];
 		$motivo  = $_POST["motivo"];	
@@ -26,26 +27,26 @@
 		$data_prorrogacao = date("Y-m-d H:i:s" );
 		$url  = $_POST["url"];
 	}
+
 	// AUTORIZAÇÃO
-		// ESTATUS TEM QUE SER 2
-		if($_POST["status"] == 2){
-			$status = $_POST["status"]; 
-			$dias_autorizados  = $_POST["dias_autorizados"];
+		if($_POST["status"] == 2){ 	
+		    $id_prorro = $_POST["id_prorro"];
+			$data_inicial_aut  = formatar_data_banco($_POST["data_inicial2"]);
+	 	    $data_final_aut  = formatar_data_banco($_POST["data_final2"]);
+			$dias_autorizados  = $_POST["dias2"];
 			$motivo_medico  = $_POST["motivo_medico"];
-			$data_autorizacao = $_POST["data_autorizacao"];
+			$data_autorizacao = date("Y-m-d H:i:s");
+			$qtd_respiratoria  = $_POST["qtd_respiratoria2"];
+		    $qtd_motora  = $_POST["qtd_motora2"];
+			$url  = $_POST["url"];
+			
 		}
-	// VALIDAÇÃO DE DADOS
-		// PEGA A URL DO FORMULARIO DE PRORROGAÇÃO E ATIVA A ABA PRORROGAÇÃO, ALÉM DE DEIXAR ELA NO PADRÃO prorro=1
-		//$url = str_replace('prorro=','prorro=1',$url);
-		//if (strpos($url, 'prorro=11') !== false) {
-		//	$url = str_replace('prorro=11','prorro=1',$url);
-		//}	
-		// TRANSFORMAR DATA
-		 		
+		
+
 	
 // INSERIR A SOLICITAÇÃO NO BANCO
-	if($status == 1){
-	  $sql = "INSERT INTO `prorrogacao`(`id`, `id_internamento`,`id_acomodacao`, `id_usuario`, `data_inicial`,`data_final`,`medico_solicitante`, `crm`, `dias_solicitados`, `dias_autorizados` , `motivo`, `motivo_medico`, `data_prorrogacao` , `qtd_respiratoria`, `qtd_motora`,`status`) VALUES ( null ,'".$id."', '".$id_acomodacao."', '".$id_usuario."','".$data_inicial."','".$data_final."', '".$medico_solicitante."' , '".$crm."' , '".$dias_solicitados."' , null ,'".$motivo."' , null ,'". $data_prorrogacao ."' ,'".$qtd_respiratoria1."' ,'".$qtd_motora1."' , '1' )";
+	if($_POST["status"] == 1){ 	
+	  $sql = "INSERT INTO `prorrogacao`(`id`, `id_internamento`,`id_acomodacao`, `id_usuario`, `data_inicial`,`data_final`,`medico_solicitante`, `crm`, `dias_solicitados`, `dias_autorizados` , `motivo`, `motivo_medico`, `data_prorrogacao` , `qtd_respiratoria`, `qtd_motora`,`status`) VALUES ( null ,'".$id_internamento."', '".$id_acomodacao."', '".$id_usuario."','".$data_inicial."','".$data_final."', '".$medico_solicitante."' , '".$crm."' , '".$dias_solicitados."' , null ,'".$motivo."' , null ,'". $data_prorrogacao ."' ,'".$qtd_respiratoria1."' ,'".$qtd_motora1."' , '1' )";
 	
 	$stmt = $pdo->prepare($sql);
 	$stmt->execute();
@@ -93,7 +94,7 @@
 				
 				$stmt = $pdo->prepare($sql);
 				// PARAMETROS
-				$stmt->bindParam(':id_internamento', $id, PDO::PARAM_INT);
+				$stmt->bindParam(':id_internamento', $id_internamento, PDO::PARAM_INT);
 				$stmt->bindParam(':ultimo_id_prorrogacao', $ultimo_id_prorrogacao, PDO::PARAM_INT);
 				$stmt->bindParam(':nome', $nome, PDO::PARAM_STR);
 				$stmt->bindParam(':evento', $evento, PDO::PARAM_STR);
@@ -111,8 +112,23 @@
 			   }
 		}
 	}else{
-		echo"<script language='javascript' type='text/javascript'>alert('Erra na geração do ID prorroga\u00e7\u00e3o!\\n Tente novamente. ');window.location.href='".$url."'</script>";
-			exit;		
+	
+	 $sql ='UPDATE `prorrogacao` SET 
+			`data_inicial_aut` = "'.$data_inicial_aut.'", 
+			`data_final_aut`   = "'.$data_final_aut.'" , 
+			`dias_autorizados` = '.$dias_autorizados.',  
+			`motivo_medico`    = "'.$motivo_medico.'",  
+			`data_autorizacao` = "'.$data_autorizacao.'", 
+			`qtd_motora` = "'.$qtd_motora.'", 
+			`qtd_respiratoria` = "'.$qtd_respiratoria.'", 
+			`status`= 2  
+		  WHERE `id` = '.$id_prorro;
+	
+	$stmt = $pdo->prepare($sql);
+		if ($stmt->execute()){
+			echo"<script language='javascript' type='text/javascript'>alert('Prorroga\u00e7\u00e3o autorizada!');window.location.href='".$url."&prorro=x';</script>";
+			exit;	
+		}	
 	}
 // -- //
 ?>
