@@ -5,7 +5,7 @@
 
 
 	if(isset($_GET['prorro']) && !empty($_GET['prorro']) ){
-		$sql='SELECT prorrogacao.id as id_prorrogacao, prorrogacao.medico_solicitante,  prorrogacao.crm, prorrogacao.data_inicial, prorrogacao.data_final, prorrogacao.data_inicial_aut, prorrogacao.data_final_aut,prorrogacao.motivo, prorrogacao.motivo_medico, prorrogacao.dias_solicitados, prorrogacao.dias_autorizados, prorrogacao.qtd_motora, prorrogacao.qtd_respiratoria, data, prorrogacao.status, imagem.id as id_imagem, acomodacao.nome  as acomodacao, acomodacao.id as id_acomodacao 
+		$sql='SELECT prorrogacao.id as id_prorrogacao, prorrogacao.medico_solicitante,  prorrogacao.crm, prorrogacao.data_inicial, prorrogacao.data_final, prorrogacao.data_inicial_aut, prorrogacao.data_final_aut,prorrogacao.motivo, prorrogacao.motivo_autorizacao, prorrogacao.dias_solicitados, prorrogacao.dias_autorizados, prorrogacao.qtd_motora, prorrogacao.qtd_respiratoria, data_autorizacao, data_prorrogacao, prorrogacao.status, imagem.id as id_imagem, acomodacao.nome  as acomodacao, acomodacao.id as id_acomodacao 
 		FROM prorrogacao 
 		INNER JOIN acomodacao on acomodacao.id = prorrogacao.id_acomodacao 
 		INNER JOIN imagem on imagem.id_prorrogacao = prorrogacao.id 
@@ -22,15 +22,18 @@
 			$data_inicial_aut = $registro["data_inicial_aut"];
 			$data_final_aut = $registro["data_final_aut"];
 			$dias_solicitados = $registro["dias_solicitados"];
+			$data_solicitacao = $registro["data_prorrogacao"];
 			$dias_autorizados = $registro["dias_autorizados"];
+			$data_autorizacao = $registro["data_autorizacao"];
 			$acomodacao = utf8_encode($registro["acomodacao"]);
 			$id_acomodacao =  $registro["id_acomodacao"];
 			$qtd_respiratoria = $registro["qtd_respiratoria"];
 			$qtd_motora = $registro["qtd_motora"];
 			$id_imagem  = $registro["id_imagem"];
 			$motivo = $registro["motivo"];
-			$motivo_medico = $registro["motivo_medico"];
+			$motivo_medico = $registro["motivo_autorizacao"];
 			$status = $registro["status"];
+			
 					
 		}
 		
@@ -285,8 +288,8 @@
 
                             <tr>
                               <td colspan="6" ><span class="style13">Justificativa da prorrogação
-                                <textarea minlength="5" required id="motivo" class="form-control input-sm" name="motivo"  style="font-size:12px; margin: 0px; height: 100px; width: 100%;" form="internacao_prorrogacao_cadastro" <?php if (isset($motivo)) { echo "readonly"; }  ?> /><?php
-                                        if(isset($motivo)){
+                                <textarea minlength="5" required id="motivo" class="form-control input-sm" name="motivo"  style="font-size:12px; margin: 0px; height: 100px; width: 100%;" form="internacao_prorrogacao_cadastro" <?php if (isset($motivo) && $_GET['prorro']<>0) { echo "readonly"; }  ?> /><?php
+                                        if(isset($motivo) && $_GET['prorro']<>0){
                                           echo $motivo;
                                         }
                                         ?></textarea>
@@ -366,10 +369,10 @@
                         <tr>
                          <td colspan="3" >
                              <span class="style13">Justificativa do médico</span>
-                                <textarea id="motivo_medico" class="form-control input-sm" name="motivo_medico"  style="font-size:12px; margin: 0px; height: 100px; width: 100%;" form="internacao_prorrogacao_cadastro"  <?php if(isset($status) && $status == 2){ echo "readonly"; } ?>/>
+                                <textarea id="motivo_autorizacao" class="form-control input-sm" name="motivo_autorizacao"  style="font-size:12px; margin: 0px; height: 100px; width: 100%;" form="internacao_prorrogacao_cadastro"  <?php if(isset($status) && $status == 2){ echo "readonly"; } ?>/>
                                         <?php
-                                        if(isset($motivo_medico)){
-                                          echo $motivo_medico;
+                                        if(isset($motivo_autorizacao)){
+                                          echo $motivo_autorizacao;
                                         }
                                         ?>                  
                                         </textarea>                         </td> 
@@ -419,6 +422,8 @@
 				 
         		 </div>
 				  <div class="modal-footer" style="background-color: red;">
+				  
+				  
             <button id="cancelar" onclick="fecharProModal()" type="button" class="btn btn-default" data-dismiss="modal" style="color:#FFFFFF;  background-color: black; border-color: #f4f7fb;" >
         		 		Cancelar 
         		</button>

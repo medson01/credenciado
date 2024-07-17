@@ -33,8 +33,10 @@
 		    $id_prorro = $_POST["id_prorro"];
 			$data_inicial_aut  = formatar_data_banco($_POST["data_inicial2"]);
 	 	    $data_final_aut  = formatar_data_banco($_POST["data_final2"]);
+			$qtd_respiratoria1  = $_POST["qtd_respiratoria1_aut"];
+			$qtd_motora1  = $_POST["qtd_motora1_aut"];
 			$dias_autorizados  = $_POST["dias2"];
-			$motivo_medico  = $_POST["motivo_medico"];
+			$motivo_autorizacao  = $_POST["motivo_autorizacao"];
 			$data_autorizacao = date("Y-m-d H:i:s");
 			$qtd_respiratoria  = $_POST["qtd_respiratoria2"];
 		    $qtd_motora  = $_POST["qtd_motora2"];
@@ -46,7 +48,7 @@
 	
 // INSERIR A SOLICITAÇÃO NO BANCO
 	if($_POST["status"] == 1){ 	
-	  $sql = "INSERT INTO `prorrogacao`(`id`, `id_internamento`,`id_acomodacao`, `id_usuario`, `data_inicial`,`data_final`,`medico_solicitante`, `crm`, `dias_solicitados`, `dias_autorizados` , `motivo`, `motivo_medico`, `data_prorrogacao` , `qtd_respiratoria`, `qtd_motora`,`status`) VALUES ( null ,'".$id_internamento."', '".$id_acomodacao."', '".$id_usuario."','".$data_inicial."','".$data_final."', '".$medico_solicitante."' , '".$crm."' , '".$dias_solicitados."' , null ,'".$motivo."' , null ,'". $data_prorrogacao ."' ,'".$qtd_respiratoria1."' ,'".$qtd_motora1."' , '1' )";
+	  $sql = "INSERT INTO `prorrogacao`(`id`, `id_internamento`,`id_acomodacao`, `id_usuario`, `data_inicial`,`data_final`,`medico_solicitante`, `crm`, `dias_solicitados`, `dias_autorizados` , `motivo`, `motivo_autorizacao`, `data_prorrogacao` , `qtd_respiratoria`, `qtd_motora`,`status`) VALUES ( null ,'".$id_internamento."', '".$id_acomodacao."', '".$id_usuario."','".$data_inicial."','".$data_final."', '".$medico_solicitante."' , '".$crm."' , '".$dias_solicitados."' , null ,'".$motivo."' , null ,'". $data_prorrogacao ."' ,'".$qtd_respiratoria1."' ,'".$qtd_motora1."' , '1' )";
 	
 	$stmt = $pdo->prepare($sql);
 	$stmt->execute();
@@ -117,7 +119,7 @@
 			`data_inicial_aut` = "'.$data_inicial_aut.'", 
 			`data_final_aut`   = "'.$data_final_aut.'" , 
 			`dias_autorizados` = '.$dias_autorizados.',  
-			`motivo_medico`    = "'.$motivo_medico.'",  
+			`motivo_autorizacao`    = "'.$motivo_autorizacao.'",  
 			`data_autorizacao` = "'.$data_autorizacao.'", 
 			`qtd_motora` = "'.$qtd_motora.'", 
 			`qtd_respiratoria` = "'.$qtd_respiratoria.'", 

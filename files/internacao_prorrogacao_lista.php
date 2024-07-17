@@ -27,7 +27,7 @@ $itens_por_pagina = 5;
  }
 // ===========================================
 
-  $a = "SELECT prorrogacao.id as id_prorrogacao, prorrogacao.medico_solicitante, prorrogacao.motivo, prorrogacao.motivo_medico, prorrogacao.data_inicial,prorrogacao.data_final, prorrogacao.data_inicial_aut,prorrogacao.data_final_aut,prorrogacao.dias_solicitados, prorrogacao.dias_autorizados, prorrogacao.qtd_motora, prorrogacao.qtd_respiratoria, data, prorrogacao.status, imagem.id as id_imagem, imagem.nome, imagem FROM prorrogacao INNER JOIN imagem on imagem.id_prorrogacao = prorrogacao.id WHERE prorrogacao.id_internamento=".$_GET['id']; 
+  $a = "SELECT prorrogacao.id as id_prorrogacao, prorrogacao.medico_solicitante, prorrogacao.motivo, prorrogacao.motivo_autorizacao, prorrogacao.data_inicial,prorrogacao.data_final, prorrogacao.data_inicial_aut,prorrogacao.data_final_aut,prorrogacao.dias_solicitados, prorrogacao.dias_autorizados, prorrogacao.qtd_motora, prorrogacao.qtd_respiratoria, prorrogacao.data_prorrogacao, prorrogacao.data_autorizacao, prorrogacao.status, imagem.id as id_imagem, imagem.nome, imagem FROM prorrogacao INNER JOIN imagem on imagem.id_prorrogacao = prorrogacao.id WHERE prorrogacao.id_internamento=".$_GET['id']; 
 
 $d =  "    LIMIT ".$pagina.", ".$itens_por_pagina;
 
@@ -113,7 +113,7 @@ $d =  "    LIMIT ".$pagina.", ".$itens_por_pagina;
     ?>
     
     <tr style="font-size: 10px; text-align: justify">
-      <td width="26" rowspan="4" align="center" style="vertical-align: inherit;">
+      <td width="26" rowspan="4" align="center" bgcolor="#C0C0C0" style="vertical-align: inherit; border-radius: 25px 0px 0px 25px  ;">
         <br>
 		<span style="font-size: small; font-weight: 800; ">
       		<?php  
@@ -124,53 +124,69 @@ $d =  "    LIMIT ".$pagina.", ".$itens_por_pagina;
 				
 				} 
 			?>
-	  	</span>	  </td>
-      <td colspan="11"  align="left">
+  	  </span>	  </td>
+      <td colspan="11"  align="left" bgcolor="#95FFFF" >
 	  
-	  <div ><div align="center" class="style1" style="width:50%; display:inline-block; text-align: end;">SOLICITAÇÃO</div><div style="width:50%; display:inline-block; text-align: end;">
+	  <div >
+	  <div align="center" class="style1" style="width:50%; display:inline-block; text-align: end;">SOLICITAÇÃO</div><div style="width:50%; display:inline-block; text-align: end;">
 	    <div align="right"  class="style1">
-	    <?php echo date("j/n/Y,  H:i:s",strtotime($aquivos['data'])); ?></div></div>		</td>
+      <?php echo date("j/n/Y,  H:i:s",strtotime($aquivos['data_prorrogacao'])); ?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <?php 
+	  				if( ($aquivos['status'] == 1)  && ($_SESSION["perfil"] <> "medico")){ 
+                    echo '
+					<a   class="hidden-print" onclick="excluir('.$_GET['id'].','.$aquivos['id_imagem'].','.$aquivos['id_prorrogacao'].' )"> 
+                      <span class="glyphicon glyphicon-trash" style="color: blue; font-size: 15px;"></span>   
+					</a>';
+                   }
+	  ?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	    </div>
+	  </div>		</td>
       <!-- DATA DE AUTORIZAÇÃO 
 	  <td width="136" >
       <div align="left">Data
         Autoriza&ccedil;&atilde;o<br>
         <?php if(!empty($aquivos['data_autorizacao'])){
-      				echo date("j/n/Y,  H:i:s",strtotime($aquivos['data_autorizacao'])); 
+      			//	echo date("j/n/Y,  H:i:s",strtotime($aquivos['data_autorizacao'])); 
 			      }
 		?></div>
     </td>
 	 -->
     </tr>
     <tr style="font-size: 10px; text-align: justify">
-      <td width="36" align="left">&nbsp;</td>
+      <td width="36" align="left">	  </td>
       <td colspan="9" align="left"> 
           Medico  :
       <?php echo "<strong>".$aquivos['medico_solicitante']."</strong>  <br> Período: <strong>".formatar_banco_data($aquivos['data_inicial'])."</strong> à <strong>".formatar_banco_data($aquivos['data_final'])."</strong>, <strong>".$aquivos['dias_solicitados']."</strong> diárias."; ?> <br />
-      F.M
+      Fisioterapias: Motora
           <?php if(isset($aquivos['qtd_motora'])){ echo  $aquivos['qtd_motora'];}else{ echo "0";} ?>, 
-F.R.
+Respiratória
 <?php if(isset($aquivos['qtd_respiratoria'])){echo  $aquivos['qtd_respiratoria'];}else{ echo "0"; } ?>
 <br />
 Solicita&ccedil;&atilde;o: <?php echo $aquivos['motivo']; ?>, <br /></td>
-		  <td width="61"><div align="center">Arquivo
-            <br />
+		  <td width="77"><div align="center">
             <?php 
 
-        echo '<a class="hidden-print" href="imagem_exibir.php?id='.$aquivos['id_imagem'].'"  target="_blank">'.$aquivos["id_imagem"].'</a>'; 
+        echo '<a style=" color: blue; font-weight: bold;  " class="hidden-print" href="imagem_exibir.php?id='.$aquivos['id_imagem'].'"  target="_blank"><svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-images" viewBox="0 0 16 16">
+  <path d="M4.502 9a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3"/>
+  <path d="M14.002 13a2 2 0 0 1-2 2h-10a2 2 0 0 1-2-2V5A2 2 0 0 1 2 3a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v8a2 2 0 0 1-1.998 2M14 2H4a1 1 0 0 0-1 1h9.002a2 2 0 0 1 2 2v7A1 1 0 0 0 15 11V3a1 1 0 0 0-1-1M2.002 4a1 1 0 0 0-1 1v8l2.646-2.354a.5.5 0 0 1 .63-.062l2.66 1.773 3.71-3.71a.5.5 0 0 1 .577-.094l1.777 1.947V5a1 1 0 0 0-1-1z"/>
+</svg>
+            <br />'.$aquivos["id_imagem"].'</a>'; 
 
 
         echo '<span class="visible-print">Imagem '.$aquivos["id_imagem"].'</span>';
         ?>
-		  </div></td>
+	  </div></td>
     </tr>
-<td colspan="11"  align="left">
+<td colspan="11"  align="left" bgcolor="#A6FFA6" >
 <div >
 <div align="center" class="style1" style="width:50%; display:inline-block; text-align: end;">AUTORIZAÇÃO</div><div style="width:50%; display:inline-block; text-align: end;">
 	    <div align="right"  class="style1">
-	    <?php echo date("j/n/Y,  H:i:s",strtotime($aquivos['data'])); ?></div></div></td>
-    <tr style="font-size: 10px; text-align: justify">
+    <?php  if(isset($aquivos['data_autorizacao'])){ echo date("j/n/Y,  H:i:s",strtotime($aquivos['data_autorizacao'])); }else{ echo ''; } ?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div></div></td>
+    <tr style="font-size: 10px; text-align: justify; ">
       <td align="left">&nbsp;</td>    
-      <td colspan="9" align="left">
+      <td colspan="9" align="left" >
+	  	<div <?php if($_SESSION["perfil"] <> 'medico' && $aquivos["status"] <> 2){ echo 'style="display: none;"';}else{ echo'style="display: block;"'; } ?> >
+		
         Medico  : <?php echo "<strong>".$aquivos['medico_solicitante']."</strong>  <br> Período autorizado: <strong>".formatar_banco_data($aquivos['data_inicial_aut'])."</strong> à <strong>".formatar_banco_data($aquivos['data_final_aut'])."</strong>, <strong>".$aquivos['dias_autorizados']."</strong> diárias."; ?>
           <br />
         F.M
@@ -178,8 +194,11 @@ Solicita&ccedil;&atilde;o: <?php echo $aquivos['motivo']; ?>, <br /></td>
 F.R.
 <?php if(isset($aquivos['qtd_respiratoria'])){echo  $aquivos['qtd_respiratoria'];}else{ echo "0"; } ?> <br />
 Retorno:        
-          <?php if(!empty($aquivos['motivo_medico']) ){ echo $aquivos['motivo_medico']; } ?>              </td><td><span style="vertical-align: inherit;">
-        <?php
+      <?php if(!empty($aquivos['motivo_medico']) ){ echo $aquivos['motivo_medico']; } ?>              
+	  </div>	  </td>
+	  <td align="center" style="border-radius: 0px 0px 25px 0px ; align-content: center;">
+	  	<div ><span >
+          <?php
 
             if( $aquivos['status'] == 1 ){ 
                echo "<font ><strong><a  style='font-family: Andale monospace;'   href=\"javascript:func()\" onmouseover=\"Tip(' Prorrogação em analise ')\" onmouseout=\"UnTip()\"> ";
@@ -188,16 +207,12 @@ Retorno:
               echo "";
             }else {           
               echo "<font ><strong><a  style='font-family: Andale monospace;' href=\"javascript:func()\" onmouseover=\"Tip('Prorrogação autorizada!')\" onmouseout=\"UnTip()\"><span class='
-glyphicon glyphicon-ok' style='color: slategrey; font-size: 15px;' ></span></font>";                     
+glyphicon glyphicon-ok' style='color: blue; font-size: 15px;' ></span></font>";                     
             }
 			
-if( ($aquivos['status'] == 1)  && ($_SESSION["perfil"] <> "medico")){ 
-	
-                    echo '<a   class="hidden-print" onclick="excluir('.$_GET['id'].','.$aquivos['id_imagem'].','.$aquivos['id_prorrogacao'].' )"> 
-                           <button type="button" class="btn btn-danger glyphicon glyphicon-remove"></button> </a>';
-                   }
+
         ?>
-        </span></td>
+      </span></div></td>
   </tr>
     <?php 
             $w = $aquivos['id_prorrogacao'];
