@@ -337,7 +337,7 @@
                         </tr>
                         <tr>
                           <td><span class="style13">Qtd Diárias</span><br />
-                            <input name="dias2" id ="dias" type="text" class="form-control input-sm" style="font-size: 10px" size="44" value='<?php if (isset($dias_autorizados)) { echo $dias_autorizados; }  ?>' readonly="readonly" /></td>
+                            <input name="dias2" id ="dias" type="text" class="form-control input-sm" style="font-size: 10px" size="44" value='<?php if (isset($dias_autorizados)) { echo $dias_autorizados; }  ?>' readonly="readonly" required="required"></td>
                           <td>&nbsp;</td>
                           <td><p id= "aviso2" ></td>
                         </tr>
@@ -427,7 +427,7 @@
             <button id="cancelar" onclick="fecharProModal()" type="button" class="btn btn-default" data-dismiss="modal" style="color:#FFFFFF;  background-color: black; border-color: #f4f7fb;" >
         		 		Cancelar 
         		</button>
-        		<button type="submit" <?php if(isset($status) && $status == 2){ echo "disabled"; } ?> class="btn btn-default" style="color:#FFFFFF;  background-color: black; border-color: #f4f7fb;" /> Incluir 
+        		<button type="submit" <?php if( (isset($status) && $status == 1 && $_SESSION["perfil"] <> 'medico') || (isset($status) && $status == 2) ){ echo "disabled"; } ?> class="btn btn-default" style="color:#FFFFFF;  background-color: black; border-color: #f4f7fb;" /> Incluir 
             </button>
         	</div>	
       </div>

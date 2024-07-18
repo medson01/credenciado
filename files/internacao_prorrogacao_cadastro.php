@@ -18,8 +18,8 @@
 		$medico_solicitante  = $_POST["medico_solicitante"];
 		$crm  = $_POST["crm"];
 		$dias_solicitados  = $_POST["dias_solicitados"];
-		$qtd_respiratoria1  = $_POST["qtd_respiratoria1"];
-		$qtd_motora1  = $_POST["qtd_motora1"];
+		$qtd_respiratoria  = $_POST["qtd_respiratoria1"];
+		$qtd_motora  = $_POST["qtd_motora1"];
 		$motivo  = $_POST["motivo"];	
 		$foto = $_FILES['imagem'];
 		$evento = utf8_decode($_POST["evento"]);
@@ -33,13 +33,11 @@
 		    $id_prorro = $_POST["id_prorro"];
 			$data_inicial_aut  = formatar_data_banco($_POST["data_inicial2"]);
 	 	    $data_final_aut  = formatar_data_banco($_POST["data_final2"]);
-			$qtd_respiratoria1  = $_POST["qtd_respiratoria1_aut"];
-			$qtd_motora1  = $_POST["qtd_motora1_aut"];
+			$qtd_respiratoria_aut  = $_POST["qtd_respiratoria2"];
+		    $qtd_motora_aut  = $_POST["qtd_motora2"];
 			$dias_autorizados  = $_POST["dias2"];
 			$motivo_autorizacao  = $_POST["motivo_autorizacao"];
 			$data_autorizacao = date("Y-m-d H:i:s");
-			$qtd_respiratoria  = $_POST["qtd_respiratoria2"];
-		    $qtd_motora  = $_POST["qtd_motora2"];
 			$url  = $_POST["url"];
 			
 		}
@@ -48,7 +46,7 @@
 	
 // INSERIR A SOLICITAÇÃO NO BANCO
 	if($_POST["status"] == 1){ 	
-	  $sql = "INSERT INTO `prorrogacao`(`id`, `id_internamento`,`id_acomodacao`, `id_usuario`, `data_inicial`,`data_final`,`medico_solicitante`, `crm`, `dias_solicitados`, `dias_autorizados` , `motivo`, `motivo_autorizacao`, `data_prorrogacao` , `qtd_respiratoria`, `qtd_motora`,`status`) VALUES ( null ,'".$id_internamento."', '".$id_acomodacao."', '".$id_usuario."','".$data_inicial."','".$data_final."', '".$medico_solicitante."' , '".$crm."' , '".$dias_solicitados."' , null ,'".$motivo."' , null ,'". $data_prorrogacao ."' ,'".$qtd_respiratoria1."' ,'".$qtd_motora1."' , '1' )";
+	  $sql = "INSERT INTO `prorrogacao`(`id`, `id_internamento`,`id_acomodacao`, `id_usuario`, `data_inicial`,`data_final`,`medico_solicitante`, `crm`, `dias_solicitados`, `dias_autorizados` , `motivo`, `motivo_autorizacao`, `data_prorrogacao` , `qtd_respiratoria`, `qtd_motora`,`status`) VALUES ( null ,'".$id_internamento."', '".$id_acomodacao."', '".$id_usuario."','".$data_inicial."','".$data_final."', '".$medico_solicitante."' , '".$crm."' , '".$dias_solicitados."' , null ,'".$motivo."' , null ,'". $data_prorrogacao ."' ,'".$qtd_respiratoria."' ,'".$qtd_motora."' , '1' )";
 	
 	$stmt = $pdo->prepare($sql);
 	$stmt->execute();
@@ -121,8 +119,8 @@
 			`dias_autorizados` = '.$dias_autorizados.',  
 			`motivo_autorizacao`    = "'.$motivo_autorizacao.'",  
 			`data_autorizacao` = "'.$data_autorizacao.'", 
-			`qtd_motora` = "'.$qtd_motora.'", 
-			`qtd_respiratoria` = "'.$qtd_respiratoria.'", 
+			`qtd_motora_aut` = "'.$qtd_motora_aut.'", 
+			`qtd_respiratoria_aut` = "'.$qtd_respiratoria_aut.'", 
 			`status`= 2  
 		  WHERE `id` = '.$id_prorro;
 	

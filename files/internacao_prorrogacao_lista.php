@@ -27,9 +27,9 @@ $itens_por_pagina = 5;
  }
 // ===========================================
 
-  $a = "SELECT prorrogacao.id as id_prorrogacao, prorrogacao.medico_solicitante, prorrogacao.motivo, prorrogacao.motivo_autorizacao, prorrogacao.data_inicial,prorrogacao.data_final, prorrogacao.data_inicial_aut,prorrogacao.data_final_aut,prorrogacao.dias_solicitados, prorrogacao.dias_autorizados, prorrogacao.qtd_motora, prorrogacao.qtd_respiratoria, prorrogacao.data_prorrogacao, prorrogacao.data_autorizacao, prorrogacao.status, imagem.id as id_imagem, imagem.nome, imagem FROM prorrogacao INNER JOIN imagem on imagem.id_prorrogacao = prorrogacao.id WHERE prorrogacao.id_internamento=".$_GET['id']; 
+  $a = "SELECT prorrogacao.id as id_prorrogacao, prorrogacao.medico_solicitante, prorrogacao.motivo, prorrogacao.motivo_autorizacao, prorrogacao.data_inicial,prorrogacao.data_final, prorrogacao.data_inicial_aut,prorrogacao.data_final_aut,prorrogacao.dias_solicitados, prorrogacao.dias_autorizados, prorrogacao.qtd_motora, prorrogacao.qtd_respiratoria, prorrogacao.qtd_motora_aut, prorrogacao.qtd_respiratoria_aut,prorrogacao.data_prorrogacao, prorrogacao.data_autorizacao, prorrogacao.status, imagem.id as id_imagem, imagem.nome, imagem FROM prorrogacao INNER JOIN imagem on imagem.id_prorrogacao = prorrogacao.id WHERE prorrogacao.id_internamento=".$_GET['id']; 
 
-$d =  "    LIMIT ".$pagina.", ".$itens_por_pagina;
+$d =  "  ORDER BY `id_prorrogacao` DESC   LIMIT ".$pagina.", ".$itens_por_pagina;
 
   $sql1 = $a.$d;
 
@@ -113,7 +113,7 @@ $d =  "    LIMIT ".$pagina.", ".$itens_por_pagina;
     ?>
     
     <tr style="font-size: 10px; text-align: justify">
-      <td width="26" rowspan="4" align="center" bgcolor="#C0C0C0" style="vertical-align: inherit; border-radius: 25px 0px 0px 25px  ;">
+      <td width="26" rowspan="4" align="center" style="vertical-align: inherit; border-radius: 25px 0px 0px 25px; <?php if(isset($aquivos["status"]) && $aquivos["status"] <> 2){ echo"background: #95FFFF;"; }else{ echo 'background: #C0C0C0; ';}  ?> ">
         <br>
 		<span style="font-size: small; font-weight: 800; ">
       		<?php  
@@ -134,7 +134,7 @@ $d =  "    LIMIT ".$pagina.", ".$itens_por_pagina;
       <?php 
 	  				if( ($aquivos['status'] == 1)  && ($_SESSION["perfil"] <> "medico")){ 
                     echo '
-					<a   class="hidden-print" onclick="excluir('.$_GET['id'].','.$aquivos['id_imagem'].','.$aquivos['id_prorrogacao'].' )"> 
+					<a  href="#" class="hidden-print" onclick="excluir('.$_GET['id'].','.$aquivos['id_prorrogacao'].' )"> 
                       <span class="glyphicon glyphicon-trash" style="color: blue; font-size: 15px;"></span>   
 					</a>';
                    }
@@ -155,14 +155,19 @@ $d =  "    LIMIT ".$pagina.", ".$itens_por_pagina;
     <tr style="font-size: 10px; text-align: justify">
       <td width="36" align="left">	  </td>
       <td colspan="9" align="left"> 
-          Medico  :
-      <?php echo "<strong>".$aquivos['medico_solicitante']."</strong>  <br> Período: <strong>".formatar_banco_data($aquivos['data_inicial'])."</strong> à <strong>".formatar_banco_data($aquivos['data_final'])."</strong>, <strong>".$aquivos['dias_solicitados']."</strong> diárias."; ?> <br />
-      Fisioterapias: Motora
-          <?php if(isset($aquivos['qtd_motora'])){ echo  $aquivos['qtd_motora'];}else{ echo "0";} ?>, 
-Respiratória
-<?php if(isset($aquivos['qtd_respiratoria'])){echo  $aquivos['qtd_respiratoria'];}else{ echo "0"; } ?>
-<br />
-Solicita&ccedil;&atilde;o: <?php echo $aquivos['motivo']; ?>, <br /></td>
+        MÉDICO  :
+      <?php echo "&nbsp;&nbsp;<strong><span style='font-size: 12px;'>".$aquivos['medico_solicitante']."</span></strong>  <br> 
+	  	PERÍODO:&nbsp;&nbsp; <strong><span style='font-size: 12px;'>".formatar_banco_data($aquivos['data_inicial'])."</span></strong> 		  	&nbsp;&nbsp;À&nbsp;&nbsp; <strong><span style='font-size: 12px;'>".formatar_banco_data($aquivos['data_final'])."</span></strong>, &nbsp;&nbsp;<strong><span style='font-size: 12px;'>".$aquivos['dias_solicitados']."</span></strong>&nbsp;&nbsp; diárias."; ?> <br />
+      FISIOTERAPIAS &nbsp;&nbsp; MOTORA:
+       <strong> <span style='font-size: 12px;'>  <?php if(isset($aquivos['qtd_motora'])){ echo  $aquivos['qtd_motora'];}else{ echo "0";} ?> </span></strong>,&nbsp;&nbsp;
+RESPIRATÓRIA: 
+<strong><span style='font-size: 12px;'><?php if(isset($aquivos['qtd_respiratoria'])){echo  $aquivos['qtd_respiratoria'];}else{ echo "0"; } ?></span> </strong>
+	<br />
+		MOTIVO DA PRORROGAÇÃO:<br />
+	<strong><span style='font-size: 12px;'>	
+		<?php echo $aquivos['motivo']; ?>, 
+	</span> </strong><br />
+	</td>
 		  <td width="77"><div align="center">
             <?php 
 
@@ -186,16 +191,19 @@ Solicita&ccedil;&atilde;o: <?php echo $aquivos['motivo']; ?>, <br /></td>
       <td align="left">&nbsp;</td>    
       <td colspan="9" align="left" >
 	  	<div <?php if($_SESSION["perfil"] <> 'medico' && $aquivos["status"] <> 2){ echo 'style="display: none;"';}else{ echo'style="display: block;"'; } ?> >
-		
-        Medico  : <?php echo "<strong>".$aquivos['medico_solicitante']."</strong>  <br> Período autorizado: <strong>".formatar_banco_data($aquivos['data_inicial_aut'])."</strong> à <strong>".formatar_banco_data($aquivos['data_final_aut'])."</strong>, <strong>".$aquivos['dias_autorizados']."</strong> diárias."; ?>
-          <br />
-        F.M
-        <?php if(isset($aquivos['qtd_motora'])){ echo  $aquivos['qtd_motora'];}else{ echo "0";} ?>, 
-F.R.
-<?php if(isset($aquivos['qtd_respiratoria'])){echo  $aquivos['qtd_respiratoria'];}else{ echo "0"; } ?> <br />
-Retorno:        
+		Tipo de autirizações:
+<p><span style='font-size: 12px;'><?php echo "Período autorizado: <strong>".formatar_banco_data($aquivos['data_inicial_aut'])."</span></strong> à <strong><span style='font-size: 12px;'>".formatar_banco_data($aquivos['data_final_aut'])."</span></strong>, <strong><span style='font-size: 12px;'>".$aquivos['dias_autorizados']."</span></strong> diárias."; ?>
+            <br />
+            FISIOTERAPIAS &nbsp;&nbsp; MOTORA:
+            <?php if(isset($aquivos['qtd_motora_aut'])){ echo  $aquivos['qtd_motora_aut'];}else{ echo "0";} ?>
+            <strong><span style='font-size: 12px;'> </span></strong>,&nbsp;&nbsp;
+RESPIRATÓRIA:
+        <?php if(isset($aquivos['qtd_respiratoria_aut'])){echo  $aquivos['qtd_respiratoria_aut'];}else{ echo "0"; } ?> 
+        <br />
+Observações/ recomendações autoridade autorizativa:<br />        
       <?php if(!empty($aquivos['motivo_medico']) ){ echo $aquivos['motivo_medico']; } ?>              
-	  </div>	  </td>
+	          </p>
+	  	</div>	  </td>
 	  <td align="center" style="border-radius: 0px 0px 25px 0px ; align-content: center;">
 	  	<div ><span >
           <?php
@@ -293,6 +301,18 @@ glyphicon glyphicon-ok' style='color: blue; font-size: 15px;' ></span></font>";
             </ul>
       </nav>
   <!-- // -->
+  
+   <!-- Perguntar antes de excluir -->
+<script language="Javascript">
+function excluir(id,id_prorrogacao) {
+     var resposta = confirm("Deseja remover esse registro?");
+     
+     if (resposta == true) {
+          window.location.href = "internacao_prorrogacao_excluir.php?id="+id+"&id_prorrogacao="+id_prorrogacao;
+     }
+}
+</script>
+  
  <?php 
    //  Acesso Modal Prorrogacao
   include("internacao_prorrogacao_modal.php"); 
