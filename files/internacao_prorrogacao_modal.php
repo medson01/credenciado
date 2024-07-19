@@ -37,6 +37,20 @@
 					
 		}
 		
+	}else{
+		$sql='SELECT prorrogacao.data_final, prorrogacao.data_final_aut FROM prorrogacao WHERE prorrogacao.id_internamento='.$_GET['id'].' ORDER BY id DESC limit 1';
+		$stmt = $pdo->prepare($sql);
+		$stmt->execute();
+		while($registro = $stmt->fetch(PDO::FETCH_ASSOC)) { 
+			 $data_final1 = $registro["data_final"];
+			 $data_final_aut1 = $registro["data_final_aut"];
+		}
+	
+		if(empty($data_final_aut1)){
+			$data_inicial = $data_final1;
+		}else{
+			$data_inicial = $data_final_aut1;
+		}
 	}
 // CONTROLE DE EXIBIÇÃO DE FORMULARIOS
 	if($_SESSION["perfil"] == 'medico'){
@@ -124,7 +138,7 @@
                               <td colspan="2"><span class = 'style13'>Data Inicial </span> <br />
 								<?php
 									if(isset($data_inicial)){
-									echo ' <input class="form-control" type="text"  data-date-format="mm/dd/yyyy" maxlength="10"size="10" required value="'.formatar_banco_data($data_inicial).'" readonly /> ';
+									echo ' <input class="form-control" name="data_inicial" type="text"  data-date-format="mm/dd/yyyy" maxlength="10"size="10" required value="'.formatar_banco_data($data_inicial).'" readonly /> ';
 									}else{
 									echo ' <input id="data_inicial" name="data_inicial" class="form-control"   type="text"  data-date-format="mm/dd/yyyy" maxlength="10"size="10" required   /> ';
 									}
@@ -319,13 +333,13 @@
                           <td width="48%">&nbsp;</td>
                         </tr>
                         <tr>
-                          <td colspan="3"><div align="center" class="style14">CONFIRME O PERÍODO CLICANDO EM DATA FINAL </div></td>
-                        </tr>
-                        <tr>
                           <td colspan="3">&nbsp;</td>
                         </tr>
                         <tr>  
                           <td><span class = 'style13'>Data Inicial </span> <br />
+						  
+						  <?php echo "";?>
+						  
 						  <input id="data_inicial" <?php if (isset($data_inicial)) { echo "value='".formatar_banco_data($data_inicial)."' "; }  ?>  style="display: none;" />
                           <input name="data_inicial2" class="form-control"type="text" id="data_inicial" data-date-format="mm/dd/yyyy" maxlength="10"size="10" <?php if (isset($data_inicial)) { echo "value='".formatar_banco_data($data_inicial)."' "; }  ?> readonly /></td><td>&nbsp;</td>
 						  <td><span class="style13">Data Final </span><br />
@@ -337,7 +351,7 @@
                         </tr>
                         <tr>
                           <td><span class="style13">Qtd Diárias</span><br />
-                            <input name="dias2" id ="dias" type="text" class="form-control input-sm" style="font-size: 10px" size="44" value='<?php if (isset($dias_autorizados)) { echo $dias_autorizados; }  ?>' readonly="readonly" required="required"></td>
+                            <input name="dias2" id ="dias" type="text" class="form-control input-sm" style="font-size: 10px" size="44" value='<?php if (isset($dias_autorizados)) { echo $dias_autorizados; }else{ echo $dias_solicitados;}  ?>' readonly="readonly" required="required"></td>
                           <td>&nbsp;</td>
                           <td><p id= "aviso2" ></td>
                         </tr>
@@ -369,13 +383,11 @@
                         <tr>
                          <td colspan="3" >
                              <span class="style13">Justificativa do médico</span>
-                                <textarea id="motivo_autorizacao" class="form-control input-sm" name="motivo_autorizacao"  style="font-size:12px; margin: 0px; height: 100px; width: 100%;" form="internacao_prorrogacao_cadastro"  <?php if(isset($status) && $status == 2){ echo "readonly"; } ?>/>
-                                        <?php
+                                <textarea id="motivo_autorizacao" class="form-control input-sm" name="motivo_autorizacao"  style="font-size:12px; margin: 0px; height: 100px; width: 100%;" form="internacao_prorrogacao_cadastro"  <?php if(isset($status) && $status == 2){ echo "readonly"; } ?>/><?php
                                         if(isset($motivo_autorizacao)){
                                           echo $motivo_autorizacao;
                                         }
-                                        ?>                  
-                                        </textarea>                         </td> 
+                                        ?></textarea>                         </td> 
                         </tr>
                                 
 

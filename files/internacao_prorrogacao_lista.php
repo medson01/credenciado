@@ -157,12 +157,11 @@ $d =  "  ORDER BY `id_prorrogacao` DESC   LIMIT ".$pagina.", ".$itens_por_pagina
       <td colspan="9" align="left"> 
         MÉDICO  :
       <?php echo "&nbsp;&nbsp;<strong><span style='font-size: 12px;'>".$aquivos['medico_solicitante']."</span></strong>  <br> 
-	  	PERÍODO:&nbsp;&nbsp; <strong><span style='font-size: 12px;'>".formatar_banco_data($aquivos['data_inicial'])."</span></strong> 		  	&nbsp;&nbsp;À&nbsp;&nbsp; <strong><span style='font-size: 12px;'>".formatar_banco_data($aquivos['data_final'])."</span></strong>, &nbsp;&nbsp;<strong><span style='font-size: 12px;'>".$aquivos['dias_solicitados']."</span></strong>&nbsp;&nbsp; diárias."; ?> <br />
+	  	PERÍODO:&nbsp;&nbsp; <strong><span style='font-size: 12px;'>".formatar_banco_data($aquivos['data_inicial'])."</span></strong> 		  	&nbsp;&nbsp;À&nbsp;&nbsp; <strong><span style='font-size: 12px;'>".formatar_banco_data($aquivos['data_final'])."</span></strong>, &nbsp;&nbsp;<strong><span style='font-size: 12px;'>".$aquivos['dias_solicitados']."</span></strong>&nbsp;&nbsp; DIÁRIAS."; ?> <br />
       FISIOTERAPIAS &nbsp;&nbsp; MOTORA:
-       <strong> <span style='font-size: 12px;'>  <?php if(isset($aquivos['qtd_motora'])){ echo  $aquivos['qtd_motora'];}else{ echo "0";} ?> </span></strong>,&nbsp;&nbsp;
+       <strong> <span style='font-size: 12px;'>  <?php if(isset($aquivos['qtd_motora'])){ echo  $aquivos['qtd_motora'];}else{ echo "0.";} ?> </span></strong>,&nbsp;&nbsp;
 RESPIRATÓRIA: 
-<strong><span style='font-size: 12px;'><?php if(isset($aquivos['qtd_respiratoria'])){echo  $aquivos['qtd_respiratoria'];}else{ echo "0"; } ?></span> </strong>
-	<br />
+<strong><span style='font-size: 12px;'><?php if(isset($aquivos['qtd_respiratoria'])){echo  $aquivos['qtd_respiratoria'];}else{ echo "0."; } ?></span> </strong>.<br />
 		MOTIVO DA PRORROGAÇÃO:<br />
 	<strong><span style='font-size: 12px;'>	
 		<?php echo $aquivos['motivo']; ?>, 
@@ -191,18 +190,26 @@ RESPIRATÓRIA:
       <td align="left">&nbsp;</td>    
       <td colspan="9" align="left" >
 	  	<div <?php if($_SESSION["perfil"] <> 'medico' && $aquivos["status"] <> 2){ echo 'style="display: none;"';}else{ echo'style="display: block;"'; } ?> >
-		Tipo de autirizações:
-<p><span style='font-size: 12px;'><?php echo "Período autorizado: <strong>".formatar_banco_data($aquivos['data_inicial_aut'])."</span></strong> à <strong><span style='font-size: 12px;'>".formatar_banco_data($aquivos['data_final_aut'])."</span></strong>, <strong><span style='font-size: 12px;'>".$aquivos['dias_autorizados']."</span></strong> diárias."; ?>
+	  	  <?php echo "PERÍODO: &nbsp;&nbsp; <span style='font-size: 12px;'><strong>".formatar_banco_data($aquivos['data_inicial_aut'])."</span></strong>&nbsp;&nbsp;  Á &nbsp;&nbsp; <strong><span style='font-size: 12px;'>".formatar_banco_data($aquivos['data_final_aut'])."</span></strong>, <strong><span style='font-size: 12px;'>".$aquivos['dias_autorizados']."</span></strong> &nbsp;&nbsp; DIÁRIAS."; ?>
             <br />
-            FISIOTERAPIAS &nbsp;&nbsp; MOTORA:
-            <?php if(isset($aquivos['qtd_motora_aut'])){ echo  $aquivos['qtd_motora_aut'];}else{ echo "0";} ?>
-            <strong><span style='font-size: 12px;'> </span></strong>,&nbsp;&nbsp;
-RESPIRATÓRIA:
-        <?php if(isset($aquivos['qtd_respiratoria_aut'])){echo  $aquivos['qtd_respiratoria_aut'];}else{ echo "0"; } ?> 
-        <br />
-Observações/ recomendações autoridade autorizativa:<br />        
-      <?php if(!empty($aquivos['motivo_medico']) ){ echo $aquivos['motivo_medico']; } ?>              
-	          </p>
+            FISIOTERAPIAS &nbsp;&nbsp; MOTORA:<strong><span style='font-size: 12px;'>
+        <?php if(isset($aquivos['qtd_motora_aut'])){ echo  $aquivos['qtd_motora_aut'];}else{ echo "0";} ?>
+             </span></strong>,&nbsp;&nbsp;
+			RESPIRATÓRIA:<strong><span style='font-size: 12px;'>
+        <?php if(isset($aquivos['qtd_respiratoria_aut'])){echo  $aquivos['qtd_respiratoria_aut'];}else{ echo "0."; } ?>
+			</span></strong>&nbsp;&nbsp;<br />
+		<?php 
+			if( $aquivos['qtd_motora_aut'] <> $aquivos['qtd_motora'] || $aquivos['qtd_respiratoria'] <> $aquivos['qtd_respiratoria_aut']){ 
+				echo "<span style='color: blue; font-style: italic;'> Aviso: Quantidade de fisioterapias solicitadas diferete das autorizadas!</br></span> ";
+			}
+		?>
+		
+        
+OBSERVAÇÕES:<br />  
+      <strong><span style='font-size: 12px;'>
+      <?php if(!empty($aquivos['motivo_autorizacao']) ){ echo $aquivos['motivo_autorizacao']; } ?>     
+	  </span></strong>         
+          </p>
 	  	</div>	  </td>
 	  <td align="center" style="border-radius: 0px 0px 25px 0px ; align-content: center;">
 	  	<div ><span >
