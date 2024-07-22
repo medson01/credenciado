@@ -417,8 +417,17 @@
 				
 <!-- Script de controle da modal -->			
 <script>
-function abrirModal() {
-   document.getElementById('aliModal').style.display = "block";
+document.onload(funcaoPaginaCarregada());
+
+function funcaoPaginaCarregada() {
+	const urlParams = new URLSearchParams(window.location.search);
+	const alimentacao = urlParams.get("ali") 
+		if(alimentacao == 0){
+			document.getElementById('aliModal').style.display = "block";
+		}
+}
+function abrirModal(a) {
+   		document.getElementById('aliModal').style.display = "block";
 }
 function fecharModal() {
    document.getElementById('aliModal').style.display = "none";

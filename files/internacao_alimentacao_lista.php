@@ -52,7 +52,7 @@ $resultado = mysqli_query($conn, $a);
 <br>
   
     <div align="left">
-  	    <button type="button" class="btn btn-primary" style="width:87px" id="incluir"  onclick="abrirModal()" 
+  	    <button type="button" class="btn btn-primary" style="width:87px" id="incluir"  onclick="abrirModal(<?php $_GET['ali']; ?>1)" 
 		<?php 
 			if($_SESSION["perfil"] == "callcenter"){
 				 echo" disabled "; 
