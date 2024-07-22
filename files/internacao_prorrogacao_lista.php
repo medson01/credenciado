@@ -164,7 +164,12 @@ RESPIRATÓRIA:
 <strong><span style='font-size: 12px;'><?php if(isset($aquivos['qtd_respiratoria'])){echo  $aquivos['qtd_respiratoria'];}else{ echo "0."; } ?></span> </strong>.<br />
 		MOTIVO DA PRORROGAÇÃO:<br />
 	<strong><span style='font-size: 12px;'>	
-		<?php echo $aquivos['motivo']; ?>, 
+	<textarea id="motivo_autorizacao" class="form-control input-sm" name="motivo_autorizacao"  rows="4" cols="60" onmousemove="auto_grow(this);" onkeyup="auto_grow(this);"  style="font-size:12px; margin-top: 20px; resize:nome; overflow:hidden; width: 100%;" form="internacao_prorrogacao_cadastro"  <?php if((isset($status) && $status == 2) || isset($aquivos['motivo'])){ echo "readonly"; } ?>/><?php
+                                        if(!empty($aquivos['motivo']) ){
+                                           echo $aquivos['motivo']; 
+                                        }
+                                        ?></textarea>
+		<?php //echo $aquivos['motivo']; ?> 
 	</span> </strong><br />
 	</td>
 		  <td width="77"><div align="center">
@@ -207,7 +212,13 @@ RESPIRATÓRIA:
         
 OBSERVAÇÕES:<br />  
       <strong><span style='font-size: 12px;'>
-      <?php if(!empty($aquivos['motivo_autorizacao']) ){ echo $aquivos['motivo_autorizacao']; } ?>     
+	   <textarea id="motivo_autorizacao" class="form-control input-sm" name="motivo_autorizacao"  rows="4" cols="60" onmousemove="auto_grow(this);" onkeyup="auto_grow(this);"  style="font-size:12px; margin-top: 20px; resize:nome; overflow:hidden; width: 100%;" form="internacao_prorrogacao_cadastro"  <?php if((isset($status) && $status == 2) || isset($aquivos['motivo_autorizacao'])){ echo "readonly"; } ?>/><?php
+                                        if(!empty($aquivos['motivo_autorizacao']) ){
+                                           echo $aquivos['motivo_autorizacao']; 
+                                        }
+                                        ?></textarea>
+	  
+      <?php //if(!empty($aquivos['motivo_autorizacao']) ){ echo $aquivos['motivo_autorizacao']; } ?>     
 	  </span></strong>         
           </p>
 	  	</div>	  </td>
@@ -310,7 +321,7 @@ glyphicon glyphicon-ok' style='color: blue; font-size: 15px;' ></span></font>";
   <!-- // -->
   
    <!-- Perguntar antes de excluir -->
-<script language="Javascript">
+<script type="text/javascript">
 function excluir(id,id_prorrogacao) {
      var resposta = confirm("Deseja remover esse registro?");
      
@@ -318,7 +329,16 @@ function excluir(id,id_prorrogacao) {
           window.location.href = "internacao_prorrogacao_excluir.php?id="+id+"&id_prorrogacao="+id_prorrogacao;
      }
 }
+
 </script>
+<script type="text/javascript">
+	function auto_grow(element){
+		element.style.height = "5px";
+		element.style.height = (element.scrollHeight)+"px";
+	}
+</script>
+	
+
   
  <?php 
    //  Acesso Modal Prorrogacao

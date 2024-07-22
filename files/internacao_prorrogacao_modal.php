@@ -232,11 +232,11 @@
                             </tr>
                             
                             <tr <?php if(isset($status) && $status == 2){ echo 'style="display: none;"'; }  ?> >
-                              <td colspan="2"><span class = 'style13'>Qtd Respiratória </span> <br />
-                                <input name="qtd_respiratoria1" id ="qtd_respiratoria1" type="text" class="form-control input-sm" style="font-size: 10px" size="44" <?php if (isset($qtd_respiratoria)) { echo "value='".$qtd_respiratoria."' readonly"; }   ?> /></td>
+                              <td colspan="2"><span class = 'style13'>Qtd Respiratória Solicitadas </span><br />
+                              <input name="qtd_respiratoria1" id ="qtd_respiratoria1" type="text" class="form-control input-sm" style="font-size: 10px" size="44" <?php if (isset($qtd_respiratoria)) { echo "value='".$qtd_respiratoria."' readonly"; }   ?> /></td>
                               <td>&nbsp;</td>
-                              <td colspan="3"><span class = 'style13'>Qtd Motora </span> <br />
-                                <input name="qtd_motora1" id ="qtd_motora1" type="text" class="form-control input-sm" style="font-size: 10px" size="44" <?php if (isset($qtd_motora)) { echo "value='".$qtd_motora."' readonly"; }  ?> /></td>
+                              <td colspan="3"><span class = 'style13'>Qtd Motora </span> <span class="style13">Solicitadas</span><br />
+                              <input name="qtd_motora1" id ="qtd_motora1" type="text" class="form-control input-sm" style="font-size: 10px" size="44" <?php if (isset($qtd_motora)) { echo "value='".$qtd_motora."' readonly"; }  ?> /></td>
                             </tr>
                             <tr>
                               <td>&nbsp;</td>

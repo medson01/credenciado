@@ -19,7 +19,7 @@
 <!-- Modal -->
 
 <div class="modal" id="aliModal" >
-	<div class="modal-dialog" style="width:100%">	
+	<div class="modal-dialog" style="width:80%">	
 	  <div class="modal-content" style="width:80%">
 		<div class="modal-header">			 	 
 			 <a onclick="fecharModal()"> <span class="close"> &times;</span> </a>			  	   
@@ -32,7 +32,7 @@
 
 
 <!-- FORMULÁRIO DE SOLICITAÇÃO DE PRORROGAÇÃO DE INTERNAMENTO -->
-<table width="92%" <?php if(isset($a)){ echo $a; } ?> border="0" align="center">
+<table width="100%" <?php if(isset($a)){ echo $a; } ?> border="0" align="center">
                           
                             <tr>
                               <td colspan="11" bgcolor="#CCCCCC">
@@ -43,8 +43,8 @@
                               <td width="8%">&nbsp;</td>
                               <td width="6%">&nbsp;</td>
                               <td width="8%">&nbsp;</td>
-                              <td width="15%">&nbsp;</td>
-                              <td width="5%">&nbsp;</td>
+                              <td width="12%">&nbsp;</td>
+                              <td width="8%">&nbsp;</td>
                               <td width="16%">&nbsp;</td>
                               <td width="6%">&nbsp;</td>
                               <td width="8%">&nbsp;</td>
