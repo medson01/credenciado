@@ -66,23 +66,12 @@ $d =  "  ORDER BY `id_prorrogacao` DESC   LIMIT ".$pagina.", ".$itens_por_pagina
   </style>
   
 <br>
-  
-    <div align="left" <?php echo $exibir_medico; ?> >
-	<a href="internacao_menu.php?id=<?php echo $_GET['id']?>&prorro=0">
-  	    <button type="button" class="btn btn-primary" style="width:87px" id="incluir"
-		<?php 
-			if($_SESSION["perfil"] == "callcenter"){
-				 echo" disabled "; 
-			}		
-		
-		?> > Incluir </button> </a>
-	</div>	
-		<div style="width:40px;float: right;" >
+<div style="width:40px;float: right;" >
 		<button  class="btn btn-default glyphicon glyphicon-print hidden-print" onclick="javascript:print();"> 
 		 
 		</button>
 		</div>		
-     <h5 align="center" class="visible-print"> HIST&Oacute;RICO DE PRORROGA&Ccedil;&Otilde;ES </h3>
+     <h5 align="center" class="visible-print"> HIST&Oacute;RICO DE ALIMENTAÇÃO </h3>
      
         <table width="100% " border="0" align="center" class="hidden-print">
 		<tr >
@@ -103,7 +92,7 @@ $d =  "  ORDER BY `id_prorrogacao` DESC   LIMIT ".$pagina.", ".$itens_por_pagina
 	</table>	
 <table width="996" border="0"  class="table table-bordered" >
     <tr style="font-size: 12px">
-      <td colspan="21" align="center" class="info"><div align="center">PRORROGAÇÕES</div></td>
+      <td colspan="21" align="center" class="info"><div align="center">HISTÓRICO DE ALIMENTAÇÃO</div></td>
     </tr>
 
     <?php
