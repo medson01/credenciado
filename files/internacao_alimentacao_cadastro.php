@@ -4,18 +4,23 @@
   require_once "../config/config.php";
   
 
-$id = $_POST["id"];
-$id_imagem = $_POST["id_imagem"];
-$id_usuario = $_SESSION["id"];
-$medico_solicitante = utf8_decode($_POST["medico_solicitante"]);
-$crm = $_POST["crm"];
-$dias_solicitados = $_POST["dias"];
-$motivo = utf8_decode($_POST["motivo"]);
-$motivo_medico = utf8_decode($_POST["motivo_medico"]);
-$qtd_respiratoria = $_POST["qtd_respiratoria"];
-$qtd_motora = $_POST["qtd_motora"];
+echo $id = $_POST["id"];
+echo $medico_solicitante = utf8_decode($_POST["medico_solicitante"]);
+echo $crm = $_POST["crm"];
+echo $nutrologo = utf8_decode($_POST["nutrologo"]);
+echo $crm_rqe = $_POST["crm_rqe"];
+
+echo $id_imagem = $_POST["id_imagem"];
+echo $id_usuario = $_SESSION["id"];
 
 
+echo $dias_solicitados = $_POST["dias"];
+echo $motivo = utf8_decode($_POST["motivo"]);
+echo $motivo_medico = utf8_decode($_POST["motivo_medico"]);
+echo $qtd_respiratoria = $_POST["qtd_respiratoria"];
+echo $qtd_motora = $_POST["qtd_motora"];
+
+exit();
           $query = "INSERT INTO `prorrogacao`(`id`, `id_internamento`, `id_usuario`, `medico_solicitante`, `crm`, `dias_solicitados`, `dias_autorizados` , `motivo`, `motivo_medico`, `data_prorrogacao` , `qtd_respiratoria`, `qtd_motora`,`status`) VALUES ( null ,'".$id."','".$id_usuario."', '".$medico_solicitante."' , '".$crm."' , '".$dias_solicitados."' , null ,'".$motivo."' ,'".$motivo_medico."' ,'".date("Y-m-d H:i:s" )."' ,'".$qtd_respiratoria."' ,'".$qtd_motora."' , '1' )";
 
 	 

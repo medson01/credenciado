@@ -1,6 +1,17 @@
 ﻿
+<!-- Script calendario data -->
+	<link rel="stylesheet" href="http://code.jquery.com/ui/1.9.0/themes/base/jquery-ui.css" />
+	<script src="http://code.jquery.com/jquery-1.8.2.js"></script>
+	<script src="http://code.jquery.com/ui/1.9.0/jquery-ui.js"></script>
+	<script src="../js/data.js"></script>	
+	
 <link rel="stylesheet" type="text/css" href="../css/modal.css"/>
 <?php
+
+// FORMATA A DATA QUE ESTÁ NO FORMATO ENG PARA BR NO BANCO
+	require_once "../func/formatar_data_banco.php";
+	
+	
 // CONTROLE DE EXIBIÇÃO DE FORMULARIOS
 	if($_SESSION["perfil"] == 'medico'){
 		$a =  'style="display: none;"';
@@ -15,11 +26,12 @@
             width: 40px;
             height: 20px;
         }
+    .style13 {font-size: 10px}
     </style>
 <!-- Modal -->
 
 <div class="modal" id="aliModal" >
-	<div class="modal-dialog" style="width:80%">	
+	<div class="modal-dialog" style="width:70%">	
 	  <div class="modal-content" style="width:80%">
 		<div class="modal-header">			 	 
 			 <a onclick="fecharModal()"> <span class="close"> &times;</span> </a>			  	   
@@ -35,30 +47,28 @@
 <table width="100%" <?php if(isset($a)){ echo $a; } ?> border="0" align="center">
                           
                             <tr>
-                              <td colspan="11" bgcolor="#CCCCCC">
+                              <td colspan="10" bgcolor="#CCCCCC">
                                 <div align="center" class="style5"> 
                               <div align="center">ALIMENTA&Ccedil;&Atilde;O</div></td>
                             </tr>
                             <tr>
-                              <td width="8%">&nbsp;</td>
-                              <td width="6%">&nbsp;</td>
-                              <td width="8%">&nbsp;</td>
-                              <td width="12%">&nbsp;</td>
-                              <td width="8%">&nbsp;</td>
-                              <td width="16%">&nbsp;</td>
-                              <td width="6%">&nbsp;</td>
-                              <td width="8%">&nbsp;</td>
-                              <td width="4%">&nbsp;</td>
-                              <td width="13%">&nbsp;</td>
-                              <td width="11%">&nbsp;</td>
+                              <td width="22%">&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
                             </tr>
-                            
                             <tr>
-                              <td colspan="6" ><span class="style13">Nome m&eacute;dico solicitante </span><br />
-                                <input id="medico_solicitante2"  name="medico_solicitante2" type="text" class="form-control input-sm" style="font-size: 10px"  size="44" required="required" <?php if (isset($medico_pro)) { echo "value='".$medico_pro."' "; }   if(isset($desativar)){ echo $desativar;} ?> /></td>
+                              <td colspan="5" ><span class="style13">Nome m&eacute;dico solicitante </span><br />
+                                  <input id="medico_solicitante2"  name="medico_solicitante2" type="text" class="form-control input-sm" style="font-size: 10px"  size="44" required="required" <?php if (isset($medico_pro)) { echo "value='".$medico_pro."' "; }   if(isset($desativar)){ echo $desativar;} ?> /></td>
                               <td>&nbsp;</td>
                               <td colspan="4"><span class="style13">CRM </span><br />
-                                <input name="crm2" id ="crm2" type="text" class="form-control input-sm" style="font-size: 10px" size="44" required="required" <?php if (isset($crm_pro)) { echo "value='".$crm_pro."' "; }  if(isset($desativar)){ echo $desativar;} ?>/></td>
+                                  <input name="crm2" id ="crm2" type="text" class="form-control input-sm" style="font-size: 10px" size="44" required="required" <?php if (isset($crm_pro)) { echo "value='".$crm_pro."' "; }  if(isset($desativar)){ echo $desativar;} ?>/></td>
                             </tr>
                             <tr>
                               <td >&nbsp;</td>
@@ -71,18 +81,15 @@
                               <td>&nbsp;</td>
                               <td>&nbsp;</td>
                               <td>&nbsp;</td>
-                              <td>&nbsp;</td>
                             </tr>
                             <tr>
-                            <td colspan="6" ><span class="style13">Nome médico Nutrólogo </span><br />
-                              <input id="medico_solicitante"  name="medico_solicitante" type="text" class="form-control input-sm" style="font-size: 10px"  size="44" required="required" <?php if (isset($medico_pro)) { echo "value='".$medico_pro."' "; }   if(isset($desativar)){ echo $desativar;} ?> />
-
-                              </span></td>
-                            <td>&nbsp;</td>
-                            <td colspan="4"><span class="style13"> CRM/RQE </span><br />
-                              <input name="crm" id ="crm" type="text" class="form-control input-sm" style="font-size: 10px" size="44" required="required" <?php if (isset($crm_pro)) { echo "value='".$crm_pro."' "; }  if(isset($desativar)){ echo $desativar;} ?>/>
-
-                              </span></td>
+                              <td colspan="5" ><span class="style13">Nome médico Nutrólogo </span><br />
+                                  <input id="medico_solicitante"  name="medico_solicitante" type="text" class="form-control input-sm" style="font-size: 10px"  size="44" required="required" <?php if (isset($medico_pro)) { echo "value='".$medico_pro."' "; }   if(isset($desativar)){ echo $desativar;} ?> />
+                                  </span></td>
+                              <td>&nbsp;</td>
+                              <td colspan="4"><span class="style13"> CRM/RQE </span><br />
+                                  <input name="crm" id ="crm" type="text" class="form-control input-sm" style="font-size: 10px" size="44" required="required" <?php if (isset($crm_pro)) { echo "value='".$crm_pro."' "; }  if(isset($desativar)){ echo $desativar;} ?>/>
+                                  </span></td>
                             </tr>
                             <tr>
                               <td>&nbsp;</td>
@@ -95,125 +102,208 @@
                               <td>&nbsp;</td>
                               <td>&nbsp;</td>
                               <td>&nbsp;</td>
-                              <td>&nbsp;</td>
                             </tr>
                             <tr>
-                              <td><span class="style13">Qtd Diárias</span><br />
-                                <select id='select' name='dias' class='form-control input-sm' <?php if(isset($desativar)){ echo $desativar;} ?> required >
+                              <td colspan="10" bgcolor="#F1E07E"><div align="center">PERÍODO DA PRORROGAÇÃO  </div></td>
+                            </tr>
+                            <tr>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                            </tr>
+                            <tr bgcolor="#999999">
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                            </tr>
+                            <tr bgcolor="#999999">
+                              <td colspan="2"><span class = 'style13' style="padding-left: 60px;">Data Inicial </span> <br />
                                   <?php
-                  								
-                  								if(isset($dias_pro) ){ 
-                                      echo "<option value='".$dias_pro."' >".$dias_pro."</option>"; 
-                                  }else{
-                                    for ($i=1; $i <= 5; $i++) {
-                                        echo "<option value='".$i."'>".$i."</option>";
-                                  }
-
-                                }
-								               ?>
-                                </select></td>
+									if(isset($_GET['data_inicial'])){
+									echo ' <input class="form-control" style="margin-left: 60px;" name="data_inicial" type="text"  data-date-format="mm/dd/yyyy" maxlength="10"size="10" required value="'.formatar_banco_data($_GET['data_inicial']).'" readonly /> ';
+									}else{
+									echo ' <input id="data_inicial" name="data_inicial" class="form-control"   type="text"  data-date-format="mm/dd/yyyy" maxlength="10"size="10" required   /> ';
+									}
+								?></td>
                               <td>&nbsp;</td>
                               <td>&nbsp;</td>
                               <td>&nbsp;</td>
                               <td>&nbsp;</td>
-                              <td>&nbsp;</td>
-                              <td>&nbsp;</td>
-                              <td>&nbsp;</td>
-                              <td>&nbsp;</td>
-                              <td>&nbsp;</td>
+                              <td colspan="3"><span class="style13">Data Final </span><br />
+                                  <?php
+								if(isset($_GET['data_final'])){
+                                	echo ' <input class="form-control" type="text"  data-date-format="mm/dd/yyyy" maxlength="10"size="10" required value="'.formatar_banco_data($_GET['data_final']).'" readonly /> ';
+								}else{
+									echo ' <input  id="data_final" name="data_final" onchange="calcularData()" class="form-control" type="text"  data-date-format="mm/dd/yyyy" maxlength="10"size="10" required  />';
+									}
+							  ?></td>
                               <td>&nbsp;</td>
                             </tr>
-                            <tr>
-                              <td>&nbsp;</td>
-                              <td>&nbsp;</td>
-                              <td>&nbsp;</td>
-                              <td>&nbsp;</td>
-                              <td>&nbsp;</td>
-                              <td>&nbsp;</td>
-                              <td>&nbsp;</td>
-                              <td>&nbsp;</td>
-                              <td>&nbsp;</td>
-                              <td>&nbsp;</td>
-                              <td>&nbsp;</td>
-                            </tr>
-                            <tr>
-                              <td colspan="11" bgcolor="#F1E07E"><div align="center">TERAPIA NUTRICIONAL </div></td>
-                            </tr>
-                            <tr>
+                            <tr bgcolor="#999999">
                               <td colspan="2">&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                            </tr>
+                            <tr bgcolor="#999999">
+                              <td colspan="2"><span class="style13" style="padding-left: 60px;">Qtd Diárias</span><br />
+                                  <?php
+							if(isset($_GET['dias_autorizados']) ){
+                             	echo ' <input  style="margin-left: 60px;" name="dias_autorizados" type="text" class="form-control input-sm" style="font-size: 10px" size="44" value="'.$_GET['dias_autorizados'].'"readonly />';
+								
+							}else{
+								echo ' <input name="dias_autorizados" id ="dias" type="text" class="form-control input-sm" style="font-size: 10px" size="44" value="" readonly />';
+							}
+							  ?></td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                            </tr>
+                            <tr bgcolor="#999999">
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                            </tr>
+                            <tr>
+                              <td>&nbsp;</td>
+                              <td width="6%">&nbsp;</td>
+                              <td width="3%">&nbsp;</td>
+                              <td width="10%">&nbsp;</td>
+                              <td width="12%">&nbsp;</td>
+                              <td width="7%">&nbsp;</td>
+                              <td width="11%">&nbsp;</td>
+                              <td width="1%">&nbsp;</td>
+                              <td width="11%">&nbsp;</td>
+                              <td width="17%">&nbsp;</td>
+                            </tr>
+                            <tr>
+                              <td colspan="10"><div align="center"><span>QUANTIDADE  DE DIÁRIAS </span></div></td>
+                            </tr>
+                            <tr>
+                              <td colspan="10"><div align="center">
+                                <select id='qtd_diarias' name='qtd_diarias' class='form-control input-sm' <?php if(isset($desativar)){ echo $desativar;} ?> required="required" style="width:50px">
+                                  <?php
+                  				     for ($i=0; $i <= $_GET['dias_autorizados']; $i++) {
+                                        echo "<option value='".$i."'>".$i."</option>";
+                                     }
+								   ?>
+                                </select>
+                              </div></td>
+                            </tr>
+                            <tr>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                            </tr>
+                            <tr>
+                              <td colspan="10" bgcolor="#F1E07E"><div align="center">TERAPIA NUTRICIONAL </div></td>
+                            </tr>
+                            <tr>
+                              <td>&nbsp;</td>
                               <td>&nbsp;</td>
                               <td>&nbsp;</td>
                               <td colspan="4">&nbsp;</td>
                               <td colspan="3">&nbsp;</td>
                             </tr>
                             <tr>
-                              <td colspan="2">Terapia Nutricional </td>
+                              <td>Terapia Nutricional </td>
                               <td>&nbsp;</td>
                               <td>&nbsp;</td>
                               <td colspan="4">Enteral </td>
                               <td colspan="3">Parenteral</td>
                             </tr>
                             <tr>
+                              <td><div class="form-check">
+                                <input name="vias" type="radio" class="largerCheckbox" id="checkbox" value="" />
+                                <span > Via Oral (TNO) </span> </div></td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td colspan="4"><div class="form-check">
+                                <div class="form-check">
+                                  <input name="vias" type="radio" class="largerCheckbox" id="radio" value="" />
+                                <span > Via Sonda Nasoenteral (SNE) </span> </div></td>
+                              <td colspan="3"><div class="form-check">
+                                <div class="form-check">
+                                  <input name="vias" type="radio" class="largerCheckbox" id="radio2" value="" />
+                                <span > Via Periférica (NPP) </span> </div></td>
+                            </tr>
+                            <tr>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
                               <td colspan="2">&nbsp;</td>
                               <td>&nbsp;</td>
                               <td>&nbsp;</td>
-                              <td colspan="4"><div class="form-check"></td>
-                              <td colspan="3"><div class="form-check"></td>
+                              <td colspan="2">&nbsp;</td>
+                              <td>&nbsp;</td>
                             </tr>
                             <tr>
-                              <td colspan="2"><div class="form-check">
-                                <input name="checkbox" type="checkbox" class="largerCheckbox" id="checkbox" value="" />
-                                <span class="style13"> Via Oral (TNO) </span> </div></td>
-                              <td><span class="style13">Qtd  p/ dia </span><br />
-                                <select id='select3' name='select2' class='form-control input-sm' <?php if(isset($desativar)){ echo $desativar;} ?> required="required" >
+                              <td colspan="10"><div align="center"><span>QUANTIDADE  <span>DE ALIMENTAÇÃO</span> POR DIA  </span></div></td>
+                            </tr>
+                            <tr>
+                              <td colspan="10"><div align="center">
+                                <select onchange="totalAlimentacao()" id='por_dia' name='por_dia' class='form-control input-sm' <?php if(isset($desativar)){ echo $desativar;} ?> required="required" style="width:50px" >
                                   <?php
-                  								
-                  								if(isset($dias_pro) ){ 
-                                      echo "<option value='".$dias_pro."' >".$dias_pro."</option>"; 
-                                  }else{
-                                    for ($i=0; $i <= 5; $i++) {
+                  				    for ($i=0; $i <= 4; $i++) {
                                         echo "<option value='".$i."'>".$i."</option>";
-                                  }
-
-                                }
-								               ?>
-                                </select></td>
-                              <td>&nbsp;</td>
-                              <td colspan="2"><div class="form-check">
-                                <input class="largerCheckbox" type="checkbox" name="enteral_sne" value="enteral_sne" />
-                                <span class="style13"> Via Sonda Nasoenteral (SNE) </span> </div></td>
-                              <td><span class="style13">Qtd  p/ dia </span><br />
-                                <select id='select4' name='select3' class='form-control input-sm' <?php if(isset($desativar)){ echo $desativar;} ?> required="required" >
-                                  <?php
-                  								
-                  								if(isset($dias_pro) ){ 
-                                      echo "<option value='".$dias_pro."' >".$dias_pro."</option>"; 
-                                  }else{
-                                    for ($i=0; $i <= 5; $i++) {
-                                        echo "<option value='".$i."'>".$i."</option>";
-                                  }
-
-                                }
-								               ?>
-                                </select></td>
-                              <td>&nbsp;</td>
-                              <td colspan="2"><div class="form-check">
-                                <input class="largerCheckbox" type="checkbox" name="parenteral_npp" value="parenteral_npp" />
-                                <span class="style13"> Via Periférica (NPP) </span> </div></td>
-                              <td><span class="style13">Qtd  p/ dia </span><br />
-                                  <select id='select2' name='select' class='form-control input-sm' <?php if(isset($desativar)){ echo $desativar;} ?> required="required" >
-                                    <?php
-                  								
-                  								if(isset($dias_pro) ){ 
-                                      echo "<option value='".$dias_pro."' >".$dias_pro."</option>"; 
-                                  }else{
-                                    for ($i=0; $i <= 5; $i++) {
-                                        echo "<option value='".$i."'>".$i."</option>";
-                                  }
-
-                                }
-								               ?>
-                                </select></td>
+                                     }
+									?>
+                                </select>
+                              </div></td>
+                            </tr>
+                            <tr>
+                              <td colspan="10">&nbsp;</td>
+                            </tr>
+                            <tr>
+                              <td colspan="10"  bgcolor="#F1E07E"><div align="center">TOTAL DE ALIMENTAÇÕES </div></td>
+                            </tr>
+                            <tr>
+                              <td colspan="10">&nbsp;</td>
+                            </tr>
+                            <tr>
+                              <td colspan="10"><div align="center">
+                                <input   style="text-align:center; font-size: large; color:#FF0000; font-weight: bolder;" id="total_alimentacao" name="total_alimentacao" type="text" class="form-control input-sm" size="44" readonly />
+							  
+							  
+							  </div></td>
                             </tr>
                             <tr>
                               <td>&nbsp;</td>
@@ -226,26 +316,24 @@
                               <td>&nbsp;</td>
                               <td>&nbsp;</td>
                               <td>&nbsp;</td>
+                            </tr>
+                            <tr>
+                              <td colspan="10" bgcolor="#F1E07E"><div align="center">ARQUIVO</div></td>
+                            </tr>
+                            <tr>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
                               <td>&nbsp;</td>
                             </tr>
                             <tr>
-                              <td colspan="11" bgcolor="#F1E07E"><div align="center">ARQUIVO</div></td>
-                            </tr>
-                            <tr>
-                              <td>&nbsp;</td>
-                              <td>&nbsp;</td>
-                              <td>&nbsp;</td>
-                              <td>&nbsp;</td>
-                              <td>&nbsp;</td>
-                              <td>&nbsp;</td>
-                              <td>&nbsp;</td>
-                              <td>&nbsp;</td>
-                              <td>&nbsp;</td>
-                              <td>&nbsp;</td>
-                              <td>&nbsp;</td>
-                            </tr>
-                            <tr>
-                              <td colspan="11"><span class = 'style13'>Anexar a imagem da solicitação </span> </span>
+                              <td colspan="10"><span class = 'style13'>Anexar a imagem da solicitação </span> </span>
                                 <br />
 						<div class="mb-3">
   							
@@ -253,26 +341,9 @@
 						</div>								 </td>
                             </tr>
                             <tr>
-                              <td colspan="11">							  </td>
+                              <td colspan="10">							  </td>
                             </tr>
                             <tr>
-                              <td>&nbsp;</td>
-                              <td>&nbsp;</td>
-                              <td>&nbsp;</td>
-                              <td>&nbsp;</td>
-                              <td>&nbsp;</td>
-                              <td>&nbsp;</td>
-                              <td>&nbsp;</td>
-                              <td>&nbsp;</td>
-                              <td>&nbsp;</td>
-                              <td>&nbsp;</td>
-                              <td>&nbsp;</td>
-                            </tr>
-                            <tr bgcolor="#F1E07E">
-                              <td colspan="11">&nbsp;</td>
-                            </tr>
-                            <tr>
-                              <td>&nbsp;</td>
                               <td>&nbsp;</td>
                               <td>&nbsp;</td>
                               <td>&nbsp;</td>
@@ -286,7 +357,20 @@
                             </tr>
 
                             <tr>
-                              <td colspan="11" class="style13" >Justificativa da prorrogação
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                            </tr>
+
+                            <tr>
+                              <td colspan="10" class="style13" >Justificativa da prorrogação
                                 <textarea minlength="5" required id="motivo" class="form-control input-sm" name="motivo"  style="font-size:12px; margin: 0px; height: 100px; width: 100%;" form="prorrogacao" <?php if(isset($desativar)){ echo $desativar; } ?> /><?php
                                         if(isset($motivo_pro)){
                                           echo $motivo_pro;
@@ -294,7 +378,7 @@
                                         ?></textarea>                              </td>
                           </tr>
                         <tr>
-                          <td colspan="11" >                              </td>
+                          <td colspan="10" >                              </td>
           </tr>
 </table>
 
@@ -379,24 +463,24 @@
                          <td >&nbsp;</td>
                          <td>&nbsp;</td>
                          <td><div align="right"><strong>
-                              <input name="id" type="hidden" value="<?php echo $id; ?>" />
-                              <input name="id_imagem" type="hidden" value="<?php echo $id_imagem; ?>" />
-                              <input name="id_prorrogacao" type="hidden" value="<?php echo $id_prorrogacao; ?>" />
-                            
-                             <input name="id_usuario" type="hidden" value="<?php echo $_SESSION["id"]; ?>" size="44" />                             
+                                                          
 
                             </strong></div></td>
         </tr>
 
 </table>
 		<!-- DADOS DE ENVIO PRORROGAÇÃO -->
-			<!-- IMAGEM -->
+			<!-- IMAGEM --> 
+			<input type="hidden" name="id_usuario"    value="<?php echo $_SESSION["id"]; ?>" />	
 			<input type="hidden" name="id"            value="<?php echo $_GET['id']; ?>" /> 
-          	<input type="hidden" name="evento"        value="int" /> 
-			<input type="hidden" name="descricao"     value="Solicitação médica de prorrogação" />  
+			<input type="hidden" name="id_prorro"     value="<?php echo $_GET['id_prorro']; ?>" />    		
+			<input type="hidden" name="id_imagem"     value="<?php echo $id_imagem; ?>" />
+          	<input type="hidden" name="evento"        value="ali" /> 
+			<input type="hidden" name="descricao"     value="Solicitação médica de alimentação" />  
           	<input type="hidden" name="MAX_FILE_SIZE" value="99999999" />  
 			<input type="hidden" name="url"           value="<?php echo $_SERVER['REQUEST_URI']; ?>" /> 
-        		    
+           	<input type="hidden" name="data_inicial"  value="<?php echo formatar_banco_data($_GET['data_inicial']); ?>" /> 
+			<input type="hidden" name="data_final"    value="<?php echo formatar_banco_data($_GET['data_final']); ?>" /> 		    
                 </div>
                 </div>
         	     <!-- /Conteúdo Modal -->
@@ -414,6 +498,20 @@
       ...
 </div>
 </form> 
+
+<!-- TOTAL ALIMENTAÇÃO-->
+<script>
+	function totalAlimentacao() {
+		var qtd_diarias = document.getElementById("qtd_diarias").value;
+		var qtd_tno = document.getElementById("por_dia").value;
+
+		var total = 0;
+		
+		total = qtd_diarias * qtd_tno;
+		document.getElementById("total_alimentacao").value = total;
+		
+	}
+</script>
 				
 <!-- Script de controle da modal -->			
 <script>
@@ -421,15 +519,50 @@ document.onload(funcaoPaginaCarregada());
 
 function funcaoPaginaCarregada() {
 	const urlParams = new URLSearchParams(window.location.search);
-	const alimentacao = urlParams.get("ali") 
-		if(alimentacao == 0){
+	const alimentacao = urlParams.get("id_prorro") 
+		if(alimentacao > 0){
 			document.getElementById('aliModal').style.display = "block";
 		}
 }
-function abrirModal(a) {
+function abrirModal() {
    		document.getElementById('aliModal').style.display = "block";
 }
 function fecharModal() {
    document.getElementById('aliModal').style.display = "none";
 }
 </script>  	
+
+
+<!-- CALCULA A QUANTIDADE DE DIAS DE UMA DATA PARA OUTRA  -->	
+<script>
+			function calcularData() {	
+				// Converte o padrão BR para ENG 
+				function FormataStringData(data) {
+				  var dia  = data.split("/")[0];
+				  var mes  = data.split("/")[1];
+				  var ano  = data.split("/")[2];
+				
+				  return ano + '-' + ("0"+mes).slice(-2) + '-' + ("0"+dia).slice(-2);
+				  // Utilizo o .slice(-2) para garantir o formato com 2 digitos.
+				}
+				
+				var d1 = document.getElementById("data_inicial").value;
+				var d2 = document.getElementById("data_final").value
+				
+				var date1 = new Date(FormataStringData(d1));
+				var date2 = new Date(FormataStringData(d2));
+		
+				var timeDiff = Math.abs(date2 - date1);
+				var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24)); 
+				
+				if(diffDays > 5){
+					document.getElementById("aviso1").innerHTML = '<div style="font-size: x-small; font-family: system-ui; font-weight: 400;" class="alert alert-danger" role="alert">Périodo exede ao máximo de diárias permitida que é 5 diárias!</div>';
+					document.getElementById("aviso2").innerHTML = '<div style="font-size: x-small; font-family: system-ui; font-weight: 400;" class="alert alert-info" role="alert">Périodo exede ao máximo de diárias permitida que é 5 diárias!</div>';
+				}else{
+					document.getElementById("aviso1").innerHTML = '';
+					document.getElementById("aviso2").innerHTML = '';
+				}
+				document.getElementById("dias").value = diffDays;
+				diffDays = 0;
+			}
+</script>	

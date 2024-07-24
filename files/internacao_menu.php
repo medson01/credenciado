@@ -109,7 +109,7 @@ $tabela = array
 //  ATIVA A ABA QUE SESEJA 			  
  if(isset($_GET['prorro'])){ 
  	$aba = 1;
- }elseif(isset($_GET['ali'])){
+ }elseif(isset($_GET['id_prorro']) || isset($_GET['ali'])){
  	$aba = 2;
  }else{
  	$aba = 0;

@@ -113,7 +113,7 @@ $d =  "  ORDER BY `id_prorrogacao` DESC   LIMIT ".$pagina.", ".$itens_por_pagina
     ?>
     
     <tr style="font-size: 10px; text-align: justify">
-      <td width="26" rowspan="4" align="center" style="vertical-align: inherit; border-radius: 25px 0px 0px 25px; <?php if(isset($aquivos["status"]) && $aquivos["status"] <> 2){ echo"background: #95FFFF;"; }else{ echo 'background: #C0C0C0; ';}  ?> ">
+      <td width="26" rowspan="5" align="center" style="vertical-align: inherit; border-radius: 25px 0px 0px 25px; <?php if(isset($aquivos["status"]) && $aquivos["status"] <> 2){ echo"background: #95FFFF;"; }else{ echo 'background: #C0C0C0; ';}  ?> ">
         <br>
 		<span style="font-size: small; font-weight: 800; ">
       		<?php  
@@ -185,48 +185,42 @@ RESPIRATÓRIA:
         echo '<span class="visible-print">Imagem '.$aquivos["id_imagem"].'</span>';        ?>
 	        </div></td></tr>
 <td colspan="11"  align="left" bgcolor="#A6FFA6" >
-<div >
+
+<!-- ADICIONAR MOTÃO SOLICITAR ALIMENTAÇÃO -->
 <div align="center" class="style1" style="width:50%; display:inline-block; text-align: end;">AUTORIZAÇÃO</div><div style="width:50%; display:inline-block; text-align: end;">
 	    <div align="right"  class="style1">
-    <?php  if(isset($aquivos['data_autorizacao'])){ echo date("j/n/Y,  H:i:s",strtotime($aquivos['data_autorizacao'])); }else{ echo ''; } ?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font ><strong><a  style='color: blue; font-family: Andale monospace;'href="internacao_menu.php?id=<?php echo $_GET["id"]; ?>&amp;ali=0"  onmouseover="Tip('Solicitar Alimentação!')" onmouseout="UnTip()"><img src="../imagem/alimentacao01.png" width="21" height="24" /></a> </span></font>&nbsp;&nbsp;&nbsp;&nbsp;</div>
-</div></td>
+    <?php  if(isset($aquivos['data_autorizacao'])){ echo date("j/n/Y,  H:i:s",strtotime($aquivos['data_autorizacao'])); }else{ echo ''; } ?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+       &nbsp;&nbsp;&nbsp;&nbsp;</div>
+</td>
     <tr style="font-size: 10px; text-align: justify; ">
-      <td align="left">
-        
-		 
-      </td>    
-      <td colspan="9" align="left" >
-	  	<div <?php if($_SESSION["perfil"] <> 'medico' && $aquivos["status"] <> 2){ echo 'style="display: none;"';}else{ echo'style="display: block;"'; } ?> >
-	  	  <?php echo "PERÍODO: &nbsp;&nbsp; <span style='font-size: 12px;'><strong>".formatar_banco_data($aquivos['data_inicial_aut'])."</span></strong>&nbsp;&nbsp;  Á &nbsp;&nbsp; <strong><span style='font-size: 12px;'>".formatar_banco_data($aquivos['data_final_aut'])."</span></strong>, <strong><span style='font-size: 12px;'>".$aquivos['dias_autorizados']."</span></strong> &nbsp;&nbsp; DIÁRIAS."; ?>
-            <br />
-            FISIOTERAPIAS &nbsp;&nbsp; MOTORA:<strong><span style='font-size: 12px;'>
-        <?php if(isset($aquivos['qtd_motora_aut'])){ echo  $aquivos['qtd_motora_aut'];}else{ echo "0";} ?>
-             </span></strong>,&nbsp;&nbsp;
-			RESPIRATÓRIA:<strong><span style='font-size: 12px;'>
-        <?php if(isset($aquivos['qtd_respiratoria_aut'])){echo  $aquivos['qtd_respiratoria_aut'];}else{ echo "0."; } ?>
-			</span></strong>&nbsp;&nbsp;<br />
-		<?php 
+      <td align="left"></td>
+      <td colspan="9" align="left" ><div <?php if($_SESSION["perfil"] <> 'medico' && $aquivos["status"] <> 2){ echo 'style="display: none;"';}else{ echo'style="display: block;"'; } ?> > <?php echo "PERÍODO: &nbsp;&nbsp; <span style='font-size: 12px;'><strong>".formatar_banco_data($aquivos['data_inicial_aut'])."</span></strong>&nbsp;&nbsp;  Á &nbsp;&nbsp; <strong><span style='font-size: 12px;'>".formatar_banco_data($aquivos['data_final_aut'])."</span></strong>, <strong><span style='font-size: 12px;'>".$aquivos['dias_autorizados']."</span></strong> &nbsp;&nbsp; DIÁRIA(S)."; ?> <br />
+        FISIOTERAPIAS &nbsp;&nbsp; MOTORA:<strong><span style='font-size: 12px;'>
+  <?php if(isset($aquivos['qtd_motora_aut'])){ echo  $aquivos['qtd_motora_aut'];}else{ echo "0";} ?>
+  </span></strong>,&nbsp;&nbsp;
+        RESPIRATÓRIA:<strong><span style='font-size: 12px;'>
+              <?php if(isset($aquivos['qtd_respiratoria_aut'])){echo  $aquivos['qtd_respiratoria_aut'];}else{ echo "0."; } ?>
+              </span></strong>&nbsp;&nbsp;<br />
+              <?php 
 			if( $aquivos['qtd_motora_aut'] <> $aquivos['qtd_motora'] || $aquivos['qtd_respiratoria'] <> $aquivos['qtd_respiratoria_aut']){ 
 				echo "<span style='color: blue; font-style: italic;'> Aviso: Quantidade de fisioterapias solicitadas diferete das autorizadas!</br></span> ";
 			}
 		?>
-		
-        
-OBSERVAÇÕES:<br />  
-      <strong><span style='font-size: 12px;'>
-	   <textarea id="motivo_autorizacao" class="form-control input-sm" name="motivo_autorizacao"  rows="4" cols="60" onmousemove="auto_grow(this);" onkeyup="auto_grow(this);"  style="font-size:12px; margin-top: 20px; resize:nome; overflow:hidden; width: 100%;" form="internacao_prorrogacao_cadastro"  <?php if((isset($status) && $status == 2) || isset($aquivos['motivo_autorizacao'])){ echo "readonly"; } ?>/><?php
+        OBSERVAÇÕES:<br />
+  <strong><span style='font-size: 12px;'>
+  <textarea id="textarea" class="form-control input-sm" name="textarea"  rows="4" cols="60" onmousemove="auto_grow(this);" onkeyup="auto_grow(this);"  style="font-size:12px; margin-top: 20px; resize:nome; overflow:hidden; width: 100%;" form="internacao_prorrogacao_cadastro"  <?php if((isset($status) && $status == 2) || isset($aquivos['motivo_autorizacao'])){ echo "readonly"; } ?>/>
+  <?php
                                         if(!empty($aquivos['motivo_autorizacao']) ){
                                            echo $aquivos['motivo_autorizacao']; 
                                         }
-                                        ?></textarea>
-	  
-      <?php //if(!empty($aquivos['motivo_autorizacao']) ){ echo $aquivos['motivo_autorizacao']; } ?>     
-	  </span></strong>         
-          </p>
-	  	</div>	  </td>
-	  <td align="center" style="border-radius: 0px 0px 25px 0px ; align-content: center;">
-	  	<div ><span >
-          <?php
+                                        ?>
+  </textarea>
+  <?php //if(!empty($aquivos['motivo_autorizacao']) ){ echo $aquivos['motivo_autorizacao']; } ?>
+  </span></strong>
+  </p>
+      </div></td>
+      <td align="center" style="border-radius: 0px 0px 25px 0px ; align-content: center;"><div ><span >
+        <?php
 
             if( $aquivos['status'] == 1 ){ 
                echo "<font ><strong><a  style='font-family: Andale monospace;'   href=\"javascript:func()\" onmouseover=\"Tip(' Prorrogação em analise ')\" onmouseout=\"UnTip()\"> ";
@@ -241,6 +235,25 @@ glyphicon glyphicon-ok' style='color: blue; font-size: 15px;' ></span></font>";
 
         ?>
       </span></div></td>
+    </tr>
+    <tr style="font-size: 10px; text-align: justify; " bgcolor="#A6FFA6" >
+      <td align="left">      </td>    
+      <td colspan="9" align="left" >
+	   
+	      <div align="center" class="style1" style="width:55%; display:inline-block; text-align: end;">
+	        <div align="right">ALIMENTAÇÃO</div>
+	      </div>
+	      <div align="right" style="width:40%; display:inline-block; text-align: end;"> 
+		  	<font >
+				<strong>
+					<a  style='color: blue; font-family: Andale monospace;'href="internacao_menu.php?id=<?php echo $_GET["id"]; ?>&id_prorro=<?php echo $aquivos["id_prorrogacao"]; ?>&data_inicial=<?php echo $aquivos["data_inicial_aut"]; ?>&data_final=<?php echo $aquivos["data_final_aut"]; ?>&dias_autorizados=<?php echo $aquivos["dias_autorizados"]; ?> "  onmouseover="Tip('Adicionar Alimentação!')" onmouseout="UnTip()">
+	      <button type="button" class="btn" style="padding:1px"><img src="../imagem/alimentacao01.png" width="20" height="20" style="margin:0" /></button>
+				  </a> 
+		  		</span>
+		  	</font>        
+		  </div>
+	  </td>
+	  <td align="center" style="border-radius: 0px 0px 25px 0px ; align-content: center;">&nbsp;</td>
   </tr>
     <?php 
             $w = $aquivos['id_prorrogacao'];
