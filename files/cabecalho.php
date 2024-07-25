@@ -97,6 +97,8 @@ Revisão links Bootstrap
 	$("#qtd_motora").mask("00");
     $("#qtd_alimentacao_parenteral").mask("00");
     $("#crm").mask("000000");
+	$("#ali_crm").mask("000000");
+	$("#crm_rqe").mask("000000");
     $("#codigo").mask("00000000");
 	$("#cpf").mask("00000000000");
     $("#cnpj").mask("00000000000000");

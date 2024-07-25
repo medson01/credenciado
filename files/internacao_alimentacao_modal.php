@@ -14,9 +14,9 @@
 	
 // CONTROLE DE EXIBIÇÃO DE FORMULARIOS
 	if($_SESSION["perfil"] == 'medico'){
-		$a =  'style="display: none;"';
+		$exibir_medico =  'style="display: block;;"';
 	}else{
-		$b =  'style="display: none;"';
+		$exibir_medico =  'style="display: none;"';
 	}
 
 ?>
@@ -37,7 +37,7 @@
 			 <a onclick="fecharModal()"> <span class="close"> &times;</span> </a>			  	   
 		</div>
 		<div class="modal-body" >
-        <form nome="internacao_prorrogacao_cadastro2" id="internacao_prorrogacao_cadastro2" action="internacao_prorrogacao_cadastro2.php" method="post" class="form-group" enctype="multipart/form-data">
+        <form nome="internacao_alimentacao_cadastro" id="internacao_alimentacao_cadastro" action="internacao_alimentacao_cadastro.php" method="post" class="form-group" enctype="multipart/form-data">
               
                 <div align="center">
                   <div class="form-group">
@@ -65,10 +65,10 @@
                             </tr>
                             <tr>
                               <td colspan="5" ><span class="style13">Nome m&eacute;dico solicitante </span><br />
-                                  <input id="medico_solicitante2"  name="medico_solicitante2" type="text" class="form-control input-sm" style="font-size: 10px"  size="44" required="required" <?php if (isset($medico_pro)) { echo "value='".$medico_pro."' "; }   if(isset($desativar)){ echo $desativar;} ?> /></td>
+                                  <input id="medico_solicitante"  name="medico_solicitante" type="text" class="form-control input-sm" style="font-size: 10px"  size="44" required="required" <?php if (isset($medico_solicitante)) { echo "value='".$medico_solicitante."' "; }   if(isset($desativar)){ echo $desativar;} ?> /></td>
                               <td>&nbsp;</td>
                               <td colspan="4"><span class="style13">CRM </span><br />
-                                  <input name="crm2" id ="crm2" type="text" class="form-control input-sm" style="font-size: 10px" size="44" required="required" <?php if (isset($crm_pro)) { echo "value='".$crm_pro."' "; }  if(isset($desativar)){ echo $desativar;} ?>/></td>
+                                  <input name="ali_crm" id ="ali_crm" type="text" class="form-control input-sm" style="font-size: 10px" size="44" required="required" <?php if (isset($ali_crm)) { echo "value='".$ali_crm."' "; }  if(isset($desativar)){ echo $desativar;} ?>/></td>
                             </tr>
                             <tr>
                               <td >&nbsp;</td>
@@ -84,11 +84,11 @@
                             </tr>
                             <tr>
                               <td colspan="5" ><span class="style13">Nome médico Nutrólogo </span><br />
-                                  <input id="medico_solicitante"  name="medico_solicitante" type="text" class="form-control input-sm" style="font-size: 10px"  size="44" required="required" <?php if (isset($medico_pro)) { echo "value='".$medico_pro."' "; }   if(isset($desativar)){ echo $desativar;} ?> />
+                                  <input id="nutrologo"  name="nutrologo" type="text" class="form-control input-sm" style="font-size: 10px"  size="44" required="required" <?php if (isset($nutrologo)) { echo "value='".$nutrologo."' "; }   if(isset($desativar)){ echo $desativar;} ?> />
                                   </span></td>
                               <td>&nbsp;</td>
                               <td colspan="4"><span class="style13"> CRM/RQE </span><br />
-                                  <input name="crm" id ="crm" type="text" class="form-control input-sm" style="font-size: 10px" size="44" required="required" <?php if (isset($crm_pro)) { echo "value='".$crm_pro."' "; }  if(isset($desativar)){ echo $desativar;} ?>/>
+                                  <input name="crm_rqe" id ="crm_rqe" type="text" class="form-control input-sm" style="font-size: 10px" size="44" required="required" <?php if (isset($crm_rqe)) { echo "value='".$crm_rqe."' "; }  if(isset($desativar)){ echo $desativar;} ?>/>
                                   </span></td>
                             </tr>
                             <tr>
@@ -135,8 +135,6 @@
                                   <?php
 									if(isset($_GET['data_inicial'])){
 									echo ' <input class="form-control" style="margin-left: 60px;" name="data_inicial" type="text"  data-date-format="mm/dd/yyyy" maxlength="10"size="10" required value="'.formatar_banco_data($_GET['data_inicial']).'" readonly /> ';
-									}else{
-									echo ' <input id="data_inicial" name="data_inicial" class="form-control"   type="text"  data-date-format="mm/dd/yyyy" maxlength="10"size="10" required   /> ';
 									}
 								?></td>
                               <td>&nbsp;</td>
@@ -147,9 +145,7 @@
                                   <?php
 								if(isset($_GET['data_final'])){
                                 	echo ' <input class="form-control" type="text"  data-date-format="mm/dd/yyyy" maxlength="10"size="10" required value="'.formatar_banco_data($_GET['data_final']).'" readonly /> ';
-								}else{
-									echo ' <input  id="data_final" name="data_final" onchange="calcularData()" class="form-control" type="text"  data-date-format="mm/dd/yyyy" maxlength="10"size="10" required  />';
-									}
+								}
 							  ?></td>
                               <td>&nbsp;</td>
                             </tr>
@@ -170,8 +166,6 @@
 							if(isset($_GET['dias_autorizados']) ){
                              	echo ' <input  style="margin-left: 60px;" name="dias_autorizados" type="text" class="form-control input-sm" style="font-size: 10px" size="44" value="'.$_GET['dias_autorizados'].'"readonly />';
 								
-							}else{
-								echo ' <input name="dias_autorizados" id ="dias" type="text" class="form-control input-sm" style="font-size: 10px" size="44" value="" readonly />';
 							}
 							  ?></td>
                               <td>&nbsp;</td>
@@ -252,17 +246,17 @@
                             </tr>
                             <tr>
                               <td><div class="form-check">
-                                <input name="vias" type="radio" class="largerCheckbox" id="checkbox" value="" />
+                                <input name="vias" type="radio" class="largerCheckbox" id="checkbox" value="TNO" required="required"/>
                                 <span > Via Oral (TNO) </span> </div></td>
                               <td>&nbsp;</td>
                               <td>&nbsp;</td>
                               <td colspan="4"><div class="form-check">
                                 <div class="form-check">
-                                  <input name="vias" type="radio" class="largerCheckbox" id="radio" value="" />
+                                  <input name="vias" type="radio" class="largerCheckbox" id="radio" value="SNE" />
                                 <span > Via Sonda Nasoenteral (SNE) </span> </div></td>
                               <td colspan="3"><div class="form-check">
                                 <div class="form-check">
-                                  <input name="vias" type="radio" class="largerCheckbox" id="radio2" value="" />
+                                  <input name="vias" type="radio" class="largerCheckbox" id="radio2" value="NPP" />
                                 <span > Via Periférica (NPP) </span> </div></td>
                             </tr>
                             <tr>
@@ -371,7 +365,7 @@
 
                             <tr>
                               <td colspan="10" class="style13" >Justificativa da prorrogação
-                                <textarea minlength="5" required id="motivo" class="form-control input-sm" name="motivo"  style="font-size:12px; margin: 0px; height: 100px; width: 100%;" form="prorrogacao" <?php if(isset($desativar)){ echo $desativar; } ?> /><?php
+                                <textarea minlength="5" required id="motivo" class="form-control input-sm" name="motivo"  style="font-size:12px; margin: 0px; height: 100px; width: 100%;" form="internacao_alimentacao_cadastro" <?php if(isset($desativar)){ echo $desativar; } ?> /><?php
                                         if(isset($motivo_pro)){
                                           echo $motivo_pro;
                                         }
@@ -385,9 +379,9 @@
 
 <!-- ################################################################################################################################# -->
 
-<!-- FORMULÁRIO DE AUTORIZAÇÃO DA PRORROGAÇÃO DE INTERNAMENTO  -->
-
- <table width="100%" <?php if(isset($b)){ echo $b; } ?> border="0" align="center">
+<!-- FORMULÁRIO DE AUTORIZAÇÃO DA ALIMENTAÇÃO DA PRORROGAÇÃO DO INTERNAMENTO  -->
+<div class="alert alert-danger"  <?php echo $exibir_medico; ?> >
+ <table width="100%" border="0" align="center"  <?php echo $exibir_medico; ?> >
                 <!-- autorização do médico -->
                       <!-- Cabeçalho de autorização médica-->
                         <tr>
@@ -474,13 +468,13 @@
 			<input type="hidden" name="id_usuario"    value="<?php echo $_SESSION["id"]; ?>" />	
 			<input type="hidden" name="id"            value="<?php echo $_GET['id']; ?>" /> 
 			<input type="hidden" name="id_prorro"     value="<?php echo $_GET['id_prorro']; ?>" />    		
-			<input type="hidden" name="id_imagem"     value="<?php echo $id_imagem; ?>" />
           	<input type="hidden" name="evento"        value="ali" /> 
 			<input type="hidden" name="descricao"     value="Solicitação médica de alimentação" />  
           	<input type="hidden" name="MAX_FILE_SIZE" value="99999999" />  
 			<input type="hidden" name="url"           value="<?php echo $_SERVER['REQUEST_URI']; ?>" /> 
            	<input type="hidden" name="data_inicial"  value="<?php echo formatar_banco_data($_GET['data_inicial']); ?>" /> 
-			<input type="hidden" name="data_final"    value="<?php echo formatar_banco_data($_GET['data_final']); ?>" /> 		    
+			<input type="hidden" name="data_final"    value="<?php echo formatar_banco_data($_GET['data_final']); ?>" /> 
+			<input type="hidden" name="status"           value="<?php if($_SESSION["perfil"] == 'medico'){ echo 2;}else{ echo 1; } ?>" /> 		    
                 </div>
                 </div>
         	     <!-- /Conteúdo Modal -->
@@ -497,7 +491,17 @@
       </div>
       ...
 </div>
-</form> 
+</form>
+
+<!-- LETRAS MAÚSCULAS --> 
+ <script type="text/javascript">
+$("#motivo_medico").on("input", function(){
+	$(this).val($(this).val().toUpperCase());
+}); 
+$("#motivo").on("input", function(){
+	$(this).val($(this).val().toUpperCase());
+});
+</script> 
 
 <!-- TOTAL ALIMENTAÇÃO-->
 <script>

@@ -1,49 +1,119 @@
 
 <?php 
-    // Arquivo de configuração
+  // Arquivo de configuração
   require_once "../config/config.php";
-  
+  // FORMATAR A DATA PARA O FORMATO DO BANCO ENG
+  require_once "../func/formatar_data_banco.php";
 
-echo $id = $_POST["id"];
-echo $medico_solicitante = utf8_decode($_POST["medico_solicitante"]);
-echo $crm = $_POST["crm"];
-echo $nutrologo = utf8_decode($_POST["nutrologo"]);
-echo $crm_rqe = $_POST["crm_rqe"];
+  // RECEBIMENTO DE DADOS HOSPITAL SOLICITAÇÃO DE ALIMENTAÇÃO
+if($_POST["status"] == 1){ 	
+	$id_internamento = $_POST["id"]; 
+	$id_prorro = $_POST["id_prorro"]; 
+	$medico_solicitante = utf8_decode($_POST["medico_solicitante"]);
+	$crm = $_POST["ali_crm"]; // FOI MUDADO O NOME PARA EVITAR QUE A VARIÁVEL USA-SE UM VALOR ASSIM QUE ABRE A TELA.
+	$nutrologo = utf8_decode($_POST["nutrologo"]);
+	$crm_rqe = $_POST["crm_rqe"];echo "<br>";
+	$qtd_diarias = $_POST["qtd_diarias"];
+	$vias = utf8_decode($_POST["vias"]);
+	$por_dia = $_POST["por_dia"];
+	//$total_alimentacao  = $_POST["total_alimentacao"];	// NÃO ADICIONAR NO BANCO PQ O CALCULO DE qtd_diarias X por_dia = TOTAL DE ALIMENTAÇÃO
+	$motivo = utf8_decode($_POST["motivo"]);
+	$foto = $_FILES['imagem'];
+	$evento = utf8_decode($_POST["evento"]);
+	$descricao = utf8_decode($_POST["descricao"]);
+	$data_inicial  = formatar_data_banco($_POST["data_inicial"]);
+	$data_final  = formatar_data_banco($_POST["data_final"]);	
+	$url  = $_POST["url"];
+}
 
-echo $id_imagem = $_POST["id_imagem"];
-echo $id_usuario = $_SESSION["id"];
 
-
-echo $dias_solicitados = $_POST["dias"];
-echo $motivo = utf8_decode($_POST["motivo"]);
-echo $motivo_medico = utf8_decode($_POST["motivo_medico"]);
-echo $qtd_respiratoria = $_POST["qtd_respiratoria"];
-echo $qtd_motora = $_POST["qtd_motora"];
-
-exit();
-          $query = "INSERT INTO `prorrogacao`(`id`, `id_internamento`, `id_usuario`, `medico_solicitante`, `crm`, `dias_solicitados`, `dias_autorizados` , `motivo`, `motivo_medico`, `data_prorrogacao` , `qtd_respiratoria`, `qtd_motora`,`status`) VALUES ( null ,'".$id."','".$id_usuario."', '".$medico_solicitante."' , '".$crm."' , '".$dias_solicitados."' , null ,'".$motivo."' ,'".$motivo_medico."' ,'".date("Y-m-d H:i:s" )."' ,'".$qtd_respiratoria."' ,'".$qtd_motora."' , '1' )";
-
-	 
-        $insert = mysqli_query($conn, $query);
 		
-		    $id_prorrogacao = mysqli_insert_id($conn);
+	
+// INSERIR A SOLICITAÇÃO NO BANCO
+	if($_POST["status"] == 1){ 	
+	  $sql = "INSERT INTO `alimentacao`(`id`, `id_internamento`, `id_prorro`, `medico_solicitante`, `crm`, `nutrologo`, `crm_rqe`, `qtd_diarias`, `vias`, `por_dia`, `motivo`, `data_inicial`, `data_final`, `data_sol_alimentacao`, `status`) VALUES (null,".$id_internamento.",".$id_prorro.",'".$medico_solicitante."',".$crm.",'".$nutrologo."',".$crm_rqe.",".$qtd_diarias.",'".$vias."',".$por_dia.",'".$motivo."',".$data_inicial.",".$data_final.",'".date("Y-m-d H:i:s" )."',1)";
 
-        $update = mysqli_query($conn,"UPDATE `imagem` SET `id_prorrogacao`= '".$id_prorrogacao."' WHERE id = '".$id_imagem."'"); 
-
-        $update = mysqli_query($conn,"UPDATE `internamento` SET `prorrogacao`= 1 WHERE id = '".$id."'"); 
-
-        
-        if($insert){
-          
-		 echo"<script language='javascript' type='text/javascript'>alert('Solicita\u00e7\u00e3oo de prorroga\u00e7\u00e3o encaminhada para aprova\u00e7\u00e3o!');window.location.href='painel.php?int=1'</script>";
-         // echo"<script language='javascript' type='text/javascript'>alert('Alteração aplicada com sucesso!'); history.go(-1);</script>";
-
-        }else{
-		
-    echo"<script language='javascript' type='text/javascript'>alert('internamento não cadastrado com sucesso!');window.location.href='painel.php?int=1'</script>";
-
-        }
-  
-     
-    
+	$stmt = $pdo->prepare($sql);
+	$stmt->execute();
+	
+	$ultimo_id_alimentacao = $pdo->lastInsertId();
+	
+	if(isset($ultimo_id_alimentacao) && !empty($ultimo_id_alimentacao)){
+	// TRATAMENTO IMAGEM
+		// VERIFICA SE A IMAGEM FOI ENVIADA
+		if (!isset($_FILES['imagem'])){	
+			echo retorno('Selecione uma imagem');
+			exit;
+		}else{
+			
+			$nome = utf8_decode($foto['name']);
+			$tipo = $foto['type'];
+			$tamanho = $foto['size'];		
+			// DEFINIÇÕES DO ARQUIVO
+				//TAMANHO MÁXIMO TRATADO (2M)
+					define('TAMANHO_MAXIMO', (2 * 1024 * 1024));		
+				// TIPO 
+				if( preg_match('/^application\/(pdf)$/', $tipo) ) {
+				  $tag = 1;
+				}
+				// EXTENÇÃO
+				if (preg_match('/^image\/(pjpeg|jpeg|png|gif|bmp)$/', $tipo)){
+				  $tag = 1;
+				}
+			
+			// VALIDAÇÕES	
+				// SE FORMATO OU EXTENÇÃO NÃO ESTIVER EM CONFORMIDADE
+				if(isset($tag) <> 1){  
+					 echo"<script language='javascript' type='text/javascript'>alert('Extenção de arquivo válida!');window.location.href='".$url."'</script>";
+					exit;
+				}
+				// SE TAMANHO MÁXIMO NÃO ESTIVER EM CONFORMIDADE 
+				if ($tamanho > TAMANHO_MAXIMO){
+					echo"<script language='javascript' type='text/javascript'>alert('A imagem deve possuir no máximo 2 MB!');history.back();</script>";
+					exit;
+				}		
+			// TRANS FORMANDO IMAGEM EM DADO BINÁRIO
+				$imagem = file_get_contents($foto['tmp_name']);		
+			// IMAGEM NO BANCO 
+				$sql = 'INSERT INTO imagem (id, id_internamento, id_alimentacao, id_pronto_atendimento, nome, evento, descricao, tipo, tamanho, data ,imagem) VALUES (null,:id_internamento ,:ultimo_id_alimentacao,null,:nome,:evento ,:descricao ,:tipo,:tamanho, "'.date("Y-m-d H:i:s" ).'", :imagem)';
+				
+				$stmt = $pdo->prepare($sql);
+				// PARAMETROS
+				$stmt->bindParam(':id_internamento', $id_internamento, PDO::PARAM_INT);
+				$stmt->bindParam(':ultimo_id_alimentacao', $ultimo_id_prorrogacao, PDO::PARAM_INT);
+				$stmt->bindParam(':nome', $nome, PDO::PARAM_STR);
+				$stmt->bindParam(':evento', $evento, PDO::PARAM_STR);
+				$stmt->bindParam(':descricao', $descricao, PDO::PARAM_STR);
+				$stmt->bindParam(':tipo', $tipo, PDO::PARAM_STR);
+				$stmt->bindParam(':tamanho', $tamanho, PDO::PARAM_INT);
+				$stmt->bindParam(':imagem', $imagem, PDO::PARAM_LOB);
+			
+				
+				if ($stmt->execute()){
+					 echo"<script language='javascript' type='text/javascript'>alert('Solicita\u00e7\u00e3o encaminhada para aprova\u00e7\u00e3o!');window.location.href='internacao_menu.php?id=".$id_internamento."&ali=0';</script>";
+					exit;
+					
+				}
+			   }
+		}
+	}else{
+	
+	 $sql ='UPDATE `alimentacao` SET 
+			`data_inicial_aut` = "'.$data_inicial_aut.'", 
+			`data_final_aut`   = "'.$data_final_aut.'" , 
+			`dias_autorizados` = '.$dias_autorizados.',  
+			`motivo_autorizacao`    = "'.$motivo_autorizacao.'",  
+			`data_autorizacao` = "'.$data_autorizacao.'", 
+			`qtd_motora_aut` = "'.$qtd_motora_aut.'", 
+			`qtd_respiratoria_aut` = "'.$qtd_respiratoria_aut.'", 
+			`status`= 2  
+		  WHERE `id` = '.$id_prorro;
+	
+	$stmt = $pdo->prepare($sql);
+		if ($stmt->execute()){
+			echo"<script language='javascript' type='text/javascript'>alert('Prorroga\u00e7\u00e3o autorizada!');window.location.href='".$url."&prorro=x';</script>";
+			exit;	
+		}	
+	}
+// -- //
 ?>
