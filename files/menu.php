@@ -73,55 +73,60 @@
 <!-- Botões do Menu -->
 <?php
 
-	if( ($_SESSION["perfil"] <> "aut_internacao")  && ($_SESSION["perfil"] <> "laboratorio") && ($_SESSION["perfil"] <> "callcenter") && ($_SESSION["perfil"] <> "clinica") && ($_SESSION["perfil"] <> "clin_lab")  ) {
+	if( ($_SESSION["perfil"] <> "aut_internacao")  && ($_SESSION["perfil"] <> "laboratorio") && ($_SESSION["perfil"] <> "callcenter") && ($_SESSION["perfil"] <> "clinica") && ($_SESSION["perfil"] <> "clin_lab") ) {
+		if( $_SESSION["perfil"] <> "alimentacao"){
+			echo'
+			<!-- Botão consulta de situação -->
+			<a href="fom_consulta_situacao.php" > 
+				<div class="thumbnail tile tile-medium tile-teal"  style="display: flex; justify-content: center; align-items: center;">	
+					
+					Situação 
+				</div>
+			</a>
+	
+			<!-- Botão pronto atendimento -->
+			<a href="painel.php?pa=1"  > 
+				<div class="thumbnail tile tile-medium tile-teal" style="display: flex; justify-content: center; align-items: center;">	
+					
+					Pronto atendimento
+				</div>
+			</a>
+			';
+		}
 		echo'
-		<!-- Botão consulta de situação -->
-		<a href="fom_consulta_situacao.php" > 
-			<div class="thumbnail tile tile-medium tile-teal"  style="display: flex; justify-content: center; align-items: center;">	
-				
-				Situação 
-			</div>
-		</a>
-
-		<!-- Botão pronto atendimento -->
-		<a href="painel.php?pa=1"  > 
-			<div class="thumbnail tile tile-medium tile-teal" style="display: flex; justify-content: center; align-items: center;">	
-				
-				Pronto atendimento
-			</div>
-		</a>
-
-		<!-- Botão internação -->
-		<a  href="painel.php?int=1"  > 
-			<div class="thumbnail tile tile-medium tile-teal" style="display: flex; justify-content: center; align-items: center;">	
-				
-				Interna&ccedil;&atilde;o 	
-			</div>
-		</a>
-		
-		
-		<!-- Em desenvolvimento 
-		
-		 Botão sadt 
-		<a  href="painel.php?sadt=1"  > 
-			<div class="thumbnail tile tile-medium tile-teal" style="display: flex; justify-content: center; align-items: center;">	
-				
-				SADT 	
-			</div>
-		</a>
-
-
-
-		 Botão Pronto 
-		<a  href="principal.php?ponto=1"  > 
-			<div class="thumbnail tile tile-medium tile-teal btn-ponto" style="display: flex; justify-content: center; align-items: center;">	
-				
-				Ponto	
-			</div>
-		</a>
-
-		-->
-		';
+			<!-- Botão internação -->
+			<a  href="painel.php?int=1"  > 
+				<div class="thumbnail tile tile-medium tile-teal" style="display: flex; justify-content: center; align-items: center;">	
+					
+					Interna&ccedil;&atilde;o 	
+				</div>
+			</a>
+			';
+		if( $_SESSION["perfil"] <> "alimentacao"){
+			echo'	
+			<!-- Em desenvolvimento 
+			
+			 Botão sadt 
+			<a  href="painel.php?sadt=1"  > 
+				<div class="thumbnail tile tile-medium tile-teal" style="display: flex; justify-content: center; align-items: center;">	
+					
+					SADT 	
+				</div>
+			</a>
+	
+	
+	
+			 Botão Pronto 
+			<a  href="principal.php?ponto=1"  > 
+				<div class="thumbnail tile tile-medium tile-teal btn-ponto" style="display: flex; justify-content: center; align-items: center;">	
+					
+					Ponto	
+				</div>
+			</a>
+	
+			-->
+			';
+		}
 	}
 		
 

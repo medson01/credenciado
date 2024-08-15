@@ -11,7 +11,10 @@
 	}else{
 		$exibir_medico =  'style="display: none;"';
 	}
-  
+  	
+	if($_SESSION["perfil"] == 'alimentacao'){
+		$exibir_medico =  'style="display: none;"';
+	}
 
 // NAVEGAÇÃO ENTRE AS PÁGINAS
 // ==========================================
@@ -26,9 +29,11 @@ $itens_por_pagina = 5;
   $pagina = 0;
  }
 // ===========================================
-
+ if($_SESSION["perfil"] == "alimentacao"){
+  $a = "SELECT prorrogacao.id as id_prorrogacao, prorrogacao.medico_solicitante, prorrogacao.motivo, prorrogacao.motivo_autorizacao, prorrogacao.data_inicial,prorrogacao.data_final, prorrogacao.data_inicial_aut,prorrogacao.data_final_aut,prorrogacao.dias_solicitados, prorrogacao.dias_autorizados, prorrogacao.qtd_motora, prorrogacao.qtd_respiratoria, prorrogacao.qtd_motora_aut, prorrogacao.qtd_respiratoria_aut,prorrogacao.data_prorrogacao, prorrogacao.data_autorizacao, prorrogacao.status, imagem.id as id_imagem, imagem.nome, imagem FROM prorrogacao INNER JOIN imagem on imagem.id_prorrogacao = prorrogacao.id WHERE prorrogacao.id_internamento=".$_GET['id']." AND prorrogacao.status=2"; ; 
+  }else{
   $a = "SELECT prorrogacao.id as id_prorrogacao, prorrogacao.medico_solicitante, prorrogacao.motivo, prorrogacao.motivo_autorizacao, prorrogacao.data_inicial,prorrogacao.data_final, prorrogacao.data_inicial_aut,prorrogacao.data_final_aut,prorrogacao.dias_solicitados, prorrogacao.dias_autorizados, prorrogacao.qtd_motora, prorrogacao.qtd_respiratoria, prorrogacao.qtd_motora_aut, prorrogacao.qtd_respiratoria_aut,prorrogacao.data_prorrogacao, prorrogacao.data_autorizacao, prorrogacao.status, imagem.id as id_imagem, imagem.nome, imagem FROM prorrogacao INNER JOIN imagem on imagem.id_prorrogacao = prorrogacao.id WHERE prorrogacao.id_internamento=".$_GET['id']; 
-
+  }
 $d =  "  ORDER BY `id_prorrogacao` DESC   LIMIT ".$pagina.", ".$itens_por_pagina;
 
   $sql1 = $a.$d;
@@ -62,6 +67,7 @@ $d =  "  ORDER BY `id_prorrogacao` DESC   LIMIT ".$pagina.", ".$itens_por_pagina
   <style type="text/css">
 <!--
 .style1 {font-size: 10px}
+.style2 {font-style: italic}
 -->
   </style>
   
@@ -113,18 +119,21 @@ $d =  "  ORDER BY `id_prorrogacao` DESC   LIMIT ".$pagina.", ".$itens_por_pagina
     ?>
     
     <tr style="font-size: 10px; text-align: justify">
-      <td width="26" rowspan="5" align="center" style="vertical-align: inherit; border-radius: 25px 0px 0px 25px; <?php if(isset($aquivos["status"]) && $aquivos["status"] <> 2){ echo"background: #95FFFF;"; }else{ echo 'background: #C0C0C0; ';}  ?> ">
-        <br>
-		<span style="font-size: small; font-weight: 800; ">
-      		<?php  
-				if(isset($aquivos["status"]) && $aquivos["status"] <> 2){
+      <td width="26" rowspan="4" align="center" style="vertical-align: inherit; border-radius: 25px 0px 0px 25px; <?php if( isset($aquivos["status"]) && $aquivos["status"] == 2){ echo "background: #95FFFF;"; }elseif($aquivos["status"] == 0){ echo "background: indianred;"; }else{ echo 'background: #C0C0C0; ';}  ?> ">
+        <p>
+		
+		 </p>
+        <p><br>
+            <span style="font-size: small; font-weight: 800; ">
+              <?php  
+				if(isset($aquivos["status"]) && ( $aquivos["status"] <> 2 && $aquivos["status"] <> 0) ){
 					echo "<a  id='ticket' href = 'internacao_menu.php?id=".$_GET['id']."&prorro=".$aquivos["id_prorrogacao"]."'>".$aquivos['id_prorrogacao']."</a>";
 				}else{
 					echo $aquivos['id_prorrogacao'];
 				
 				} 
 			?>
-  	  </span>	  </td>
+                </span> </p></td>
       <td colspan="11"  align="left" bgcolor="#95FFFF" >
 	  
 	  <div >
@@ -187,14 +196,18 @@ RESPIRATÓRIA:
 <td colspan="11"  align="left" bgcolor="#A6FFA6" >
 
 <!-- ADICIONAR MOTÃO SOLICITAR ALIMENTAÇÃO -->
-<div align="center" class="style1" style="width:50%; display:inline-block; text-align: end;">AUTORIZAÇÃO</div><div style="width:50%; display:inline-block; text-align: end;">
+<div align="center" class="style1" style="width:45%; display:inline-block; text-align: end;">AUTORIZAÇÃO</div><div style="width:50%; display:inline-block; text-align: end;">
 	    <div align="right"  class="style1">
     <?php  if(isset($aquivos['data_autorizacao'])){ echo date("j/n/Y,  H:i:s",strtotime($aquivos['data_autorizacao'])); }else{ echo ''; } ?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
        &nbsp;&nbsp;&nbsp;&nbsp;</div>
 </td>
     <tr style="font-size: 10px; text-align: justify; ">
       <td align="left"></td>
-      <td colspan="9" align="left" ><div <?php if($_SESSION["perfil"] <> 'medico' && $aquivos["status"] <> 2){ echo 'style="display: none;"';}else{ echo'style="display: block;"'; } ?> > <?php echo "PERÍODO: &nbsp;&nbsp; <span style='font-size: 12px;'><strong>".formatar_banco_data($aquivos['data_inicial_aut'])."</span></strong>&nbsp;&nbsp;  Á &nbsp;&nbsp; <strong><span style='font-size: 12px;'>".formatar_banco_data($aquivos['data_final_aut'])."</span></strong>, <strong><span style='font-size: 12px;'>".$aquivos['dias_autorizados']."</span></strong> &nbsp;&nbsp; DIÁRIA(S)."; ?> <br />
+      <td colspan="9" align="left" >
+	     <div <?php if($aquivos['status'] == 0){ echo 'style="display: block;"';}else{ echo'style="display: none;"'; } ?> >
+		   <h5 align="center"><em>Prorrogação Negada!	  	   </em></h1>
+	     </div>
+	  <div <?php if($aquivos["status"] <> 2  ){ echo 'style="display: none;"';}else{ echo'style="display: block;"'; } ?> > <?php echo "PERÍODO: &nbsp;&nbsp; <span style='font-size: 12px;'><strong>".formatar_banco_data($aquivos['data_inicial_aut'])."</span></strong>&nbsp;&nbsp;  Á &nbsp;&nbsp; <strong><span style='font-size: 12px;'>".formatar_banco_data($aquivos['data_final_aut'])."</span></strong>, <strong><span style='font-size: 12px;'>&nbsp;&nbsp;".$aquivos['dias_autorizados']."</span></strong> &nbsp;&nbsp; DIÁRIA(S)."; ?> <br />
         FISIOTERAPIAS &nbsp;&nbsp; MOTORA:<strong><span style='font-size: 12px;'>
   <?php if(isset($aquivos['qtd_motora_aut'])){ echo  $aquivos['qtd_motora_aut'];}else{ echo "0";} ?>
   </span></strong>,&nbsp;&nbsp;
@@ -206,9 +219,16 @@ RESPIRATÓRIA:
 				echo "<span style='color: blue; font-style: italic;'> Aviso: Quantidade de fisioterapias solicitadas diferete das autorizadas!</br></span> ";
 			}
 		?>
-        OBSERVAÇÕES:<br />
-  <strong><span style='font-size: 12px;'>
-  <textarea id="textarea" class="form-control input-sm" name="textarea"  rows="4" cols="60" onmousemove="auto_grow(this);" onkeyup="auto_grow(this);"  style="font-size:12px; margin-top: 20px; resize:nome; overflow:hidden; width: 100%;" form="internacao_prorrogacao_cadastro"  <?php if((isset($status) && $status == 2) || isset($aquivos['motivo_autorizacao'])){ echo "readonly"; } ?>/>
+        
+        <div  style="position: relative; width:30px; left: 90%; bottom: 30px; position: relative; <?php 	if($_SESSION["perfil"] == 'alimentacao'){ echo 'display: block;" ';}else{ echo ' display: none; "';} ?>  > <a  style='color: blue; font-family: Andale monospace;' href="internacao_menu.php?id=<?php echo $_GET["id"]; ?>&amp;id_prorro=<?php echo $aquivos["id_prorrogacao"]; ?>&amp;data_inicial=<?php echo $aquivos["data_inicial_aut"]; ?>&amp;data_final=<?php echo $aquivos["data_final_aut"]; ?>&amp;dias_autorizados=<?php echo $aquivos["dias_autorizados"]; ?> "  onmouseover="Tip('Adicionar Alimentação!')" onmouseout="UnTip()">
+          <button type="button" class="btn" style="padding:1px"><img src="../imagem/alimentacao01.png" width="20" height="20" style="margin:0" /><strong><span style='font-size: 12px;'></span></strong></button>
+		 </a>
+        </div>
+	</div>
+	<div>
+	OBSERVAÇÕES:
+        <strong><span style='font-size: 12px;'>
+        <textarea id="textarea" class="form-control input-sm" name="textarea"  rows="4" cols="60" onmousemove="auto_grow(this);" onkeyup="auto_grow(this);"  style="font-size:12px; margin-top: 20px; resize:nome; overflow:hidden; width: 100%;" form="internacao_prorrogacao_cadastro"  <?php if((isset($status) && $status == 2)  || (isset($aquivos['motivo_autorizacao'])) ){ echo "readonly"; } ?>/>
   <?php
                                         if(!empty($aquivos['motivo_autorizacao']) ){
                                            echo $aquivos['motivo_autorizacao']; 
@@ -227,34 +247,19 @@ RESPIRATÓRIA:
 			   echo "<span class='glyphicon glyphicon-warning-sign' style='color: slategrey; font-size: 15px;' ></span>"; 
             }elseif (is_null($aquivos['status'])){
               echo "";
+			}elseif ($aquivos['status'] == 0){
+			  echo "<font ><strong><a  style='font-family: Andale monospace;' href=\"javascript:func()\" onmouseover=\"Tip('Prorrogação Negada!')\" onmouseout=\"UnTip()\"><span class='
+glyphicon glyphicon-ban-circle' style='color: blue; font-size: 20px;' ></span></font>"; 
             }else {           
               echo "<font ><strong><a  style='font-family: Andale monospace;' href=\"javascript:func()\" onmouseover=\"Tip('Prorrogação autorizada!')\" onmouseout=\"UnTip()\"><span class='
-glyphicon glyphicon-ok' style='color: blue; font-size: 15px;' ></span></font>";                     
+glyphicon glyphicon-ok' style='color: blue; font-size: 18px;' ></span></font>";                     
             }
 			
 
         ?>
       </span></div></td>
     </tr>
-    <tr style="font-size: 10px; text-align: justify; " bgcolor="#A6FFA6" >
-      <td align="left">      </td>    
-      <td colspan="9" align="left" >
-	   
-	      <div align="center" class="style1" style="width:55%; display:inline-block; text-align: end;">
-	        <div align="right">ALIMENTAÇÃO</div>
-	      </div>
-	      <div align="right" style="width:40%; display:inline-block; text-align: end;"> 
-		  	<font >
-				<strong>
-					<a  style='color: blue; font-family: Andale monospace;'href="internacao_menu.php?id=<?php echo $_GET["id"]; ?>&id_prorro=<?php echo $aquivos["id_prorrogacao"]; ?>&data_inicial=<?php echo $aquivos["data_inicial_aut"]; ?>&data_final=<?php echo $aquivos["data_final_aut"]; ?>&dias_autorizados=<?php echo $aquivos["dias_autorizados"]; ?> "  onmouseover="Tip('Adicionar Alimentação!')" onmouseout="UnTip()">
-	      <button type="button" class="btn" style="padding:1px"><img src="../imagem/alimentacao01.png" width="20" height="20" style="margin:0" /></button>
-				  </a> 
-		  		</span>
-		  	</font>        
-		  </div>
-	  </td>
-	  <td align="center" style="border-radius: 0px 0px 25px 0px ; align-content: center;">&nbsp;</td>
-  </tr>
+    
     <?php 
             $w = $aquivos['id_prorrogacao'];
               } ?>

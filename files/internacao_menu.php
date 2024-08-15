@@ -83,22 +83,26 @@ switch ($sub_menu) {
 //===================================================================================
 //EX.: array(TITULO, PAGINAS)
 
-If( $_SESSION["perfil"] <> "aut_internacao") {
-$tabela = array
+If( $_SESSION["perfil"] == "aut_internacao") {					
+	$tabela = array
+					(
+            array("Guia_internação","internacao_usuario.php"),  
+			array("Autorização_TOTVS","internacao_aut_totvs_formulario.php")
+					);
+
+/*}elseif( $_SESSION["perfil"] == "alimentacao"){
+	$tabela = array
+					(
+            array("Guia_internação","internacao_usuario.php"),  
+			array("Alimentação","internacao_alimentacao_lista.php"),
+					);
+*/					
+}else{
+	$tabela = array
 					(
             array("Guia_internação","internacao_usuario.php"),  
 			array("Prorrogação","internacao_prorrogacao_lista.php"),
-			///array("Prorrogação","internacao_prorrogacao_lista.php"),
 			array("Alimentação","internacao_alimentacao_lista.php"),
-			//array("Acomodação","internacao_acomodacao_formulario.php")
-  
-					);
-}else{
-$tabela = array
-					(
-            array("Guia_internação","internacao_usuario.php"),  
-						array("Autorização_TOTVS","internacao_aut_totvs_formulario.php")
-  
 					);
 }
 //====================================================================================

@@ -46,10 +46,12 @@
 			 $data_final_aut1 = $registro["data_final_aut"];
 		}
 	
-		if(empty($data_final_aut1)){
-			$data_inicial = $data_final1;
-		}else{
-			$data_inicial = $data_final_aut1;
+		if(isset($data_final1) || isset($data_final_aut1)){
+			if(empty($data_final_aut1)){
+				$data_inicial = $data_final1;
+			}else{
+				$data_inicial = $data_final_aut1;
+			}
 		}
 	}
 // CONTROLE DE EXIBIÇÃO DE FORMULARIOS
@@ -102,7 +104,7 @@
                             <tr>
                               <td colspan="6" bgcolor="#CCCCCC">
                                 <div align="center" class="style5"> 
-                              <div align="center">SOLICITAÇÃO DE PRORROGAÇÃO </div></td>
+                              <div align="center">PRORROGAÇÃO Nº <?php if(isset($_GET['prorro'])){ echo $_GET['prorro']; } ?></div></td>
                             </tr>
                             <tr>
                               <td width="13%">&nbsp;</td>
@@ -302,7 +304,7 @@
 
                             <tr>
                               <td colspan="6" ><span class="style13">Justificativa da prorrogação
-                                <textarea minlength="5" required id="motivo" class="form-control input-sm" name="motivo"  style="font-size:12px; margin: 0px; height: 100px; width: 100%;" form="internacao_prorrogacao_cadastro" <?php if (isset($motivo) && $_GET['prorro']<>0) { echo "readonly"; }  ?> /><?php
+                                <textarea minlength="5" required id="motivo_prorro" class="form-control input-sm" name="motivo"  style="font-size:12px; margin: 0px; height: 100px; width: 100%;" form="internacao_prorrogacao_cadastro" <?php if (isset($motivo) && $_GET['prorro']<>0) { echo "readonly"; }  ?> /><?php
                                         if(isset($motivo) && $_GET['prorro']<>0){
                                           echo $motivo;
                                         }
@@ -383,7 +385,7 @@
                         <tr>
                          <td colspan="3" >
                              <span class="style13">Justificativa do médico</span>
-                                <textarea id="motivo_autorizacao" class="form-control input-sm" name="motivo_autorizacao"  style="font-size:12px; margin: 0px; height: 100px; width: 100%;" form="internacao_prorrogacao_cadastro"  <?php if(isset($status) && $status == 2){ echo "readonly"; } ?>/><?php
+                                <textarea id="motivo_autorizacao_prorro" class="form-control input-sm" name="motivo_autorizacao"  style="font-size:12px; margin: 0px; height: 100px; width: 100%;" form="internacao_prorrogacao_cadastro"  <?php if(isset($status) && $status == 2){ echo "readonly"; } ?>/><?php
                                         if(isset($motivo_autorizacao)){
                                           echo $motivo_autorizacao;
                                         }
@@ -436,17 +438,45 @@
 				  <div class="modal-footer" style="background-color: red;">
 				  
 				  
-            <button id="cancelar" onclick="fecharProModal()" type="button" class="btn btn-default" data-dismiss="modal" style="color:#FFFFFF;  background-color: black; border-color: #f4f7fb;" >
+            	<button id="cancelar" onclick="fecharProModal()" type="button" class="btn btn-default" data-dismiss="modal" style="color:#FFFFFF;  background-color: black; border-color: #f4f7fb;" >
         		 		Cancelar 
         		</button>
-        		<button type="submit" <?php if( (isset($status) && $status == 1 && $_SESSION["perfil"] <> 'medico') || (isset($status) && $status == 2) ){ echo "disabled"; } ?> class="btn btn-default" style="color:#FFFFFF;  background-color: black; border-color: #f4f7fb;" /> Incluir 
-            </button>
+				<a onclick="naoAutorizar(<?php echo $_GET['id'].",".$_GET['prorro'];?>)">
+				<span  class="btn btn-default" style="color:#FFFFFF;  background-color: black; border-color: #f4f7fb; <?php if( $_SESSION['perfil'] <> 'medico') { echo 'display:none;';} ?> " /> 
+						Não autorizar 
+				</span></a>
+								
+        		<button type="submit" <?php if( (isset($status) && $status == 1 && $_SESSION["perfil"] <> 'medico') || (isset($status) && $status == 2) ){ echo "disabled"; } ?> class="btn btn-default" style="color:#FFFFFF;  background-color: black; border-color: #f4f7fb;" /> 
+						<?php if($_SESSION["perfil"] == 'medico'){ echo 'Autorizar'; }else { echo 'Solicitar'; } ?>  
+            	</button>
         	</div>	
       </div>
       ...
 </div>
 </form> 
 
+<!-- NEGAR AUTORIZAÇÃO -->
+<script>
+function naoAutorizar(id_internacao, id_prorro ) {
+	var motivo_autorizacao = document.getElementById("motivo_autorizacao_prorro").value;
+	if (confirm("Você deseja realmente negar a solicitação?")) {
+	  window.location.href="internacao_prorrogacao_cadastro.php?negar=1&id_internacao="+id_internacao+"&id_prorro="+id_prorro+"&motivo_autorizacao="+motivo_autorizacao; 
+	}   
+}
+</script>
+
+<!-- LETRAS MAÚSCULAS --> 
+<script type="text/javascript">
+$("#medico_solicitante").on("input", function(){
+	$(this).val($(this).val().toUpperCase());
+});
+$("#motivo_autorizacao_prorro").on("input", function(){
+	$(this).val($(this).val().toUpperCase());
+});
+$("#motivo_prorro").on("input", function(){
+	$(this).val($(this).val().toUpperCase());
+});
+</script> 
 				
 <!-- SCRIPT DE CONTROLE DO MODAL -->			
 <script>

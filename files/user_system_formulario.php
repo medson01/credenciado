@@ -71,6 +71,7 @@
                               <td>&nbsp;</td>
                               <td><select class="form-matric" style="background:#faffbd; width:100%;" id="perfil" name="perfil" required="required" >
                                   <option  value="administrador">Administrador </option>
+								  <option  value="alimentacao">Alimentação </option>
 								  <option  value="callcenter">Callcenter</option>
                                   <option  value="clinica">Clinica</option>
 								  <option  value="clin_lab">Clínica e Laboratório </option>

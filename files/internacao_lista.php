@@ -46,7 +46,7 @@ ORDER by prorrogacao.id DESC
 */
 
  
-  If( $_SESSION["perfil"] == "usuario"){
+  If( $_SESSION["perfil"] == "usuario" || $_SESSION["perfil"] == "alimentacao"){
 
     if(isset($_GET['buscar'])){
 
@@ -109,7 +109,7 @@ ORDER by prorrogacao.id DESC
     $d =  "  DESC LIMIT $pagina, $itens_por_pagina ;";
 
   
-  $sql1 = $a.$d;
+ $sql1 = $a.$d;
 
   
   $stmt1 = $pdo->prepare($sql1);
@@ -553,7 +553,7 @@ function excluir(id) {
 
                   //Botão Saída   
 
-                       if (empty($registro["dat_saida"]) && $_SESSION["perfil"] <> "aut_internacao"){                
+                       if (  (empty($registro["dat_saida"])) && ($_SESSION["perfil"] <> "aut_internacao") && ( $_SESSION["perfil"] <> "alimentacao") ){                
                         echo " 
                                     <!-- Botão sair 
                                             <a class='btn btn-primary  btn-xs'  onclick='saida(".$registro['autorizacao'].",".$dat_saida[$i].",".$data[$i].")'><span style='font-size: 10px; align: center;'> Saída </center> </span> </a>

@@ -4,10 +4,34 @@
 // FORMATAR A DATA PARA O FORMATO DO BANCO ENG
   require_once "../func/formatar_data_banco.php";
   
-// ENTRADA DE DADOS
-	// SOLICITAÇÃO
+  
+  
+// NEGAR AUTORIZAÇÃO DE PRORROGAÇÃO
+if(isset($_GET["negar"])){ 
+	$id_prorro = $_GET["id_prorro"];
+	$id_internacao = $_GET["id_internacao"];
+	$motivo_autorizacao  = $_GET["motivo_autorizacao"];
+	$data_autorizacao = date("Y-m-d H:i:s");
+		
+	$sql ='UPDATE `prorrogacao` SET `status`= 0 , `motivo_autorizacao`= "'.$motivo_autorizacao.'" , `data_autorizacao` = "'.$data_autorizacao.'" WHERE `id` = '.$id_prorro;
 	
-
+	$stmt = $pdo->prepare($sql);
+	$stmt->execute();
+	
+	// AVISO NA LISTA INTERNAÇÃO QUE TEM UMA SOLICITAÇÃO DE PRORROGAÇÃO E QUE JÁ FOI AUTORIZADA PARA OS MÉDICOS
+	$sql = "UPDATE `internamento` SET `prorrogacao`= NULL WHERE id=".$id_internacao;
+	$stmt = $pdo->prepare($sql);
+	
+		if ($stmt->execute()){
+			echo"<script language='javascript' type='text/javascript'>alert('Prorroga\u00e7\u00e3o negada!');window.location.href='internacao_menu.php?id=".$id_internacao."&prorro=x';</script>";
+			exit;	
+		}	
+	
+	
+	}
+	
+	
+// SOLICITAÇÃO AUTORIZAÇÃO  
 	if($_POST["status"] == 1){ 	
 		$status = $_POST["status"];
 		$id_internamento = $_POST["id_internamento"];
@@ -28,8 +52,9 @@
 		$url  = $_POST["url"];
 	}
 
-	// AUTORIZAÇÃO
+// AUTORIZAR SOLICITAÇÃO 
 		if($_POST["status"] == 2){ 	
+			$id_internamento = $_POST["id_internamento"];
 		    $id_prorro = $_POST["id_prorro"];
 			$data_inicial_aut  = formatar_data_banco($_POST["data_inicial2"]);
 	 	    $data_final_aut  = formatar_data_banco($_POST["data_final2"]);
@@ -50,8 +75,13 @@
 	
 	$stmt = $pdo->prepare($sql);
 	$stmt->execute();
-	
 	$ultimo_id_prorrogacao = $pdo->lastInsertId();
+	
+	// AVISO NA LISTA INTERNAÇÃO QUE TEM UMA SOLICITAÇÃO DE PRORROGAÇÃO PARA OS MÉDICOS
+	$sql = "UPDATE `internamento` SET `prorrogacao`= 1 WHERE id=".$id_internamento;
+	$stmt = $pdo->prepare($sql);
+	$stmt->execute();
+
 
 	if(isset($ultimo_id_prorrogacao) && !empty($ultimo_id_prorrogacao)){
 	// TRATAMENTO IMAGEM
@@ -125,6 +155,12 @@
 		  WHERE `id` = '.$id_prorro;
 	
 	$stmt = $pdo->prepare($sql);
+	$stmt->execute();
+	
+// AVISO NA LISTA INTERNAÇÃO QUE TEM UMA SOLICITAÇÃO DE PRORROGAÇÃO E QUE JÁ FOI AUTORIZADA PARA OS MÉDICOS
+	$sql = "UPDATE `internamento` SET `prorrogacao`= NULL WHERE id=".$id_internamento;
+	$stmt = $pdo->prepare($sql);
+	
 		if ($stmt->execute()){
 			echo"<script language='javascript' type='text/javascript'>alert('Prorroga\u00e7\u00e3o autorizada!');window.location.href='".$url."&prorro=x';</script>";
 			exit;	

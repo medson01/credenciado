@@ -5,7 +5,9 @@
   // FORMATAR A DATA PARA O FORMATO DO BANCO ENG
   require_once "../func/formatar_data_banco.php";
 
-  // RECEBIMENTO DE DADOS HOSPITAL SOLICITA플O DE ALIMENTA플O
+
+// ENTRADA DE DADOS
+	// SOLICITA플O
 if($_POST["status"] == 1){ 	
 	$id_internamento = $_POST["id"]; 
 	$id_prorro = $_POST["id_prorro"]; 
@@ -14,10 +16,10 @@ if($_POST["status"] == 1){
 	$nutrologo = utf8_decode($_POST["nutrologo"]);
 	$crm_rqe = $_POST["crm_rqe"];echo "<br>";
 	$qtd_diarias = $_POST["qtd_diarias"];
-	$vias = utf8_decode($_POST["vias"]);
+	$terapia_nutricial = utf8_decode($_POST["vias"]);
 	$por_dia = $_POST["por_dia"];
 	//$total_alimentacao  = $_POST["total_alimentacao"];	// N홒 ADICIONAR NO BANCO PQ O CALCULO DE qtd_diarias X por_dia = TOTAL DE ALIMENTA플O
-	$motivo = utf8_decode($_POST["motivo"]);
+	$motivo_solicitacao = utf8_decode($_POST["motivo_ali"]);
 	$foto = $_FILES['imagem'];
 	$evento = utf8_decode($_POST["evento"]);
 	$descricao = utf8_decode($_POST["descricao"]);
@@ -26,12 +28,20 @@ if($_POST["status"] == 1){
 	$url  = $_POST["url"];
 }
 
-
+// AUTORIZA플O
+if($_POST["status"] == 2){ 
+	$id_internamento = $_POST["id"]; 
+	$id_ali= $_POST["id_ali"];
+	$qtd_diarias_aut = $_POST["dias_autorizados"];
+	$qtd_por_dia_aut = $_POST["por_dia_aut"];
+	$motivo_autorizacao = utf8_decode($_POST["medico_aut"]);
+	$url  = $_POST["url"];
+}
 		
 	
 // INSERIR A SOLICITA플O NO BANCO
 	if($_POST["status"] == 1){ 	
-	  $sql = "INSERT INTO `alimentacao`(`id`, `id_internamento`, `id_prorro`, `medico_solicitante`, `crm`, `nutrologo`, `crm_rqe`, `qtd_diarias`, `vias`, `por_dia`, `motivo`, `data_inicial`, `data_final`, `data_sol_alimentacao`, `status`) VALUES (null,".$id_internamento.",".$id_prorro.",'".$medico_solicitante."',".$crm.",'".$nutrologo."',".$crm_rqe.",".$qtd_diarias.",'".$vias."',".$por_dia.",'".$motivo."',".$data_inicial.",".$data_final.",'".date("Y-m-d H:i:s" )."',1)";
+	  $sql = "INSERT INTO `alimentacao`(`id`, `id_internamento`, `id_prorro`, `medico_solicitante`, `crm`, `nutrologo`, `crm_rqe`, `qtd_diarias`, `terapia_nutricial`, `por_dia`, `motivo_solicitacao`, `data_inicial`, `data_final`, `data_sol_alimentacao`, `status`) VALUES (null,".$id_internamento.",".$id_prorro.",'".$medico_solicitante."',".$crm.",'".$nutrologo."',".$crm_rqe.",".$qtd_diarias.",'".$terapia_nutricial."',".$por_dia.",'".$motivo_solicitacao."',".$data_inicial.",".$data_final.",'".date("Y-m-d H:i:s" )."',1)";
 
 	$stmt = $pdo->prepare($sql);
 	$stmt->execute();
@@ -94,24 +104,25 @@ if($_POST["status"] == 1){
 					exit;
 					
 				}
-			   }
+			}
+		}else{
+					echo"<script language='javascript' type='text/javascript'>alert('Problema na base alimenta\u00e7\u00e3oo. Solicita\u00e7\u00e3o n\u00e3o encaminhada!');window.location.href='internacao_menu.php?id=".$id_internamento."&ali=0';</script>";
+					exit;
 		}
+
 	}else{
 	
 	 $sql ='UPDATE `alimentacao` SET 
-			`data_inicial_aut` = "'.$data_inicial_aut.'", 
-			`data_final_aut`   = "'.$data_final_aut.'" , 
-			`dias_autorizados` = '.$dias_autorizados.',  
-			`motivo_autorizacao`    = "'.$motivo_autorizacao.'",  
-			`data_autorizacao` = "'.$data_autorizacao.'", 
-			`qtd_motora_aut` = "'.$qtd_motora_aut.'", 
-			`qtd_respiratoria_aut` = "'.$qtd_respiratoria_aut.'", 
+	 		`qtd_diarias_aut` = "'.$qtd_diarias_aut.'", 
+			`qtd_por_dia_aut` = "'.$qtd_por_dia_aut.'", 
+			`motivo_autorizacao` = "'.$motivo_autorizacao.'", 
 			`status`= 2  
-		  WHERE `id` = '.$id_prorro;
+		  WHERE `id` = '.$id_ali;
 	
 	$stmt = $pdo->prepare($sql);
+
 		if ($stmt->execute()){
-			echo"<script language='javascript' type='text/javascript'>alert('Prorroga\u00e7\u00e3o autorizada!');window.location.href='".$url."&prorro=x';</script>";
+			echo"<script language='javascript' type='text/javascript'>alert('Alimenta\u00e7\u00e3o autorizada!');window.location.href='credenciado/files/internacao_menu.php?id=".$id_internamento."&id_prorro=';</script>";
 			exit;	
 		}	
 	}
