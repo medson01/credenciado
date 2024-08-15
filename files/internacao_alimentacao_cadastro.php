@@ -4,9 +4,27 @@
   require_once "../config/config.php";
   // FORMATAR A DATA PARA O FORMATO DO BANCO ENG
   require_once "../func/formatar_data_banco.php";
+  
 
-
-// ENTRADA DE DADOS
+// NEGAR AUTORIZAÇÃO DE PRORROGAÇÃO
+if(isset($_GET["negar"])){ 
+	$id_ali = $_GET["id_ali"];
+	$id_internacao = $_GET["id_internacao"];
+	$motivo_autorizacao  = $_GET["motivo_autorizacao"];
+	$data_autorizacao = date("Y-m-d H:i:s");
+		
+	$sql ='UPDATE `alimentacao` SET `status`= 0 , `motivo_autorizacao`= "'.$motivo_autorizacao.'" , `data_autorizacao` = "'.$data_autorizacao.'" WHERE `id` = '.$id_ali;
+	
+	$stmt = $pdo->prepare($sql);
+	
+	if ($stmt->execute()){
+			echo"<script language='javascript' type='text/javascript'>alert('Alimenta\u00e7\u00e3o negada!');window.location.href='internacao_menu.php?id=".$id_internacao."&ali=x';</script>";
+			exit;	
+	}	
+	
+	
+	}
+	
 	// SOLICITAÇÃO
 if($_POST["status"] == 1){ 	
 	$id_internamento = $_POST["id"]; 
@@ -35,6 +53,7 @@ if($_POST["status"] == 2){
 	$qtd_diarias_aut = $_POST["dias_autorizados"];
 	$qtd_por_dia_aut = $_POST["por_dia_aut"];
 	$motivo_autorizacao = utf8_decode($_POST["medico_aut"]);
+	$data_autorizacao = date("Y-m-d H:i:s");
 	$url  = $_POST["url"];
 }
 		
@@ -116,13 +135,14 @@ if($_POST["status"] == 2){
 	 		`qtd_diarias_aut` = "'.$qtd_diarias_aut.'", 
 			`qtd_por_dia_aut` = "'.$qtd_por_dia_aut.'", 
 			`motivo_autorizacao` = "'.$motivo_autorizacao.'", 
+			`data_autorizacao` = "'.$data_autorizacao.'", 
 			`status`= 2  
 		  WHERE `id` = '.$id_ali;
 	
 	$stmt = $pdo->prepare($sql);
 
 		if ($stmt->execute()){
-			echo"<script language='javascript' type='text/javascript'>alert('Alimenta\u00e7\u00e3o autorizada!');window.location.href='credenciado/files/internacao_menu.php?id=".$id_internamento."&id_prorro=';</script>";
+			echo"<script language='javascript' type='text/javascript'>alert('Alimenta\u00e7\u00e3o autorizada!');window.location.href='internacao_menu.php?id=".$id_internamento."&id_prorro=';</script>";
 			exit;	
 		}	
 	}

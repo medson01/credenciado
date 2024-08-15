@@ -37,14 +37,15 @@
 	}else{
 
 		if(isset($_GET['id_prorro'])){
-			echo $sql="SELECT *
+			echo $sql="SELECT 
+			  id_prorro, SUM(qtd_diarias_aut) AS qtd_diarias_aut
 			FROM alimentacao 
-			WHERE alimentacao.id =".$_GET['id_prorro'];
+			WHERE alimentacao.id_prorro  =".$_GET['id_prorro'];
 	
 			$stmt = $pdo->prepare($sql);
 			$stmt->execute();
 			while($registro = $stmt->fetch(PDO::FETCH_ASSOC)) { 
-		
+				$qtd_diarias_aut = $registro["qtd_diarias_aut"];
 		
 			}
 		
@@ -219,7 +220,7 @@
                                   <?php
 							
                              	echo ' <input  style="margin-left: 60px;" name="dias_autorizados" type="text" class="form-control input-sm" style="font-size: 10px" size="44" ';
-								if (isset($dias_autorizados)) {
+								if (isset($qtd_diarias)) {
 									echo "value='".$dias_autorizados."' "; 
 							   	}else{
 									echo "value='".$_GET['dias_autorizados']."' ";
@@ -261,18 +262,29 @@
                               <td width="17%">&nbsp;</td>
                             </tr>
                             <tr>
-                              <td colspan="10"><div align="center"><span>QUANTIDADE  DE DIÁRIAS </span></div></td>
+                              <td colspan="10" bgcolor="#F1E07E"><div align="center"><span>DIÁRIAS </span>DE ALIMENTAÇÃO </div></td>
+                            </tr>
+                            <tr>
+                              <td colspan="10">&nbsp;</td>
                             </tr>
                             <tr>
                               <td colspan="10"><div align="center">
                                 <select id='qtd_diarias' name='qtd_diarias' class='form-control input-sm' <?php if(isset($desativar)){ echo $desativar;} ?> required="required" style="width:50px">
                                   <?php
-								  	if(isset($dias_autorizados)){
-										echo "<option value='".$dias_autorizados."'>".$dias_autorizados."</option>";
+								    $dias_autorizados = $_GET['dias_autorizados']; // QTD AUTORIDADO NA PRORROGAÇÃO
+									
+								  	if(!isset($_GET['dias_autorizados'])){
+										// VALOR JÁ AUTORIZADO
+										echo "<option value='".$qtd_diarias."'>".$qtd_diarias."</option>";
 									}else{
-                  				     for ($i=0; $i <= $_GET['dias_autorizados']; $i++) {
-                                        echo "<option value='".$i."'>".$i."</option>";
-                                     }
+										// VALOR PARA AUTORIZAR
+										if(isset($qtd_diarias_aut) && empty($qtd_diarias_aut)){//QTD AUTORIZADO DENTRO DA ALIMENTAÇÃO
+											$dias_autorizados = $dias_autorizados - $qtd_diarias_aut;
+										}  
+										
+										 for ($i=0; $i <= $dias_autorizados; $i++) {
+											echo "<option value='".$i."'>".$i."</option>";
+										 }
 									}
 
 								   ?>
@@ -337,7 +349,10 @@
                               <td>&nbsp;</td>
                             </tr>
                             <tr>
-                              <td colspan="10"><div align="center"><span>QUANTIDADE  <span>DE ALIMENTAÇÃO</span> POR DIA  </span></div></td>
+                              <td colspan="10" bgcolor="#F1E07E"><div align="center"><span>QUANTIDADE  <span>DE ALIMENTAÇÃO</span> POR DIA  </span></div></td>
+                            </tr>
+                            <tr>
+                              <td colspan="10">&nbsp;</td>
                             </tr>
                             <tr>
                               <td colspan="10"><div align="center">
@@ -541,9 +556,12 @@
             	<button id="cancelar" onclick="fecharModal()" type="button" class="btn btn-default" data-dismiss="modal" style="color:#FFFFFF;  background-color: black; border-color: #f4f7fb;" >
         		 		Cancelar 
         		</button>
-				
+				<a onclick="naoAutorizar(<?php echo $_GET['id'].",".$_GET['ali'];?>)">
+				<span  class="btn btn-default" style="color:#FFFFFF;  background-color: black; border-color: #f4f7fb; <?php if( $_SESSION['perfil'] <> 'medico') { echo 'display:none;';} ?> " /> 
+						Não autorizar 
+				</span></a>
         		<button type="submit" class="btn btn-default" style="color:#FFFFFF;  background-color: black; border-color: #f4f7fb; <?php if( (isset($_GET['ali']) && $_SESSION['perfil'] == 'alimentacao') || $status == 2 ) { echo 'display:none;';} ?> " /> 
-				<?php if($_SESSION['perfil'] == 'medico'){ echo 'Autorizar'; }else{echo 'Incluir';} ?> 
+				<?php if($_SESSION['perfil'] == 'medico'){ echo 'Autorizar'; }else{echo 'Solicitar';} ?> 
 				</button>
         	</div>	
       </div>
@@ -551,7 +569,15 @@
 </div>
 </form>
 
-
+<!-- NEGAR AUTORIZAÇÃO -->
+<script>
+function naoAutorizar(id_internacao, id_ali ) {
+	var motivo_autorizacao = document.getElementById("medico_aut").value;
+	if (confirm("Você deseja realmente negar a solicitação?")) {
+	  window.location.href="internacao_prorrogacao_cadastro.php?negar=1&id_internacao="+id_internacao+"&id_ali="+id_ali+"&motivo_autorizacao="+motivo_autorizacao; 
+	}   
+}
+</script>
 
 <!-- LETRAS MAÚSCULAS --> 
  <script type="text/javascript">
