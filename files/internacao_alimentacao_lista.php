@@ -154,28 +154,29 @@ $itens_por_pagina = 5;
 				}
 			?>
 </span></strong><br />
-PERÍODO DA PRORROGAÇÃO:<?php echo " &nbsp;&nbsp; <span style='font-size: 12px;'><strong>".formatar_banco_data($aquivos['data_inicial_aut'])."</span></strong>&nbsp;&nbsp;  Á &nbsp;&nbsp; <strong><span style='font-size: 12px;'>".formatar_banco_data($aquivos['data_final_aut'])."</span></strong>, <span style='font-size: 12px;'><strong>&nbsp;&nbsp;".$aquivos['dias_autorizados']."</span></strong> &nbsp;&nbsp;diária(s)."; ?><br />
-MÉDICO SOLICITANTE:
+PERÍODO DA PRORROGAÇÃO:<?php echo " &nbsp;&nbsp; <span style='font-size: 12px;'><strong>".formatar_banco_data($aquivos['data_inicial_aut'])."</span></strong>&nbsp;&nbsp;  Á &nbsp;&nbsp; <strong><span style='font-size: 12px;'>".formatar_banco_data($aquivos['data_final_aut'])."</span></strong>, <span style='font-size: 12px;'>"; ?><br />
+<span class="style2"> DIÁRIAS : </span><span style="font-size: 12px; color: #FF0000;"><strong><?php echo $aquivos['dias_autorizados']; ?></span></strong> <br />
+<span style="font-size: 10px;">MÉDICO SOLICITANTE: </span>
 <span style="font-size: 12px;"><strong>
 <?php if(isset($aquivos['medico_solicitante'])){ echo  $aquivos['medico_solicitante'];}else{ echo "0";} ?> 
 </span></strong>
          , 
-CRM:
+<span style="font-size: 10px;">CRM:</span>
 <span style="font-size: 12px;"><strong>
 <?php if(isset($aquivos['crm'])){ echo  $aquivos['crm'];}else{ echo "0";} ?>
 </span></strong>
 <br />
-NUTRÓLOGO:
+<span style="font-size: 10px;">NUTRÓLOGO:</span>
 <span style="font-size: 12px;"><strong>
 <?php if(isset($aquivos['nutrologo'])){ echo  $aquivos['nutrologo'];}else{ echo "0";} ?>
 </span></strong>
 , 
-CRM/RQE:
+<span style="font-size: 10px;">CRM/RQE:</span>
 <span style="font-size: 12px;"><strong>
 <?php if(isset($aquivos['crm_rqe'])){ echo  $aquivos['crm_rqe'];}else{ echo "0";} ?>
 </span></strong>
 <br />
-TERAPIA:
+<span style="font-size: 10px;">TERAPIA:</span>
 <span style="font-size: 12px;"><strong>
 <?php if(isset($aquivos['terapia_nutricial'])){ echo  utf8_encode($aquivos['terapia_nutricial']);}else{ echo "0";} ?>
 </span></strong><br />
@@ -187,9 +188,9 @@ QTD.DE VEZES POR DIA:
 <span style="font-size: 12px; color: #FF0000; "><strong>
 <?php if(isset($aquivos['por_dia'])){ echo  $aquivos['por_dia'];}else{ echo "0";} ?>
 </span></strong></span><br />
-TOTAL DE ALIMENTAÇÕES: &nbsp;&nbsp; <span style='font-size: 14px; color:#FF0000'> <?php echo $total_alimentacao = $aquivos['por_dia']*$aquivos['qtd_diarias']; ?></span><br />
+<span style="font-size: 10px;">TOTAL DE ALIMENTAÇÕES: &nbsp;&nbsp; </span><span style='font-size: 14px; color:#FF0000'> <?php echo $total_alimentacao = $aquivos['por_dia']*$aquivos['qtd_diarias']; ?></span><br />
 <br />
-MOTIVO DA SOLICITAÇÃO :
+<span style="font-size: 10px;">MOTIVO DA SOLICITAÇÃO :</span>
 <textarea id="internacao_alimentacao_cadastro" class="form-control input-sm" name="internacao_alimentacao_cadastro"  rows="4" cols="60" onmousemove="auto_grow(this);" onkeyup="auto_grow(this);"  style="font-size:12px;  resize:nome; overflow:hidden; width: 100%;" form="internacao_alimentacao_cadastro"  <?php if((isset($status) && $status == 2) || isset($aquivos['motivo_solicitacao'])){ echo "readonly"; } ?>/>
 <?php
                                         if(!empty($aquivos['motivo_solicitacao']) ){
@@ -222,7 +223,7 @@ MOTIVO DA SOLICITAÇÃO :
     <tr style="font-size: 10px; text-align: justify; ">
       <td align="left">&nbsp;</td>
       <td colspan="9" align="left" ><div <?php if($aquivos["status"] <> 2){ echo 'style="display: none;"';}else{ echo'style="display: block;"'; } ?> >
-        MÉDICO:
+        MÉDICO AUTORIZADOR:
         <?php if(isset($aquivos['medico_solicitante'])){ echo  $aquivos['medico_solicitante'];}else{ echo "0";} ?>
         , 
 		CRM/RQE:
@@ -230,7 +231,7 @@ MOTIVO DA SOLICITAÇÃO :
         TERAPIA: <span style="font-size: 12px;"><strong>
         <?php if(isset($aquivos['terapia_nutricial'])){ echo  utf8_encode($aquivos['terapia_nutricial']);}else{ echo "0";} ?>
         </span></strong><br />
-        <span class="style2">QTD. DE DIÁRIAS DE ALIMENTAÇÃO: <span style="font-size: 12px; color: #FF0000;"><strong>
+        <span class="style2"> DIÁRIAS DE ALIMENTAÇÃO: <span style="font-size: 12px; color: #FF0000;"><strong>
         <?php if(isset($aquivos['qtd_diarias'])){ echo  $aquivos['qtd_diarias'];}else{ echo "0";} ?>
         </span></strong><br />
 QTD.DE VEZES POR DIA: <span style="font-size: 12px; color: #FF0000; "><strong>

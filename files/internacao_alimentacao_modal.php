@@ -48,8 +48,8 @@
 				$qtd_diarias_aut = $registro["qtd_diarias_aut"];
 		
 			}
-		
 		}
+		$saldo_diarias = $_GET['dias_autorizados'] - $qtd_diarias_aut;
 	}
 	
 // CONTROLE DE EXIBIÇÃO DE FORMULARIOS
@@ -216,7 +216,7 @@
                               <td>&nbsp;</td>
                             </tr>
                             <tr bgcolor="#999999">
-                              <td colspan="2"><span class="style13" style="padding-left: 60px;">Qtd Diárias</span><br />
+                              <td colspan="2"><span class="style13" style="padding-left: 60px;">Diárias</span><br />
                                   <?php
 							
                              	echo ' <input  style="margin-left: 60px;" name="dias_autorizados" type="text" class="form-control input-sm" style="font-size: 10px" size="44" ';
@@ -264,6 +264,14 @@
                             <tr>
                               <td colspan="10" bgcolor="#F1E07E"><div align="center"><span>DIÁRIAS </span>DE ALIMENTAÇÃO </div></td>
                             </tr>
+
+      						
+                            <tr align="center" <?php if(isset($saldo_diarias) && !empty($saldo_diarias) ) { echo 'style="display: block;"'; }else{ echo 'style="display: none;"';} ?> >
+                              <td colspan="10" >&nbsp;</td>
+                            </tr>
+                            <tr <?php if(isset($saldo_diarias) && !empty($saldo_diarias) ) { echo 'style="display: block;"'; }else{ echo 'style="display: none;"';} ?> >
+                              <td colspan="10"><div align="center">A prorrogação já utilizou <?php echo $qtd_diarias_aut; ?> diárias de alimentação de um total de <?php echo $_GET['dias_autorizados']; ?>, restando apenas <?php echo $saldo_diarias; ?> de saldo no período.</div></td>
+                            </tr>
                             <tr>
                               <td colspan="10">&nbsp;</td>
                             </tr>
@@ -271,20 +279,25 @@
                               <td colspan="10"><div align="center">
                                 <select id='qtd_diarias' name='qtd_diarias' class='form-control input-sm' <?php if(isset($desativar)){ echo $desativar;} ?> required="required" style="width:50px">
                                   <?php
-								    $dias_autorizados = $_GET['dias_autorizados']; // QTD AUTORIDADO NA PRORROGAÇÃO
+								    $dias_autorizados = $_GET['dias_autorizados']; // QTD TOTAL DE DIÁRIAS AUTORIDADO   NA PRORROGAÇÃO 
 									
 								  	if(!isset($_GET['dias_autorizados'])){
-										// VALOR JÁ AUTORIZADO
+										// QTD SOLICITADA DE DIÁRIAS DE ALIMENTAÇÃO DENTRO DO PERÍDIO DE PRORROGAÇÃO JÁ AUTORIZADO
 										echo "<option value='".$qtd_diarias."'>".$qtd_diarias."</option>";
 									}else{
 										// VALOR PARA AUTORIZAR
 										if(isset($qtd_diarias_aut) && empty($qtd_diarias_aut)){//QTD AUTORIZADO DENTRO DA ALIMENTAÇÃO
 											$dias_autorizados = $dias_autorizados - $qtd_diarias_aut;
 										}  
+										// CASO A ALIMENTAÇÃO NÃO TENHA UTILIZADO A QTD TOTAL DE DIÁRIAS FICA O SALDO. A QUANDIDADE DE 
+										// DIARIAS DE ALIMENTAÇÃO NÃO PODE SER SUPERIOR AO DA PRORROGAÇÃO, PODE SER MENOR MAS NUNCA SUPERIOR
+										if(isset($saldo_diarias)){
+											$dias_autorizados = $saldo_diarias;
+										}
+											 for ($i=0; $i <= $dias_autorizados; $i++) {
+												echo "<option value='".$i."'>".$i."</option>";
+											 }
 										
-										 for ($i=0; $i <= $dias_autorizados; $i++) {
-											echo "<option value='".$i."'>".$i."</option>";
-										 }
 									}
 
 								   ?>
@@ -380,7 +393,7 @@
                             </tr>
                             <tr>
                               <td colspan="10"><div align="center">
-                                <input   style="text-align:center; font-size: large; color:#FF0000; font-weight: bolder;" id="total_alimentacao" name="total_alimentacao" type="text" class="form-control input-sm" size="44" readonly <?php if(isset($por_dia)){ $w = $por_dia*$dias_autorizados; echo 'value="'.$w.'"'; } ?> />
+                                <input   style="text-align:center; font-size: large; color:#FF0000; font-weight: bolder;" id="total_alimentacao" name="total_alimentacao" type="text" class="form-control input-sm" size="44" readonly <?php if(isset($por_dia)){ $w = $por_dia*$qtd_diarias; echo 'value="'.$w.'"'; } ?> />
 							  
 							  
 							  </div></td>
@@ -489,7 +502,7 @@
                         </tr>
                         <tr>  
                           <td><span  id="t1"  class="style13"> Diárias</span> <br />
-                          <input name="dias_autorizados" id ="dias_autorizados" type="text" class="form-control input-sm" style="font-size: 10px" size="44" <?php if (isset($dias_autorizados)) { echo "value='".$dias_autorizados."' readonly"; } ?>/></td><td>&nbsp;</td>
+                          <input name="dias_autorizados" id ="dias_autorizados" type="text" class="form-control input-sm" style="font-size: 10px" size="44" <?php if (isset($qtd_diarias)) { echo "value='".$qtd_diarias."' readonly"; } ?>/></td><td>&nbsp;</td>
 						  <td><span class = 'style13'>Qtd de Alimentações por Dia </span><br />
                           <input name="por_dia_aut" id ="por_dia_aut" type="text" class="form-control input-sm" style="font-size: 10px" size="44" <?php if (isset($por_dia_aut)) { echo "value='".$por_dia_aut."' readonly "; }else{ echo "value='".$por_dia."'  "; } ?>/></td>
           <tr>
