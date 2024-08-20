@@ -155,7 +155,7 @@ $itens_por_pagina = 5;
 			?>
 </span></strong><br />
 PERÍODO DA PRORROGAÇÃO:<?php echo " &nbsp;&nbsp; <span style='font-size: 12px;'><strong>".formatar_banco_data($aquivos['data_inicial_aut'])."</span></strong>&nbsp;&nbsp;  Á &nbsp;&nbsp; <strong><span style='font-size: 12px;'>".formatar_banco_data($aquivos['data_final_aut'])."</span></strong>, <span style='font-size: 12px;'>"; ?><br />
-<span class="style2"> DIÁRIAS : </span><span style="font-size: 12px; color: #FF0000;"><strong><?php echo $aquivos['dias_autorizados']; ?></span></strong> <br />
+<span style="font-size: 10px;"> DIÁRIAS : </span><span style="font-size: 12px; color: #FF0000;"><strong><?php echo $aquivos['dias_autorizados']; ?></span></strong> <br />
 <span style="font-size: 10px;">MÉDICO SOLICITANTE: </span>
 <span style="font-size: 12px;"><strong>
 <?php if(isset($aquivos['medico_solicitante'])){ echo  $aquivos['medico_solicitante'];}else{ echo "0";} ?> 
@@ -194,7 +194,7 @@ QTD.DE VEZES POR DIA:
 <textarea id="internacao_alimentacao_cadastro" class="form-control input-sm" name="internacao_alimentacao_cadastro"  rows="4" cols="60" onmousemove="auto_grow(this);" onkeyup="auto_grow(this);"  style="font-size:12px;  resize:nome; overflow:hidden; width: 100%;" form="internacao_alimentacao_cadastro"  <?php if((isset($status) && $status == 2) || isset($aquivos['motivo_solicitacao'])){ echo "readonly"; } ?>/>
 <?php
                                         if(!empty($aquivos['motivo_solicitacao']) ){
-                                           echo $aquivos['motivo_solicitacao']; 
+                                           echo utf8_encode($aquivos['motivo_solicitacao']); 
                                         }
                                         ?></textarea>
 
@@ -245,7 +245,7 @@ TOTAL DE ALIMENTAÇÕES: &nbsp;&nbsp; <span style='font-size: 14px; color:#FF000
 		<textarea id="textarea" class="form-control input-sm" name="textarea"  rows="4" cols="60" onmousemove="auto_grow(this);" onkeyup="auto_grow(this);"  style="font-size:12px; margin-top: 20px; resize:nome; overflow:hidden; width: 100%;" form="internacao_prorrogacao_cadastro"  <?php if((isset($status) && $status == 2) || isset($aquivos['motivo_autorizacao'])){ echo "readonly"; } ?>/>
 <?php
                                         if(!empty($aquivos['motivo_autorizacao']) ){
-                                           echo $aquivos['motivo_autorizacao']; 
+                                           echo utf8_encode($aquivos['motivo_autorizacao']); 
                                         }
                                         ?></textarea>		</td>
       <td align="center" style="border-radius: 0px 0px 25px 0px ; align-content: center;"><div ><span >

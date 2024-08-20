@@ -49,7 +49,10 @@
 		
 			}
 		}
-		$saldo_diarias = $_GET['dias_autorizados'] - $qtd_diarias_aut;
+		if(!empty($qtd_diarias_aut)){
+			$saldo_diarias = $_GET['dias_autorizados'] - $qtd_diarias_aut;
+			
+		}
 	}
 	
 // CONTROLE DE EXIBIÇÃO DE FORMULARIOS
@@ -269,12 +272,24 @@
                             <tr align="center" <?php if(isset($saldo_diarias) && !empty($saldo_diarias) ) { echo 'style="display: block;"'; }else{ echo 'style="display: none;"';} ?> >
                               <td colspan="10" >&nbsp;</td>
                             </tr>
-                            <tr <?php if(isset($saldo_diarias) && !empty($saldo_diarias) ) { echo 'style="display: block;"'; }else{ echo 'style="display: none;"';} ?> >
-                              <td colspan="10"><div align="center">A prorrogação já utilizou <?php echo $qtd_diarias_aut; ?> diárias de alimentação de um total de <?php echo $_GET['dias_autorizados']; ?>, restando apenas <?php echo $saldo_diarias; ?> de saldo no período.</div></td>
+                            <tr  >
+                              <td colspan="10">
+							  <?php 
+							  
+							  if(!empty($saldo_diarias)){
+								$mensagem = 'Já foi utilizada '.$qtd_diarias_aut.' diárias de um total de '.$_GET['dias_autorizados'].', restando apenas '. $saldo_diarias.' para esse período de prorrogação.';
+							  }
+							  
+							  ?>
+							  <div align="center" <?php if(isset($saldo_diarias) && !empty($saldo_diarias) ) { echo 'style="display: block;"'; }else{ echo 'style="display: none;"';} ?> > 
+							  <?php echo $mensagem; ?> 
+							  
+							  </div>
+							  
+							  
+							  </td>
                             </tr>
-                            <tr>
-                              <td colspan="10">&nbsp;</td>
-                            </tr>
+
                             <tr>
                               <td colspan="10"><div align="center">
                                 <select id='qtd_diarias' name='qtd_diarias' class='form-control input-sm' <?php if(isset($desativar)){ echo $desativar;} ?> required="required" style="width:50px">
@@ -466,7 +481,7 @@
                               <td colspan="10" class="style13" >Justificativa da alimentação
                                 <textarea minlength="5" required id="motivo_ali" class="form-control input-sm" name="motivo_ali"  style="font-size:12px; margin: 0px; height: 100px; width: 100%;"  <?php if (isset($motivo_solicitacao) ) { echo "readonly"; }  ?> /><?php
                                         if(isset($motivo_solicitacao)){
-                                          echo $motivo_solicitacao;
+                                          echo utf8_encode($motivo_solicitacao);
                                         }
                                         ?></textarea>                              </td>
                           </tr>
@@ -515,7 +530,7 @@
                              <span class="style13">Justificativa do médico</span>
                                 <textarea id="medico_aut" class="form-control input-sm" name="medico_aut"  style="font-size:12px; margin: 0px; height: 100px; width: 100%;"   /><?php
                                         if(isset($motivo_autorizacao)){
-                                          echo $motivo_autorizacao;
+                                          echo utf8_encode($motivo_autorizacao);
                                         }
                                         ?></textarea>                         </td> 
                         </tr>
