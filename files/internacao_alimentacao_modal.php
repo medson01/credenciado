@@ -37,7 +37,7 @@
 	}else{
 
 		if(isset($_GET['id_prorro'])){
-			echo $sql="SELECT 
+			 $sql="SELECT 
 			  id_prorro, SUM(qtd_diarias_aut) AS qtd_diarias_aut
 			FROM alimentacao 
 			WHERE alimentacao.id_prorro  =".$_GET['id_prorro'];
