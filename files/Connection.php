@@ -5,7 +5,7 @@ class Connection {
 	// DADOS DE ACESSO.
 	private $con;
 	private $host = "localhost";
-	private $dbname = "credenciado_prod";
+	private $dbname = "bkp_credenciado_prod";
 	private $username = "root";
 	private $password = "";
 	

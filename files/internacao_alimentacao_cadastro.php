@@ -104,12 +104,13 @@ if($_POST["status"] == 2){
 			// TRANS FORMANDO IMAGEM EM DADO BINÁRIO
 				$imagem = file_get_contents($foto['tmp_name']);		
 			// IMAGEM NO BANCO 
-				$sql = 'INSERT INTO imagem (id, id_internamento, id_alimentacao, id_pronto_atendimento, nome, evento, descricao, tipo, tamanho, data ,imagem) VALUES (null,:id_internamento ,:ultimo_id_alimentacao,null,:nome,:evento ,:descricao ,:tipo,:tamanho, "'.date("Y-m-d H:i:s" ).'", :imagem)';
+				$sql = 'INSERT INTO imagem (id, id_pronto_atendimento, id_internamento,id_prorrogacao, id_alimentacao, id_sadt, nome, evento, descricao, tipo, tamanho, data ,imagem) VALUES (null, null, :id_internamento, :id_prorro ,:ultimo_id_alimentacao, null, :nome, :evento,:descricao, :tipo,:tamanho, "'.date("Y-m-d H:i:s" ).'", :imagem)';
 				
 				$stmt = $pdo->prepare($sql);
 				// PARAMETROS
 				$stmt->bindParam(':id_internamento', $id_internamento, PDO::PARAM_INT);
-				$stmt->bindParam(':ultimo_id_alimentacao', $ultimo_id_prorrogacao, PDO::PARAM_INT);
+				$stmt->bindParam(':id_prorro', $id_prorro, PDO::PARAM_INT);
+				$stmt->bindParam(':ultimo_id_alimentacao', $ultimo_id_alimentacao, PDO::PARAM_INT);
 				$stmt->bindParam(':nome', $nome, PDO::PARAM_STR);
 				$stmt->bindParam(':evento', $evento, PDO::PARAM_STR);
 				$stmt->bindParam(':descricao', $descricao, PDO::PARAM_STR);

@@ -73,7 +73,7 @@
 <!-- Botões do Menu -->
 <?php
 
-	if( ($_SESSION["perfil"] <> "aut_internacao")  && ($_SESSION["perfil"] <> "laboratorio") && ($_SESSION["perfil"] <> "callcenter") && ($_SESSION["perfil"] <> "clinica") && ($_SESSION["perfil"] <> "clin_lab") ) {
+	if( ($_SESSION["perfil"] <> "internacao")  && ($_SESSION["perfil"] <> "aut_internacao")  && ($_SESSION["perfil"] <> "laboratorio") && ($_SESSION["perfil"] <> "callcenter") && ($_SESSION["perfil"] <> "clinica") && ($_SESSION["perfil"] <> "clin_lab") ) {
 		if( $_SESSION["perfil"] <> "alimentacao"){
 			echo'
 			<!-- Botão consulta de situação -->
@@ -93,6 +93,8 @@
 			</a>
 			';
 		}
+		
+		if( $_SESSION["perfil"] <> "pa"){
 		echo'
 			<!-- Botão internação -->
 			<a  href="painel.php?int=1"  > 
@@ -102,6 +104,8 @@
 				</div>
 			</a>
 			';
+		}	
+			
 		if( $_SESSION["perfil"] <> "alimentacao"){
 			echo'	
 			<!-- Em desenvolvimento 
@@ -170,13 +174,12 @@
 		}
 		*/
     	//-- Botão internação validação TOTVs -->		
-		if( $_SESSION["perfil"] == "aut_internacao") {
+		if( $_SESSION["perfil"] == "aut_internacao"  || $_SESSION["perfil"] == "internacao") {
 		echo'
 		<a  href="painel.php?int=1"  > 
 			<div class="thumbnail tile tile-medium tile-teal" style="display: flex; justify-content: center; align-items: center;">	
 				
-				Interna&ccedil;&atilde;o </br> 
-				TOTVs	
+				Interna&ccedil;&atilde;o
 			</div>
 		</a>';
 		}

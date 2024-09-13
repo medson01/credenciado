@@ -30,9 +30,9 @@ $itens_por_pagina = 5;
  }
 // ===========================================
  if($_SESSION["perfil"] == "alimentacao"){
-  $a = "SELECT prorrogacao.id as id_prorrogacao, prorrogacao.medico_solicitante, prorrogacao.motivo, prorrogacao.motivo_autorizacao, prorrogacao.data_inicial,prorrogacao.data_final, prorrogacao.data_inicial_aut,prorrogacao.data_final_aut,prorrogacao.dias_solicitados, prorrogacao.dias_autorizados, prorrogacao.qtd_motora, prorrogacao.qtd_respiratoria, prorrogacao.qtd_motora_aut, prorrogacao.qtd_respiratoria_aut,prorrogacao.data_prorrogacao, prorrogacao.data_autorizacao, prorrogacao.status, imagem.id as id_imagem, imagem.nome, imagem FROM prorrogacao INNER JOIN imagem on imagem.id_prorrogacao = prorrogacao.id WHERE prorrogacao.id_internamento=".$_GET['id']." AND prorrogacao.status=2"; ; 
+  $a = "SELECT prorrogacao.id as id_prorrogacao, prorrogacao.medico_solicitante, prorrogacao.motivo, prorrogacao.motivo_autorizacao, prorrogacao.data_inicial,prorrogacao.data_final, prorrogacao.data_inicial_aut,prorrogacao.data_final_aut,prorrogacao.dias_solicitados, prorrogacao.dias_autorizados, prorrogacao.qtd_motora, prorrogacao.qtd_respiratoria, prorrogacao.qtd_motora_aut, prorrogacao.qtd_respiratoria_aut,prorrogacao.data_prorrogacao, prorrogacao.data_autorizacao, prorrogacao.status, imagem.id as id_imagem, imagem.nome, imagem FROM prorrogacao INNER JOIN imagem on imagem.id_prorrogacao = prorrogacao.id WHERE prorrogacao.id_internamento=".$_GET['id']." AND prorrogacao.status=2 AND  imagem.evento = 'int'"; 
   }else{
-  $a = "SELECT prorrogacao.id as id_prorrogacao, prorrogacao.medico_solicitante, prorrogacao.motivo, prorrogacao.motivo_autorizacao, prorrogacao.data_inicial,prorrogacao.data_final, prorrogacao.data_inicial_aut,prorrogacao.data_final_aut,prorrogacao.dias_solicitados, prorrogacao.dias_autorizados, prorrogacao.qtd_motora, prorrogacao.qtd_respiratoria, prorrogacao.qtd_motora_aut, prorrogacao.qtd_respiratoria_aut,prorrogacao.data_prorrogacao, prorrogacao.data_autorizacao, prorrogacao.status, imagem.id as id_imagem, imagem.nome, imagem FROM prorrogacao INNER JOIN imagem on imagem.id_prorrogacao = prorrogacao.id WHERE prorrogacao.id_internamento=".$_GET['id']; 
+  $a = "SELECT prorrogacao.id as id_prorrogacao, prorrogacao.medico_solicitante, prorrogacao.motivo, prorrogacao.motivo_autorizacao, prorrogacao.data_inicial,prorrogacao.data_final, prorrogacao.data_inicial_aut,prorrogacao.data_final_aut,prorrogacao.dias_solicitados, prorrogacao.dias_autorizados, prorrogacao.qtd_motora, prorrogacao.qtd_respiratoria, prorrogacao.qtd_motora_aut, prorrogacao.qtd_respiratoria_aut,prorrogacao.data_prorrogacao, prorrogacao.data_autorizacao, prorrogacao.status, imagem.id as id_imagem, imagem.nome, imagem FROM prorrogacao INNER JOIN imagem on imagem.id_prorrogacao = prorrogacao.id WHERE prorrogacao.id_internamento=".$_GET['id']." AND  imagem.evento = 'int'";  
   }
 $d =  "  ORDER BY `id_prorrogacao` DESC   LIMIT ".$pagina.", ".$itens_por_pagina;
 
@@ -220,7 +220,7 @@ RESPIRATÓRIA:
 			}
 		?>
         
-        <div  style="position: relative; width:30px; left: 90%; bottom: 30px; position: relative; <?php 	if($_SESSION["perfil"] == 'alimentacao'){ echo 'display: block;" ';}else{ echo ' display: none; "';} ?>  > <a  style='color: blue; font-family: Andale monospace;' href="internacao_menu.php?id=<?php echo $_GET["id"]; ?>&amp;id_prorro=<?php echo $aquivos["id_prorrogacao"]; ?>&amp;data_inicial=<?php echo $aquivos["data_inicial_aut"]; ?>&amp;data_final=<?php echo $aquivos["data_final_aut"]; ?>&amp;dias_autorizados=<?php echo $aquivos["dias_autorizados"]; ?> "  onmouseover="Tip('Adicionar Alimentação!')" onmouseout="UnTip()">
+        <div  style="position: relative; width:30px; left: 90%; bottom: 30px; position: relative; <?php 	if($_SESSION["perfil"] == 'alimentacao' || $_SESSION["perfil"] == 'internacao'){ echo 'display: block;" ';}else{ echo ' display: none; "';} ?>  > <a  style='color: blue; font-family: Andale monospace;' href="internacao_menu.php?id=<?php echo $_GET["id"]; ?>&amp;id_prorro=<?php echo $aquivos["id_prorrogacao"]; ?>&amp;data_inicial=<?php echo $aquivos["data_inicial_aut"]; ?>&amp;data_final=<?php echo $aquivos["data_final_aut"]; ?>&amp;dias_autorizados=<?php echo $aquivos["dias_autorizados"]; ?> "  onmouseover="Tip('Adicionar Alimentação!')" onmouseout="UnTip()">
           <button type="button" class="btn" style="padding:1px"><img src="../imagem/alimentacao01.png" width="20" height="20" style="margin:0" /><strong><span style='font-size: 12px;'></span></strong></button>
 		 </a>
         </div>
@@ -228,7 +228,7 @@ RESPIRATÓRIA:
 	<div>
 	OBSERVAÇÕES:
         <strong><span style='font-size: 12px;'>
-        <textarea id="textarea" class="form-control input-sm" name="textarea"  rows="4" cols="60" onmousemove="auto_grow(this);" onkeyup="auto_grow(this);"  style="font-size:12px; margin-top: 20px; resize:nome; overflow:hidden; width: 100%;" form="internacao_prorrogacao_cadastro"  <?php if((isset($status) && $status == 2)  || (isset($aquivos['motivo_autorizacao'])) ){ echo "readonly"; } ?>/>
+        <textarea id="textarea" class="form-control input-sm" name="textarea"  rows="4" cols="60" onmousemove="auto_grow(this);" onkeyup="auto_grow(this);"  style="font-size:12px; margin-top: 20px; resize:nome; overflow:hidden; width: 100%;" form="internacao_prorrogacao_cadastro"  readonly />
   <?php
                                         if(!empty($aquivos['motivo_autorizacao']) ){
                                            echo $aquivos['motivo_autorizacao']; 

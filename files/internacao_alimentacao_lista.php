@@ -27,13 +27,18 @@ $itens_por_pagina = 5;
  }
 // ===========================================
 
-  $a = "SELECT prorrogacao.id as id_prorrogacao, prorrogacao.data_inicial_aut,prorrogacao.data_final_aut,prorrogacao.dias_autorizados, 
-  imagem.id as id_imagem, imagem.nome, imagem , 
-  alimentacao.id AS id_alimentacao, alimentacao.medico_solicitante,alimentacao.crm, alimentacao.nutrologo, alimentacao.crm_rqe, alimentacao.qtd_diarias, alimentacao.terapia_nutricial,alimentacao.por_dia, alimentacao.motivo_solicitacao, alimentacao.data_inicial, alimentacao.data_final,alimentacao.data_sol_alimentacao,alimentacao.motivo_autorizacao ,alimentacao.status 
+  $a = "SELECT  
+  alimentacao.id AS id_alimentacao, alimentacao.id_internamento, alimentacao.medico_solicitante,alimentacao.crm, alimentacao.nutrologo, alimentacao.crm_rqe, alimentacao.qtd_diarias, 
+  alimentacao.terapia_nutricial,alimentacao.por_dia, alimentacao.motivo_solicitacao, alimentacao.data_inicial, 
+  alimentacao.data_final,alimentacao.data_sol_alimentacao,alimentacao.motivo_autorizacao ,alimentacao.status, 
+  prorrogacao.id as id_prorrogacao, prorrogacao.data_inicial_aut,prorrogacao.data_final_aut,prorrogacao.dias_autorizados, 
+  imagem.id as id_imagem, imagem.evento , imagem.nome, imagem 
   FROM alimentacao 
   INNER JOIN prorrogacao ON prorrogacao.id = alimentacao.id_prorro
-  INNER JOIN imagem on imagem.id_prorrogacao = prorrogacao.id 
-  WHERE prorrogacao.id_internamento=".$_GET['id']." 
+  INNER JOIN imagem on imagem.id_alimentacao = alimentacao.id 
+  WHERE 
+  imagem.evento = 'ali'
+  AND alimentacao.id_internamento=".$_GET['id']." 
   AND prorrogacao.status=2"; 
 
   $d =  "  ORDER BY `id_alimentacao` DESC   LIMIT ".$pagina.", ".$itens_por_pagina;

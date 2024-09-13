@@ -11,7 +11,7 @@ VARIÁVEIS ALTERADAS
   $host = 'localhost';
   $username = 'root';
   $password = '';
-  $dbname = 'credenciado_prod';
+  $dbname = 'bkp_credenciado_prod';
   
   $conn = mysqli_connect($host,$username ,$password ,$dbname);
 

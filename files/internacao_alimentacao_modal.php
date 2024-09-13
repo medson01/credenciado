@@ -363,7 +363,7 @@
                                 <span > Via Sonda Nasoenteral (SNE) </span> </div></td>
                               <td colspan="3"><div class="form-check">
                                 <div class="form-check">
-                                  <input name="vias" type="radio" class="largerCheckbox" id="radio2" value="Periférica,  NPP" <?php if(isset($terapia_nutricial) && $terapia_nutricial == "Parenteral,  NPP"){ echo ' checked disabled'; } ?>/>
+                                  <input name="vias" type="radio" class="largerCheckbox" id="radio2" value="Periférica,  NPP" <?php if(isset($terapia_nutricial) && $terapia_nutricial == "﻿Periférica, NPP"){ echo ' checked disabled'; } ?>/>
                                 <span > Via Periférica (NPP) </span> </div></td>
                             </tr>
                             <tr>

@@ -87,7 +87,7 @@ echo '<div id="exTab2" >
 					<li "; 
 					if(isset($_GET['id'])){ echo 'class="active"';} 
 					echo ">";
-					if( $_SESSION["perfil"] != "aut_internacao") {
+					if( $_SESSION["perfil"] <> "internacao" && $_SESSION["perfil"] <> "aut_internacao") {
 					   echo "	<a href='#2' data-toggle='tab'>Cadastro</a>";
 					}
 			echo "</li>" ;

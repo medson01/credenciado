@@ -71,15 +71,18 @@
                               <td>&nbsp;</td>
                               <td><select class="form-matric" style="background:#faffbd; width:100%;" id="perfil" name="perfil" required="required" >
                                   <option  value="administrador">Administrador </option>
+								  <option  value="auditor">Auditor </option>
 								  <option  value="alimentacao">Alimentação </option>
 								  <option  value="callcenter">Callcenter</option>
                                   <option  value="clinica">Clinica</option>
-								  <option  value="clin_lab">Clínica e Laboratório </option>
+								  <option  value="clin_lab">Clínica e Laboratório </option> 
+								  <option  value="faturamento">Faturamento </option>
+								  <option  value="internacao">Internação </option>
 								  <option  value="laboratorio">Laboratório </option>		  
                                   <option  value="medico">Médico </option>
-                                  <option  value="auditor">Auditor </option>
+								  <option  value="pa">Pronto Atendimento </option>                                   
                                   <option  value="usuario">Usuario </option>
-                                  <option  value="faturamento">Faturamento </option>
+                                 
                                   <option  value="aut_internacao">Autorização internacao</option>
 
                               </select></td>
