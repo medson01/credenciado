@@ -108,7 +108,7 @@ $d =  "  ORDER BY `id_prorrogacao` DESC   LIMIT ".$pagina.", ".$itens_por_pagina
                             </tr>
 	</table>	
 <table width="996" border="0"  class="table table-bordered" >
-    <tr style="font-size: 12px">
+    <tr style="font-size: 12px"  >
       <td colspan="21" align="center" class="info"><div align="center">PRORROGAÇÕES</div></td>
     </tr>
 
@@ -117,17 +117,22 @@ $d =  "  ORDER BY `id_prorrogacao` DESC   LIMIT ".$pagina.", ".$itens_por_pagina
          
           $id_imagem = $aquivos['id_imagem'];
     ?>
-    
-    <tr style="font-size: 10px; text-align: justify">
-      <td width="26" rowspan="4" align="center" style="vertical-align: inherit; border-radius: 25px 0px 0px 25px; <?php if( isset($aquivos["status"]) && $aquivos["status"] == 2){ echo "background: #95FFFF;"; }elseif($aquivos["status"] == 0){ echo "background: indianred;"; }else{ echo 'background: #C0C0C0; ';}  ?> ">
+ </table>
+ 
+<table width="996" border="0"  class="table table-bordered"  >
+ <tbody id='tickt_prrrogacao_<?php echo $aquivos["id_prorrogacao"]; ?>'>
+    <tr style="font-size: 10px; text-align: justify"  >
+	  <td width="26" rowspan="4" align="center" style="vertical-align: inherit; border-radius: 25px 0px 0px 25px; <?php if( isset($aquivos["status"]) && $aquivos["status"] == 2){ echo "background: #95FFFF;"; }elseif($aquivos["status"] == 0){ echo "background: indianred;"; }else{ echo 'background: #C0C0C0; ';}  ?> ">
         <p>
 		
 		 </p>
         <p><br>
             <span style="font-size: small; font-weight: 800; ">
               <?php  
+			    $print = "internacao_menu.php?id=".$_GET['id']."&prorro=".$aquivos["id_prorrogacao"];
 				if(isset($aquivos["status"]) && ( $aquivos["status"] <> 2 && $aquivos["status"] <> 0) ){
-					echo "<a  id='ticket' href = 'internacao_menu.php?id=".$_GET['id']."&prorro=".$aquivos["id_prorrogacao"]."'>".$aquivos['id_prorrogacao']."</a>";
+					
+					echo "<a  id='ticket' href = '".$print."'>".$aquivos['id_prorrogacao']."</a>";
 				}else{
 					echo $aquivos['id_prorrogacao'];
 				
@@ -182,7 +187,8 @@ RESPIRATÓRIA:
 		  <td width="77"><a style="color: blue;" href="internacao_menu.php?id=<?php echo $_GET["id"]; ?>&ali=0"></a>
   <div>&nbsp;&nbsp;</div>
 	        <div align="center">
-	          <?php 
+	          <p>
+	            <?php 
 
         echo '<a style=" color: blue; font-weight: bold;  " class="hidden-print" href="imagem_exibir.php?id='.$aquivos['id_imagem'].'"  target="_blank"><svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-images" viewBox="0 0 16 16">
   <path d="M4.502 9a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3"/>
@@ -192,6 +198,26 @@ RESPIRATÓRIA:
 
 
         echo '<span class="visible-print">Imagem '.$aquivos["id_imagem"].'</span>';        ?>
+              </p>
+	          <p>
+			<button class="btn btn-default glyphicon glyphicon-print hidden-print" type="button" onclick="cont(<?php echo $aquivos['id_prorrogacao']; ?> )" ></button> 
+			 
+<!-- IMPRIMIR DMODAL -->			
+		
+
+<script>
+function cont(prorro){
+   
+   tela_impressao = window.open('<?php echo "http://".$_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']; ?>');
+   var conteudo = document.getElementById('tickt_prrrogacao_'+prorro).innerHTML;
+   tela_impressao.document.write(conteudo);
+  // tela_impressao.window.print();
+   //tela_impressao.window.close();
+}
+</script>
+	
+		
+              </p>
 	        </div></td></tr>
 <td colspan="11"  align="left" bgcolor="#A6FFA6" >
 
@@ -231,7 +257,7 @@ RESPIRATÓRIA:
         <textarea id="textarea" class="form-control input-sm" name="textarea"  rows="4" cols="60" onmousemove="auto_grow(this);" onkeyup="auto_grow(this);"  style="font-size:12px; margin-top: 20px; resize:nome; overflow:hidden; width: 100%;" form="internacao_prorrogacao_cadastro"  readonly />
   <?php
                                         if(!empty($aquivos['motivo_autorizacao']) ){
-                                           echo $aquivos['motivo_autorizacao']; 
+                                           echo utf8_encode($aquivos['motivo_autorizacao']); 
                                         }
                                         ?>
   </textarea>
@@ -239,8 +265,9 @@ RESPIRATÓRIA:
   </span></strong>
   </p>
       </div></td>
-      <td align="center" style="border-radius: 0px 0px 25px 0px ; align-content: center;"><div ><span >
-        <?php
+      <td align="center" style="border-radius: 0px 0px 25px 0px ; align-content: center;"><div >
+        <p><span >
+          <?php
 
             if( $aquivos['status'] == 1 ){ 
                echo "<font ><strong><a  style='font-family: Andale monospace;'   href=\"javascript:func()\" onmouseover=\"Tip(' Prorrogação em analise ')\" onmouseout=\"UnTip()\"> ";
@@ -257,12 +284,17 @@ glyphicon glyphicon-ok' style='color: blue; font-size: 18px;' ></span></font>";
 			
 
         ?>
-      </span></div></td>
+          </span></p>
+        <p>
+			
+		</p>
+      </div></td>
     </tr>
     
     <?php 
             $w = $aquivos['id_prorrogacao'];
               } ?>
+	</tbody>
 </table>
      
       <span class="style2">*F.M.: Fisioterapia Motora<br />

@@ -95,7 +95,7 @@
                             <tr>
                               <td>Senha&nbsp;</td>
                               <td><p>&nbsp;</p>                              </td>
-                              <td><input class="form-matric" style="background:#faffbd;" type="password" name="senha" id="senha"  required="required" size="60px"/></td>
+                              <td><input class="form-matric" style="background:#faffbd;" type="password" name="senha"  required="required" size="60px"/></td>
                             </tr>
                             <tr>
                               <td>&nbsp;</td>

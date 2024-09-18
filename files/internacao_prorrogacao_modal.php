@@ -3,7 +3,7 @@
 // FORMATA A DATA QUE ESTÁ NO FORMATO ENG PARA BR NO BANCO
 	require_once "../func/formatar_data_banco.php";
 
-
+  
 	if(isset($_GET['prorro']) && !empty($_GET['prorro']) ){
 		$sql='SELECT prorrogacao.id as id_prorrogacao, prorrogacao.medico_solicitante,  prorrogacao.crm, prorrogacao.data_inicial, prorrogacao.data_final, prorrogacao.data_inicial_aut, prorrogacao.data_final_aut,prorrogacao.motivo, prorrogacao.motivo_autorizacao, prorrogacao.dias_solicitados, prorrogacao.dias_autorizados, prorrogacao.qtd_motora, prorrogacao.qtd_respiratoria, data_autorizacao, data_prorrogacao, prorrogacao.status, imagem.id as id_imagem, acomodacao.nome  as acomodacao, acomodacao.id as id_acomodacao 
 		FROM prorrogacao 
@@ -154,7 +154,7 @@
 								if(isset($data_final)){
                                 	echo ' <input class="form-control" type="text"  data-date-format="mm/dd/yyyy" maxlength="10"size="10" required value="'.formatar_banco_data($data_final).'" readonly /> ';
 								}else{
-									echo ' <input  id="data_final" name="data_final" onchange="calcularData()" class="form-control" type="text"  data-date-format="mm/dd/yyyy" maxlength="10"size="10" required  />';
+									echo ' <input  id="data_final" name="data_final" onchange="calcular_Data()" class="form-control" type="text"  data-date-format="mm/dd/yyyy" maxlength="10"size="10" required  />';
 									}
 							  ?>
 								</td>
@@ -479,18 +479,18 @@ $("#motivo_prorro").on("input", function(){
 </script> 
 				
 <!-- SCRIPT DE CONTROLE DO MODAL -->			
-<script>
-	function abrirProModal() {
-	   document.getElementById('labModal').style.display = "block";
-	}
-	function fecharProModal() {
-	   document.getElementById('labModal').style.display = "none";
-	}
-</script> 
+		<script>
+			function abrirProModal() {
+			   document.getElementById('labModal').style.display = "block";
+			}
+			function fecharProModal() {
+			   document.getElementById('labModal').style.display = "none";
+			}
+		</script> 
 
 <!-- CALCULA A QUANTIDADE DE DIAS DE UMA DATA PARA OUTRA  -->	
 		<script>
-			function calcularData() {	
+			function calcular_Data() {	
 				// Converte o padrão BR para ENG 
 				function FormataStringData(data) {
 				  var dia  = data.split("/")[0];
@@ -509,7 +509,7 @@ $("#motivo_prorro").on("input", function(){
 		
 				var timeDiff = Math.abs(date2 - date1);
 				var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24)); 
-				
+				diffDays = diffDays + 1;
 				if(diffDays > 5){
 					document.getElementById("aviso1").innerHTML = '<div style="font-size: x-small; font-family: system-ui; font-weight: 400;" class="alert alert-danger" role="alert">Périodo exede ao máximo de diárias permitida que é 5 diárias!</div>';
 					document.getElementById("aviso2").innerHTML = '<div style="font-size: x-small; font-family: system-ui; font-weight: 400;" class="alert alert-info" role="alert">Périodo exede ao máximo de diárias permitida que é 5 diárias!</div>';
@@ -520,7 +520,12 @@ $("#motivo_prorro").on("input", function(){
 				document.getElementById("dias").value = diffDays;
 				diffDays = 0;
 			}
-		</script>	 	  
+		</script>
+		
+		
+	
+	
+		 	  
 <?php				
 		if(isset($_GET['prorro']) ){
 			if($_GET['prorro'] >= 0 && $_GET['prorro'] <> 'x' && !isset($_GET['pagina']) ){	
